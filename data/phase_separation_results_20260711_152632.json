@@ -1,0 +1,86 @@
+{
+  "timestamp": "20260711_152632",
+  "results": {
+    "b6_h1_binary_dg_vs_jain_vale": {
+      "mann_whitney_u": 1.0,
+      "p": 0.8333333333333334,
+      "below_20_geo": {
+        "15": 3.7041144371032715
+      },
+      "above_31_geo": {
+        "36": 3.6444666385650635,
+        "40": 3.6984357833862305,
+        "50": 3.676837205886841,
+        "60": 3.792419195175171,
+        "80": 3.5287914276123047
+      },
+      "note": "d_g is binary at r!=21, so both r<=20 and r>=31 groups likely have similar d_g. The test checks whether J&V's threshold adds separation beyond d_g's own collapse point."
+    },
+    "b6_h2_continuous_di_vs_hydration": {
+      "status": "pending_batch1_di"
+    },
+    "b6_h3_di_derivative_peak": {
+      "derivatives": [
+        {
+          "r_mid": 12.5,
+          "derivative": 1.3637542724609376e-05
+        },
+        {
+          "r_mid": 16.5,
+          "derivative": 0.00011446078618367513
+        },
+        {
+          "r_mid": 19.5,
+          "derivative": -0.00038295984268188477
+        },
+        {
+          "r_mid": 22.5,
+          "derivative": 6.0776869455973305e-05
+        },
+        {
+          "r_mid": 25.5,
+          "derivative": 0.00021153688430786133
+        },
+        {
+          "r_mid": 28.5,
+          "derivative": 0.00012195110321044922
+        },
+        {
+          "r_mid": 33.0,
+          "derivative": -0.00013672312100728354
+        },
+        {
+          "r_mid": 38.0,
+          "derivative": 6.082653999328613e-05
+        },
+        {
+          "r_mid": 45.0,
+          "derivative": 0.0001504838466644287
+        },
+        {
+          "r_mid": 55.0,
+          "derivative": 0.00018701553344726562
+        },
+        {
+          "r_mid": 70.0,
+          "derivative": 0.0003451615571975708
+        }
+      ],
+      "max_derivative_at": 19.5,
+      "near_jain_vale_30": false,
+      "note": "Testing against Jain & Vale gelation threshold (~30), NOT HD clinical threshold (~36). Our d_g collapse is at r!=21, which matches neither."
+    },
+    "n_variants": 8,
+    "geodesics": {
+      "15": 3.7041144371032715,
+      "21": 0.13908152282238007,
+      "27": 3.7074499130249023,
+      "36": 3.6444666385650635,
+      "40": 3.6984357833862305,
+      "50": 3.676837205886841,
+      "60": 3.792419195175171,
+      "80": 3.5287914276123047
+    },
+    "hydration": {}
+  }
+}
