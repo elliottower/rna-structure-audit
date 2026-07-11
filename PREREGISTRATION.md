@@ -6,7 +6,7 @@
 
 **Date:** 2026-07-11 (pre SHA freeze)
 
-**Commit SHA:** _TO BE FILLED AFTER COMMIT_
+**Commit SHA:** 5427db9
 
 **Epistemic status:** This is a **frozen analysis protocol**, not a pre-registration
 in the strict sense. The hypotheses below are informed by results from a prior
