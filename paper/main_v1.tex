@@ -1,0 +1,494 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\BN}{\mathrm{BN}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\CITE}[1]{\textcolor{red}{[CITE: #1]}}
+
+\title{Causal Geometry Audit of RNA Foundation Model Representations:\\
+  Bracket Norm, Grassmannian Transportability, and Weight Factorization\\
+  on HTT mRNA for Huntington's Disease}
+
+\author{Elliot Tower\\
+  Mechanistic Research\\
+  \texttt{elliot@elliottower.ai}}
+
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+RNA-targeting therapeutics face two geometric confounds: distinguishing
+genuine structural features from length-dependent artifacts, and
+predicting whether drug mechanisms transfer across pathogenic mutations.
+We apply three independent audits to RNA-FM, a 99M-parameter RNA
+foundation model, using Huntingtin (HTT) mRNA as a case study.
+%
+First, bracket-norm correction reveals which embedding dimensions encode
+intensive structural properties of the CAG repeat region versus
+extensive properties that scale with sequence length.
+%
+Second, Grassmannian subspace analysis quantifies how the
+representation subspace drifts as CAG repeat count increases from
+wild-type (21 repeats) through the disease threshold (36+) to severe
+expansions (80 repeats), yielding a transportability score for
+antisense oligonucleotide design.
+%
+Third, singular value decomposition of RNA-FM's weight matrices shows
+\TODO{effective rank results} across layers and projections, with
+cross-projection subspace overlap suggesting a shared low-dimensional
+factor structure amenable to mechanistic decomposition.
+%
+All analyses, code, and data are publicly available.
+\end{abstract}
+
+%% ────────────────────────────────────────────
+\section{Introduction}
+\label{sec:intro}
+
+Huntington's disease (HD) is caused by expansion of a CAG trinucleotide
+repeat in exon~1 of the Huntingtin gene (HTT), producing a
+polyglutamine-expanded protein that aggregates and causes
+neurodegeneration~\CITE{MacDonald et al.~1993, HTT Collaborative Group}.
+Normal alleles carry 6--35 CAG repeats; 36--39 repeats confer incomplete
+penetrance; 40+ repeats are fully penetrant~\CITE{Rubinsztein et al.~1996}.
+No disease-modifying therapy exists. The primary therapeutic strategy
+targets HTT mRNA directly, using antisense oligonucleotides (ASOs) to
+reduce production of the toxic protein~\CITE{Tabrizi et al.~2019, tominersen trial}.
+
+The central challenge for RNA-targeting drug design is \emph{transportability}:
+a drug mechanism validated on one CAG repeat length must transfer to the
+repeat lengths seen in patients. Clinical trials of tominersen
+(an ASO targeting HTT mRNA) were halted partly because the drug reduced
+both mutant and wild-type HTT with insufficient selectivity~\CITE{Tabrizi et al.~2022}.
+Understanding which structural features of the CAG repeat region are
+preserved across repeat lengths---and which degrade---would inform
+the design of allele-selective therapies.
+
+RNA foundation models offer a new lens on this problem. RNA-FM, a
+99M-parameter BERT-style model pre-trained on 23 million non-coding RNA
+sequences, produces 640-dimensional contextual embeddings for each
+nucleotide position~\CITE{Chen et al.~2022, RNA-FM}. These embeddings
+capture structural and functional properties learned from evolutionary
+data, providing a representation space where geometric analyses can
+detect genuine structural signals.
+
+We apply three complementary audits from the causal geometry
+framework~\CITE{Tower, bracket norm; Tower, Grassmannian cohort transfer}
+to RNA-FM embeddings of the HTT CAG repeat region:
+
+\begin{enumerate}
+\item \textbf{Bracket-norm correction.} RNA embeddings are confounded
+  by sequence length: longer sequences produce higher-norm
+  representations due to positional encoding and attention aggregation
+  effects. The bracket norm~\CITE{Tower, bracket norm} normalizes
+  feature magnitudes by $\sqrt{n}$ to distinguish \emph{intensive}
+  structural properties (genuine features of the RNA fold) from
+  \emph{extensive} properties (artifacts scaling with input length).
+
+\item \textbf{Grassmannian transportability.} For each CAG repeat count
+  $r$, we compute the principal component subspace of RNA-FM embeddings
+  on the repeat region, yielding a point on the Grassmannian
+  $\Gr(k, 640)$. The geodesic distance between the wild-type subspace
+  ($r = 21$) and a mutant subspace ($r > 36$) quantifies how much the
+  representation structure degrades---a direct measure of drug
+  mechanism transferability~\CITE{Tower, Grassmannian cohort transfer}.
+
+\item \textbf{Weight factorization.} Singular value decomposition of
+  RNA-FM's attention and MLP weight matrices reveals the intrinsic
+  dimensionality of each projection. Cross-projection subspace overlap
+  (shared singular directions between $W_Q$ and $W_K$, between $W_V$
+  and $W_O$) indicates whether the model's internal structure admits a
+  shared factor bank decomposition, as demonstrated for GPT-2 in prior
+  work~\CITE{Tower \& Nanda, factorization circuits}.
+\end{enumerate}
+
+Together, these three audits provide a geometric validity check on any
+structural claim derived from RNA-FM embeddings: features surviving
+bracket-norm correction, Grassmannian transportability, and weight-space
+factorization analysis carry higher evidential weight than features
+identified by any single method.
+
+
+%% ────────────────────────────────────────────
+\section{Background}
+\label{sec:background}
+
+\subsection{RNA-FM architecture}
+
+RNA-FM~\CITE{Chen et al.~2022} is a BERT-style~\CITE{Devlin et al.~2019}
+transformer encoder with 12 layers, 20 attention heads per layer,
+hidden dimension $d = 640$, and intermediate MLP dimension $d_{\mathrm{ff}} = 5120$.
+The model uses a nucleotide-level vocabulary of 28 tokens (A, C, G, U,
+plus special tokens) and was pre-trained with masked language modeling
+on 23.7 million non-coding RNA sequences from RNAcentral~\CITE{RNAcentral}.
+%
+RNA-FM achieves state-of-the-art performance on RNA secondary structure
+prediction, producing per-nucleotide embeddings that encode structural
+context without explicit thermodynamic modeling.
+
+\subsection{HTT mRNA and CAG repeat structure}
+
+The human HTT mRNA (RefSeq NM\_002111.7) spans 13{,}669 nucleotides.
+The pathogenic CAG repeat lies in exon~1, with normal alleles containing
+approximately 21 repeats (63 nucleotides). The repeat region and its
+flanking sequences create a structured RNA domain whose conformation
+depends on repeat length: longer repeats form more stable hairpin
+structures that may affect mRNA splicing, localization, and
+translation~\CITE{de Mezer et al.~2011; Sobczak et al.~2003}.
+
+\subsection{Bracket norm}
+
+The bracket norm~\CITE{Tower, bracket norm} is a normalization that
+distinguishes intensive from extensive properties in high-dimensional
+feature spaces. For a feature vector $\mathbf{f} \in \R^d$ computed
+from $n$ observations, the bracket-norm corrected value is
+$\BN(\mathbf{f}) = \|\mathbf{f}\| / \sqrt{n}$.
+%
+Features whose bracket-norm corrected magnitude is invariant to $n$
+represent genuine intensive properties; features whose corrected
+magnitude varies with $n$ are extensive and may be confounded by
+sampling density or input size. In the RNA context, $n$ is the
+sequence length, and the correction identifies embedding dimensions
+that encode per-nucleotide structural information rather than
+global sequence statistics.
+
+\subsection{Grassmannian subspace analysis}
+
+A $k$-dimensional subspace of $\R^d$ is a point on the Grassmannian
+manifold $\Gr(k, d)$~\CITE{Edelman et al.~1998}. Given two subspaces
+$U, V \in \Gr(k, d)$, the principal angles
+$\theta_1 \leq \cdots \leq \theta_k$ between them are computed via the
+SVD of $U^\top V$, and the geodesic distance is
+$d_g(U, V) = \sqrt{\sum_i \theta_i^2}$.
+%
+This distance quantifies structural similarity between representation
+subspaces: small geodesic distance implies that the same geometric
+features are active in both conditions, while large distance indicates
+a qualitative shift in representation structure.
+%
+When applied to RNA embeddings across CAG repeat variants, this yields
+a \emph{transportability score}: the degree to which drug-relevant
+structural features identified on wild-type RNA persist in disease-length
+expansions.
+
+
+%% ────────────────────────────────────────────
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Data preparation}
+
+We obtained the full-length HTT mRNA sequence (NM\_002111.7,
+13{,}669~nt) from NCBI RefSeq. The native CAG repeat region was
+identified by regex matching, yielding 21 tandem CAG repeats at
+positions 148--211.
+
+To study transportability across repeat lengths, we constructed
+synthetic HTT mRNA variants by replacing the native CAG repeat with
+$r \in \{15, 21, 27, 36, 40, 50, 60, 80\}$ tandem repeats, preserving
+50~nt of flanking sequence on each side. This set spans
+sub-normal (15), normal (21), intermediate (27), reduced-penetrance
+threshold (36), full-penetrance (40), and severe expansion (50--80)
+alleles.
+
+\subsection{Embedding extraction}
+
+We loaded RNA-FM weights from the HuggingFace
+repository~\CITE{multimolecule/rnafm} into a BERT encoder using the
+\texttt{transformers} library~\CITE{Wolf et al.~2020}, with
+architecture parameters matched to the published
+specification (12 layers, 640 hidden, 20 heads, 5120 intermediate).
+%
+Input sequences were tokenized at single-nucleotide resolution
+(A$\to$5, C$\to$6, G$\to$7, U$\to$8) with CLS and EOS tokens.
+Embeddings from the final hidden layer and all intermediate layers
+were extracted for each variant.
+
+\subsection{Bracket-norm analysis}
+
+For windows of size $n \in \{100, 200, 300, 400, 500\}$~nt centered on
+the CAG repeat region, we computed the mean embedding norm
+$\bar{\ell}(n) = \frac{1}{n} \sum_{i=1}^{n} \|\mathbf{h}_i\|$
+and the bracket-norm corrected value $\BN(n) = \bar{\ell}(n) / \sqrt{n}$.
+%
+An intensive property yields constant $\BN(n)$ across window sizes;
+an extensive property yields $\BN(n)$ that decreases as $1/\sqrt{n}$.
+
+We also computed per-dimension bracket norms: for each of the 640
+embedding dimensions, we computed the $L^2$ norm across positions and
+divided by $\sqrt{n}$, identifying the dimensions with the highest
+intensive signal.
+
+\subsection{Grassmannian transportability}
+
+For each CAG repeat variant $r$, we computed RNA-FM embeddings on the
+synthetic sequence and extracted the final-layer representations for
+the repeat-plus-flanking region. PCA with $k = 10$ components yielded
+a subspace $U_r \in \Gr(10, 640)$.
+
+The geodesic distance $d_g(U_{21}, U_r)$ between the wild-type
+subspace and each variant subspace quantifies transportability.
+We also computed the full principal angle spectrum to identify which
+subspace dimensions are preserved versus disrupted by repeat expansion.
+
+\subsection{Layer-wise analysis}
+
+For a 500~nt window centered on the CAG repeat, we extracted hidden
+states from all 13 layers (embedding + 12 transformer layers) and
+performed PCA on each. The effective dimensionality (number of
+components for 95\% variance) characterizes how concentrated the
+representation is at each processing stage.
+
+We computed cross-layer subspace similarity as the mean cosine of
+principal angles between 10-dimensional PCA subspaces of different
+layers, yielding a $13 \times 13$ similarity matrix.
+
+\subsection{Weight matrix factorization}
+
+For each of the 12 transformer layers, we performed SVD on all six
+projection matrices ($W_Q, W_K, W_V, W_O \in \R^{640 \times 640}$
+and $W_{\mathrm{in}} \in \R^{5120 \times 640}$,
+$W_{\mathrm{out}} \in \R^{640 \times 5120}$).
+%
+The effective rank at 95\% cumulative variance and the spectral decay
+ratio $\sigma_1 / \sigma_{10}$ characterize the intrinsic
+dimensionality of each projection.
+
+To assess whether projections share a common factor structure, we
+computed the subspace overlap between the top-20 right singular vectors
+of each attention projection pair ($W_Q$--$W_K$, $W_Q$--$W_V$,
+$W_K$--$W_V$, $W_Q$--$W_O$) within each layer. High overlap indicates
+that the same input-space directions are important across projections,
+supporting a shared factor bank decomposition.
+
+
+%% ────────────────────────────────────────────
+\section{Results}
+\label{sec:results}
+
+\TODO{Fill with actual numbers from analysis\_results\_latest.json once
+the pipeline completes. The structure below matches the saved JSON fields.}
+
+\subsection{Bracket-norm correction identifies intensive RNA features}
+
+\TODO{Raw norms scale with window size. BN-corrected norms:
+report whether they stabilize (intensive) or continue to decrease (extensive).
+Report top intensive dimensions.}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.9\textwidth]{../figures/bracket_norm.png}
+% \caption{(a) Mean embedding norm increases with window size, reflecting
+% the extensive contribution of positional encoding. (b) Bracket-norm
+% corrected values \TODO{stabilize/decrease}, indicating that
+% \TODO{interpretation}.}
+% \label{fig:bracket_norm}
+% \end{figure}
+
+\subsection{Grassmannian distance increases with CAG expansion}
+
+\TODO{Report geodesic distances for each repeat count. Key question:
+is the increase monotonic? Is there a phase transition near the
+disease threshold (36 repeats)?}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.9\textwidth]{../figures/transportability.png}
+% \caption{(a) Geodesic distance from the wild-type ($r=21$) subspace
+% increases with CAG repeat count. \TODO{Note any nonlinearity near
+% $r=36$.} (b) Principal angle heatmap shows which subspace dimensions
+% are preserved (small angles) versus disrupted (large angles) by
+% expansion.}
+% \label{fig:transport}
+% \end{figure}
+
+\subsection{Layer-wise effective dimensionality}
+
+\TODO{Report effective dims. Early layers typically high-dimensional,
+later layers compress to task-relevant subspace.}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.9\textwidth]{../figures/cross_layer_similarity.png}
+% \caption{Cross-layer subspace similarity matrix. \TODO{Describe
+% block structure if present.}}
+% \label{fig:layers}
+% \end{figure}
+
+\subsection{Weight matrices admit low-rank factorization}
+
+\TODO{Report effective ranks. If attention matrices have effective
+rank $\ll 640$, the shared factor bank decomposition is geometrically
+motivated.}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.9\textwidth]{../figures/weight_factorization.png}
+% \caption{(a) Effective rank (95\% variance) by layer and projection type.
+% (b) Spectral decay ratio $\sigma_1/\sigma_{10}$ heatmap.}
+% \label{fig:factorize}
+% \end{figure}
+
+\subsection{CAG repeat region is geometrically distinct}
+
+\TODO{Report PCA separation, norm difference between CAG and flanking
+positions.}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.9\textwidth]{../figures/position_analysis.png}
+% \caption{(a) PCA of RNA-FM embeddings colored by region (CAG vs.\
+% flanking). (b) Position-wise embedding norm shows \TODO{elevated/reduced}
+% norm in the CAG region.}
+% \label{fig:positions}
+% \end{figure}
+
+
+%% ────────────────────────────────────────────
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Implications for RNA-targeting drug design}
+
+The transportability analysis provides a direct, quantitative answer to
+a question facing ASO drug designers: how much does the structural
+representation of HTT mRNA change between wild-type and disease-length
+CAG expansions? \TODO{Interpret the geodesic distance curve.}
+
+The bracket-norm analysis complements this by identifying which
+embedding dimensions carry genuine structural information. Drug
+design pipelines that screen RNA structural features should weight
+intensive dimensions (high bracket-norm) over extensive ones to
+avoid length-dependent artifacts.
+
+\subsection{Weight factorization and mechanistic interpretability}
+
+The SVD analysis reveals whether RNA-FM's internal computations are
+amenable to the shared factor bank decomposition demonstrated for
+GPT-2~\CITE{Tower \& Nanda, factorization circuits}. \TODO{Interpret
+effective rank and cross-projection overlap results.}
+
+If confirmed, a factorized RNA-FM would enable direct inspection of
+which learned structural motifs (factors) are recruited by each
+attention head and MLP projection, providing mechanistic interpretability
+of RNA language model predictions. This addresses a key limitation
+of current RNA structure prediction: models achieve high accuracy
+without revealing which structural features drive their predictions.
+
+\subsection{Limitations}
+
+Several limitations qualify these results. RNA-FM was pre-trained
+on non-coding RNA, not mRNA; its representations of protein-coding
+sequences like HTT may not capture coding-specific structural features.
+The PCA-based subspace extraction assumes linearity in the
+representation geometry; nonlinear structure would require manifold
+learning approaches. The synthetic repeat variants do not capture
+somatic mosaicism or epigenetic modifications present in patient
+tissue. The weight SVD characterizes the model's \emph{capacity}
+for low-rank structure, but the full distillation-based factorization
+(fitting a shared factor bank and per-projection selectors) requires
+GPU training that we defer to subsequent work.
+
+\subsection{Future directions}
+
+Three extensions follow directly. First, cross-view validation using
+thermodynamic structure prediction (EternaFold, RNAfold) as an
+independent view, assessing whether the Grassmannian subspace identified
+by RNA-FM aligns with physics-based structural ensembles. Second, full
+distillation-based factorization of RNA-FM to extract interpretable
+factors, following the pipeline established for
+GPT-2~\CITE{Tower \& Nanda, factorization circuits}. Third, application
+to additional RNA therapeutic targets (SARS-CoV-2 frameshifting element,
+DMD exon-skipping targets, SMA survival motor neuron) to test whether
+the bracket-norm and transportability metrics generalize across RNA
+drug targets.
+
+
+%% ────────────────────────────────────────────
+\section{Conclusion}
+\label{sec:conclusion}
+
+We applied three geometric audits---bracket-norm correction,
+Grassmannian transportability, and weight factorization---to RNA-FM
+representations of the HTT CAG repeat region. \TODO{One-sentence
+summary of key finding.} These tools provide a principled validity
+check for RNA structural claims derived from foundation model
+embeddings, and a quantitative transportability metric directly
+relevant to RNA-targeting drug design for Huntington's disease.
+
+All code, data, and analysis results are available at
+\url{https://github.com/ElliottTower/causal-rna} under the MIT license.
+
+
+%% ────────────────────────────────────────────
+\bibliographystyle{plainnat}
+% \bibliography{refs}
+
+\begin{thebibliography}{99}
+
+\bibitem[Chen et al.(2022)]{rnafm}
+Chen, J., Hu, Z., Sun, S., Tan, Q., Wang, Y., Yu, Q., Zong, L., Hong, L., Xiao, J., King, I., et al.
+\newblock Interpretable RNA foundation model from unannotated data for highly accurate RNA structure and function predictions.
+\newblock \emph{arXiv:2204.00300}, 2022.
+
+\bibitem[de~Mezer et al.(2011)]{demezer2011}
+de~Mezer, M., Wojciechowska, M., Napierala, M., Sobczak, K., and Krzyzosiak, W.~J.
+\newblock Mutant {CAG} repeats of {Huntingtin} transcript fold into hairpins, form nuclear foci and are targets for {RNA} interference.
+\newblock \emph{Nucleic Acids Research}, 39(9):3852--3863, 2011.
+
+\bibitem[Devlin et al.(2019)]{devlin2019bert}
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language understanding.
+\newblock In \emph{NAACL-HLT}, 2019.
+
+\bibitem[Edelman et al.(1998)]{edelman1998}
+Edelman, A., Arias, T.~A., and Smith, S.~T.
+\newblock The geometry of algorithms with orthogonality constraints.
+\newblock \emph{SIAM Journal on Matrix Analysis and Applications}, 20(2):303--353, 1998.
+
+\bibitem[MacDonald et al.(1993)]{macdonald1993}
+MacDonald, M.~E., Ambrose, C.~M., Duyao, M.~P., et al.
+\newblock A novel gene containing a trinucleotide repeat that is expanded and unstable on {Huntington's} disease chromosomes.
+\newblock \emph{Cell}, 72(6):971--983, 1993.
+
+\bibitem[Rubinsztein et al.(1996)]{rubinsztein1996}
+Rubinsztein, D.~C., Leggo, J., Coles, R., et al.
+\newblock Phenotypic characterization of individuals with 30--40 {CAG} repeats in the {Huntington} disease ({HD}) gene reveals {HD} cases with 36 repeats and apparently normal elderly individuals with 36--39 repeats.
+\newblock \emph{American Journal of Human Genetics}, 59(1):16, 1996.
+
+\bibitem[Sobczak et al.(2003)]{sobczak2003}
+Sobczak, K., de~Mezer, M., Michlewski, G., Krol, J., and Krzyzosiak, W.~J.
+\newblock {RNA} structure of trinucleotide repeats associated with human neurological diseases.
+\newblock \emph{Nucleic Acids Research}, 31(19):5469--5482, 2003.
+
+\bibitem[Tabrizi et al.(2019)]{tabrizi2019}
+Tabrizi, S.~J., Leavitt, B.~R., Landwehrmeyer, G.~B., et al.
+\newblock Targeting {Huntingtin} expression in patients with {Huntington's} disease.
+\newblock \emph{New England Journal of Medicine}, 380(24):2307--2316, 2019.
+
+\bibitem[Tabrizi et al.(2022)]{tabrizi2022}
+Tabrizi, S.~J., Estevez-Fraga, C., van Roon-Mom, W.~M.~C., et al.
+\newblock Potential disease-modifying therapies for {Huntington's} disease: lessons learned and future opportunities.
+\newblock \emph{The Lancet Neurology}, 21(7):645--658, 2022.
+
+\bibitem[Wolf et al.(2020)]{wolf2020transformers}
+Wolf, T., Debut, L., Sanh, V., et al.
+\newblock Transformers: State-of-the-art natural language processing.
+\newblock In \emph{EMNLP: System Demonstrations}, 2020.
+
+\end{thebibliography}
+
+\end{document}

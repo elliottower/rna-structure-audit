@@ -1,0 +1,9 @@
+.venv/
+pretrained/
+__pycache__/
+*.pyc
+.DS_Store
+data/*.pt
+data/*.json
+figures/
+uv.lock
