@@ -4,9 +4,9 @@
 
 **Author:** Elliot Tower (elliot@elliottower.ai)
 
-**Date:** 2026-07-12 (pre SHA freeze)
+**Date:** 2026-07-12
 
-**Commit SHA:** `[TO BE FILLED AFTER COMMIT]`
+**Commit SHA:** `694b43b0cf85b367c6fff04155cfd929bdf63022` (prereg), `a7d10f5e4aea5c0ad1f7002abe75e91d34a4eaa8` (experiment scripts, factorization-unified repo)
 
 **Epistemic status:** This is a preregistration for a **corrected re-run** of
 an initial cross-architecture study. The initial run produced interpretable
@@ -456,4 +456,4 @@ proves that hypotheses, kill criteria, metrics, and analysis code were frozen
 before the corrected data experiments were run. Any post-hoc additions will
 be clearly marked as such in the results document.
 
-**Commit SHA:** `[TO BE FILLED AFTER COMMIT]`
+**Commit SHA:** `694b43b0cf85b367c6fff04155cfd929bdf63022` (prereg), `a7d10f5e4aea5c0ad1f7002abe75e91d34a4eaa8` (experiment scripts, factorization-unified repo)
