@@ -182,7 +182,7 @@ Phase 2 evaluates all five models on 52 Rfam families (the original 12 plus 40 a
 | NT v2 (56M, DNA) | 1.169 | 28/52 | -0.039 |
 | Caduceus (14M, DNA) | 1.197 | 5/52 | -0.021 |
 | HyenaDNA (5.4M, DNA) | 1.138 | 8/52 | -0.058 |
-| Evo (7B, DNA) | \textcolor{red}{[PENDING]} | \textcolor{red}{[PENDING]} | \textcolor{red}{[PENDING]} |
+| Evo (7B, DNA) | 1.352 | 6/52 | -0.042 |
 | RNA-FM untrained | 1.030 | 3/52 | — |
 
 NT v2 exceeds the nucleotide-stratified null in 28/52 families (54%), the highest consistency of any model despite having only the third-highest mean ratio (1.169). RNA-FM has the highest mean ratio (1.895) but exceeds the null in only 5/52 families (10%), replicating the Phase 1 pattern of high-mean, high-variance signal. The untrained RNA-FM control exceeds the null in 3/52 families, establishing the chance rate under this selection procedure.
