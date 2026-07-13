@@ -4,6 +4,7 @@
 **Authors**: Elliot Tower
 **Repos**: causal-rna, factorization-unified
 **Prior prereg SHA**: `694b43b` (causal-rna), `a7d10f5` (factorization-unified)
+**This prereg SHA**: `bd4b3fd` (causal-rna), `74c8f49` (factorization-unified)
 
 ## Context
 
