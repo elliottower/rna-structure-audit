@@ -1,8 +1,10 @@
 {
   "name": "Corona_5UTR",
-  "sequence": "GCUCACGGUUUCGUCCGUGUUGCAGCCGAUCAUCAGCACACCCAGGUUUCGUCCGGGUGUGACCGAAAGGUAAGAUGGAGAGCCUCGUCCCUGGUUUCAACGAGAAAA",
-  "dot_bracket": "((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
-  "source": "Rfam RF03120 consensus",
+  "sequence": "AUUAAAGGUUUAUACCUUCCCAGGUAACAAACCAACCAACUUUCGAUCUCUUGUAGAUCUGUUCUCUAAACGAACUUUAAAAUCUGUGUGGCUGUCACUCGGCAGCAUGCCGAGUGCAGCCACACAGUAUAAUUAAUAACUAAUUACUGUCGUUGACAGGACACGAGUAACUCGUCUAUCUUCUGCAGGCUGCUUACGGUUUCGUCCGUGUUGCAGCCGAUCAUCAGCACAUCUAGGUUUCGUCCGGGUGUGACCGAAAGGUAAGAUGGAGAGCCUUGUCCCUGGUUUCAACGAGAAAA",
+  "dot_bracket": "......(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).))))))))......................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+  "source": "Rfam RF03120 seed alignment member (MT019530.1/1-299)",
   "rfam_id": "RF03120",
-  "length": 108
+  "length": 299,
+  "seed_member": "MT019530.1/1-299",
+  "seed_members_available": 18
 }

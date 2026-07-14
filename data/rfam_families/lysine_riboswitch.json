@@ -1,8 +1,10 @@
 {
   "name": "lysine_riboswitch",
-  "sequence": "AAACCGUGGAGUGCUACCGGAUGA",
-  "dot_bracket": "........................",
-  "source": "Rfam RF00168 consensus",
+  "sequence": "AGUGAAGAUAGAGGUGCGAACUUCAUCAGUAAAAGCUUGGAGAAGAAUGAGCUUCAAUGAAAAGCUUUGAAAGGGAACGUUCGCCGAAGUGAAGAAAAACUCAUUUUUUUCUUUGCUGGUCCUGCAUUUAAGAGAUGCCGGAUUGUCAAGGCGGUGCCGCCUUGGAGAGCUAUCUCACUG",
+  "dot_bracket": ".....((((((....(((((((((.......((((((((.....................))))))))......))).))))))...((((((((((((......))))))))))))(((((((((((.....))))))))))).(((((((......)))))))....)))))).....",
+  "source": "Rfam RF00168 seed alignment member (M93419.1/332-511)",
   "rfam_id": "RF00168",
-  "length": 24
+  "length": 180,
+  "seed_member": "M93419.1/332-511",
+  "seed_members_available": 31
 }

@@ -1,22 +1,29 @@
 """Prepare Rfam family data for Phase 6 (and future local experiments).
 
-Fetches consensus sequences and secondary structures from Rfam for
+Fetches seed alignment members and secondary structures from Rfam for
 the 52 families used in Phases 1-5. Saves each as a JSON file in
 data/rfam_families/.
 
 For the 12 Phase 1 families with PDB crystal structures, uses the
 curated sequences from the paper (Table 1). For the 40 Phase 2
-expansion families, fetches from Rfam API.
+expansion families, fetches the best seed alignment member (highest
+canonical WC pair count) from the Rfam seed Stockholm alignment.
 
 Usage:
     uv run python scripts/prepare_rfam_families.py
+    uv run python scripts/prepare_rfam_families.py --dry-run
 """
 
+import argparse
 import json
 import re
+import ssl
 import urllib.request
+from collections import OrderedDict
 from pathlib import Path
 from datetime import datetime
+
+from tqdm import tqdm
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "data" / "rfam_families"
@@ -128,90 +135,236 @@ PHASE2_RFAM_IDS = {
 }
 
 
-def fetch_rfam_consensus(rfam_id):
-    """Fetch consensus sequence and structure from Rfam API."""
-    url = f"https://rfam.org/family/{rfam_id}/alignment?acc={rfam_id}&format=stockholm&download=0"
+WC_PAIRS = {("A", "U"), ("U", "A"), ("C", "G"), ("G", "C")}
+
+
+def parse_dot_bracket(db_string):
+    stack = []
+    pairs = []
+    for idx, char in enumerate(db_string):
+        if char == "(":
+            stack.append(idx)
+        elif char == ")":
+            if stack:
+                partner = stack.pop()
+                pairs.append((partner, idx))
+    return sorted(pairs)
+
+
+def count_wc_pairs(sequence, db_string):
+    pairs = parse_dot_bracket(db_string)
+    return sum(1 for i, j in pairs if (sequence[i], sequence[j]) in WC_PAIRS)
+
+
+def fetch_seed_alignment(rfam_id):
+    """Fetch Rfam seed Stockholm alignment and return parsed members.
+
+    Returns list of (seqname, ungapped_sequence, projected_dot_bracket).
+    """
+    url = (
+        f"https://rfam.org/family/{rfam_id}/alignment"
+        f"?acc={rfam_id}&format=stockholm&download=0&type=seed"
+    )
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
     try:
-        with urllib.request.urlopen(url, timeout=30) as resp:
+        with urllib.request.urlopen(url, timeout=60, context=ctx) as resp:
             text = resp.read().decode("utf-8")
     except Exception as e:
         print(f"  Failed to fetch {rfam_id}: {e}")
-        return None, None
+        return []
 
-    sequence = None
-    structure = None
+    seq_chunks = OrderedDict()
+    ss_chunks = []
+
     for line in text.split("\n"):
+        line = line.rstrip()
+        if not line or line.startswith("#=GF") or line.startswith("#=GR") or line == "//":
+            continue
         if line.startswith("#=GC SS_cons"):
-            structure = line.split(None, 2)[2].strip()
-            structure = re.sub(r"[<{]", "(", structure)
-            structure = re.sub(r"[>}]", ")", structure)
-            structure = re.sub(r"[^().]", ".", structure)
-        elif line.startswith("#=GC RF"):
-            sequence = line.split(None, 2)[2].strip().upper()
-            sequence = sequence.replace("T", "U")
-            sequence = re.sub(r"[^ACGU]", "", sequence)
+            chunk = line.split(None, 2)[2]
+            ss_chunks.append(chunk)
+        elif line.startswith("#"):
+            continue
+        else:
+            parts = line.split()
+            if len(parts) == 2:
+                name, chunk = parts
+                if name not in seq_chunks:
+                    seq_chunks[name] = []
+                seq_chunks[name].append(chunk)
 
-    return sequence, structure
+    if not ss_chunks:
+        return []
+
+    full_ss = "".join(ss_chunks)
+    full_ss = re.sub(r"[<{\[]", "(", full_ss)
+    full_ss = re.sub(r"[>}\]]", ")", full_ss)
+    full_ss = re.sub(r"[^().]", ".", full_ss)
+
+    members = []
+    for seqname, chunks in seq_chunks.items():
+        aligned_seq = "".join(chunks)
+        if len(aligned_seq) != len(full_ss):
+            continue
+
+        ungapped_seq = []
+        projected_ss = []
+        for col_idx, (s_char, ss_char) in enumerate(zip(aligned_seq, full_ss)):
+            if s_char in (".", "-", "_"):
+                continue
+            nuc = s_char.upper().replace("T", "U")
+            if nuc not in "ACGU":
+                nuc = "N"
+            ungapped_seq.append(nuc)
+            projected_ss.append(ss_char)
+
+        seq_str = "".join(ungapped_seq)
+        ss_str = "".join(projected_ss)
+
+        seq_str = seq_str.replace("N", "")
+        if len(seq_str) != len(ss_str):
+            clean_seq = []
+            clean_ss = []
+            for s, d in zip(ungapped_seq, projected_ss):
+                if s != "N":
+                    clean_seq.append(s)
+                    clean_ss.append(d)
+            seq_str = "".join(clean_seq)
+            ss_str = "".join(clean_ss)
+
+        if len(seq_str) < 30:
+            continue
+
+        stack = []
+        balanced = True
+        for ch in ss_str:
+            if ch == "(":
+                stack.append(ch)
+            elif ch == ")":
+                if not stack:
+                    balanced = False
+                    break
+                stack.pop()
+        if stack:
+            balanced = False
+        if not balanced:
+            continue
+
+        members.append((seqname, seq_str, ss_str))
+
+    return members
+
+
+def pick_best_member(members):
+    """Pick the seed member with the most canonical WC pairs."""
+    best = None
+    best_wc = -1
+    best_len = -1
+    for seqname, seq, ss in members:
+        wc = count_wc_pairs(seq, ss)
+        if wc > best_wc or (wc == best_wc and len(seq) > best_len):
+            best = (seqname, seq, ss)
+            best_wc = wc
+            best_len = len(seq)
+    return best, best_wc
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Report pair counts without overwriting files")
+    args = parser.parse_args()
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     saved = 0
     failed = []
+    results = []
 
+    print("Phase 1 curated families:")
     for name, data in PHASE1_FAMILIES.items():
         seq = data["sequence"].strip()
         db = data["dot_bracket"].strip()
         if len(seq) != len(db):
             db = db[:len(seq)]
+        wc = count_wc_pairs(seq, db)
 
-        family = {
-            "name": name,
-            "sequence": seq,
-            "dot_bracket": db,
-            "source": "Phase 1 curated (PDB/Rfam)",
-            "rfam_id": data.get("rfam_id"),
-            "length": len(seq),
-        }
-        out_path = OUT_DIR / f"{name}.json"
-        with open(out_path, "w") as f:
-            json.dump(family, f, indent=2)
-        saved += 1
-        print(f"  {name}: {len(seq)} nt (Phase 1 curated)")
+        if not args.dry_run:
+            family = {
+                "name": name,
+                "sequence": seq,
+                "dot_bracket": db,
+                "source": "Phase 1 curated (PDB/Rfam)",
+                "rfam_id": data.get("rfam_id"),
+                "length": len(seq),
+            }
+            out_path = OUT_DIR / f"{name}.json"
+            with open(out_path, "w") as f:
+                json.dump(family, f, indent=2)
+            saved += 1
 
-    for name, rfam_id in PHASE2_RFAM_IDS.items():
-        print(f"  Fetching {name} ({rfam_id})...", end=" ")
-        seq, db = fetch_rfam_consensus(rfam_id)
-        if seq is None or db is None:
-            print("FAILED")
+        status = "PASS" if wc >= 15 else "FAIL"
+        print(f"  {name}: {len(seq)} nt, {wc} WC pairs [{status}]")
+        results.append((name, len(seq), wc, status))
+
+    print(f"\nPhase 2 expansion families (fetching seed alignments):")
+    for name, rfam_id in tqdm(list(PHASE2_RFAM_IDS.items()), desc="Fetching"):
+        members = fetch_seed_alignment(rfam_id)
+        if not members:
+            print(f"  {name} ({rfam_id}): NO VALID MEMBERS")
             failed.append(name)
+            results.append((name, 0, 0, "FAILED"))
             continue
 
-        if len(seq) != len(db):
-            min_len = min(len(seq), len(db))
-            seq = seq[:min_len]
-            db = db[:min_len]
+        best, wc = pick_best_member(members)
+        if best is None:
+            print(f"  {name} ({rfam_id}): NO VALID MEMBERS")
+            failed.append(name)
+            results.append((name, 0, 0, "FAILED"))
+            continue
 
-        family = {
-            "name": name,
-            "sequence": seq,
-            "dot_bracket": db,
-            "source": f"Rfam {rfam_id} consensus",
-            "rfam_id": rfam_id,
-            "length": len(seq),
-        }
-        out_path = OUT_DIR / f"{name}.json"
-        with open(out_path, "w") as f:
-            json.dump(family, f, indent=2)
-        saved += 1
-        print(f"{len(seq)} nt")
+        seqname, seq, ss = best
+        status = "PASS" if wc >= 15 else "FAIL"
+        print(f"  {name}: {len(seq)} nt, {wc} WC pairs, "
+              f"from {seqname} ({len(members)} members) [{status}]")
+        results.append((name, len(seq), wc, status))
 
-    print(f"\nSaved {saved} families to {OUT_DIR}")
+        if not args.dry_run:
+            family = {
+                "name": name,
+                "sequence": seq,
+                "dot_bracket": ss,
+                "source": f"Rfam {rfam_id} seed alignment member ({seqname})",
+                "rfam_id": rfam_id,
+                "length": len(seq),
+                "seed_member": seqname,
+                "seed_members_available": len(members),
+            }
+            out_path = OUT_DIR / f"{name}.json"
+            with open(out_path, "w") as f:
+                json.dump(family, f, indent=2)
+            saved += 1
+
+    pass_count = sum(1 for _, _, wc, s in results if s == "PASS")
+    fail_count = sum(1 for _, _, wc, s in results if s == "FAIL")
+    fetch_fail = sum(1 for _, _, wc, s in results if s == "FAILED")
+
+    print(f"\n{'='*60}")
+    print(f"Summary:")
+    print(f"  Pass (>= 15 WC pairs): {pass_count}")
+    print(f"  Fail (< 15 WC pairs):  {fail_count}")
+    print(f"  Fetch failed:          {fetch_fail}")
+    print(f"  Total:                 {len(results)}")
+    if not args.dry_run:
+        print(f"  Saved {saved} families to {OUT_DIR}")
+    else:
+        print(f"  (dry run — no files written)")
     if failed:
-        print(f"Failed: {failed}")
-    print(f"Timestamp: {timestamp}")
+        print(f"  Fetch failures: {failed}")
+    print(f"  Timestamp: {timestamp}")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,10 @@
 {
   "name": "THF_riboswitch",
-  "sequence": "GGCAGAGUAGGGCCCCGCGCGCUAAGUGCCGGCGGGACGGGAAGUUGCCCGCCGGACGAAGGGCAAAUUGCCCGCGGUGCGGGGCCCGCAUCCGCUGCC",
-  "dot_bracket": ".(.((.((....(((((((((((((....................((..((((((((............))))))))))....(.(((...........",
-  "source": "Rfam RF01831 consensus",
+  "sequence": "GGCAGAGUAGGAGCGCGUGUGCAGUACCUCGCAAGGGGUCCAGUGCCGGCGGGACGGGGAGUUGUCCGCCGGACGAAAAGCCACAGGCUUGCAGUACGCCCUCCGCAUCCCGCUGCC",
+  "dot_bracket": "(((((....(((((((((((((....................((.((((((((...........))))))))))...((((.....))))))).))))))))))........)))))",
+  "source": "Rfam RF01831 seed alignment member (AAXG02000014.1/43071-43187)",
   "rfam_id": "RF01831",
-  "length": 99
+  "length": 117,
+  "seed_member": "AAXG02000014.1/43071-43187",
+  "seed_members_available": 79
 }

@@ -1,8 +1,10 @@
 {
   "name": "purine_riboswitch",
-  "sequence": "AAAAAAAAAAAAAAAUUCCCUCGUAUAAUCCCGGGAAUAUGGCCCGGGAGUUUCUACCAGGCAACCGUAAAUUGCCUGACUACGAGGGAAUUUUUUUUUUUU",
-  "dot_bracket": ".................(((.(.((((...(((((((........))))))).........(((((((.........))))))...)..)))).))))....",
-  "source": "Rfam RF00167 consensus",
+  "sequence": "UACGGAUAGACGAAAGCCCUUCAUAUAAGCGCAAGAAUAUGGCUUGCGCGUCUCUACCGGGCCGCCGUAAACGGCCCGACUAUGAAGGCAGAAGACGCUGCU",
+  "dot_bracket": ".................((((((((...(((((((.......)))))))........(((((((.......)))))))..))))))))..............",
+  "source": "Rfam RF00167 seed alignment member (BA000043.1/272473-272574)",
   "rfam_id": "RF00167",
-  "length": 102
+  "length": 102,
+  "seed_member": "BA000043.1/272473-272574",
+  "seed_members_available": 112
 }

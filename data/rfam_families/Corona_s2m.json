@@ -1,8 +1,10 @@
 {
   "name": "Corona_s2m",
-  "sequence": "CGGUGCCGAGGCCACGCCGAGUAGGAUCGAGGGUACAGCACCA",
-  "dot_bracket": "...(((((....(((.((((......))..))..)))...)))",
-  "source": "Rfam RF00164 consensus",
+  "sequence": "GGAAGCCGCGACCACGCCGAGUAGGAUCGAGGGUACAGCUUCC",
+  "dot_bracket": ".(((((....(((.((((.....))..))..)))...))))).",
+  "source": "Rfam RF00164 seed alignment member (Z66541.1/2326-2368)",
   "rfam_id": "RF00164",
-  "length": 43
+  "length": 43,
+  "seed_member": "Z66541.1/2326-2368",
+  "seed_members_available": 38
 }

@@ -1,10 +1,10 @@
-"""Phase 6: Compensatory double mutation experiment.
+"""Phase 6: Perturbation specificity test.
 
-For each base pair (i, j) in each RNA family, compare:
-  - Destructive: swap only position i → breaks the pair
-  - Compensatory: swap both i and j → preserves the pair
+For each interior base pair (i, j) in a stem, swap position i and measure
+whether perturbation at partner j exceeds perturbation at j's adjacent
+stem neighbors. PS(i,j) = Delta_j - max(Delta_{j-1}, Delta_{j+1}).
 
-A structure-aware model should show d_dest > d_comp (CR > 1).
+Metric defined in PREREGISTRATION_PHASE6_V2.md.
 
 Usage (local test, 1 family, 1 model):
     uv run python scripts/phase6_compensatory_mutation.py --models rnafm --families tRNA_Phe_yeast --device cpu
@@ -30,14 +30,25 @@ COMPLEMENT = {"A": "U", "U": "A", "C": "G", "G": "C"}
 TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 ROOT = Path(__file__).resolve().parent.parent
 DATA_OUT = ROOT / "data" / "gpu_results" / "phase6_compensatory"
+QUARANTINED = {"tRNA_Phe_yeast", "tRNA_Ala_human"}
+WC_PAIRS = {("A", "U"), ("U", "A"), ("C", "G"), ("G", "C")}
+
+ADAPTER_OFFSETS = {
+    "rnafm": 0,
+    "rinalmo": 0,
+    "utrlm": 0,
+    "ernierna": 0,
+    "splicebert": 0,
+    "hyenadna": 0,
+    "caduceus": 0,
+    "evo": 0,
+    "nt": 0,
+    "dnabert2": 0,
+}
+NON_CHARACTER_TOKENIZERS = {"nt", "dnabert2"}
 
 
 def parse_dot_bracket(db_string):
-    """Extract base pairs from dot-bracket notation.
-
-    Returns list of (i, j) tuples where i < j and both positions
-    form a Watson-Crick pair in the sequence.
-    """
     stack = []
     pairs = []
     for idx, char in enumerate(db_string):
@@ -50,188 +61,335 @@ def parse_dot_bracket(db_string):
     return sorted(pairs)
 
 
-def filter_wc_pairs(sequence, pairs):
-    """Keep only canonical Watson-Crick pairs (AU, UA, CG, GC)."""
-    wc = {("A", "U"), ("U", "A"), ("C", "G"), ("G", "C")}
-    return [(i, j) for i, j in pairs if (sequence[i], sequence[j]) in wc]
+def parse_stems(dot_bracket, sequence):
+    """Group consecutive stacked WC pairs into stems.
+
+    A stem is a maximal run of pairs (i, j), (i+1, j-1), (i+2, j-2)...
+    Only canonical WC pairs are included.
+    """
+    opens = dot_bracket.count("(")
+    closes = dot_bracket.count(")")
+    if opens != closes:
+        raise ValueError(f"Unbalanced dot-bracket: {opens} opens vs {closes} closes")
+    all_pairs = parse_dot_bracket(dot_bracket)
+    wc_pairs = [(i, j) for i, j in all_pairs if (sequence[i], sequence[j]) in WC_PAIRS]
+    pair_set = set(wc_pairs)
+
+    used = set()
+    stems = []
+    for i, j in wc_pairs:
+        if (i, j) in used:
+            continue
+        stem = [(i, j)]
+        used.add((i, j))
+        ci, cj = i + 1, j - 1
+        while ci < cj and (ci, cj) in pair_set and (ci, cj) not in used:
+            stem.append((ci, cj))
+            used.add((ci, cj))
+            ci += 1
+            cj -= 1
+        stems.append(stem)
+    return stems
 
 
-def complement_swap(sequence, positions):
-    """Swap nucleotides at given positions to their complement."""
+def get_eligible_pairs(sequence, stems):
+    """Return interior pairs from stems with >= 3 WC pairs.
+
+    Each eligible pair includes references to its stem-adjacent j positions.
+    Returns list of dicts with keys: i, j, j_prev, j_next, stem_idx, pair_type.
+    """
+    eligible = []
+    for stem_idx, stem in enumerate(stems):
+        if len(stem) < 3:
+            continue
+        for k in range(1, len(stem) - 1):
+            i, j = stem[k]
+            _, j_prev = stem[k - 1]
+            _, j_next = stem[k + 1]
+            eligible.append({
+                "i": i, "j": j,
+                "j_prev": j_prev, "j_next": j_next,
+                "stem_idx": stem_idx,
+                "pos_in_stem": k,
+                "stem_length": len(stem),
+                "pair_type": f"{sequence[i]}-{sequence[j]}",
+            })
+    return eligible
+
+
+def complement_swap(sequence, position):
     seq_list = list(sequence)
-    for pos in positions:
-        seq_list[pos] = COMPLEMENT[seq_list[pos]]
+    seq_list[position] = COMPLEMENT[seq_list[position]]
     return "".join(seq_list)
 
 
 def cosine_distance(a, b):
-    """Cosine distance between two vectors."""
     sim = torch.nn.functional.cosine_similarity(a.unsqueeze(0), b.unsqueeze(0))
     return (1.0 - sim).item()
 
 
-def compute_compensatory_ratio(adapter, sequence, dot_bracket, device="cpu"):
-    """Compute compensatory ratio across all layers for one RNA family.
+def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device="cpu", offset=0):
+    """Compute perturbation profiles for all eligible pairs at all layers.
 
-    Returns dict with per-layer CR, best layer, per-pair details.
+    Returns:
+        delta_profiles: dict mapping pair_index -> {layer -> {pos -> Delta}}
+        stem_positions: set of all positions in any stem
+        loop_positions: set of all unpaired positions
     """
-    pairs = parse_dot_bracket(dot_bracket)
-    pairs = filter_wc_pairs(sequence, pairs)
-
-    if len(pairs) < 15:
-        return None
-
     tokens_wt = adapter.tokenize(sequence).to(device)
     layers_wt = adapter.get_all_layer_embeddings(tokens_wt)
     n_layers = len(layers_wt)
 
-    per_layer_cr = []
+    all_positions = set(range(len(sequence)))
+    stem_positions = set()
+    for stem in all_stems:
+        for i, j in stem:
+            stem_positions.add(i)
+            stem_positions.add(j)
+    loop_positions = all_positions - stem_positions
 
-    for layer_idx in range(n_layers):
-        emb_wt = layers_wt[layer_idx]
+    # Cache mutations: many pairs may share the same mutated position i
+    unique_mutations = {}
+    for idx, p in enumerate(eligible_pairs):
+        pos_i = p["i"]
+        if pos_i not in unique_mutations:
+            unique_mutations[pos_i] = []
+        unique_mutations[pos_i].append(idx)
 
-        d_partner_list = []
-        d_nonpartner_list = []
-        pair_details = []
+    delta_profiles = {idx: {} for idx in range(len(eligible_pairs))}
 
-        all_positions = set(range(len(sequence)))
-        paired_positions = set()
-        for i, j in pairs:
-            paired_positions.add(i)
-            paired_positions.add(j)
-        unpaired_positions = sorted(all_positions - paired_positions)
-
-        for i, j in pairs:
-            seq_mut = complement_swap(sequence, [i])
-            tokens_mut = adapter.tokenize(seq_mut).to(device)
-            emb_mut = adapter.get_all_layer_embeddings(tokens_mut)[layer_idx]
-
-            # Perturbation at partner j when i is swapped (coupling signal)
-            d_partner = cosine_distance(emb_wt[j], emb_mut[j])
-            d_partner_list.append(d_partner)
-
-            # Perturbation at non-partner positions when i is swapped (background)
-            if unpaired_positions:
-                bg_dists = [
-                    cosine_distance(emb_wt[k], emb_mut[k])
-                    for k in unpaired_positions[:10]
-                ]
-                d_nonpartner_list.extend(bg_dists)
-
-            pair_type = f"{sequence[i]}-{sequence[j]}"
-            pair_details.append({
-                "i": i, "j": j, "type": pair_type,
-                "d_partner": d_partner,
-                "d_direct_i": cosine_distance(emb_wt[i], emb_mut[i]),
-            })
-
-        mean_partner = float(np.mean(d_partner_list))
-        mean_nonpartner = float(np.mean(d_nonpartner_list)) if d_nonpartner_list else 0.0
-        cr = mean_partner / mean_nonpartner if mean_nonpartner > 1e-10 else float("nan")
-        per_layer_cr.append(cr)
-
-    valid_crs = [(i, cr) for i, cr in enumerate(per_layer_cr) if not np.isnan(cr)]
-    if not valid_crs:
-        return None
-    best_layer = max(valid_crs, key=lambda x: x[1])[0]
-    best_cr = float(per_layer_cr[best_layer])
-
-    gc_pairs = [(i, j) for i, j in pairs if sequence[i] in "GC"]
-    au_pairs = [(i, j) for i, j in pairs if sequence[i] in "AU"]
-
-    return {
-        "best_cr": best_cr,
-        "best_layer": best_layer,
-        "per_layer_cr": [float(x) for x in per_layer_cr],
-        "n_pairs": len(pairs),
-        "n_gc_pairs": len(gc_pairs),
-        "n_au_pairs": len(au_pairs),
-    }
-
-
-def compensatory_null(adapter, sequence, dot_bracket, n_permutations=100, device="cpu"):
-    """Base-pair-type-stratified null for compensatory ratio.
-
-    Shuffles which positions pair with which, stratified by base-pair
-    type (GC vs AU). A GC pair is only reassigned to another GC pair;
-    an AU pair only to another AU pair. This preserves the GC/AU pair
-    distribution that is the dominant composition confound (Phase 1-2).
-
-    Max-over-layers is applied to each permutation, matching the real
-    metric's selection procedure (Phase 1→2 bug fix).
-    """
-    pairs = parse_dot_bracket(dot_bracket)
-    pairs = filter_wc_pairs(sequence, pairs)
-
-    if len(pairs) < 15:
-        return None
-
-    gc_nucs = {"G", "C"}
-    gc_pairs = [(i, j) for i, j in pairs if sequence[i] in gc_nucs]
-    au_pairs = [(i, j) for i, j in pairs if sequence[i] not in gc_nucs]
-
-    tokens_wt = adapter.tokenize(sequence).to(device)
-    layers_wt = adapter.get_all_layer_embeddings(tokens_wt)
-    n_layers = len(layers_wt)
-
-    null_crs = []
-
-    for perm in tqdm(range(n_permutations), desc="Null permutations", leave=False):
-        shuffled_pairs = []
-        for type_pairs in [gc_pairs, au_pairs]:
-            if not type_pairs:
-                continue
-            lefts = [i for i, j in type_pairs]
-            rights = [j for i, j in type_pairs]
-            np.random.shuffle(lefts)
-            np.random.shuffle(rights)
-            shuffled_pairs.extend(zip(lefts, rights))
-
-        best_cr_this_perm = float("-inf")
+    for pos_i, pair_indices in tqdm(unique_mutations.items(), desc="Computing deltas", leave=False):
+        seq_mut = complement_swap(sequence, pos_i)
+        tokens_mut = adapter.tokenize(seq_mut).to(device)
+        layers_mut = adapter.get_all_layer_embeddings(tokens_mut)
 
         for layer_idx in range(n_layers):
             emb_wt = layers_wt[layer_idx]
-            d_dest_list = []
-            d_comp_list = []
+            emb_mut = layers_mut[layer_idx]
 
-            for i, j in shuffled_pairs:
-                seq_dest = complement_swap(sequence, [i])
-                tokens_dest = adapter.tokenize(seq_dest).to(device)
-                emb_dest = adapter.get_all_layer_embeddings(tokens_dest)[layer_idx]
+            # Compute Delta at all relevant positions for this mutation
+            positions_needed = set()
+            for pidx in pair_indices:
+                p = eligible_pairs[pidx]
+                positions_needed.update([p["j"], p["j_prev"], p["j_next"]])
+            positions_needed.update(stem_positions)
+            positions_needed.update(loop_positions)
+            positions_needed.discard(pos_i)
 
-                seq_comp = complement_swap(sequence, [i, j])
-                tokens_comp = adapter.tokenize(seq_comp).to(device)
-                emb_comp = adapter.get_all_layer_embeddings(tokens_comp)[layer_idx]
+            deltas_this_layer = {}
+            for k in positions_needed:
+                k_off = k + offset
+                if k_off < emb_wt.shape[0] and k_off < emb_mut.shape[0]:
+                    deltas_this_layer[k] = cosine_distance(emb_wt[k_off], emb_mut[k_off])
 
-                d_dest_i = cosine_distance(emb_wt[i], emb_dest[i])
-                d_comp_i = cosine_distance(emb_wt[i], emb_comp[i])
+            for pidx in pair_indices:
+                delta_profiles[pidx][layer_idx] = deltas_this_layer
 
-                d_dest_list.append(d_dest_i)
-                d_comp_list.append(d_comp_i)
+    return delta_profiles, stem_positions, loop_positions, n_layers
 
-            mean_dest = float(np.mean(d_dest_list))
-            mean_comp = float(np.mean(d_comp_list))
-            cr = mean_dest / mean_comp if mean_comp > 1e-10 else float("nan")
-            if not np.isnan(cr):
-                best_cr_this_perm = max(best_cr_this_perm, cr)
 
-        null_crs.append(best_cr_this_perm)
+def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
+    """Compute PS at every layer from precomputed Delta profiles.
+
+    Returns per-layer mean PS and per-pair details at best layer.
+    """
+    per_layer_ps = []
+
+    for layer_idx in range(n_layers):
+        ps_values = []
+        for idx, p in enumerate(eligible_pairs):
+            deltas = delta_profiles[idx].get(layer_idx, {})
+            if p["j"] not in deltas or p["j_prev"] not in deltas or p["j_next"] not in deltas:
+                continue
+            d_partner = deltas[p["j"]]
+            d_prev = deltas[p["j_prev"]]
+            d_next = deltas[p["j_next"]]
+            d_adj = max(d_prev, d_next)
+            ps = d_partner - d_adj
+            ps_values.append(ps)
+        mean_ps = float(np.mean(ps_values)) if ps_values else float("nan")
+        per_layer_ps.append(mean_ps)
+
+    valid = [(i, v) for i, v in enumerate(per_layer_ps) if not np.isnan(v)]
+    if not valid:
+        return None
+    best_layer = max(valid, key=lambda x: x[1])[0]
+    best_ps = per_layer_ps[best_layer]
+
+    pair_details_at_best = []
+    for idx, p in enumerate(eligible_pairs):
+        deltas = delta_profiles[idx].get(best_layer, {})
+        if p["j"] not in deltas or p["j_prev"] not in deltas or p["j_next"] not in deltas:
+            continue
+        d_partner = deltas[p["j"]]
+        d_prev = deltas[p["j_prev"]]
+        d_next = deltas[p["j_next"]]
+        d_adj = max(d_prev, d_next)
+        pair_details_at_best.append({
+            "i": p["i"], "j": p["j"],
+            "pair_type": p["pair_type"],
+            "stem_idx": p["stem_idx"],
+            "d_partner": d_partner,
+            "d_adj": d_adj,
+            "ps": d_partner - d_adj,
+            "partner_is_max": d_partner > d_adj,
+        })
 
     return {
-        "null_95th": float(np.percentile(null_crs, 95)),
-        "null_mean": float(np.mean(null_crs)),
-        "null_std": float(np.std(null_crs)),
-        "n_permutations": n_permutations,
+        "per_layer_ps": [float(x) for x in per_layer_ps],
+        "best_ps": float(best_ps),
+        "best_layer": best_layer,
+        "pair_details": pair_details_at_best,
+    }
+
+
+def generate_derangement(n):
+    """Generate a random derangement of range(n). No element maps to itself."""
+    if n < 2:
+        return list(range(n))
+    while True:
+        perm = list(range(n))
+        np.random.shuffle(perm)
+        if all(perm[i] != i for i in range(n)):
+            return perm
+
+
+def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_derangements=1000):
+    """Within-stem derangement null.
+
+    Shuffles partner assignments within each stem, recomputes PS from
+    existing Delta profiles. Returns null thresholds for primary (at
+    best_layer) and conservative (independently max'd) variants.
+    """
+    stems_map = {}
+    for idx, p in enumerate(eligible_pairs):
+        sid = p["stem_idx"]
+        if sid not in stems_map:
+            stems_map[sid] = []
+        stems_map[sid].append(idx)
+
+    derangeable = {sid: idxs for sid, idxs in stems_map.items() if len(idxs) >= 3}
+
+    if not derangeable:
+        return {
+            "null_95th_primary": None,
+            "null_95th_conservative": None,
+            "null_mean_primary": None,
+            "n_derangements": 0,
+            "n_stems_in_null": 0,
+            "null_available": False,
+        }
+
+    null_ps_primary = []
+    null_ps_conservative = []
+
+    for _ in range(n_derangements):
+        deranged_ps_at_best = []
+        deranged_ps_per_layer = [[] for _ in range(n_layers)]
+
+        for sid, pair_idxs in derangeable.items():
+            k = len(pair_idxs)
+            derangement = generate_derangement(k)
+            j_positions = [eligible_pairs[pair_idxs[orig]]["j"] for orig in range(k)]
+            j_prev_positions = [eligible_pairs[pair_idxs[orig]]["j_prev"] for orig in range(k)]
+            j_next_positions = [eligible_pairs[pair_idxs[orig]]["j_next"] for orig in range(k)]
+
+            for orig_idx_in_stem, deranged_partner_idx in enumerate(derangement):
+                pair_idx = pair_idxs[orig_idx_in_stem]
+                fake_j = j_positions[deranged_partner_idx]
+                fake_j_prev = j_prev_positions[deranged_partner_idx]
+                fake_j_next = j_next_positions[deranged_partner_idx]
+
+                for layer_idx in range(n_layers):
+                    deltas = delta_profiles[pair_idx].get(layer_idx, {})
+                    if fake_j not in deltas or fake_j_prev not in deltas or fake_j_next not in deltas:
+                        continue
+                    d_partner = deltas[fake_j]
+                    d_prev = deltas[fake_j_prev]
+                    d_next = deltas[fake_j_next]
+                    d_adj = max(d_prev, d_next)
+                    ps = d_partner - d_adj
+                    deranged_ps_per_layer[layer_idx].append(ps)
+                    if layer_idx == best_layer:
+                        deranged_ps_at_best.append(ps)
+
+        if deranged_ps_at_best:
+            null_ps_primary.append(float(np.mean(deranged_ps_at_best)))
+
+        layer_means = [float(np.mean(lps)) if lps else float("-inf") for lps in deranged_ps_per_layer]
+        null_ps_conservative.append(max(layer_means))
+
+    return {
+        "null_95th_primary": float(np.percentile(null_ps_primary, 95)) if null_ps_primary else 0.0,
+        "null_95th_conservative": float(np.percentile(null_ps_conservative, 95)) if null_ps_conservative else 0.0,
+        "null_mean_primary": float(np.mean(null_ps_primary)) if null_ps_primary else 0.0,
+        "n_derangements": n_derangements,
+        "n_stems_in_null": len(derangeable),
+        "null_available": True,
+    }
+
+
+def positive_control(eligible_pairs, delta_profiles, best_layer, stem_positions, loop_positions):
+    """Stem > loop screening gate (per prereg: outside Bonferroni family)."""
+    paired_stem = []
+    paired_loop = []
+
+    for idx, p in enumerate(eligible_pairs):
+        deltas = delta_profiles[idx].get(best_layer, {})
+        pos_i = p["i"]
+        stem_d = [v for k, v in deltas.items() if k in stem_positions and k != pos_i]
+        loop_d = [v for k, v in deltas.items() if k in loop_positions]
+        if stem_d and loop_d:
+            paired_stem.append(float(np.mean(stem_d)))
+            paired_loop.append(float(np.mean(loop_d)))
+
+    if len(paired_stem) < 2:
+        return {"pass": False, "p_value": 1.0, "reason": "insufficient paired data"}
+
+    t_stat, p_val = stats.ttest_rel(paired_stem, paired_loop)
+    passes = p_val < 0.05 and t_stat > 0
+    return {
+        "pass": bool(passes),
+        "p_value": float(p_val),
+        "mean_stem_delta": float(np.mean(paired_stem)),
+        "mean_loop_delta": float(np.mean(paired_loop)),
+    }
+
+
+def h3_precision_test(pair_details, eligible_pairs):
+    """Fraction of deep-interior pairs where partner is max among {j, j-1, j+1}.
+
+    H3 uses pairs >= 2 from each stem end (stricter than the primary
+    eligible filter which only drops terminals). Uses pos_in_stem stored
+    at creation time in get_eligible_pairs.
+    """
+    eligible_lookup = {(p["i"], p["j"]): p for p in eligible_pairs}
+
+    h3_details = []
+    for p in pair_details:
+        ep = eligible_lookup.get((p["i"], p["j"]))
+        if ep is None:
+            continue
+        pos = ep["pos_in_stem"]
+        slen = ep["stem_length"]
+        if pos >= 2 and pos <= slen - 3:
+            h3_details.append(p)
+
+    partner_is_max_count = sum(1 for p in h3_details if p["partner_is_max"])
+    n = len(h3_details)
+    if n == 0:
+        return {"fraction": 0.0, "n": 0, "p_value": 1.0}
+    fraction = partner_is_max_count / n
+    p_val = stats.binomtest(partner_is_max_count, n, 1.0 / 3.0, alternative="greater").pvalue
+    return {
+        "fraction": float(fraction),
+        "n": n,
+        "partner_max_count": partner_is_max_count,
+        "p_value": float(p_val),
     }
 
 
 def load_rfam_families(family_names=None):
-    """Load RNA families from data directory.
-
-    Returns list of dicts with keys: name, sequence, dot_bracket.
-    Looks for families in data/rfam_families/ or falls back to
-    hardcoded Phase 1 families.
-    """
     rfam_dir = ROOT / "data" / "rfam_families"
     if rfam_dir.exists():
         families = []
@@ -242,65 +400,212 @@ def load_rfam_families(family_names=None):
                 continue
             families.append(fam)
         return families
-
-    raise FileNotFoundError(
-        f"No rfam_families directory found at {rfam_dir}. "
-        "Run the family preparation script first."
-    )
+    raise FileNotFoundError(f"No rfam_families directory at {rfam_dir}.")
 
 
-def run_phase6(adapter, families, device="cpu", compute_null=True):
-    """Run Phase 6 for one model on all families."""
+def load_adapter(model_name):
+    adapters = {}
+    try:
+        from multi_model_audit import RNAFMAdapter
+        adapters["rnafm"] = RNAFMAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import NTAdapter
+        adapters["nt"] = NTAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import HyenaDNAAdapter
+        adapters["hyenadna"] = HyenaDNAAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import EvoAdapter
+        adapters["evo"] = EvoAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import CaduceusAdapter
+        adapters["caduceus"] = CaduceusAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import RiNALMoAdapter
+        adapters["rinalmo"] = RiNALMoAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import UTRLMAdapter
+        adapters["utrlm"] = UTRLMAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import ERNIERNAAdapter
+        adapters["ernierna"] = ERNIERNAAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import SpliceBERTAdapter
+        adapters["splicebert"] = SpliceBERTAdapter
+    except ImportError:
+        pass
+    try:
+        from multi_model_audit import DNABERT2Adapter
+        adapters["dnabert2"] = DNABERT2Adapter
+    except ImportError:
+        pass
+    if model_name not in adapters:
+        raise ValueError(f"Unknown model: {model_name}. Available: {list(adapters.keys())}")
+    return adapters[model_name]()
+
+
+def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
     results = {"per_rna": {}}
 
     for fam in tqdm(families, desc=f"Phase 6 [{adapter.name}]"):
         name = fam["name"]
         seq = fam["sequence"]
         db = fam["dot_bracket"]
+        quarantined = name in QUARANTINED
 
-        cr_result = compute_compensatory_ratio(adapter, seq, db, device=device)
-        if cr_result is None:
-            results["per_rna"][name] = {"skipped": True, "reason": "< 15 pairs"}
+        if len(seq) != len(db):
+            results["per_rna"][name] = {
+                "skipped": True,
+                "reason": f"sequence/dot_bracket length mismatch ({len(seq)} vs {len(db)})",
+            }
             continue
 
-        if compute_null:
-            null_result = compensatory_null(adapter, seq, db, device=device)
-            cr_result["comp_null_95th"] = null_result["null_95th"]
-            cr_result["exceeds_comp_null"] = cr_result["best_cr"] > null_result["null_95th"]
+        stems = parse_stems(db, seq)
+        n_wc_total = sum(len(s) for s in stems)
 
-        results["per_rna"][name] = cr_result
+        if n_wc_total < 15:
+            results["per_rna"][name] = {
+                "skipped": True,
+                "reason": f"< 15 WC pairs ({n_wc_total} found)",
+                "n_wc_pairs_total": n_wc_total,
+            }
+            continue
 
-    active = {k: v for k, v in results["per_rna"].items() if not v.get("skipped")}
-    if active:
-        crs = [v["best_cr"] for v in active.values()]
-        results["mean_best_cr"] = float(np.mean(crs))
-        results["median_best_cr"] = float(np.median(crs))
-        results["families_exceeding_comp_null"] = sum(
-            1 for v in active.values() if v.get("exceeds_comp_null", False)
+        eligible = get_eligible_pairs(seq, stems)
+
+        if len(eligible) < 5:
+            results["per_rna"][name] = {
+                "skipped": True,
+                "reason": f"< 5 eligible interior pairs ({len(eligible)} found)",
+                "n_wc_pairs_total": n_wc_total,
+                "n_stems": len(stems),
+            }
+            continue
+
+        delta_profiles, stem_pos, loop_pos, n_layers = compute_delta_profiles(
+            adapter, seq, eligible, stems, device=device, offset=offset,
         )
+
+        ps_result = compute_ps_from_deltas(eligible, delta_profiles, n_layers)
+        if ps_result is None:
+            results["per_rna"][name] = {"skipped": True, "reason": "no valid PS values"}
+            continue
+
+        best_layer = ps_result["best_layer"]
+
+        pc = positive_control(eligible, delta_profiles, best_layer, stem_pos, loop_pos)
+
+        null_result = None
+        if compute_null:
+            null_result = derangement_null(eligible, delta_profiles, n_layers, best_layer)
+
+        h3 = h3_precision_test(ps_result["pair_details"], eligible)
+
+        gc_ps = [p["ps"] for p in ps_result["pair_details"] if p["pair_type"] in ("C-G", "G-C")]
+        au_ps = [p["ps"] for p in ps_result["pair_details"] if p["pair_type"] in ("A-U", "U-A")]
+
+        entry = {
+            "best_ps": ps_result["best_ps"],
+            "best_layer": ps_result["best_layer"],
+            "per_layer_ps": ps_result["per_layer_ps"],
+            "n_eligible_pairs": len(eligible),
+            "n_stems": len([s for s in stems if len(s) >= 3]),
+            "n_wc_pairs_total": sum(len(s) for s in stems),
+            "positive_control": pc,
+            "h3_precision": h3,
+            "ps_gc_pairs": float(np.mean(gc_ps)) if gc_ps else None,
+            "ps_au_pairs": float(np.mean(au_ps)) if au_ps else None,
+            "quarantined": quarantined,
+        }
+
+        if null_result:
+            entry["null_95th_primary"] = null_result["null_95th_primary"]
+            entry["null_95th_conservative"] = null_result["null_95th_conservative"]
+            entry["null_available"] = null_result.get("null_available", True)
+            if null_result["null_95th_primary"] is not None:
+                entry["exceeds_null_primary"] = ps_result["best_ps"] > null_result["null_95th_primary"]
+                entry["exceeds_null_conservative"] = ps_result["best_ps"] > null_result["null_95th_conservative"]
+            else:
+                entry["exceeds_null_primary"] = None
+                entry["exceeds_null_conservative"] = None
+
+        results["per_rna"][name] = entry
+
+    active = {k: v for k, v in results["per_rna"].items()
+              if not v.get("skipped") and not v.get("quarantined")
+              and v.get("positive_control", {}).get("pass", False)}
+    if active:
+        ps_values = [v["best_ps"] for v in active.values()]
+        results["mean_best_ps"] = float(np.mean(ps_values))
+        results["median_best_ps"] = float(np.median(ps_values))
+        if compute_null:
+            results["families_exceeding_null_primary"] = sum(
+                1 for v in active.values() if v.get("exceeds_null_primary") is True)
+            results["families_exceeding_null_conservative"] = sum(
+                1 for v in active.values() if v.get("exceeds_null_conservative") is True)
+            results["families_no_null"] = [
+                k for k, v in active.items() if v.get("null_available") is False]
     results["families_total"] = len(active)
+    results["families_quarantined"] = [k for k, v in results["per_rna"].items() if v.get("quarantined")]
+    results["families_skipped"] = [k for k, v in results["per_rna"].items() if v.get("skipped")]
+    results["families_failed_gate"] = [
+        k for k, v in results["per_rna"].items()
+        if not v.get("skipped") and not v.get("quarantined")
+        and not v.get("positive_control", {}).get("pass", False)
+    ]
 
     return results
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Phase 6: Compensatory mutation test")
-    parser.add_argument("--models", nargs="+", default=["rnafm"],
-                        help="Models to test")
-    parser.add_argument("--families", nargs="+", default=None,
-                        help="Specific families to test (default: all)")
+    parser = argparse.ArgumentParser(description="Phase 6: Perturbation specificity test")
+    parser.add_argument("--models", nargs="+", default=["rnafm"])
+    parser.add_argument("--families", nargs="+", default=None)
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--no-null", action="store_true",
                         help="Skip null computation (for quick testing)")
+    parser.add_argument("--offset", type=int, default=None,
+                        help="Override token offset (default: per-adapter lookup)")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Random seed for derangement null (saved in output)")
+    parser.add_argument("--allow-non-character", action="store_true",
+                        help="Run non-character tokenizers (NT, DNABERT-2) with caveated results")
     args = parser.parse_args()
+
+    np.random.seed(args.seed)
 
     DATA_OUT.mkdir(parents=True, exist_ok=True)
     families = load_rfam_families(args.families)
     print(f"Loaded {len(families)} families")
 
     for model_name in args.models:
+        if model_name in NON_CHARACTER_TOKENIZERS and not args.allow_non_character:
+            print(f"\nSKIPPING {model_name}: non-character tokenizer. "
+                  f"Per-nucleotide position mapping is undefined for k-mer/BPE models. "
+                  f"Use --allow-non-character to run with caveated results.")
+            continue
+
+        offset = args.offset if args.offset is not None else ADAPTER_OFFSETS.get(model_name, 0)
+        tokenizer_caveated = model_name in NON_CHARACTER_TOKENIZERS
+
         print(f"\n{'='*60}")
-        print(f"Running Phase 6 for {model_name}")
+        print(f"Phase 6 PS metric for {model_name} (offset={offset})")
         print(f"{'='*60}")
 
         adapter = load_adapter(model_name)
@@ -308,95 +613,35 @@ def main():
 
         trained_results = run_phase6(
             adapter, families, device=args.device,
-            compute_null=not args.no_null,
+            compute_null=not args.no_null, offset=offset,
         )
 
         output = {
             "model": model_name,
             "timestamp": TIMESTAMP,
             "phase": 6,
-            "experiment": "compensatory_double_mutation",
-            "compensatory_trained": trained_results,
+            "metric": "perturbation_specificity",
+            "preregistration": "PREREGISTRATION_PHASE6_V2.md",
+            "offset": offset,
+            "seed": args.seed,
+            "tokenizer_caveated": tokenizer_caveated,
+            "results": trained_results,
         }
 
-        out_path = DATA_OUT / f"{model_name}_phase6_{TIMESTAMP}.json"
+        out_path = DATA_OUT / f"{model_name}_phase6_ps_{TIMESTAMP}.json"
         with open(out_path, "w") as f:
             json.dump(output, f, indent=2)
         print(f"Saved to {out_path}")
 
         print(f"\n{model_name} summary:")
-        print(f"  Mean CR: {trained_results.get('mean_best_cr', 'N/A'):.4f}")
-        print(f"  Families exceeding null: {trained_results.get('families_exceeding_comp_null', 'N/A')}/{trained_results.get('families_total', 0)}")
-
-
-def load_adapter(model_name):
-    """Load a model adapter by name. Uses multi_model_audit adapters."""
-    adapters = {}
-
-    try:
-        from multi_model_audit import RNAFMAdapter
-        adapters["rnafm"] = RNAFMAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import NTAdapter
-        adapters["nt"] = NTAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import HyenaDNAAdapter
-        adapters["hyenadna"] = HyenaDNAAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import EvoAdapter
-        adapters["evo"] = EvoAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import CaduceusAdapter
-        adapters["caduceus"] = CaduceusAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import RiNALMoAdapter
-        adapters["rinalmo"] = RiNALMoAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import UTRLMAdapter
-        adapters["utrlm"] = UTRLMAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import ERNIERNAAdapter
-        adapters["ernierna"] = ERNIERNAAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import SpliceBERTAdapter
-        adapters["splicebert"] = SpliceBERTAdapter
-    except ImportError:
-        pass
-
-    try:
-        from multi_model_audit import DNABERT2Adapter
-        adapters["dnabert2"] = DNABERT2Adapter
-    except ImportError:
-        pass
-
-    if model_name not in adapters:
-        raise ValueError(f"Unknown model: {model_name}. Available: {list(adapters.keys())}")
-
-    return adapters[model_name]()
+        print(f"  Mean PS: {trained_results.get('mean_best_ps', 'N/A')}")
+        print(f"  Families (confirmatory): {trained_results.get('families_total', 0)}")
+        print(f"  Families (quarantined): {trained_results.get('families_quarantined', [])}")
+        print(f"  Families (skipped): {trained_results.get('families_skipped', [])}")
+        print(f"  Families (failed gate): {trained_results.get('families_failed_gate', [])}")
+        if not args.no_null:
+            print(f"  Exceeding null (primary): {trained_results.get('families_exceeding_null_primary', 'N/A')}")
+            print(f"  Exceeding null (conservative): {trained_results.get('families_exceeding_null_conservative', 'N/A')}")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,10 @@
 {
   "name": "glycine_riboswitch",
-  "sequence": "GACCGAGGGGGAAAG",
-  "dot_bracket": "..)))))))).....",
-  "source": "Rfam RF00504 consensus",
+  "sequence": "AUGAAGAUAGCGAGAGAUUAUCUUCCAUAAAUGGAAGAUAGCCGAAGGGGAAAUACAAAGGCCCGCCAAGCCUUUGUAGAAGCUCUCAGGCGGCAGGAUCGCUAUCGGAUA",
+  "dot_bracket": ".....((((((((......((((............)))).(((((..(((...((.....................))....))))).))).......)))))))).....",
+  "source": "Rfam RF00504 seed alignment member (AE008691.1/313165-313055)",
   "rfam_id": "RF00504",
-  "length": 15
+  "length": 111,
+  "seed_member": "AE008691.1/313165-313055",
+  "seed_members_available": 41
 }

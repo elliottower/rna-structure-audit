@@ -1,8 +1,10 @@
 {
   "name": "ZMP_riboswitch",
-  "sequence": "GCGGGGGGUAAAGUUUUGCCGACCGCCUGGGCAACCUUU",
-  "dot_bracket": "))))))))...............................",
-  "source": "Rfam RF01750 consensus",
+  "sequence": "UCCACCUUGCGCAACUGGCGAAUCCUGGGGCUGCCGCCGGCAGUACCCGGCAGUGGGCAUUGACCACGAGGAAGCGCAAGGUCUCUGGCGUCAUGCACAACGACGCCUGCCGCUCGCCUGGGCAGCGAAU",
+  "dot_bracket": "..((((((((((..((....................................((((.......))))..))..)))))))))).......................(((((.........))))).....",
+  "source": "Rfam RF01750 seed alignment member (CU914168.1/2467319-2467448)",
   "rfam_id": "RF01750",
-  "length": 39
+  "length": 130,
+  "seed_member": "CU914168.1/2467319-2467448",
+  "seed_members_available": 157
 }

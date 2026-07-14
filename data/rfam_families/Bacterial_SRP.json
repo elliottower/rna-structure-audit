@@ -1,8 +1,10 @@
 {
   "name": "Bacterial_SRP",
-  "sequence": "UAUGGGGCCCCGCGCAACGCCACCCCGCCAACCCGGUCAGGGCCGGAAGGCAGCAGCCGGGGCGGGGUUUGGCGUGUGCGCGGGUUGCCCCGUUUUU",
-  "dot_bracket": "...(.(((.(..(((..((((...(((.(((..(((((((....(((((....(((.....)))....))))).)))))))...).).))).).)..",
-  "source": "Rfam RF00169 consensus",
+  "sequence": "UGUUAGUACUCUAUAAUACUGUAAUUCUUAAGAAUUUGGUCAGGAUUGGAAAAUAGCAGCCAUAUUAAGACAGUACAGGUAUUACGAAUAUUACUAACAGAGA",
+  "dot_bracket": "...((((((((..((((.((((((.(((((((...(((((....(((....)))....))))))))))))..)))))))..))).)))...))))).......",
+  "source": "Rfam RF00169 seed alignment member (AE016826.1/499549-499447)",
   "rfam_id": "RF00169",
-  "length": 97
+  "length": 103,
+  "seed_member": "AE016826.1/499549-499447",
+  "seed_members_available": 199
 }

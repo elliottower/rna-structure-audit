@@ -1,8 +1,10 @@
 {
   "name": "U5_snRNA",
-  "sequence": "AUCCUCUGGGUCCACUCCAUAUCGAAUAAAUCUUUCGCCUUUUACUAAAGAUUUCCGUGGAGUGGACCAAUUAAGAGGCUUAAACUAAUUUUUGGAAGCCCCCUUUUUUUGGGGGCU",
-  "dot_bracket": "..((((..(((.(.((.(((((..............................................((((((((...........))))).))).......))).)..)).))))",
-  "source": "Rfam RF00020 consensus",
+  "sequence": "UCACUCUGGUUUCCCUUCAUUACACGAAUAAAUCUUUCGCCUUUUACUAAAGAUUUCCGUGGAGGGAAACACUUGAUGAGUCUAUAGACUUAUUUUUUGUGUGCCCAACGAAAGUUGGGCC",
+  "dot_bracket": "..((((..(((((((((((..........((((((((...........))))))))...))))))))))).......))))...................(.((((((......)))))))",
+  "source": "Rfam RF00020 seed alignment member (AAZX01000523.1/17560-17680)",
   "rfam_id": "RF00020",
-  "length": 117
+  "length": 121,
+  "seed_member": "AAZX01000523.1/17560-17680",
+  "seed_members_available": 131
 }

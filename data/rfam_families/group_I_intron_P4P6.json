@@ -1,8 +1,10 @@
 {
   "name": "group_I_intron_P4P6",
-  "sequence": "AAAUCUAGGAUGAAGAUAUAGUCUAAUCUGUCAGGAAACUGACAG",
-  "dot_bracket": ".............................................",
-  "source": "Rfam RF00028 consensus",
+  "sequence": "UAACAAGGUUUUUUAUUGGUUCUUCUGCAGUGCGCCAAAGGAAGCCUUAGCAGCCUGAAAGGGUGUAUCUCCGCGACUAUAAAUAAAAAGGGGAUUUUAAAUGCUAGUCUGAUAAAAAAAGGCGACAUUGCCAAAUUGCGGGAAGUCCCUAAAGAUUCAACUACUAAGCAGCUUGUGGAAACACAGUUGUGGCCGAGUUAAUAGCCCUGGGUAUAGUAACAAUGUUGAAUAUGACUCUUAAUUGAGGAAAUGGGUGAUCCGCAGCCAAAUCCUAAGGACAUUUUAUUGUCUAUGGAUGCAGUUCACAGGCCAGAUGGCAAUGGGUAUCCUAGUGGGAUAUAUAUAUAUGGAUGCUUAAGAUAUGGUCGAGCUUCUCUCGAAAGAGAG",
+  "dot_bracket": "...(((((((((............................)))))))))..(((................................................)))....................(((((.((...((((((....(((((..................................................................................................)))))...))))))((...((((....(((((....)))))...))))...))............)).))))).(((((((((.............)))))))))...................(((((....)))))",
+  "source": "Rfam RF00028 seed alignment member (M86534.1/28-414)",
   "rfam_id": "RF00028",
-  "length": 45
+  "length": 387,
+  "seed_member": "M86534.1/28-414",
+  "seed_members_available": 3
 }

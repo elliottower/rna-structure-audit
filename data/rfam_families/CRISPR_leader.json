@@ -1,8 +1,10 @@
 {
   "name": "CRISPR_leader",
-  "sequence": "GUUUCAAUCCCUUAUAGGUAGGCUAAAAAC",
+  "sequence": "GUUUCAAUCCCCAAAGGGAAGGCUACAAAC",
   "dot_bracket": ".(((.....(((...)))........))).",
-  "source": "Rfam RF01315 consensus",
+  "source": "Rfam RF01315 seed alignment member (CP000679.1/62025-62054)",
   "rfam_id": "RF01315",
-  "length": 30
+  "length": 30,
+  "seed_member": "CP000679.1/62025-62054",
+  "seed_members_available": 19
 }

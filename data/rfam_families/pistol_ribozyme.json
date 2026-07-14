@@ -1,8 +1,10 @@
 {
   "name": "pistol_ribozyme",
-  "sequence": "ACUCGUCUGGGCGAGUAUAAAUACGCAUUAGGCCCAGAGCGUCCCGGCGUUCUUCGCCGGGGGUUGCG",
-  "dot_bracket": "((((........)))).........((((.....(........).((((((((...............",
-  "source": "Rfam RF02679 consensus",
+  "sequence": "ACUCGACUAGACGAGUAUAAACUACAUUAAGCCUAGUGCGUUAUAGCCGUAAAUAAGAAGUAAACGGCUAUAGGUUGUA",
+  "dot_bracket": "((((........))))......((((....(.......).((((((((.................))))))))..))))",
+  "source": "Rfam RF02679 seed alignment member (AGFS01138167.1/426-348)",
   "rfam_id": "RF02679",
-  "length": 68
+  "length": 79,
+  "seed_member": "AGFS01138167.1/426-348",
+  "seed_members_available": 40
 }

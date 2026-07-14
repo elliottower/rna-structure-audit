@@ -1,8 +1,10 @@
 {
   "name": "mir_155_precursor",
-  "sequence": "ACCAGGUCGCCGCCAGGC",
-  "dot_bracket": "...)).....)).)..).",
-  "source": "Rfam RF00001 consensus",
+  "sequence": "GUCUACGACCAUACCACAAUGAACACACCGGUUCUCGUCCGAUCACCGAAGUUAAGCAUUGUCGGGCCAGGAUAGUACCUGGAUGGGGGACCGCCUGGGAACGCCUGGUGUCGUAGACU",
+  "dot_bracket": "(((((((((....((.(((((...((..((((((......))..))))..))....)))))..))(((.((....(.((.....((....)).....)).)..)).)))))))))))).",
+  "source": "Rfam RF00001 seed alignment member (K02350.1/1-119)",
   "rfam_id": "RF00001",
-  "length": 18
+  "length": 119,
+  "seed_member": "K02350.1/1-119",
+  "seed_members_available": 604
 }

@@ -1,8 +1,10 @@
 {
   "name": "Vault_RNA",
-  "sequence": "GGGCCGGCUUUAGCUCAGCGGUUACUUCGACUAAUAUAAUUUUAUUUCUCUUUAUUUUUUUUGGGGGUUCGAGACCCGCGGGCGCUGUCCGGCCCUUUU",
-  "dot_bracket": ".((((((......((((..((((....(((((...................................................................",
-  "source": "Rfam RF00006 consensus",
+  "sequence": "GGGCCAGCUUUAGCUCAGCGGUUACUUCGACGUGCUCCAGUUUGAGCAGGCUAUGUAACGUGGUCGGUUCGAGCAACACAACCAGCCGCUUGCCUAUCUGGUGAGUGGUUGGUUCGAGACCCGCGGGCGCUCUCUGGCCCUUUU",
+  "dot_bracket": ".((((((.....((((.((((....(((((...................................................................................)))))..)))))))).....)))))).....",
+  "source": "Rfam RF00006 seed alignment member (AAHX01094554.1/16303-16446)",
   "rfam_id": "RF00006",
-  "length": 99
+  "length": 144,
+  "seed_member": "AAHX01094554.1/16303-16446",
+  "seed_members_available": 66
 }

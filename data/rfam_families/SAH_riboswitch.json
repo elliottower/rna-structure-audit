@@ -1,8 +1,10 @@
 {
   "name": "SAH_riboswitch",
-  "sequence": "CCUUCCGAGGAGCGCUGCAACGGGCCCUUACGGCCCGCCAGGCUCGGAAGGGUAAAUCUACAACGGCGCUCACUCACA",
-  "dot_bracket": "....(((.((((............((((((................................................",
-  "source": "Rfam RF01057 consensus",
+  "sequence": "CCGUUCGAGGGGCGCUGCAGCAGGCCUAGGCCUGUCAGGCUCGAACGGAGCGCGCUCUCAGGCCGGCCUCGCCGGUCUGUCAACGCACCAACGGCGCCCAUUCGCA",
+  "dot_bracket": ".(((((((............((((((..))))))......)))))))...........................................................",
+  "source": "Rfam RF01057 seed alignment member (CP000744.1/550599-550494)",
   "rfam_id": "RF01057",
-  "length": 78
+  "length": 106,
+  "seed_member": "CP000744.1/550599-550494",
+  "seed_members_available": 51
 }

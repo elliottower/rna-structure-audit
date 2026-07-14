@@ -1,8 +1,10 @@
 {
   "name": "tmRNA",
-  "sequence": "GCGAAAACAAAGACAUAGACUAAGCAUGUAGACCUCCAGGGGGGGAGGACUUUCGGACGCGGGUUCGAUUCCCGCCACCUCCACCA",
-  "dot_bracket": "))..............................................................................))))).",
-  "source": "Rfam RF00023 consensus",
+  "sequence": "GGGGAUGUUUUGGGAUUCGACAGGCGUAGACCCGCAUUGACUGCGAUUCGUAGGUUACGUCUACGUAAAAACGUUACAGUUAAAUAUAACUGCAAAUAACAAAAAUUCUUACGCAUUAGCUGCUUAAUUUAGCGCAUGCGUUGCUCUUGACCAGUUUACUCGUGACUGGUUUUCGAGUAUCAACUUUAGCGAGUUACGUUUAACUACCUCACCUGAAUAGUUAAAAAGAGUCUUAACAGGUUAGCUGGUUCAUACUAGCCCUGUUAUAUGGCGUUUUGAACUAGUGAAGUUUAAGUAAUAUAACUAUGAUCGUAGAGGUUAAUGACGAGAUGCGUUUGGACAGGGGUUCAAUUCCCCUCAUCUCCAUAG",
+  "dot_bracket": "(((((((...........(((((((((((.((((((((((((((((((.....(((((((..........))))))).....................................(((((((((........))))))))).((((((.((((((((.......))))))))..))))))...................(((((((((.........)))))))))..................((((((((((....(((.........)))...))))))))))......................)))))...)))))))))))).)))))))))))).(((((.......))))))))))))....",
+  "source": "Rfam RF00023 seed alignment member (CP000033.3/728512-728880)",
   "rfam_id": "RF00023",
-  "length": 86
+  "length": 369,
+  "seed_member": "CP000033.3/728512-728880",
+  "seed_members_available": 28
 }

@@ -1,8 +1,10 @@
 {
   "name": "U1_snRNA",
-  "sequence": "CGC",
-  "dot_bracket": ")).",
-  "source": "Rfam RF00003 consensus",
+  "sequence": "AUACUUACCUGGCAGGGGAGAUACCAUGAUCAUGAAGGUGGUUUUCCCAGGGCGAGGCUCACCCAUUGCACUUUGGGGUGUGCUGACCCCUGCGAUUUCCCCAAAUGCGGGAAACUCGACUGCAUAAUUUGUGGUAGUGGGGGACUGCGUUCGCGCUCUCCCCUG",
+  "dot_bracket": "...........((((((((((.(((((..........)))))))))))((((.(.(((.(((((..........)).))).)))..))))).((((((.((.......)))).).))).))))...............((((((.((((....)))).)))))).",
+  "source": "Rfam RF00003 seed alignment member (M32270.1/371-535)",
   "rfam_id": "RF00003",
-  "length": 3
+  "length": 165,
+  "seed_member": "M32270.1/371-535",
+  "seed_members_available": 63
 }

@@ -1,8 +1,10 @@
 {
   "name": "CrPV_IRES",
-  "sequence": "AUA",
-  "dot_bracket": "...",
-  "source": "Rfam RF00458 consensus",
+  "sequence": "GCAAAAAUGUGAUCUUGCUUGUAAAUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGUAUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAGUGGCAGCCCCACAAUAUCCAGGAAGCCCUCUCUGCGGUUUUUCAGAUUAGGUAGUCGAAAAACCUAAGAAAUUUACCUGCUACAU",
+  "dot_bracket": "(((((((((......(((((((((.(....................).)))))))))....))))))))).........((((....)))).....((((.((((.....((((.....))))...)))).))))...........(((((.((((((......))))))))))).....................",
+  "source": "Rfam RF00458 seed alignment member (AF218039.1/6028-6223)",
   "rfam_id": "RF00458",
-  "length": 3
+  "length": 196,
+  "seed_member": "AF218039.1/6028-6223",
+  "seed_members_available": 6
 }

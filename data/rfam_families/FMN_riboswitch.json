@@ -1,8 +1,10 @@
 {
   "name": "FMN_riboswitch",
-  "sequence": "CCGGAUGGGAGAAGACGGAA",
-  "dot_bracket": "))).................",
-  "source": "Rfam RF00050 consensus",
+  "sequence": "UAACAUUUUCGGGGCAAGGCGAAAUUCCUUACCGAUGGUAAUAGUCCAUGAACCUUAAUUGGUUGAUUCAGUGAAAUUCUGAAACCGACGGUAUAGUCCGGAUGGUAGAAAAUGUCA",
+  "dot_bracket": "..((((((((......(((.......)))...((((((.......))))..(((......)))...(((((.......)))))..)).(((......))).......))))))))..",
+  "source": "Rfam RF00050 seed alignment member (AE017263.1/670666-670782)",
   "rfam_id": "RF00050",
-  "length": 20
+  "length": 117,
+  "seed_member": "AE017263.1/670666-670782",
+  "seed_members_available": 107
 }
