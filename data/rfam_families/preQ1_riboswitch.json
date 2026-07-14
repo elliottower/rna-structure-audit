@@ -1,0 +1,8 @@
+{
+  "name": "preQ1_riboswitch",
+  "sequence": "AUAGGAGUGGUUCGUAAACCUCCCACUAUAAAAAACUAAGGAAAA",
+  "dot_bracket": ".....(((((................)))))..............",
+  "source": "Rfam RF00522 consensus",
+  "rfam_id": "RF00522",
+  "length": 45
+}

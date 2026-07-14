@@ -1,0 +1,8 @@
+{
+  "name": "Bacterial_SRP",
+  "sequence": "UAUGGGGCCCCGCGCAACGCCACCCCGCCAACCCGGUCAGGGCCGGAAGGCAGCAGCCGGGGCGGGGUUUGGCGUGUGCGCGGGUUGCCCCGUUUUU",
+  "dot_bracket": "...(.(((.(..(((..((((...(((.(((..(((((((....(((((....(((.....)))....))))).)))))))...).).))).).)..",
+  "source": "Rfam RF00169 consensus",
+  "rfam_id": "RF00169",
+  "length": 97
+}

@@ -1,0 +1,8 @@
+{
+  "name": "glycine_riboswitch",
+  "sequence": "GACCGAGGGGGAAAG",
+  "dot_bracket": "..)))))))).....",
+  "source": "Rfam RF00504 consensus",
+  "rfam_id": "RF00504",
+  "length": 15
+}

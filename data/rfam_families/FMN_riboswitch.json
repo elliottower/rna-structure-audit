@@ -1,0 +1,8 @@
+{
+  "name": "FMN_riboswitch",
+  "sequence": "CCGGAUGGGAGAAGACGGAA",
+  "dot_bracket": "))).................",
+  "source": "Rfam RF00050 consensus",
+  "rfam_id": "RF00050",
+  "length": 20
+}

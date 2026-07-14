@@ -1,0 +1,8 @@
+{
+  "name": "IRE_stem_loop",
+  "sequence": "CGGUUUCUUGCUUCAACAGUGUUUGAACGGAAACCG",
+  "dot_bracket": "((.(.(((((.(.((((((...).))))))))))))",
+  "source": "Rfam RF00037 consensus",
+  "rfam_id": "RF00037",
+  "length": 36
+}

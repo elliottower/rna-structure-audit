@@ -1,0 +1,8 @@
+{
+  "name": "U2_snRNA_stem",
+  "sequence": "AUCCUUUGCUUUGGCUUAGAUUCAAAUUGAAAUUUGAUCAAGUGCGUAUAUCCUUAUACUAACAAUAUCGGAGAAAAGCUGAU",
+  "dot_bracket": "((((((((((((..(((((.........)))))..((((.........)))).((((((......)))))).)))))))))))",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00004",
+  "length": 83
+}

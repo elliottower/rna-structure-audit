@@ -1,0 +1,8 @@
+{
+  "name": "lysine_riboswitch",
+  "sequence": "AAACCGUGGAGUGCUACCGGAUGA",
+  "dot_bracket": "........................",
+  "source": "Rfam RF00168 consensus",
+  "rfam_id": "RF00168",
+  "length": 24
+}

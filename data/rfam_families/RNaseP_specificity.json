@@ -1,0 +1,8 @@
+{
+  "name": "RNaseP_specificity",
+  "sequence": "GAGGAAAGUCCGGGCUCCAUAGGGCAGGGUGCCAGGUAACGCCUGGGGGGGAAACCCACGACCAGUGCAACAGAGAGCAAACCGCCGAUGGCCC",
+  "dot_bracket": "........((((((.((((((((..((((((........))))))...)))))))).........((((((.......)))))).))))))",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00010",
+  "length": 94
+}

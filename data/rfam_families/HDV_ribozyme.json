@@ -1,0 +1,8 @@
+{
+  "name": "HDV_ribozyme",
+  "sequence": "GGCCGGCAUGGUCCCAGCCUCCUCGCUGGCGCCGGCUGGGCAACAUUCCGAGGGGACCGUCCCCUCGGUAAUGGCGAAUGGGUCC",
+  "dot_bracket": "(((((.((((((.....(((.((.((..((((..((((.......)))).)))).)).)).)))..))))))..)))))......",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00094",
+  "length": 85
+}

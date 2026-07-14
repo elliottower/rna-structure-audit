@@ -1,0 +1,8 @@
+{
+  "name": "CRISPR_leader",
+  "sequence": "GUUUCAAUCCCUUAUAGGUAGGCUAAAAAC",
+  "dot_bracket": ".(((.....(((...)))........))).",
+  "source": "Rfam RF01315 consensus",
+  "rfam_id": "RF01315",
+  "length": 30
+}

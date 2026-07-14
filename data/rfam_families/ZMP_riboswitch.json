@@ -1,0 +1,8 @@
+{
+  "name": "ZMP_riboswitch",
+  "sequence": "GCGGGGGGUAAAGUUUUGCCGACCGCCUGGGCAACCUUU",
+  "dot_bracket": "))))))))...............................",
+  "source": "Rfam RF01750 consensus",
+  "rfam_id": "RF01750",
+  "length": 39
+}

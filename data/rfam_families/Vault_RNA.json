@@ -1,0 +1,8 @@
+{
+  "name": "Vault_RNA",
+  "sequence": "GGGCCGGCUUUAGCUCAGCGGUUACUUCGACUAAUAUAAUUUUAUUUCUCUUUAUUUUUUUUGGGGGUUCGAGACCCGCGGGCGCUGUCCGGCCCUUUU",
+  "dot_bracket": ".((((((......((((..((((....(((((...................................................................",
+  "source": "Rfam RF00006 consensus",
+  "rfam_id": "RF00006",
+  "length": 99
+}

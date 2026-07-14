@@ -1,0 +1,8 @@
+{
+  "name": "manganese_riboswitch",
+  "sequence": "UAUCCAUUUGGAGGCGAUGAAGCGUGCCCUGUAUUUGGGCACUUUGGGCACGCGGAGCCAGUGGUGCAACCGGCCAAAUGGAUA",
+  "dot_bracket": "(((((((((((.(((.......((((..(((.(.......................................).)))))))...",
+  "source": "Rfam RF01786 consensus",
+  "rfam_id": "RF01786",
+  "length": 84
+}

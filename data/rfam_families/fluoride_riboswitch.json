@@ -1,0 +1,8 @@
+{
+  "name": "fluoride_riboswitch",
+  "sequence": "AUAAUAAAAGGCGAUGGAGUUCGCCUUUAACCGCCCGUAAUGGGCUGAUGACUCCUACUAAAAC",
+  "dot_bracket": ".........((((..........)))).....................................",
+  "source": "Rfam RF01734 consensus",
+  "rfam_id": "RF01734",
+  "length": 64
+}

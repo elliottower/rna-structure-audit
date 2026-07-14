@@ -1,0 +1,8 @@
+{
+  "name": "cobalamin_riboswitch",
+  "sequence": "CGAGCCAGGAGACCUGCCGGCGGAGGAAGUAUCAC",
+  "dot_bracket": ").....)).)...)))...................",
+  "source": "Rfam RF00174 consensus",
+  "rfam_id": "RF00174",
+  "length": 35
+}

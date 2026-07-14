@@ -1,0 +1,8 @@
+{
+  "name": "twister_ribozyme",
+  "sequence": "AAAACCCGCAAGGCCGACGCAUAAGGCGCCGCCGGUGCAAGCCCGGCCGCCCCUUAAGGGGCGGGCGCUCAUGGGUAAAAA",
+  "dot_bracket": "...((((.....(((..(((...................................)))....(..(((.........))).",
+  "source": "Rfam RF02681 consensus",
+  "rfam_id": "RF02681",
+  "length": 81
+}

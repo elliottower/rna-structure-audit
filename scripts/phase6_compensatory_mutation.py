@@ -90,39 +90,50 @@ def compute_compensatory_ratio(adapter, sequence, dot_bracket, device="cpu"):
     for layer_idx in range(n_layers):
         emb_wt = layers_wt[layer_idx]
 
-        d_dest_list = []
-        d_comp_list = []
+        d_partner_list = []
+        d_nonpartner_list = []
         pair_details = []
 
+        all_positions = set(range(len(sequence)))
+        paired_positions = set()
         for i, j in pairs:
-            seq_dest = complement_swap(sequence, [i])
-            tokens_dest = adapter.tokenize(seq_dest).to(device)
-            emb_dest = adapter.get_all_layer_embeddings(tokens_dest)[layer_idx]
+            paired_positions.add(i)
+            paired_positions.add(j)
+        unpaired_positions = sorted(all_positions - paired_positions)
 
-            seq_comp = complement_swap(sequence, [i, j])
-            tokens_comp = adapter.tokenize(seq_comp).to(device)
-            emb_comp = adapter.get_all_layer_embeddings(tokens_comp)[layer_idx]
+        for i, j in pairs:
+            seq_mut = complement_swap(sequence, [i])
+            tokens_mut = adapter.tokenize(seq_mut).to(device)
+            emb_mut = adapter.get_all_layer_embeddings(tokens_mut)[layer_idx]
 
-            d_dest_i = cosine_distance(emb_wt[i], emb_dest[i])
-            d_comp_i = cosine_distance(emb_wt[i], emb_comp[i])
-            d_comp_j = cosine_distance(emb_wt[j], emb_comp[j])
+            # Perturbation at partner j when i is swapped (coupling signal)
+            d_partner = cosine_distance(emb_wt[j], emb_mut[j])
+            d_partner_list.append(d_partner)
 
-            d_dest_list.append(d_dest_i)
-            d_comp_list.append(d_comp_i)
+            # Perturbation at non-partner positions when i is swapped (background)
+            if unpaired_positions:
+                bg_dists = [
+                    cosine_distance(emb_wt[k], emb_mut[k])
+                    for k in unpaired_positions[:10]
+                ]
+                d_nonpartner_list.extend(bg_dists)
 
             pair_type = f"{sequence[i]}-{sequence[j]}"
             pair_details.append({
                 "i": i, "j": j, "type": pair_type,
-                "d_dest_i": d_dest_i, "d_comp_i": d_comp_i,
-                "d_comp_j": d_comp_j,
+                "d_partner": d_partner,
+                "d_direct_i": cosine_distance(emb_wt[i], emb_mut[i]),
             })
 
-        mean_dest = float(np.mean(d_dest_list))
-        mean_comp = float(np.mean(d_comp_list))
-        cr = mean_dest / mean_comp if mean_comp > 1e-10 else float("nan")
+        mean_partner = float(np.mean(d_partner_list))
+        mean_nonpartner = float(np.mean(d_nonpartner_list)) if d_nonpartner_list else 0.0
+        cr = mean_partner / mean_nonpartner if mean_nonpartner > 1e-10 else float("nan")
         per_layer_cr.append(cr)
 
-    best_layer = int(np.nanargmax(per_layer_cr))
+    valid_crs = [(i, cr) for i, cr in enumerate(per_layer_cr) if not np.isnan(cr)]
+    if not valid_crs:
+        return None
+    best_layer = max(valid_crs, key=lambda x: x[1])[0]
     best_cr = float(per_layer_cr[best_layer])
 
     gc_pairs = [(i, j) for i, j in pairs if sequence[i] in "GC"]
@@ -320,30 +331,64 @@ def main():
 
 def load_adapter(model_name):
     """Load a model adapter by name. Uses multi_model_audit adapters."""
-    from multi_model_audit import (
-        RNAFMAdapter, NTv2Adapter, HyenaDNAAdapter,
-        CaduceusAdapter, EvoAdapter,
-    )
-
-    adapters = {
-        "rnafm": RNAFMAdapter,
-        "nt": NTv2Adapter,
-        "hyenadna": HyenaDNAAdapter,
-        "caduceus": CaduceusAdapter,
-        "evo": EvoAdapter,
-    }
+    adapters = {}
 
     try:
-        from multi_model_audit import RiNALMoAdapter, UTRLMAdapter
+        from multi_model_audit import RNAFMAdapter
+        adapters["rnafm"] = RNAFMAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import NTAdapter
+        adapters["nt"] = NTAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import HyenaDNAAdapter
+        adapters["hyenadna"] = HyenaDNAAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import EvoAdapter
+        adapters["evo"] = EvoAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import CaduceusAdapter
+        adapters["caduceus"] = CaduceusAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import RiNALMoAdapter
         adapters["rinalmo"] = RiNALMoAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import UTRLMAdapter
         adapters["utrlm"] = UTRLMAdapter
     except ImportError:
         pass
 
     try:
-        from multi_model_audit import ERNIERNAAdapter, SpliceBERTAdapter, DNABERT2Adapter
+        from multi_model_audit import ERNIERNAAdapter
         adapters["ernierna"] = ERNIERNAAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import SpliceBERTAdapter
         adapters["splicebert"] = SpliceBERTAdapter
+    except ImportError:
+        pass
+
+    try:
+        from multi_model_audit import DNABERT2Adapter
         adapters["dnabert2"] = DNABERT2Adapter
     except ImportError:
         pass

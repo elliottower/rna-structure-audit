@@ -1,0 +1,8 @@
+{
+  "name": "tmRNA",
+  "sequence": "GCGAAAACAAAGACAUAGACUAAGCAUGUAGACCUCCAGGGGGGGAGGACUUUCGGACGCGGGUUCGAUUCCCGCCACCUCCACCA",
+  "dot_bracket": "))..............................................................................))))).",
+  "source": "Rfam RF00023 consensus",
+  "rfam_id": "RF00023",
+  "length": 86
+}

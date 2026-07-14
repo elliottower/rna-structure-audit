@@ -1,0 +1,8 @@
+{
+  "name": "U5_snRNA",
+  "sequence": "AUCCUCUGGGUCCACUCCAUAUCGAAUAAAUCUUUCGCCUUUUACUAAAGAUUUCCGUGGAGUGGACCAAUUAAGAGGCUUAAACUAAUUUUUGGAAGCCCCCUUUUUUUGGGGGCU",
+  "dot_bracket": "..((((..(((.(.((.(((((..............................................((((((((...........))))).))).......))).)..)).))))",
+  "source": "Rfam RF00020 consensus",
+  "rfam_id": "RF00020",
+  "length": 117
+}

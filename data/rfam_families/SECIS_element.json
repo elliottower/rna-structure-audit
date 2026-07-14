@@ -1,0 +1,8 @@
+{
+  "name": "SECIS_element",
+  "sequence": "GUCUCAUUUAUGACGGCCUGACCCUAAACCCCUCUGGGGCGGGUCAGGCCUGAUGCUUGGAGAC",
+  "dot_bracket": "(.((((...........((((((((((.......(((......)))...........)))))).",
+  "source": "Rfam RF00031 consensus",
+  "rfam_id": "RF00031",
+  "length": 64
+}

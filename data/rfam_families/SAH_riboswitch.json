@@ -1,0 +1,8 @@
+{
+  "name": "SAH_riboswitch",
+  "sequence": "CCUUCCGAGGAGCGCUGCAACGGGCCCUUACGGCCCGCCAGGCUCGGAAGGGUAAAUCUACAACGGCGCUCACUCACA",
+  "dot_bracket": "....(((.((((............((((((................................................",
+  "source": "Rfam RF01057 consensus",
+  "rfam_id": "RF01057",
+  "length": 78
+}

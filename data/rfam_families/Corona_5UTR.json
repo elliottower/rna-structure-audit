@@ -1,0 +1,8 @@
+{
+  "name": "Corona_5UTR",
+  "sequence": "GCUCACGGUUUCGUCCGUGUUGCAGCCGAUCAUCAGCACACCCAGGUUUCGUCCGGGUGUGACCGAAAGGUAAGAUGGAGAGCCUCGUCCCUGGUUUCAACGAGAAAA",
+  "dot_bracket": "((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+  "source": "Rfam RF03120 consensus",
+  "rfam_id": "RF03120",
+  "length": 108
+}

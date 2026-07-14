@@ -1,0 +1,8 @@
+{
+  "name": "c_di_GMP_riboswitch",
+  "sequence": "UAAUGAAAAAGGCAAACCCGUCGAAAGACGGGGACGCAAAGCCACGGGUCUAAGGCCCUAAAGGGCUAUGACAGCCGGGCUGCCGAA",
+  "dot_bracket": "...........((...((((.(.(.........))))))...))..((((...(.(((((.....((((..................",
+  "source": "Rfam RF01051 consensus",
+  "rfam_id": "RF01051",
+  "length": 87
+}

@@ -1,0 +1,8 @@
+{
+  "name": "hammerhead_ribozyme",
+  "sequence": "GGAGACCGCUGCCGAAACGCGAAAGCGUCUAGCGUCCG",
+  "dot_bracket": "((((...((((..........))))(((...)))..))",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00163",
+  "length": 38
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Y_RNA",
+  "sequence": "GGCUGGUCCGAAGGUAGUGGGUUAUUGCUAAUUAUAGAUAGUUACACUUUUUUUUGCAUUUUCUCCCUUCCCACUGCUACACUUGACUAGCCUUUU",
+  "dot_bracket": "((((((((.((..(((((((..(..............................(((.((...................................))",
+  "source": "Rfam RF00019 consensus",
+  "rfam_id": "RF00019",
+  "length": 96
+}

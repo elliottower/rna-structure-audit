@@ -1,0 +1,8 @@
+{
+  "name": "6S_RNA",
+  "sequence": "AGCAGGUUCAAGGGCUUAAUGACGACAAACGGCACCGCGGGGAGUCU",
+  "dot_bracket": ".......)))..))).)..)))..................)))))))",
+  "source": "Rfam RF00013 consensus",
+  "rfam_id": "RF00013",
+  "length": 47
+}

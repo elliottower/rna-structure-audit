@@ -1,0 +1,8 @@
+{
+  "name": "group_II_intron_D5",
+  "sequence": "GAGAGCCGUAUGCGAGGAAACUCGCACGUACGGUUCUGGGGGGGGUGUUAAAACUAAGAAUUGACUACCUACCCCAU",
+  "dot_bracket": "..((((((((.(((((.........)))))...))))))))..........................((.((.((..",
+  "source": "Rfam RF00029 consensus",
+  "rfam_id": "RF00029",
+  "length": 77
+}

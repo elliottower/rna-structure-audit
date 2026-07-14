@@ -1,0 +1,8 @@
+{
+  "name": "Corona_s2m",
+  "sequence": "CGGUGCCGAGGCCACGCCGAGUAGGAUCGAGGGUACAGCACCA",
+  "dot_bracket": "...(((((....(((.((((......))..))..)))...)))",
+  "source": "Rfam RF00164 consensus",
+  "rfam_id": "RF00164",
+  "length": 43
+}

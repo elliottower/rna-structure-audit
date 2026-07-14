@@ -1,0 +1,8 @@
+{
+  "name": "mir_21_precursor",
+  "sequence": "UGUCGGGUAGCUUAUCAGACUGAUGUUGACUGUUGAAUCUCAUGGCAACACCAGUCGAUGGGCUGUCUGACA",
+  "dot_bracket": "(((((((((((((((((((((((((((((((((..........)))))))))))))))))))))))))))))",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00001",
+  "length": 72
+}

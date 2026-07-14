@@ -1,0 +1,8 @@
+{
+  "name": "purine_riboswitch",
+  "sequence": "AAAAAAAAAAAAAAAUUCCCUCGUAUAAUCCCGGGAAUAUGGCCCGGGAGUUUCUACCAGGCAACCGUAAAUUGCCUGACUACGAGGGAAUUUUUUUUUUUU",
+  "dot_bracket": ".................(((.(.((((...(((((((........))))))).........(((((((.........))))))...)..)))).))))....",
+  "source": "Rfam RF00167 consensus",
+  "rfam_id": "RF00167",
+  "length": 102
+}

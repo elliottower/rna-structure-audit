@@ -1,0 +1,8 @@
+{
+  "name": "Histone_3prime",
+  "sequence": "CCAAAGGCUCUUUUAAGAGCCACCAACAUUUACAAAAAAAUUUUGU",
+  "dot_bracket": ".......((((((....)))))).......................",
+  "source": "Rfam RF00032 consensus",
+  "rfam_id": "RF00032",
+  "length": 46
+}
