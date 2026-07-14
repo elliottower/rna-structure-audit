@@ -6,7 +6,7 @@
 
 **Date:** 2026-07-13
 
-**Commit SHA:** [TO BE FROZEN BEFORE GPU EXECUTION]
+**Commit SHA:** `c19aa59`
 
 **Replaces:** PREREGISTRATION_PHASE6_COMPENSATORY_MUTATION.md (SHA `e9f2149`), which used a confounded metric (destructive-vs-compensatory ratio conflates number-of-swaps with structure preservation). This preregistration defines a different metric for the same scientific question.
 
