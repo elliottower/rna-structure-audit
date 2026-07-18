@@ -1,0 +1,160 @@
+# STOCKHOLM 1.0
+#=GF ID IRES_Cripavirus
+#=GF AC RF00458
+#=GF DE Cripavirus internal ribosome entry site (IRES)
+#=GF AU Ontiveros-Palacios N; 0000-0001-8457-4455
+#=GF GA 44.5
+#=GF NC 41.2
+#=GF TC 44.5
+#=GF SE Published; 11233983
+#=GF SS Published; PMID:11233983
+#=GF TP Cis-reg; IRES;
+#=GF BM cmbuild -F CM SEED
+#=GF CB cmcalibrate --mpi CM
+#=GF SM cmsearch --cpu 4 --verbose --nohmmonly -T 30.00 -Z 2958934 CM SEQDB
+#=GF DR SO; 0000243; internal_ribosome_entry_site;
+#=GF DR GO; 0043022; ribosome binding;
+#=GF RN [1]
+#=GF RM 11233983
+#=GF RT A tertiary structure model of the internal ribosome entry site (IRES) for
+#=GF RT methionine-independent initiation of translation.
+#=GF RA Kanamori Y, Nakashima N
+#=GF RL RNA 2001;7:266-274.
+#=GF RN [2]
+#=GF RM 17124290
+#=GF RT Structural basis for ribosome recruitment and manipulation by a viral IRES
+#=GF RT RNA.
+#=GF RA Pfingsten JS, Costantino DA, Kieft JS
+#=GF RL Science. 2006;314:1450-1454.
+#=GF RN [3]
+#=GF RM 24792965
+#=GF RT Initiation of translation by cricket paralysis virus IRES requires its
+#=GF RT translocation in the ribosome.
+#=GF RA Fernandez IS, Bai XC, Murshudov G, Scheres SH, Ramakrishnan V
+#=GF RL Cell. 2014;157:823-831.
+#=GF RN [4]
+#=GF RM 25601755
+#=GF RT Cryo-EM of ribosomal 80S complexes with termination factors reveals the
+#=GF RT translocated cricket paralysis virus IRES.
+#=GF RA Muhs M, Hilal T, Mielke T, Skabkin MA, Sanbonmatsu KY, Pestova TV, Spahn
+#=GF RA CM
+#=GF RL Mol Cell. 2015;57:422-432.
+#=GF RN [5]
+#=GF RM 25652826
+#=GF RT Initiation of translation in bacteria by a structured eukaryotic IRES RNA.
+#=GF RA Colussi TM, Costantino DA, Zhu J, Donohue JP, Korostelev AA, Jaafar ZA,
+#=GF RA Plank TD, Noller HF, Kieft JS
+#=GF RL Nature. 2015;519:110-113.
+#=GF RN [6]
+#=GF RM 27159451
+#=GF RT Structural characterization of ribosome recruitment and translocation by
+#=GF RT type IV  IRES.
+#=GF RA Murray J, Savva CG, Shin BS, Dever TE, Ramakrishnan V, Fernandez IS
+#=GF RL Elife. 2016;5:e13567.
+#=GF RN [7]
+#=GF RM 29856316
+#=GF RT Dual tRNA mimicry in the Cricket Paralysis Virus IRES uncovers an
+#=GF RT unexpected  similarity with the Hepatitis C Virus IRES.
+#=GF RA Pisareva VP, Pisarev AV, Fernandez IS
+#=GF RL Elife. 2018;7:e34062.
+#=GF RN [8]
+#=GF RM 33188728
+#=GF RT Nonstructural Protein 1 of SARS-CoV-2 Is a Potent Pathogenicity Factor
+#=GF RT Redirecting Host Protein Synthesis Machinery toward Viral RNA.
+#=GF RA Yuan S, Peng L, Park JJ, Hu Y, Devarkar SC, Dong MB, Shen Q, Wu S, Chen S,
+#=GF RA Lomakin IB, Xiong Y
+#=GF RL Mol Cell. 2020;80:1055-1066.
+#=GF RN [9]
+#=GF RM 35709277
+#=GF RT Structure of the mammalian ribosome as it decodes the selenocysteine UGA
+#=GF RT codon.
+#=GF RA Hilal T, Killam BY, Grozdanovic M, Dobosz-Bartoszek M, Loerke J, Burger J,
+#=GF RA Mielke T, Copeland PR, Simonovic M, Spahn CMT
+#=GF RL Science. 2022;376:1338-1343.
+#=GF RN [10]
+#=GF RM 39385025
+#=GF RT Structural basis of mRNA decay by the human exosome-ribosome supercomplex.
+#=GF RA Kogel A, Keidel A, Loukeri MJ, Kuhn CC, Langer LM, Schafer IB, Conti E
+#=GF RL Nature. 2024;635:237-242.
+#=GF CC This family represents a Cripavirus internal ribosome entry site (IRES)
+#=GF CC which is required for the production of capsid proteins through
+#=GF CC IRES-mediated translation [1]. The Structure of IRES Cripavirus has being
+#=GF CC reported in PDB: 2IL9, 2NOQ, 4D5N, 4D61, 4V92, 4XEJ_AIRE, 4XEJ_BIRE, 5IT9,
+#=GF CC 7JQC, 6D90, 6D9J, 7ZJW, 7ZJX, 5IT7, 9G8M, 9G8O [2-10]
+#=GF WK Cripavirus_internal_ribosome_entry_site_(IRES)
+#=GF SQ 18
+
+AF178440.1/5925-6118                        UUGACUAUGUGAUCUUGCUUUCGU-AAUAAAAUUC--UG-UACAUAAAAGUCGAAAGUAUUGCUAUAGUUAAGGUUGCGCUUGCCUAUUUAGGCAUACUUCUCAGGAUGGCGCG-UUGC-AGUCCAA-CAAGAUCCAGGGACUGUACAGAAUUUUCCUAUACCUCGAGUCGGGUUU-GGAA-UCUAAGGUUGACUCGCUG
+AB017037.1/6286-6479                        GAAAAUGUGUGAUCUGAUUAGAAGUAAGAAAAUUCCUAG-UU-AUAAUA-UUUUUAAUACUGCUACAUUUUU-AAGACCCUUAGUUAUUUAGCUUUACCGCCCAGGAUGGGGUG-CAGC-GUUCCUG-CAAUAUCCAGGGCAC-CUAGGUGCAGCCUUGUAGUUUUAGUGGACUUU-AGGCUAAAGAAUUUCACUAGCAA
+AF014388.1/6078-6273                        GUUAAGAUGUGAUCUUGCUUCCUU--AUACAAUUUUGAGAGGUUAAUAAGAAGGAAGUAGUGCUAUCUUAAU-AAUUAGGUUAACUAUUUAGUUUUACUGUUCAGGAUGCCUAU-UGGC-AGCCCCA-UAAUAUCCAGGACACCCUCUCUGCUUCUUAUAUGAUUAGGUUGUCAUU-UAGAAUAAGAAAAUAACCUGCUA
+AF218039.1/6028-6223                        GCAAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUUUUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUGCUA
+AF183905.1/5647-5843                        CCAACAAUGUGAUCUUGCUUGCGG-AGGCAAAAUUUGCACAGUAUAAAAUCUGCAAGUAGUGCUAUUGUUGG-AAUCACCGUACCUAUUUAGGUUUACGCUCCAAGAUCGGUGGAUAGC-AGCCCUAUCAAUAUCUAGGAGAACUGUGCU-AUGUUUAGAAGAUUAGGUAGUCUCU-AAACA-GAACAAUUUACCUGCUG
+AB006531.1/6003-6199                        CUGACUAUGUGAUCUUAUUAAAAUUAGGUUAAAUUUCGAGGUUAAAAAUAGUUUUAAUAUUGCUAUAGUCUU-AGAGGUCUUGUAUAUUUAUACUUACCACACAAGAUGGACCG-GAGC-AGCCCUC-CAAUAUCUAGUGUACC-CUCGUGCUCGCUCAAACAUUAAGUGGUGUUG-UGCGAAAAGAAUCUCACUUCAAG
+AF022937.1/6935-7116                        AGUGUUGUGUGAUCUUGCGCGAU-------AAA-UGCUGACGUGAAAA--CGUUGCGUAUUGCUACAACACU-----UGGUUAGCUAUUUAGCUUUACUAAUCAAGACGCCGUC-GUGC-AGCCCAC-AAAAGUCUAGAUA---CGUCACAGGAGAGCAUACGCUAGGUCGCGUUGACUAUCCUUAUAUAUGACCUGCAA
+URS000080DDA6_64698/2-142                   CUGACUAUGUGAUCUUAUUAAAAUUAGGUUAAAUUUCGAGGUUAAAAAUAGUUUUAAUAUUGCUAUAGUCUU-AGAGGUCUUGCGA----AAGCUUACCACACAAGAUGGACCG-GAGCGAAAGCUC-CAAUAUCUAGUGUACCCUCG----------------------------------------------------
+#=GR URS000080DDA6_64698/2-142 2IL9_A_SS    ...(.(.((...(..(((((((((((......................)))))))))))..)...)))).......{{{{{.<<........>>.....((((.<<<<}}}}}(.((((....)))).)...>>>>.))))...........................................................
+#=GR URS000080DDA6_64698/2-142 2IL9_M_SS    .(..........(..(((((((((((......................)))))))))))..)............).{{{{{.<<........>>.....((((.....}}}}}(.((((....)))).)........))))...........................................................
+URS000080E076_12136/1-190                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUUUUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUGCU-
+#=GR URS000080E076_12136/1-190 2NOQ_A_SS    ..(((((((.....((((((((((...(........{{{{{.......).))))))))))...)))))))......{{{{{.((((....)))).....((((.((((}}}}}(.(((......))).)....)))).))))...}}}}}...((((((((.....{{{{{{..)).)))))).......}}}}}}....
+URS000080E194_12136/1-194                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUUAUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUUAAG
+#=GR URS000080E194_12136/1-194 4D5N_X_SS    ..(((((((......(((((((((...(........{{{{{{......).)))))))))....)))))))......{{{{..((((....)))).....((((.(((((}}}}(.(((......))).)...))))).))))..}}}}}}...((((.(((.(((.{{{{)))))).).)))).........}}}}....
+#=GR URS000080E194_12136/1-194 4D61_j_SS    ..(((((..........(((((((............{{{{{.........)))))))........)))))......{{{{...(((....)))......((((.(((((}}}}(.(((......))).)...))))).))))...}}}}}...((((.(((.(((.{{{{)))))).).)))).........}}}}....
+URS000080DD48_12136/1-190                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUCGAAAAACCUAGGUAGGUUUU----UCUAAGAAAUUUACCUAUUU
+#=GR URS000080DD48_12136/1-190 4V92_AZ_SS   ..(((((((.....((((((((((...(........{{{{{{......).))))))))))...)))))))......{{{{{.((((....)))).....((((.((((}}}}}(.(((......))).)...)))).))))..}}}}}}.......(((((((({{{{{{))))))....)).........}}}}}}...
+URS00008116AA_64698/6-196                   --GACUAUGUGAUCUUAUUAAAAUUAGGUUAAAUUUCGAGGUUAAAAAUAGUUUUAAUAUUGCUAUAGUCUU-AGAGGUCUUGUAUAUUUAUACUUACCACACAAGAUGGACCG-GAGC-AGCCCUC-CAAUAUCUAGUGUACCCUC-GUGCUCGCUCAAACAUUAAGUGGUGUUG-UGCGAAAAGAAUCUCACUUCAA-
+#=GR URS00008116AA_64698/6-196 4XEJ_AIRE_SS ..........................................................................................................................................................((.(.(((((.{{{{{))))))..))...........}}}}}....
+#=GR URS00008116AA_64698/6-196 4XEJ_BIRE_SS ..........................................................................................................................................................((.(.(((((.{{{{{))))))..))...........}}}}}....
+URS0000A7632F_12136/1-192                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGCUUUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUGCUA
+#=GR URS0000A7632F_12136/1-192 5IT9_i_SS    ..(((((........((((((...............{{{{{{...........))))))......)))))......{{{{{.((((....)))).....((((.((((}}}}}(.(((......))).)...)))).))))..}}}}}}........(((((...{{{{{.)))))...............}}}}}....
+#=GR URS0000A7632F_12136/1-192 7JQC_i_SS    ...............(((((((((..............{{{{........)))))))).)......................(((......))).....((((.((((.....(.((.......).).)...)))).))))..}}}}.....................................................
+URS0000D56C4A_12136/1-194                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUUUUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUCUCU
+#=GR URS0000D56C4A_12136/1-194 6D90_4_SS    ..((((((........((((((((...(...................)..))))))))......))))))......{{{{...(((....)))......((((.((.(.}}}}..(((......))).....).)).))))...........((((((((.((........)))))-)))))..................
+URS0000D56C35_12136/1-190                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUUUUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUCUU-
+#=GR URS0000D56C35_12136/1-190 6D9J_4_SS    ..((.((..........((((((....(........{{{{{.......)..))))))........)).)).......{{{{.((((....)))).....((((.((.(}}}}.(.(((......))).)...).)).))))...}}}}}.....(((((.......{{{{{...))-)))..........}}}}}.....
+URS0002617726_12136/1-195                   -CAAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGUUAUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUUGAG
+#=GR URS0002617726_12136/1-195 7ZJW_I_SS    ...................................................................................(((....)))......(((...........(.(((......))).)........)))............((((.(((.(((.{{{{{))))))..)))).........}}}}}....
+URS0002616B80_12136/1-163                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUGCGGCUUUUCAACCUUG--AGGC---------------------------
+#=GR URS0002616B80_12136/1-163 7ZJX_I_SS    .....((.(.......((...(((...(........{{{{{.......).))..).)).....)..)).......{.{....((((....)))).....((((.(((((..}}(.(((......))).)..))))).))))...}}}}}...................................................
+URS0000A7638F_12136/1-190                   --AAAAAUGUGAUCUUGCUUGUAA--AUACAAUUUUGAGAGGUUAAUAAAUUACAAGUAGUGCUAUUUUUGU-AUUUAGGUUAGCUAUUUAGCUUUACGUUCCAGGAUGCCUAG-UGGC-AGCCCCA-CAAUAUCCAGGAAGCCCUCUCUACGGUUUUUCAGAUUAGGUAGUCGAA-AAACCUAAGAAAUUUACCUGCU-
+#=GR URS0000A7638F_12136/1-190 5IT7_4_SS    ..(((((........(((((((((...(.........{{{........).)))))))))......)))))......{{{{..((((....))))......(.(.((((.}}}}(.(((......))).)...)))).).).....}}}.....(((((((.(((({{{{{)))))).))))..........}}}}}....
+#=GC SS_cons                                <<<<<<<<<------<<<<<<<<<..-<________AAAAAA______>->>>>>>>>>---->>>>>>>>>.:::BBBBB:<<<<____>>>>:::::<<<<-<<<<bbbbb<.<<<_.____>>>.>--->>>>->>>>::aaaaaa:::<<<<<-<<<<<<CCCCCC>>>>>>.>>>>>:::::::::cccccc:::
+#=GC RF                                     ccgAcuaUGUGAUCUUgCuugcag..AuacAAuUUUgaGaggUaAAaAaacugcaaGuAuUGCUAuagUcgg.AuuuaggUUagcUAUUUAgcuUUACuuccCAGGAUGccuag.ugGC.AGcCCca.cAAUAUCCAGggaaCCCucucUGcggucuuucagauUAgGUagucuga.agaccuaAgAAauUuACcUgcua
+#=GC RNA_structural_elements                [=====================================P1===============================]==========[==============================P2=========================]===========[==============P3============]==================
+
+AF178440.1/5925-6118                        UAA
+AB017037.1/6286-6479                        AUA
+AF014388.1/6078-6273                        ACU
+AF218039.1/6028-6223                        CAU
+AF183905.1/5647-5843                        AAC
+AB006531.1/6003-6199                        AAA
+AF022937.1/6935-7116                        AUA
+URS000080DDA6_64698/2-142                   ---
+#=GR URS000080DDA6_64698/2-142 2IL9_A_SS    ...
+#=GR URS000080DDA6_64698/2-142 2IL9_M_SS    ...
+URS000080E076_12136/1-190                   ---
+#=GR URS000080E076_12136/1-190 2NOQ_A_SS    ...
+URS000080E194_12136/1-194                   GCU
+#=GR URS000080E194_12136/1-194 4D5N_X_SS    ...
+#=GR URS000080E194_12136/1-194 4D61_j_SS    ...
+URS000080DD48_12136/1-190                   UU-
+#=GR URS000080DD48_12136/1-190 4V92_AZ_SS   ...
+URS00008116AA_64698/6-196                   ---
+#=GR URS00008116AA_64698/6-196 4XEJ_AIRE_SS ...
+#=GR URS00008116AA_64698/6-196 4XEJ_BIRE_SS ...
+URS0000A7632F_12136/1-192                   C--
+#=GR URS0000A7632F_12136/1-192 5IT9_i_SS    ...
+#=GR URS0000A7632F_12136/1-192 7JQC_i_SS    ...
+URS0000D56C4A_12136/1-194                   AGU
+#=GR URS0000D56C4A_12136/1-194 6D90_4_SS    ...
+URS0000D56C35_12136/1-190                   ---
+#=GR URS0000D56C35_12136/1-190 6D9J_4_SS    ...
+URS0002617726_12136/1-195                   GCU
+#=GR URS0002617726_12136/1-195 7ZJW_I_SS    ...
+URS0002616B80_12136/1-163                   ---
+#=GR URS0002616B80_12136/1-163 7ZJX_I_SS    ...
+URS0000A7638F_12136/1-190                   ---
+#=GR URS0000A7638F_12136/1-190 5IT7_4_SS    ...
+#=GC SS_cons                                :::
+#=GC RF                                     aua
+#=GC RNA_structural_elements                ===
+//

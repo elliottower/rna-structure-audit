@@ -1,0 +1,28 @@
+{
+  "name": "group_I_intron_P4P6",
+  "rfam_id": "RF00028",
+  "original_sequence": "UAACAAGGUUUUUUAUUGGUUCUUCUGCAGUGCGCCAAAGGAAGCCUUAGCAGCCUGAAAGGGUGUAUCUCCGCGACUAUAAAUAAAAAGGGGAUUUUAAAUGCUAGUCUGAUAAAAAAAGGCGACAUUGCCAAAUUGCGGGAAGUCCCUAAAGAUUCAACUACUAAGCAGCUUGUGGAAACACAGUUGUGGCCGAGUUAAUAGCCCUGGGUAUAGUAACAAUGUUGAAUAUGACUCUUAAUUGAGGAAAUGGGUGAUCCGCAGCCAAAUCCUAAGGACAUUUUAUUGUCUAUGGAUGCAGUUCACAGGCCAGAUGGCAAUGGGUAUCCUAGUGGGAUAUAUAUAUAUGGAUGCUUAAGAUAUGGUCGAGCUUCUCUCGAAAGAGAG",
+  "original_dot_bracket": "...(((((((((............................)))))))))..(((................................................)))....................(((((.((...((((((....(((((..................................................................................................)))))...))))))((...((((....(((((....)))))...))))...))............)).))))).(((((((((.............)))))))))...................(((((....)))))",
+  "n_available": 3,
+  "n_selected": 3,
+  "sequences": [
+    {
+      "accession": "V01416.1/43-384",
+      "sequence": "ATGACTCTCTAAATAGCAATATTTACCTTTGGAGGGAAAAGTTATCAGGCATGCACCTGGTAGCTAGTCTTTAAACCAATAGATTGCATCGGTTTAAAAGGCAAGACCGTCAAATTGCGGGAAAGGGGTCAACAGCCGTTCAGTACCAAGTCTCAGGGGAAACTTTGAGATGGCCTTGCAAAGGGTATGGTAATAAGCTGACGGACATGGTCCTAACCACGCAGCCAAGTCCTAAGTCAACAGATCTTCTGTTGATATGGATGCAGTTCACAGACTAAATGTCGGTCGGGGAAGATGTATTCTTCTCATAAGATATAGTCGGACCTCTCCTTAATGGGAGCT",
+      "dot_bracket": "....(((((((((..............)))))))))...(((....................))).......................................(((((.((...((((((....(((((..............................................................................)))))...)).))))((...((((...(((((..........)))))...))))...))............)).))))).(((((((((.)))))))))...................(((((....)))))..",
+      "length": 342
+    },
+    {
+      "accession": "X03106.1/43-386",
+      "sequence": "ATGACTCTCTAAATTGCAAAATTTACCTTTGGAGGGAAAAGTTATCAGGCCTGCACCTGATAGCTAGTCTTTAAACCAATAGATTGCATCGGTTTAATAGGCAAGACCGTCAAATTGCGGGAAAAGGGTCAACAGCCGTTCAGTACCAAGTCTCAGGGGAAACTTTGAGATGGCCTTGCAAAGGATATGGTAATAAGCTGACGGACAGGGTCCTAACCACGCAGCCAAGTCCTAAGTCAACATTTCGGTGTTGATATGGATGCAGTTCACAGACTAAATGTCGGTCGGGGAAGAATAGGTATTCTTCTCATAAGATATAGTCGGACCTCTCCTTAATGGGAGCT",
+      "dot_bracket": "....(((((((((..............)))))))))...(((....................))).......................................(((((.((...((((((....(((((..............................................................................)))))...)).))))((...((((...(((((.........)))))...))))...))............)).))))).(((((((((....)))))))))...................(((((....)))))..",
+      "length": 344
+    },
+    {
+      "accession": "M86534.1/28-414",
+      "sequence": "TAACAAGGTTTTTTATTGGTTCTTCTGCAGTGCGCCAAAGGAAGCCTTAGCAGCCTGAAAGGGTGTATCTCCGCGACTATAAATAAAAAGGGGATTTTAAATGCTAGTCTGATAAAAAAAGGCGACATTGCCAAATTGCGGGAAGTCCCTAAAGATTCAACTACTAAGCAGCTTGTGGAAACACAGTTGTGGCCGAGTTAATAGCCCTGGGTATAGTAACAATGTTGAATATGACTCTTAATTGAGGAAATGGGTGATCCGCAGCCAAATCCTAAGGACATTTTATTGTCTATGGATGCAGTTCACAGGCCAGATGGCAATGGGTATCCTAGTGGGATATATATATATGGATGCTTAAGATATGGTCGAGCTTCTCTCGAAAGAGAG",
+      "dot_bracket": "...(((((((((............................)))))))))..(((................................................)))....................(((((.((...((((((....(((((..................................................................................................)))))...))))))((...((((....(((((....)))))...))))...))............)).))))).(((((((((.............)))))))))...................(((((....)))))",
+      "length": 387
+    }
+  ]
+}

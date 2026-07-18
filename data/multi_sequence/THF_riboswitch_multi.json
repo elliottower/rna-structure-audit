@@ -1,0 +1,40 @@
+{
+  "name": "THF_riboswitch",
+  "rfam_id": "RF01831",
+  "original_sequence": "GGCAGAGUAGGAGCGCGUGUGCAGUACCUCGCAAGGGGUCCAGUGCCGGCGGGACGGGGAGUUGUCCGCCGGACGAAAAGCCACAGGCUUGCAGUACGCCCUCCGCAUCCCGCUGCC",
+  "original_dot_bracket": "(((((....(((((((((((((....................((.((((((((...........))))))))))...((((.....))))))).))))))))))........)))))",
+  "n_available": 79,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "BABF01004573.1/52-147",
+      "sequence": "GCAGAGTAGGTTTGTGTGCGTTAAGTGCTGGTTGAACAGGGAGTTGTCAGCCGGACGAAAAGATTTTCTTGCGGTACACGAATCGCATCCCGCTGC",
+      "dot_bracket": "((((....(((((((((((((...((.((((((((...........))))))))))...(((.....)))))).))))))))))........))))",
+      "length": 96
+    },
+    {
+      "accession": "BABB01000157.1/63-158",
+      "sequence": "GCAGAGTAGACACATGTGCGTTAAGTGCCGGATGAACAGGGAGTTGTCACCCGGACGAAAAGAAAATCTTGCGGTACATGAGTCGCATCCCGCTGC",
+      "dot_bracket": "((((....(((((((((((((...((.((((((((...........))))))))))...(((.....)))))).))))))))))........))))",
+      "length": 96
+    },
+    {
+      "accession": "BAAZ01020636.1/794-894",
+      "sequence": "TTTAGAGTAGGAAATAAATAGTAAAGACTTAATAAACGGGGAAGTTGTTATTAGGGCNAATAAATATTTTTATGCCTTATTATTTTCGCATTCCGCTAAGA",
+      "dot_bracket": "(((((....(((((((((((((.....((((((((............))))))))....((((......))))))).))))))))))........)))).)",
+      "length": 101
+    },
+    {
+      "accession": "AAQK01002842.1/285-380",
+      "sequence": "ACAGAGTAAAAATATGTGCGTTAAGTGCCTTTAACACGGGGAGTTGGTTAAGGAACGAAAAGTTATTCTTGCGGTACATATTTTGCATCCCGCTGT",
+      "dot_bracket": "((((....(((((((((((((...((.((((((((...........))))))))))...(((.....)))))).))))))))))........))))",
+      "length": 96
+    },
+    {
+      "accession": "CP000233.1/1666649-1666554",
+      "sequence": "GGGGTAGGAATCCTTGCGTAACGGACTAATGGAACGGAATGTGAACATTAGTAGATTAAGTCCGATATGACTTAGCGTTTGGTTTCCGCATTCACC",
+      "dot_bracket": "((....(((((((((((((...((.((((((((..........))))))))))....((((........))))))).)))))))))).......))",
+      "length": 96
+    }
+  ]
+}

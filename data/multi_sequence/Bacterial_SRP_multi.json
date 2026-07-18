@@ -1,0 +1,40 @@
+{
+  "name": "Bacterial_SRP",
+  "rfam_id": "RF00169",
+  "original_sequence": "UGUUAGUACUCUAUAAUACUGUAAUUCUUAAGAAUUUGGUCAGGAUUGGAAAAUAGCAGCCAUAUUAAGACAGUACAGGUAUUACGAAUAUUACUAACAGAGA",
+  "original_dot_bracket": "...((((((((..((((.((((((.(((((((...(((((....(((....)))....))))))))))))..)))))))..))).)))...))))).......",
+  "n_available": 199,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CP000412.1/1420806-1420719",
+      "sequence": "TGTATTGGGCAATGTTCGACCTCCGAAGCGTGTCAGGACCGGAAGGTAGCAGCACTAAGGTCGCTTGGACATGTGCCCTTTATTTAGC",
+      "dot_bracket": "...(((((((.((((((.(((((((...(((((....(((....)))....))))).)))))))..)))))))..)))))).......",
+      "length": 88
+    },
+    {
+      "accession": "CP001015.1/23929-24010",
+      "sequence": "ATAGTGGAGCAACAGTTCTGCGTGAAGCGGGTCAGGGGAGGAATCCAGCAGCCCTAAGCGATTTGAATTGTGTGCTCTTTTT",
+      "dot_bracket": "...(((((((.(((((((((((((...(((((....(((....)))....))))).)))))))..)))))))..))))))..",
+      "length": 82
+    },
+    {
+      "accession": "CP000088.1/57486-57389",
+      "sequence": "TCAGGCCCCTCGTGCGGCGTCATCCTACGAACCTCCCCAGGGCCGGAAGGCAGCAAGGATAAGTAGGCTCTGACGGGTGCGCGGGGGGTCCTTCGCGT",
+      "dot_bracket": "...((((((((((((.(((((((((((((...(((((....(((....)))....))))).)))))))..)))))))..)))))))))))........",
+      "length": 98
+    },
+    {
+      "accession": "BX251412.1/198564-198476",
+      "sequence": "GCCTCCGCGCGGCGTTACCCGGGTGAACTCCCCCAGGTTAGGAATAAAGCAAGGGTAGCTCGGCTCTGGCGGGTGTGCGGGGGTCTTGC",
+      "dot_bracket": "...(((((((.((((((.(((((((...(((((....(((....)))....))))))))))))...)))))))..))))))........",
+      "length": 89
+    },
+    {
+      "accession": "AE014184.1/822891-822803",
+      "sequence": "GCCTCCGCGCGGCGTTACCCGGGTGAACTCCCCCAGGTTAGGAATAAAGCAAGGGTAGCTCGGCTCTGGCGGGTGTGCGGGGGTCTTGC",
+      "dot_bracket": "...(((((((.((((((.(((((((...(((((....(((....)))....))))))))))))...)))))))..))))))........",
+      "length": 89
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "purine_riboswitch",
+  "rfam_id": "RF00167",
+  "original_sequence": "UACGGAUAGACGAAAGCCCUUCAUAUAAGCGCAAGAAUAUGGCUUGCGCGUCUCUACCGGGCCGCCGUAAACGGCCCGACUAUGAAGGCAGAAGACGCUGCU",
+  "original_dot_bracket": ".................((((((((...(((((((.......)))))))........(((((((.......)))))))..))))))))..............",
+  "n_available": 112,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AAML04000013.1/228851-228749",
+      "sequence": "ATTCATGTTTTGTACTGTATAACATATAATTTTGACAATATGGGTCATAAGTTTCTACCGGAATACCGTAAATATTCTGACTATGTATACTATTATTTAGTTA",
+      "dot_bracket": ".................((((.((((...(((((((.......)))))))........(((((((.......)))))))..))))))))..............",
+      "length": 103
+    },
+    {
+      "accession": "CP000024.1/1182948-1183043",
+      "sequence": "TCAAACAATGAGAACATTACTTATTTATGTCACGAATGGGCGTGACGTTTCTACAAGGTGCCGTAACACCTAACAATAAGTAAGCTAATTTAGTCA",
+      "dot_bracket": ".................((((((((...(((((((....)))))))........((((((......))))))..))))))))..............",
+      "length": 96
+    },
+    {
+      "accession": "AL591981.1/205922-205823",
+      "sequence": "ATAACTTAAAACCGAAATACTTGTATAATAGTTGCGATTGGGCGACGAGTTTCTACCTGGTTACCGTAAATAACCGGACTATGAGTAGTTTGTATAAAGA",
+      "dot_bracket": ".................((((((((...(((((((......)))))))........(((((((.......)))))))..)))))))).............",
+      "length": 100
+    },
+    {
+      "accession": "AF270087.1/2580-2679",
+      "sequence": "AAAATAATTTATATGACTCATATAATCTAGAGAATATGGCTTTAGAAGTTTCTACCGTGTCGCCATAAACGACACGACTATGAGTAACAATCCAATACAT",
+      "dot_bracket": "..............((((((((...(((((((........)))))))........(((((((.......)))))))..))))))))..............",
+      "length": 100
+    },
+    {
+      "accession": "AL596170.1/223345-223246",
+      "sequence": "ATAACTTAAAACCGAAATACTTATATAATAGTTGCGATTGGGCGACGAGTTTCTACCTGGTTACCGTAAATAACCGGACTATGAGTAGTTTGTATAAAGA",
+      "dot_bracket": ".................((((((((...(((((((......)))))))........(((((((.......)))))))..)))))))).............",
+      "length": 100
+    }
+  ]
+}

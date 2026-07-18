@@ -1,0 +1,40 @@
+{
+  "name": "IRE_stem_loop",
+  "rfam_id": "RF00037",
+  "original_sequence": "CGCAGUUCUUGCUUCAACAGUGCUUGAACGGAACUCG",
+  "original_dot_bracket": "((.((((((.(.((((((...).))))))))))))))",
+  "n_available": 27,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "URS000080E11E_8355/1-30",
+      "sequence": "GTTCTTGCTTCAACAGTGTTTGAACGGAAC",
+      "dot_bracket": "(((((.(.((((((...).)))))))))))",
+      "length": 30
+    },
+    {
+      "accession": "BAAE01241509.1/2881-2846",
+      "sequence": "GAAGTTCTTGCTTCAACAGTGTTTGAACGGAACTTC",
+      "dot_bracket": "((((((((.(.((((((...).))))))))))))))",
+      "length": 36
+    },
+    {
+      "accession": "AANH01004160.1/35803-35838",
+      "sequence": "GGAGTTCTTGCTTCAACAGTGTTTGAACGGAACTTT",
+      "dot_bracket": "((((((((.(.((((((...).))))))))))))))",
+      "length": 36
+    },
+    {
+      "accession": "BC152596.1/22-57",
+      "sequence": "GAGGTTCTTGCTTCAACAGTGATTGAACGGAACTTC",
+      "dot_bracket": "((((((((.(.((((((...).))))))))))))))",
+      "length": 36
+    },
+    {
+      "accession": "BT073905.1/31-66",
+      "sequence": "GAAGTTCTTGCTTCAACAGTGATTGAACGGAACTCC",
+      "dot_bracket": "((((((((.(.((((((...).))))))))))))))",
+      "length": 36
+    }
+  ]
+}

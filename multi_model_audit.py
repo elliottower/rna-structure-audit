@@ -238,7 +238,23 @@ class EvoAdapter(ModelAdapter):
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         tokens = tokens.to(next(self.model.parameters()).device)
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0].float().cpu() for hs in out.hidden_states]
+        if out.hidden_states is not None:
+            return [hs[0].float().cpu() for hs in out.hidden_states]
+        # StripedHyena ignores output_hidden_states; use hooks
+        hidden_states = []
+        hooks = []
+        backbone = self.model.backbone if hasattr(self.model, "backbone") else self.model.model
+        for layer in backbone.blocks:
+            h = layer.register_forward_hook(
+                lambda mod, inp, out, hs=hidden_states: hs.append(
+                    (out[0] if isinstance(out, tuple) else out)[0].float().cpu()
+                )
+            )
+            hooks.append(h)
+        self.model(tokens)
+        for h in hooks:
+            h.remove()
+        return hidden_states
 
 
 # ── Caduceus adapter ───────────────────────────────────────────────────────

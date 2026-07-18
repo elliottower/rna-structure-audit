@@ -1,0 +1,40 @@
+{
+  "name": "tRNA_Phe_yeast",
+  "rfam_id": "RF00005",
+  "original_sequence": "GCGGAUUUAGCUCAGUUGGGAGAGCGCCAGACUGAAGAUCUGGAGGUCCUGUGUUCGAUCCACAGAAUUCGCACCA",
+  "original_dot_bracket": "(((((((..((((........)))).(((((.......))))).....(((((.......))))))))))))....",
+  "n_available": 944,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AB042432.1/6942-7011",
+      "sequence": "AAGATATTAGTAAAATCAATTACATAACTTTGTCAAAGTTAAATTATAGATCAATAATCTATATATCTTA",
+      "dot_bracket": "(((((((..((((......)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 70
+    },
+    {
+      "accession": "X05914.1/238-170",
+      "sequence": "AAAAAGATAAGCTAACTAAGCTACTGGGTTCATACCCCATTTATAAAGGTTTTAATCCTTTTCTTTTTA",
+      "dot_bracket": "(((((((..((((.....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 69
+    },
+    {
+      "accession": "X05915.1/238-170",
+      "sequence": "AAAAAGATAAGCTAATTAAGCTACTGGGTTCATACCCCATTTATAAAGGTTATAATCCTTTTCTTTTTA",
+      "dot_bracket": "(((((((..((((.....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 69
+    },
+    {
+      "accession": "J04815.1/1953-1885",
+      "sequence": "AGAGGTCTAGTTAAAATATAACTTTGGGTTGTCAGGCCAAAATTGCTGGTTAAATTCCAGCGGCTTCTG",
+      "dot_bracket": "(((((((..((((.....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 69
+    },
+    {
+      "accession": "M10217.1/5910-5978",
+      "sequence": "AGTAAAGTCAGCTAAAAAAGCTTTTGGGCCCATACCCCAAACATGTTGGTTAAACCCCTTCCTTTACTA",
+      "dot_bracket": "(((((((..((((.....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 69
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Histone_3prime",
+  "rfam_id": "RF00032",
+  "original_sequence": "ACAACGGCUCUUUUAAGAGCCACCACAUGUGACCGAAAGAGCAUUU",
+  "original_dot_bracket": ".....((((((....)))))).........................",
+  "n_available": 50,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "URS000080E1CD_10090/1-28",
+      "sequence": "GGCCAAAGGCCCTTTTCAGGGCCACCCA",
+      "dot_bracket": ".......((((((....)))))).....",
+      "length": 28
+    },
+    {
+      "accession": "URS0002335968_32630/1-28",
+      "sequence": "GGCCAAAGGCCCTTTTCAGGGCCACCCC",
+      "dot_bracket": ".......((((((....)))))).....",
+      "length": 28
+    },
+    {
+      "accession": "URS000080E236_32630/1-26",
+      "sequence": "GGCCAAAGGCCCTTTTCAGGGCCACC",
+      "dot_bracket": ".......((((((....))))))...",
+      "length": 26
+    },
+    {
+      "accession": "AAEE01000004.1/565730-565685",
+      "sequence": "GAACAGGTGGCACTAGCCACCATAAATTTTGAGATTAAAGTTTTAG",
+      "dot_bracket": ".....((((((....)))))).........................",
+      "length": 46
+    },
+    {
+      "accession": "AAFI02000005.1/2443043-2442999",
+      "sequence": "CCAAAGGTGTTTTTTAACACCACACAAAAAACCAATTTCTTTTCA",
+      "dot_bracket": ".....((((((....))))))........................",
+      "length": 45
+    }
+  ]
+}

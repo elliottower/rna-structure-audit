@@ -1,0 +1,200 @@
+{
+  "model": "Nucleotide-Transformer-v2",
+  "d_model": 512,
+  "n_layers": 12,
+  "token_resolution": "6mer",
+  "timestamp": "2026-07-11T16:47:22.692934",
+  "bracket_norm": {
+    "100": {
+      "mean_norm": 14.045570373535156,
+      "bn_corrected": 2.6081969404031917,
+      "n": 29
+    },
+    "200": {
+      "mean_norm": 14.045570373535156,
+      "bn_corrected": 2.6081969404031917,
+      "n": 29
+    },
+    "300": {
+      "mean_norm": 14.045570373535156,
+      "bn_corrected": 2.6081969404031917,
+      "n": 29
+    },
+    "400": {
+      "mean_norm": 14.045570373535156,
+      "bn_corrected": 2.6081969404031917,
+      "n": 29
+    },
+    "500": {
+      "mean_norm": 14.045570373535156,
+      "bn_corrected": 2.6081969404031917,
+      "n": 29
+    }
+  },
+  "grassmannian_final": {
+    "10": {
+      "geodesic": 2.1948118209838867,
+      "max_angle_deg": 83.01825714111328
+    },
+    "15": {
+      "geodesic": 0.557481050491333,
+      "max_angle_deg": 14.269176483154297
+    },
+    "18": {
+      "geodesic": 1.949795126914978,
+      "max_angle_deg": 74.56684875488281
+    },
+    "24": {
+      "geodesic": 1.8600651025772095,
+      "max_angle_deg": 69.5196304321289
+    },
+    "27": {
+      "geodesic": 0.817341685295105,
+      "max_angle_deg": 33.67717361450195
+    },
+    "30": {
+      "geodesic": 1.9012678861618042,
+      "max_angle_deg": 67.58206939697266
+    },
+    "36": {
+      "geodesic": 1.979870319366455,
+      "max_angle_deg": 68.74805450439453
+    },
+    "40": {
+      "geodesic": 2.0092108249664307,
+      "max_angle_deg": 68.69609832763672
+    },
+    "50": {
+      "geodesic": 2.136152505874634,
+      "max_angle_deg": 67.83391571044922
+    },
+    "60": {
+      "geodesic": 2.231919288635254,
+      "max_angle_deg": 70.20649719238281
+    },
+    "80": {
+      "geodesic": 2.4147191047668457,
+      "max_angle_deg": 73.1870346069336
+    }
+  },
+  "layer_compression": {
+    "0": {
+      "effective_dim_95": 16,
+      "pc1_variance": 0.28190505504608154,
+      "n_components": 29
+    },
+    "1": {
+      "effective_dim_95": 16,
+      "pc1_variance": 0.27012911438941956,
+      "n_components": 29
+    },
+    "2": {
+      "effective_dim_95": 15,
+      "pc1_variance": 0.287272572517395,
+      "n_components": 29
+    },
+    "3": {
+      "effective_dim_95": 15,
+      "pc1_variance": 0.27114543318748474,
+      "n_components": 29
+    },
+    "4": {
+      "effective_dim_95": 14,
+      "pc1_variance": 0.3516252636909485,
+      "n_components": 29
+    },
+    "5": {
+      "effective_dim_95": 14,
+      "pc1_variance": 0.4260764718055725,
+      "n_components": 29
+    },
+    "6": {
+      "effective_dim_95": 14,
+      "pc1_variance": 0.37297818064689636,
+      "n_components": 29
+    },
+    "7": {
+      "effective_dim_95": 15,
+      "pc1_variance": 0.344472199678421,
+      "n_components": 29
+    },
+    "8": {
+      "effective_dim_95": 16,
+      "pc1_variance": 0.26032397150993347,
+      "n_components": 29
+    },
+    "9": {
+      "effective_dim_95": 17,
+      "pc1_variance": 0.21593503654003143,
+      "n_components": 29
+    },
+    "10": {
+      "effective_dim_95": 17,
+      "pc1_variance": 0.2665760815143585,
+      "n_components": 29
+    },
+    "11": {
+      "effective_dim_95": 17,
+      "pc1_variance": 0.23454032838344574,
+      "n_components": 29
+    },
+    "12": {
+      "effective_dim_95": 16,
+      "pc1_variance": 0.21206800639629364,
+      "n_components": 29
+    }
+  },
+  "best_analysis_layer": 9,
+  "best_analysis_layer_dim": 17,
+  "di_final": {
+    "di_per_variant": {
+      "10": 0.709143340587616,
+      "15": 0.6475185751914978,
+      "18": 0.6646158695220947,
+      "24": 0.6399424076080322,
+      "27": 0.6200276613235474,
+      "30": 0.6365912556648254,
+      "36": 0.6364231109619141,
+      "40": 0.6372609734535217,
+      "50": 0.6391210556030273,
+      "60": 0.6399868130683899,
+      "80": 0.642527163028717
+    },
+    "left_flank_di": 0.4850437045097351,
+    "cag_di": 0.0954221785068512,
+    "right_flank_di": 0.9627585411071777,
+    "cag_elevation_vs_left": 0.19672903208443976,
+    "di_range": 0.9917582869529724,
+    "rho_di_vs_deviation": -0.06392760709681124,
+    "rho_p": 0.8518706025636504
+  },
+  "di_best_layer": {
+    "di_per_variant": {
+      "10": 0.7824194431304932,
+      "15": 0.6830260157585144,
+      "18": 0.7114663124084473,
+      "24": 0.6904374361038208,
+      "27": 0.6539922952651978,
+      "30": 0.7122684717178345,
+      "36": 0.7177625298500061,
+      "40": 0.7165179252624512,
+      "50": 0.7170632481575012,
+      "60": 0.7193836569786072,
+      "80": 0.7230196595191956
+    },
+    "left_flank_di": 0.5669361352920532,
+    "cag_di": 0.2929997444152832,
+    "right_flank_di": 0.9771097898483276,
+    "cag_elevation_vs_left": 0.5168126111142067,
+    "di_range": 0.9619242548942566,
+    "rho_di_vs_deviation": 0.7579987698621904,
+    "rho_p": 0.0068694517329335476
+  },
+  "di_best_layer_idx": 9,
+  "preflight_final": {
+    "error": "preflight-bio not importable"
+  },
+  "preflight_best": {
+    "error": "preflight-bio not importable"
+  }
+}

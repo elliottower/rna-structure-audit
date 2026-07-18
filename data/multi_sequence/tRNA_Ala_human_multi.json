@@ -1,0 +1,40 @@
+{
+  "name": "tRNA_Ala_human",
+  "rfam_id": "RF00005",
+  "original_sequence": "GGGGGAUUAGCUCAGCUGGGAGAGCGUCUGCUUAGCACGCAGAGGUCCUGGGUUCAAUCCCCAGCAUCUCCACCA",
+  "original_dot_bracket": "(((((((..((((........)))).(((((.......))))).....(((((.......))))))))))))...",
+  "n_available": 944,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "X16887.1/483-416",
+      "sequence": "CCTTAAAACTACAAAAAGCAGACAATCTTGTAAATTGTAAGATAAAAGGTTTAAGTCCTTTTTAAGGT",
+      "dot_bracket": "(((((((..((((...)))).(((((.......))))).......((((.......))))))))))).",
+      "length": 68
+    },
+    {
+      "accession": "M10217.1/7325-7260",
+      "sequence": "AAGCCTGCGGTGTTTGACATGCCAGATTGCAAATCTCGAGAAGCAAACGAAGGTTTGCCGGGCTTC",
+      "dot_bracket": "(((((((..((((...)))).(((((.......)))))....((((........))))))))))).",
+      "length": 66
+    },
+    {
+      "accession": "AF200831.1/165-97",
+      "sequence": "TATATTTTGGTGTATGATGCACAAAAGTTTTTGATACTTTTAGAAATAGTTTAATTCTATTAAATATAA",
+      "dot_bracket": "(((((((..((((.....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 69
+    },
+    {
+      "accession": "X05914.1/238-306",
+      "sequence": "TATATTTTGGTGTACGATGCACAAAAGTTTTTGATACTTTTAGTAATAGTTTAATTCTATTAAATATAA",
+      "dot_bracket": "(((((((..((((.....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 69
+    },
+    {
+      "accession": "X01078.1/1396-1463",
+      "sequence": "ACTATTTTGGCAGATTAGTGCAGTAAATTTAGAATTTATTTATATAATTTAATTAATTATAAATAGTA",
+      "dot_bracket": "(((((((..((((....)))).(((((.......)))))....(((((.......)))))))))))).",
+      "length": 68
+    }
+  ]
+}

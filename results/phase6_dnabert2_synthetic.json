@@ -1,0 +1,2422 @@
+{
+  "model": "dnabert2",
+  "experiment": "synthetic_covariation_control",
+  "timestamp": "20260715_131418",
+  "results": {
+    "per_rna": {
+      "5S_rRNA_ecoli_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "5S_rRNA_ecoli_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "5S_rRNA_ecoli_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "5S_rRNA_ecoli_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "5S_rRNA_ecoli_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "6S_RNA_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "6S_RNA_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "6S_RNA_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "6S_RNA_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "6S_RNA_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "7SK_RNA_syn0": {
+        "best_ps": -0.007221654057502747,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.007221654057502747
+        ],
+        "n_eligible_pairs": 41,
+        "n_stems": 17,
+        "n_wc_pairs_total": 87,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.05040401294244361,
+          "mean_stem_delta": 0.20069005579321386,
+          "mean_loop_delta": 0.21820233871297137
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.009576678276062012,
+        "ps_au_pairs": -0.00015658140182495117,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "7SK_RNA_syn1": {
+        "best_ps": 0.008325159549713135,
+        "best_layer": 0,
+        "per_layer_ps": [
+          0.008325159549713135
+        ],
+        "n_eligible_pairs": 41,
+        "n_stems": 17,
+        "n_wc_pairs_total": 87,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7323446714504183,
+          "mean_stem_delta": 0.17809195288418458,
+          "mean_loop_delta": 0.18088366976356118
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 0.016809046268463135,
+        "ps_au_pairs": -0.00015872716903686523,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": false
+      },
+      "7SK_RNA_syn2": {
+        "best_ps": -0.022095173597335815,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.022095173597335815
+        ],
+        "n_eligible_pairs": 41,
+        "n_stems": 17,
+        "n_wc_pairs_total": 87,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.3620839366673029,
+          "mean_stem_delta": 0.10812708031053858,
+          "mean_loop_delta": 0.10351042524958642
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.00011935830116271973,
+        "ps_au_pairs": -0.04407098889350891,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "7SK_RNA_syn3": {
+        "best_ps": -0.02861306071281433,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.02861306071281433
+        ],
+        "n_eligible_pairs": 41,
+        "n_stems": 17,
+        "n_wc_pairs_total": 87,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.2700917459815704,
+          "mean_stem_delta": 0.0866277794169638,
+          "mean_loop_delta": 0.09875547076703012
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 3.3795833587646484e-05,
+        "ps_au_pairs": -0.038162012894948326,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "7SK_RNA_syn4": {
+        "best_ps": -0.0307147353887558,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0307147353887558
+        ],
+        "n_eligible_pairs": 41,
+        "n_stems": 17,
+        "n_wc_pairs_total": 87,
+        "positive_control": {
+          "pass": false,
+          "p_value": 5.532552576097264e-06,
+          "mean_stem_delta": 0.27554235813695666,
+          "mean_loop_delta": 0.3281075877236959
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.05718549092610677,
+        "ps_au_pairs": 0.04869753122329712,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Bacterial_SRP_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Bacterial_SRP_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Bacterial_SRP_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Bacterial_SRP_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Bacterial_SRP_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "CRISPR_leader_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "CRISPR_leader_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "CRISPR_leader_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "CRISPR_leader_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "CRISPR_leader_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Corona_5UTR_syn0": {
+        "best_ps": -0.01124087307188246,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01124087307188246
+        ],
+        "n_eligible_pairs": 49,
+        "n_stems": 18,
+        "n_wc_pairs_total": 89,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.18394546666489286,
+          "mean_stem_delta": 0.15315895346682964,
+          "mean_loop_delta": 0.1616520869488619
+        },
+        "h3_precision": {
+          "fraction": 0.3333333333333333,
+          "n": 3,
+          "partner_max_count": 1,
+          "p_value": 0.7037037037037037
+        },
+        "ps_gc_pairs": -0.01641387740770976,
+        "ps_au_pairs": -0.0008948644002278646,
+        "quarantined": false,
+        "null_95th_primary": -0.0021016796429951987,
+        "null_95th_conservative": -0.0021016796429951987,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Corona_5UTR_syn1": {
+        "best_ps": -0.01433420181274414,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01433420181274414
+        ],
+        "n_eligible_pairs": 49,
+        "n_stems": 18,
+        "n_wc_pairs_total": 89,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.03728358762674615,
+          "mean_stem_delta": 0.12186832399183373,
+          "mean_loop_delta": 0.1356755513571152
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.0003180146217346191,
+        "ps_au_pairs": -0.03185443580150604,
+        "quarantined": false,
+        "null_95th_primary": -0.01676144202550252,
+        "null_95th_conservative": -0.01676144202550252,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "Corona_5UTR_syn2": {
+        "best_ps": -0.014020019107394747,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.014020019107394747
+        ],
+        "n_eligible_pairs": 49,
+        "n_stems": 18,
+        "n_wc_pairs_total": 89,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.6173438785902227,
+          "mean_stem_delta": 0.12970409838811306,
+          "mean_loop_delta": 0.1327792061586403
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -6.824731826782227e-05,
+        "ps_au_pairs": -0.015763990581035614,
+        "quarantined": false,
+        "null_95th_primary": 0.0012378758854336208,
+        "null_95th_conservative": 0.0012378758854336208,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Corona_5UTR_syn3": {
+        "best_ps": -0.003218140867021349,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.003218140867021349
+        ],
+        "n_eligible_pairs": 49,
+        "n_stems": 18,
+        "n_wc_pairs_total": 89,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.0033976923951933623,
+          "mean_stem_delta": 0.11739648880905303,
+          "mean_loop_delta": 0.1368096630745632
+        },
+        "h3_precision": {
+          "fraction": 0.6666666666666666,
+          "n": 3,
+          "partner_max_count": 2,
+          "p_value": 0.2592592592592592
+        },
+        "ps_gc_pairs": -0.0074624717235565186,
+        "ps_au_pairs": 0.0001773238182067871,
+        "quarantined": false,
+        "null_95th_primary": 0.003566602865854899,
+        "null_95th_conservative": 0.003566602865854899,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Corona_5UTR_syn4": {
+        "best_ps": -0.00015998548931545683,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.00015998548931545683
+        ],
+        "n_eligible_pairs": 49,
+        "n_stems": 18,
+        "n_wc_pairs_total": 89,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.2733662185306774,
+          "mean_stem_delta": 0.14041244846195533,
+          "mean_loop_delta": 0.14869726105612152
+        },
+        "h3_precision": {
+          "fraction": 0.3333333333333333,
+          "n": 3,
+          "partner_max_count": 1,
+          "p_value": 0.7037037037037037
+        },
+        "ps_gc_pairs": -0.0010367929935455322,
+        "ps_au_pairs": 9.053094046456473e-05,
+        "quarantined": false,
+        "null_95th_primary": -0.008423904577891031,
+        "null_95th_conservative": -0.008423904577891031,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "Corona_s2m_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "Corona_s2m_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "Corona_s2m_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "Corona_s2m_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "Corona_s2m_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "CrPV_IRES_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "CrPV_IRES_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "CrPV_IRES_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "CrPV_IRES_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "CrPV_IRES_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "FMN_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "FMN_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "FMN_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "FMN_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "FMN_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "HDV_ribozyme_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "HDV_ribozyme_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "HDV_ribozyme_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "HDV_ribozyme_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "HDV_ribozyme_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Hepatitis_C_IRES_III_syn0": {
+        "best_ps": -0.026654794812202454,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.026654794812202454
+        ],
+        "n_eligible_pairs": 52,
+        "n_stems": 19,
+        "n_wc_pairs_total": 101,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0017481697479567022,
+          "mean_stem_delta": 0.15316790183088658,
+          "mean_loop_delta": 0.12296473535098437
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.034873783588409424,
+        "ps_au_pairs": -0.001997828483581543,
+        "quarantined": false,
+        "null_95th_primary": -0.01916806399822235,
+        "null_95th_conservative": -0.01916806399822235,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Hepatitis_C_IRES_III_syn1": {
+        "best_ps": -0.07195426523685455,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.07195426523685455
+        ],
+        "n_eligible_pairs": 52,
+        "n_stems": 19,
+        "n_wc_pairs_total": 101,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.018176353872699558,
+          "mean_stem_delta": 0.16870577152825664,
+          "mean_loop_delta": 0.14724274257714656
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": 0.00016045570373535156,
+        "ps_au_pairs": -0.09599250555038452,
+        "quarantined": false,
+        "null_95th_primary": 0.014012336730957031,
+        "null_95th_conservative": 0.014012336730957031,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Hepatitis_C_IRES_III_syn2": {
+        "best_ps": -0.026162564754486084,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.026162564754486084
+        ],
+        "n_eligible_pairs": 52,
+        "n_stems": 19,
+        "n_wc_pairs_total": 101,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7059157815477879,
+          "mean_stem_delta": 0.11445775500107458,
+          "mean_loop_delta": 0.11775560158512968
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": -0.003921031951904297,
+        "ps_au_pairs": -0.033576409022013344,
+        "quarantined": false,
+        "null_95th_primary": 0.0038433223962783813,
+        "null_95th_conservative": 0.0038433223962783813,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Hepatitis_C_IRES_III_syn3": {
+        "best_ps": -0.007439598441123962,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.007439598441123962
+        ],
+        "n_eligible_pairs": 52,
+        "n_stems": 19,
+        "n_wc_pairs_total": 101,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.010476849126227934,
+          "mean_stem_delta": 0.1418625046776364,
+          "mean_loop_delta": 0.1570937848844371
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.007439598441123962,
+        "ps_au_pairs": null,
+        "quarantined": false,
+        "null_95th_primary": -0.004859402775764465,
+        "null_95th_conservative": -0.004859402775764465,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Hepatitis_C_IRES_III_syn4": {
+        "best_ps": -0.00048576295375823975,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.00048576295375823975
+        ],
+        "n_eligible_pairs": 52,
+        "n_stems": 19,
+        "n_wc_pairs_total": 101,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.030094637192969818,
+          "mean_stem_delta": 0.08386011566732593,
+          "mean_loop_delta": 0.0960472594851103
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.0005480051040649414,
+        "ps_au_pairs": -0.00046501557032267254,
+        "quarantined": false,
+        "null_95th_primary": 0.0002813786268234253,
+        "null_95th_conservative": 0.0002813786268234253,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Histone_3prime_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Histone_3prime_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Histone_3prime_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Histone_3prime_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Histone_3prime_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "IRES_HCV_domainII_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRES_HCV_domainII_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRES_HCV_domainII_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRES_HCV_domainII_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRES_HCV_domainII_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRE_stem_loop_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRE_stem_loop_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRE_stem_loop_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRE_stem_loop_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "IRE_stem_loop_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "RNaseP_specificity_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "RNaseP_specificity_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "RNaseP_specificity_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "RNaseP_specificity_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "RNaseP_specificity_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SAH_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAH_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAH_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAH_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAH_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAM_riboswitch_syn0": {
+        "best_ps": -0.03484553098678589,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.03484553098678589
+        ],
+        "n_eligible_pairs": 17,
+        "n_stems": 6,
+        "n_wc_pairs_total": 31,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.4228187895341119,
+          "mean_stem_delta": 0.1662741024299984,
+          "mean_loop_delta": 0.18792823132346656
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": -0.03484553098678589,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "SAM_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SAM_riboswitch_syn2": {
+        "best_ps": -0.0004521608352661133,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0004521608352661133
+        ],
+        "n_eligible_pairs": 17,
+        "n_stems": 6,
+        "n_wc_pairs_total": 31,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.462557712063443,
+          "mean_stem_delta": 0.06558760539824221,
+          "mean_loop_delta": 0.08697987328737208
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.0008846521377563477,
+        "ps_au_pairs": -1.9669532775878906e-05,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "SAM_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SAM_riboswitch_syn4": {
+        "best_ps": -0.06358388066291809,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.06358388066291809
+        ],
+        "n_eligible_pairs": 17,
+        "n_stems": 6,
+        "n_wc_pairs_total": 31,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.781860240518649,
+          "mean_stem_delta": 0.0879030946256066,
+          "mean_loop_delta": 0.08259369021627158
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.0021584630012512207,
+        "ps_au_pairs": -0.12500929832458496,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "SECIS_element_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SECIS_element_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SECIS_element_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SECIS_element_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SECIS_element_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SRP_RNA_helix8_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SRP_RNA_helix8_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SRP_RNA_helix8_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SRP_RNA_helix8_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SRP_RNA_helix8_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "THF_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "THF_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "THF_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "THF_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "THF_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "TPP_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "TPP_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "TPP_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "TPP_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "TPP_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "T_box_leader_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "T_box_leader_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "T_box_leader_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "T_box_leader_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "T_box_leader_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U1_snRNA_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U1_snRNA_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U1_snRNA_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U1_snRNA_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U1_snRNA_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U2_snRNA_stem_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U2_snRNA_stem_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U2_snRNA_stem_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U2_snRNA_stem_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U2_snRNA_stem_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U4_snRNA_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U4_snRNA_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U4_snRNA_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U4_snRNA_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U4_snRNA_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U5_snRNA_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U5_snRNA_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U5_snRNA_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U5_snRNA_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U5_snRNA_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U6_snRNA_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "U6_snRNA_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "U6_snRNA_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "U6_snRNA_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "U6_snRNA_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "Vault_RNA_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Vault_RNA_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Vault_RNA_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Vault_RNA_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Vault_RNA_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Y_RNA_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Y_RNA_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Y_RNA_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Y_RNA_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Y_RNA_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "ZMP_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "ZMP_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "ZMP_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "ZMP_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "ZMP_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "c_di_GMP_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "c_di_GMP_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "c_di_GMP_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "c_di_GMP_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "c_di_GMP_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "cobalamin_riboswitch_syn0": {
+        "best_ps": -0.0010331273078918457,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0010331273078918457
+        ],
+        "n_eligible_pairs": 24,
+        "n_stems": 9,
+        "n_wc_pairs_total": 51,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.5566208926156194,
+          "mean_stem_delta": 0.2866179743997645,
+          "mean_loop_delta": 0.3000561142409289
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": -0.0021741092205047607,
+        "ps_au_pairs": 0.00010785460472106934,
+        "quarantined": false,
+        "null_95th_primary": -0.0001769810914993286,
+        "null_95th_conservative": -0.0001769810914993286,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "cobalamin_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "cobalamin_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "cobalamin_riboswitch_syn3": {
+        "best_ps": -0.027875959873199463,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.027875959873199463
+        ],
+        "n_eligible_pairs": 24,
+        "n_stems": 9,
+        "n_wc_pairs_total": 51,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.06887917891882774,
+          "mean_stem_delta": 0.04408078129802431,
+          "mean_loop_delta": 0.06099919956407429
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": -0.027875959873199463,
+        "quarantined": false,
+        "null_95th_primary": -0.026315689086914062,
+        "null_95th_conservative": -0.026315689086914062,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "cobalamin_riboswitch_syn4": {
+        "best_ps": -0.0005856156349182129,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0005856156349182129
+        ],
+        "n_eligible_pairs": 24,
+        "n_stems": 9,
+        "n_wc_pairs_total": 51,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.053541245601353905,
+          "mean_stem_delta": 0.07531935011776249,
+          "mean_loop_delta": 0.1043614834363078
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": -0.0006496012210845947,
+        "ps_au_pairs": -0.0004576444625854492,
+        "quarantined": false,
+        "null_95th_primary": -0.0002892613410949707,
+        "null_95th_conservative": -0.0002892613410949707,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "fluoride_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "fluoride_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "fluoride_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "fluoride_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "fluoride_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "glmS_ribozyme_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glmS_ribozyme_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glmS_ribozyme_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glmS_ribozyme_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glmS_ribozyme_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glycine_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glycine_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glycine_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glycine_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glycine_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_II_intron_D5_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_II_intron_D5_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_II_intron_D5_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_II_intron_D5_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_II_intron_D5_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_I_intron_P4P6_syn0": {
+        "best_ps": -0.016790500708988736,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.016790500708988736
+        ],
+        "n_eligible_pairs": 33,
+        "n_stems": 9,
+        "n_wc_pairs_total": 55,
+        "positive_control": {
+          "pass": false,
+          "p_value": 1.1470223510913836e-07,
+          "mean_stem_delta": 0.026671326328149607,
+          "mean_loop_delta": 0.042913242370946375
+        },
+        "h3_precision": {
+          "fraction": 0.2,
+          "n": 5,
+          "partner_max_count": 1,
+          "p_value": 0.8683127572016461
+        },
+        "ps_gc_pairs": -0.0005107671022415161,
+        "ps_au_pairs": -0.038496812184651695,
+        "quarantined": false,
+        "null_95th_primary": 0.006316517080579486,
+        "null_95th_conservative": 0.006316517080579486,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "group_I_intron_P4P6_syn1": {
+        "best_ps": -0.01033212457384382,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01033212457384382
+        ],
+        "n_eligible_pairs": 33,
+        "n_stems": 9,
+        "n_wc_pairs_total": 55,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.0014823776578975973,
+          "mean_stem_delta": 0.04270634566894686,
+          "mean_loop_delta": 0.08320430964878904
+        },
+        "h3_precision": {
+          "fraction": 0.2,
+          "n": 5,
+          "partner_max_count": 1,
+          "p_value": 0.8683127572016461
+        },
+        "ps_gc_pairs": 0.0006837010383605957,
+        "ps_au_pairs": -0.03787168860435486,
+        "quarantined": false,
+        "null_95th_primary": 0.00479615032672882,
+        "null_95th_conservative": 0.00479615032672882,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "group_I_intron_P4P6_syn2": {
+        "best_ps": -0.023563478674207414,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.023563478674207414
+        ],
+        "n_eligible_pairs": 33,
+        "n_stems": 9,
+        "n_wc_pairs_total": 55,
+        "positive_control": {
+          "pass": false,
+          "p_value": 8.26546052651565e-05,
+          "mean_stem_delta": 0.14600728995786258,
+          "mean_loop_delta": 0.21641168464754074
+        },
+        "h3_precision": {
+          "fraction": 0.2,
+          "n": 5,
+          "partner_max_count": 1,
+          "p_value": 0.8683127572016461
+        },
+        "ps_gc_pairs": -0.015439176559448242,
+        "ps_au_pairs": -0.04387423396110535,
+        "quarantined": false,
+        "null_95th_primary": 0.001573738455772399,
+        "null_95th_conservative": 0.001573738455772399,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "group_I_intron_P4P6_syn3": {
+        "best_ps": 0.012102058955601283,
+        "best_layer": 0,
+        "per_layer_ps": [
+          0.012102058955601283
+        ],
+        "n_eligible_pairs": 33,
+        "n_stems": 9,
+        "n_wc_pairs_total": 55,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.0022789705268128793,
+          "mean_stem_delta": 0.09635990805182106,
+          "mean_loop_delta": 0.13022429746129804
+        },
+        "h3_precision": {
+          "fraction": 0.2,
+          "n": 5,
+          "partner_max_count": 1,
+          "p_value": 0.8683127572016461
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": 0.012102058955601283,
+        "quarantined": false,
+        "null_95th_primary": 0.02149113714694977,
+        "null_95th_conservative": 0.02149113714694977,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "group_I_intron_P4P6_syn4": {
+        "best_ps": -0.0002627032143729074,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0002627032143729074
+        ],
+        "n_eligible_pairs": 33,
+        "n_stems": 9,
+        "n_wc_pairs_total": 55,
+        "positive_control": {
+          "pass": false,
+          "p_value": 8.847599956670603e-05,
+          "mean_stem_delta": 0.03329868715304833,
+          "mean_loop_delta": 0.06633424161282983
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 5,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.0001933574676513672,
+        "ps_au_pairs": -0.0003551642100016276,
+        "quarantined": false,
+        "null_95th_primary": 1.2576580047607422e-05,
+        "null_95th_conservative": 1.2576580047607422e-05,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "hammerhead_ribozyme_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hammerhead_ribozyme_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hammerhead_ribozyme_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hammerhead_ribozyme_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hammerhead_ribozyme_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hatchet_ribozyme_syn0": {
+        "best_ps": -0.007892340421676636,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.007892340421676636
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 4,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.8990319832842497,
+          "mean_stem_delta": 0.2005425251006861,
+          "mean_loop_delta": 0.19864520573845276
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.010436654090881348,
+        "ps_au_pairs": -0.0002593994140625,
+        "quarantined": false,
+        "null_95th_primary": 0.00016513466835021973,
+        "null_95th_conservative": 0.00016513466835021973,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "hatchet_ribozyme_syn1": {
+        "best_ps": -0.022803649306297302,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.022803649306297302
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 4,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.24956429266057278,
+          "mean_stem_delta": 0.13978558077531703,
+          "mean_loop_delta": 0.15570594214803568
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.0023739635944366455,
+        "ps_au_pairs": -0.04323333501815796,
+        "quarantined": false,
+        "null_95th_primary": 0.015861719846725464,
+        "null_95th_conservative": 0.015861719846725464,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "hatchet_ribozyme_syn2": {
+        "best_ps": -0.01694922149181366,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01694922149181366
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 4,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.982609978387244,
+          "mean_stem_delta": 0.27531198712120597,
+          "mean_loop_delta": 0.27499737005148617
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.01694922149181366,
+        "ps_au_pairs": null,
+        "quarantined": false,
+        "null_95th_primary": 0.005459874868392944,
+        "null_95th_conservative": 0.005459874868392944,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "hatchet_ribozyme_syn3": {
+        "best_ps": -0.00026232004165649414,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.00026232004165649414
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 4,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7484067890113963,
+          "mean_stem_delta": 0.07634334362057202,
+          "mean_loop_delta": 0.07191375084221363
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": -0.0012691020965576172,
+        "ps_au_pairs": 7.32739766438802e-05,
+        "quarantined": false,
+        "null_95th_primary": -0.0012186318635940552,
+        "null_95th_conservative": -0.0012186318635940552,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "hatchet_ribozyme_syn4": {
+        "best_ps": -0.0005898177623748779,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0005898177623748779
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 4,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.06282028145684584,
+          "mean_stem_delta": 0.13821910709307036,
+          "mean_loop_delta": 0.17576219581422353
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": -0.0009195407231648763,
+        "ps_au_pairs": 0.0003993511199951172,
+        "quarantined": false,
+        "null_95th_primary": 0.00027348101139068604,
+        "null_95th_conservative": 0.00027348101139068604,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "lysine_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "lysine_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "lysine_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "lysine_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "lysine_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "manganese_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "manganese_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "manganese_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "manganese_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "manganese_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_122_precursor_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_122_precursor_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_122_precursor_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_122_precursor_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_122_precursor_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_155_precursor_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_155_precursor_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_155_precursor_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_155_precursor_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_155_precursor_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_21_precursor_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_21_precursor_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_21_precursor_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_21_precursor_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_21_precursor_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_let7_precursor_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_let7_precursor_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_let7_precursor_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_let7_precursor_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_let7_precursor_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "pistol_ribozyme_syn0": {
+        "best_ps": -0.003231823444366455,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.003231823444366455
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7566895288545283,
+          "mean_stem_delta": 0.24792977837579588,
+          "mean_loop_delta": 0.25990669721906834
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 2.2649765014648438e-06,
+        "ps_au_pairs": -0.006465911865234375,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "pistol_ribozyme_syn1": {
+        "best_ps": -0.005356937646865845,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.005356937646865845
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.11640762649354795,
+          "mean_stem_delta": 0.12502164989709855,
+          "mean_loop_delta": 0.1794571541249752
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": -0.005356937646865845,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "pistol_ribozyme_syn2": {
+        "best_ps": -0.009820938110351562,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.009820938110351562
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.5473764802501186,
+          "mean_stem_delta": 0.3361396132480531,
+          "mean_loop_delta": 0.34869641363620757
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": -0.009820938110351562,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "pistol_ribozyme_syn3": {
+        "best_ps": 0.08396553993225098,
+        "best_layer": 0,
+        "per_layer_ps": [
+          0.08396553993225098
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.08575563667659558,
+          "mean_stem_delta": 0.2571155305419649,
+          "mean_loop_delta": 0.331492855399847
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": 0.08396553993225098,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": false
+      },
+      "pistol_ribozyme_syn4": {
+        "best_ps": 0.022106140851974487,
+        "best_layer": 0,
+        "per_layer_ps": [
+          0.022106140851974487
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.4835364882455173,
+          "mean_stem_delta": 0.2380831178809915,
+          "mean_loop_delta": 0.2549353758494059
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 0.022106140851974487,
+        "ps_au_pairs": null,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": false
+      },
+      "preQ1_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "preQ1_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "preQ1_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "preQ1_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "preQ1_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "purine_riboswitch_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "purine_riboswitch_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "purine_riboswitch_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "purine_riboswitch_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "purine_riboswitch_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Ala_human_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Ala_human_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Ala_human_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Ala_human_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Ala_human_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Phe_yeast_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Phe_yeast_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Phe_yeast_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Phe_yeast_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Phe_yeast_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tmRNA_syn0": {
+        "best_ps": -0.0005961179733276368,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0005961179733276368
+        ],
+        "n_eligible_pairs": 68,
+        "n_stems": 12,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7757803424892161,
+          "mean_stem_delta": 0.16010723876781394,
+          "mean_loop_delta": 0.16170007582960075
+        },
+        "h3_precision": {
+          "fraction": 0.3333333333333333,
+          "n": 3,
+          "partner_max_count": 1,
+          "p_value": 0.7037037037037037
+        },
+        "ps_gc_pairs": -0.0001035928726196289,
+        "ps_au_pairs": -0.0009244680404663086,
+        "quarantined": false,
+        "null_95th_primary": -0.00019544363021850586,
+        "null_95th_conservative": -0.00019544363021850586,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "tmRNA_syn1": {
+        "best_ps": -3.9005279541015624e-05,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -3.9005279541015624e-05
+        ],
+        "n_eligible_pairs": 68,
+        "n_stems": 12,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.2660164445190287,
+          "mean_stem_delta": 0.07815495367525294,
+          "mean_loop_delta": 0.08313069602145869
+        },
+        "h3_precision": {
+          "fraction": 0.3333333333333333,
+          "n": 3,
+          "partner_max_count": 1,
+          "p_value": 0.7037037037037037
+        },
+        "ps_gc_pairs": 1.9470850626627605e-05,
+        "ps_au_pairs": -0.00012671947479248047,
+        "quarantined": false,
+        "null_95th_primary": 7.485151290893554e-05,
+        "null_95th_conservative": 7.485151290893554e-05,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "tmRNA_syn2": {
+        "best_ps": -0.01945241689682007,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01945241689682007
+        ],
+        "n_eligible_pairs": 68,
+        "n_stems": 12,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.6773858289370018,
+          "mean_stem_delta": 0.2043312318957582,
+          "mean_loop_delta": 0.20689796806957816
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 0.0011623104413350422,
+        "ps_au_pairs": -0.050374507904052734,
+        "quarantined": false,
+        "null_95th_primary": -0.004674291610717774,
+        "null_95th_conservative": -0.004674291610717774,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "tmRNA_syn3": {
+        "best_ps": -0.027815914154052733,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.027815914154052733
+        ],
+        "n_eligible_pairs": 68,
+        "n_stems": 12,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.49904557492335344,
+          "mean_stem_delta": 0.1327865406527382,
+          "mean_loop_delta": 0.13641905613820984
+        },
+        "h3_precision": {
+          "fraction": 0.3333333333333333,
+          "n": 3,
+          "partner_max_count": 1,
+          "p_value": 0.7037037037037037
+        },
+        "ps_gc_pairs": -0.00015816092491149902,
+        "ps_au_pairs": -0.04625441630681356,
+        "quarantined": false,
+        "null_95th_primary": -0.011381494998931884,
+        "null_95th_conservative": -0.011381494998931884,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "tmRNA_syn4": {
+        "best_ps": -0.0009911417961120605,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0009911417961120605
+        ],
+        "n_eligible_pairs": 68,
+        "n_stems": 12,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.1990854099898054,
+          "mean_stem_delta": 0.0675435502106259,
+          "mean_loop_delta": 0.07592759166517145
+        },
+        "h3_precision": {
+          "fraction": 0.3333333333333333,
+          "n": 3,
+          "partner_max_count": 1,
+          "p_value": 0.7037037037037037
+        },
+        "ps_gc_pairs": null,
+        "ps_au_pairs": -0.0009911417961120605,
+        "quarantined": false,
+        "null_95th_primary": 5.3369998931884764e-05,
+        "null_95th_conservative": 5.3369998931884764e-05,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "twister_ribozyme_syn0": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "twister_ribozyme_syn1": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "twister_ribozyme_syn2": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "twister_ribozyme_syn3": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "twister_ribozyme_syn4": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      }
+    },
+    "mean_best_ps": -0.0493045300245285,
+    "median_best_ps": -0.0493045300245285,
+    "families_exceeding_null_primary": 0,
+    "families_exceeding_null_conservative": 0,
+    "families_no_null": [],
+    "families_total": 2,
+    "families_quarantined": [],
+    "families_skipped": [
+      "5S_rRNA_ecoli_syn0",
+      "5S_rRNA_ecoli_syn1",
+      "5S_rRNA_ecoli_syn2",
+      "5S_rRNA_ecoli_syn3",
+      "5S_rRNA_ecoli_syn4",
+      "6S_RNA_syn0",
+      "6S_RNA_syn1",
+      "6S_RNA_syn2",
+      "6S_RNA_syn3",
+      "6S_RNA_syn4",
+      "Bacterial_SRP_syn0",
+      "Bacterial_SRP_syn1",
+      "Bacterial_SRP_syn2",
+      "Bacterial_SRP_syn3",
+      "Bacterial_SRP_syn4",
+      "CRISPR_leader_syn0",
+      "CRISPR_leader_syn1",
+      "CRISPR_leader_syn2",
+      "CRISPR_leader_syn3",
+      "CRISPR_leader_syn4",
+      "Corona_s2m_syn0",
+      "Corona_s2m_syn1",
+      "Corona_s2m_syn2",
+      "Corona_s2m_syn3",
+      "Corona_s2m_syn4",
+      "CrPV_IRES_syn0",
+      "CrPV_IRES_syn1",
+      "CrPV_IRES_syn2",
+      "CrPV_IRES_syn3",
+      "CrPV_IRES_syn4",
+      "FMN_riboswitch_syn0",
+      "FMN_riboswitch_syn1",
+      "FMN_riboswitch_syn2",
+      "FMN_riboswitch_syn3",
+      "FMN_riboswitch_syn4",
+      "HDV_ribozyme_syn0",
+      "HDV_ribozyme_syn1",
+      "HDV_ribozyme_syn2",
+      "HDV_ribozyme_syn3",
+      "HDV_ribozyme_syn4",
+      "Histone_3prime_syn0",
+      "Histone_3prime_syn1",
+      "Histone_3prime_syn2",
+      "Histone_3prime_syn3",
+      "Histone_3prime_syn4",
+      "IRES_HCV_domainII_syn0",
+      "IRES_HCV_domainII_syn1",
+      "IRES_HCV_domainII_syn2",
+      "IRES_HCV_domainII_syn3",
+      "IRES_HCV_domainII_syn4",
+      "IRE_stem_loop_syn0",
+      "IRE_stem_loop_syn1",
+      "IRE_stem_loop_syn2",
+      "IRE_stem_loop_syn3",
+      "IRE_stem_loop_syn4",
+      "RNaseP_specificity_syn0",
+      "RNaseP_specificity_syn1",
+      "RNaseP_specificity_syn2",
+      "RNaseP_specificity_syn3",
+      "RNaseP_specificity_syn4",
+      "SAH_riboswitch_syn0",
+      "SAH_riboswitch_syn1",
+      "SAH_riboswitch_syn2",
+      "SAH_riboswitch_syn3",
+      "SAH_riboswitch_syn4",
+      "SAM_riboswitch_syn1",
+      "SAM_riboswitch_syn3",
+      "SECIS_element_syn0",
+      "SECIS_element_syn1",
+      "SECIS_element_syn2",
+      "SECIS_element_syn3",
+      "SECIS_element_syn4",
+      "SRP_RNA_helix8_syn0",
+      "SRP_RNA_helix8_syn1",
+      "SRP_RNA_helix8_syn2",
+      "SRP_RNA_helix8_syn3",
+      "SRP_RNA_helix8_syn4",
+      "THF_riboswitch_syn0",
+      "THF_riboswitch_syn1",
+      "THF_riboswitch_syn2",
+      "THF_riboswitch_syn3",
+      "THF_riboswitch_syn4",
+      "TPP_riboswitch_syn0",
+      "TPP_riboswitch_syn1",
+      "TPP_riboswitch_syn2",
+      "TPP_riboswitch_syn3",
+      "TPP_riboswitch_syn4",
+      "T_box_leader_syn0",
+      "T_box_leader_syn1",
+      "T_box_leader_syn2",
+      "T_box_leader_syn3",
+      "T_box_leader_syn4",
+      "U1_snRNA_syn0",
+      "U1_snRNA_syn1",
+      "U1_snRNA_syn2",
+      "U1_snRNA_syn3",
+      "U1_snRNA_syn4",
+      "U2_snRNA_stem_syn0",
+      "U2_snRNA_stem_syn1",
+      "U2_snRNA_stem_syn2",
+      "U2_snRNA_stem_syn3",
+      "U2_snRNA_stem_syn4",
+      "U4_snRNA_syn0",
+      "U4_snRNA_syn1",
+      "U4_snRNA_syn2",
+      "U4_snRNA_syn3",
+      "U4_snRNA_syn4",
+      "U5_snRNA_syn0",
+      "U5_snRNA_syn1",
+      "U5_snRNA_syn2",
+      "U5_snRNA_syn3",
+      "U5_snRNA_syn4",
+      "U6_snRNA_syn0",
+      "U6_snRNA_syn1",
+      "U6_snRNA_syn2",
+      "U6_snRNA_syn3",
+      "U6_snRNA_syn4",
+      "Vault_RNA_syn0",
+      "Vault_RNA_syn1",
+      "Vault_RNA_syn2",
+      "Vault_RNA_syn3",
+      "Vault_RNA_syn4",
+      "Y_RNA_syn0",
+      "Y_RNA_syn1",
+      "Y_RNA_syn2",
+      "Y_RNA_syn3",
+      "Y_RNA_syn4",
+      "ZMP_riboswitch_syn0",
+      "ZMP_riboswitch_syn1",
+      "ZMP_riboswitch_syn2",
+      "ZMP_riboswitch_syn3",
+      "ZMP_riboswitch_syn4",
+      "c_di_GMP_riboswitch_syn0",
+      "c_di_GMP_riboswitch_syn1",
+      "c_di_GMP_riboswitch_syn2",
+      "c_di_GMP_riboswitch_syn3",
+      "c_di_GMP_riboswitch_syn4",
+      "cobalamin_riboswitch_syn1",
+      "cobalamin_riboswitch_syn2",
+      "fluoride_riboswitch_syn0",
+      "fluoride_riboswitch_syn1",
+      "fluoride_riboswitch_syn2",
+      "fluoride_riboswitch_syn3",
+      "fluoride_riboswitch_syn4",
+      "glmS_ribozyme_syn0",
+      "glmS_ribozyme_syn1",
+      "glmS_ribozyme_syn2",
+      "glmS_ribozyme_syn3",
+      "glmS_ribozyme_syn4",
+      "glycine_riboswitch_syn0",
+      "glycine_riboswitch_syn1",
+      "glycine_riboswitch_syn2",
+      "glycine_riboswitch_syn3",
+      "glycine_riboswitch_syn4",
+      "group_II_intron_D5_syn0",
+      "group_II_intron_D5_syn1",
+      "group_II_intron_D5_syn2",
+      "group_II_intron_D5_syn3",
+      "group_II_intron_D5_syn4",
+      "hammerhead_ribozyme_syn0",
+      "hammerhead_ribozyme_syn1",
+      "hammerhead_ribozyme_syn2",
+      "hammerhead_ribozyme_syn3",
+      "hammerhead_ribozyme_syn4",
+      "lysine_riboswitch_syn0",
+      "lysine_riboswitch_syn1",
+      "lysine_riboswitch_syn2",
+      "lysine_riboswitch_syn3",
+      "lysine_riboswitch_syn4",
+      "manganese_riboswitch_syn0",
+      "manganese_riboswitch_syn1",
+      "manganese_riboswitch_syn2",
+      "manganese_riboswitch_syn3",
+      "manganese_riboswitch_syn4",
+      "mir_122_precursor_syn0",
+      "mir_122_precursor_syn1",
+      "mir_122_precursor_syn2",
+      "mir_122_precursor_syn3",
+      "mir_122_precursor_syn4",
+      "mir_155_precursor_syn0",
+      "mir_155_precursor_syn1",
+      "mir_155_precursor_syn2",
+      "mir_155_precursor_syn3",
+      "mir_155_precursor_syn4",
+      "mir_21_precursor_syn0",
+      "mir_21_precursor_syn1",
+      "mir_21_precursor_syn2",
+      "mir_21_precursor_syn3",
+      "mir_21_precursor_syn4",
+      "mir_let7_precursor_syn0",
+      "mir_let7_precursor_syn1",
+      "mir_let7_precursor_syn2",
+      "mir_let7_precursor_syn3",
+      "mir_let7_precursor_syn4",
+      "preQ1_riboswitch_syn0",
+      "preQ1_riboswitch_syn1",
+      "preQ1_riboswitch_syn2",
+      "preQ1_riboswitch_syn3",
+      "preQ1_riboswitch_syn4",
+      "purine_riboswitch_syn0",
+      "purine_riboswitch_syn1",
+      "purine_riboswitch_syn2",
+      "purine_riboswitch_syn3",
+      "purine_riboswitch_syn4",
+      "tRNA_Ala_human_syn0",
+      "tRNA_Ala_human_syn1",
+      "tRNA_Ala_human_syn2",
+      "tRNA_Ala_human_syn3",
+      "tRNA_Ala_human_syn4",
+      "tRNA_Phe_yeast_syn0",
+      "tRNA_Phe_yeast_syn1",
+      "tRNA_Phe_yeast_syn2",
+      "tRNA_Phe_yeast_syn3",
+      "tRNA_Phe_yeast_syn4",
+      "twister_ribozyme_syn0",
+      "twister_ribozyme_syn1",
+      "twister_ribozyme_syn2",
+      "twister_ribozyme_syn3",
+      "twister_ribozyme_syn4"
+    ],
+    "families_failed_gate": [
+      "7SK_RNA_syn0",
+      "7SK_RNA_syn1",
+      "7SK_RNA_syn2",
+      "7SK_RNA_syn3",
+      "7SK_RNA_syn4",
+      "Corona_5UTR_syn0",
+      "Corona_5UTR_syn1",
+      "Corona_5UTR_syn2",
+      "Corona_5UTR_syn3",
+      "Corona_5UTR_syn4",
+      "Hepatitis_C_IRES_III_syn2",
+      "Hepatitis_C_IRES_III_syn3",
+      "Hepatitis_C_IRES_III_syn4",
+      "SAM_riboswitch_syn0",
+      "SAM_riboswitch_syn2",
+      "SAM_riboswitch_syn4",
+      "cobalamin_riboswitch_syn0",
+      "cobalamin_riboswitch_syn3",
+      "cobalamin_riboswitch_syn4",
+      "group_I_intron_P4P6_syn0",
+      "group_I_intron_P4P6_syn1",
+      "group_I_intron_P4P6_syn2",
+      "group_I_intron_P4P6_syn3",
+      "group_I_intron_P4P6_syn4",
+      "hatchet_ribozyme_syn0",
+      "hatchet_ribozyme_syn1",
+      "hatchet_ribozyme_syn2",
+      "hatchet_ribozyme_syn3",
+      "hatchet_ribozyme_syn4",
+      "pistol_ribozyme_syn0",
+      "pistol_ribozyme_syn1",
+      "pistol_ribozyme_syn2",
+      "pistol_ribozyme_syn3",
+      "pistol_ribozyme_syn4",
+      "tmRNA_syn0",
+      "tmRNA_syn1",
+      "tmRNA_syn2",
+      "tmRNA_syn3",
+      "tmRNA_syn4"
+    ]
+  },
+  "n_synthetic_per_family": 5,
+  "seed": 42
+}

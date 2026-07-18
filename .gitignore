@@ -5,5 +5,11 @@ __pycache__/
 .DS_Store
 data/*.pt
 data/*.json
+data/factorization/
 figures/
 uv.lock
+*.aux
+*.log
+*.out
+*.synctex.gz
+.pytest_cache/

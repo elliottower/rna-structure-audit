@@ -1,0 +1,40 @@
+{
+  "name": "Corona_s2m",
+  "rfam_id": "RF00164",
+  "original_sequence": "GGAAGCCGCGACCACGCCGAGUAGGAUCGAGGGUACAGCUUCC",
+  "original_dot_bracket": ".(((((....(((.((((.....))..))..)))...))))).",
+  "n_available": 38,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "URS000080DEE1_32630/2-47",
+      "sequence": "GAGTTCACCGAGGCCACGCGGAGTACGATCGAGGGTACAGTGAATT",
+      "dot_bracket": "...(((((....(((.((((.....))..))..)))...)))))..",
+      "length": 46
+    },
+    {
+      "accession": "AY179509.1/6505-6548",
+      "sequence": "ACTACCCGAGGCCACGCCGAGTTAGGATCGAGGGTACAGGTAGT",
+      "dot_bracket": ".(((((....(((.((((......))..))..)))...))))).",
+      "length": 44
+    },
+    {
+      "accession": "AY338174.1/29515-29557",
+      "sequence": "TTTCATCGAGGCCACGCGGAGTACGATCGAGGGTACAGTGAAT",
+      "dot_bracket": ".(((((....(((.((((.....))..))..)))...))))).",
+      "length": 43
+    },
+    {
+      "accession": "AY536760.3/1545-1587",
+      "sequence": "TTTCATCGTGGCCACGCGGAGTACGATCGAGGGTACAGTGAAT",
+      "dot_bracket": ".(((((....(((.((((.....))..))..)))...))))).",
+      "length": 43
+    },
+    {
+      "accession": "AB046864.1/2311-2353",
+      "sequence": "CTTTCCCGAGGCCACGGCGAGTAGCATCGAGGGTACAGGAATG",
+      "dot_bracket": ".(((((....(((.((((.....))..))..)))...))))).",
+      "length": 43
+    }
+  ]
+}

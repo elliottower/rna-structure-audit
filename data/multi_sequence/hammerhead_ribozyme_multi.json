@@ -1,0 +1,40 @@
+{
+  "name": "hammerhead_ribozyme",
+  "rfam_id": "RF00163",
+  "original_sequence": "GGAGACCGCUGCCGAAACGCGAAAGCGUCUAGCGUCCG",
+  "original_dot_bracket": "((((...((((..........))))(((...)))..))",
+  "n_available": 28,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "HE601624.1/39306472-39306516",
+      "sequence": "ATCTAAATGACGAGTCCTAAATGGAACTAAACACATGTGTTTGAT",
+      "dot_bracket": "((((((.......((((......))))...(((()))).))))))",
+      "length": 45
+    },
+    {
+      "accession": "AF404068.1/70-185",
+      "sequence": "CTTTCCATGAAGAGACGAAGTGATCAAGAGATTGAAGACGAGTGAACTAATTTTTTTTAATAAAAGTTCACCACGACTCCTCCTTCTCTCACAAGTCGAAACTCAGAGTCGGAAAG",
+      "dot_bracket": "((((((.......((((............................................................................))))...((((.)))).))))))",
+      "length": 116
+    },
+    {
+      "accession": "AF036754.1/91-138",
+      "sequence": "ATCCAGTTGACGAGTCCCAAATTGGACGAAACGCGCGTCAAACTGGAT",
+      "dot_bracket": "((((((.......((((......))))...(((())))....))))))",
+      "length": 48
+    },
+    {
+      "accession": "AF036398.1/58-102",
+      "sequence": "ATCTTTCTGACGAGTTTCAAATAGGACGAAACGCGTGTCATGGAT",
+      "dot_bracket": "((((((.......((((......))))...(((()))).))))))",
+      "length": 45
+    },
+    {
+      "accession": "AF404052.1/70-187",
+      "sequence": "CTTTCCCTGAAGTGACGAAGTGATCAAGAGATTGAAGACGAGTGAACTAATTTTTTTTTAATAAAAAGTTCACCACGACTCCTCCTTCTCTCACAAGTCGAAACTCAGAGTCGGAAAG",
+      "dot_bracket": "((((((.......((((..............................................................................))))...((((.)))).))))))",
+      "length": 118
+    }
+  ]
+}

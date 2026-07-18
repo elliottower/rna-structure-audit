@@ -1,0 +1,40 @@
+{
+  "name": "CRISPR_leader",
+  "rfam_id": "RF01315",
+  "original_sequence": "GUUUCAAUCCCCAAAGGGAAGGCUACAAAC",
+  "original_dot_bracket": ".(((.....(((...)))........))).",
+  "n_available": 19,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CP000141.1/1949543-1949572",
+      "sequence": "GTTTCAATCCCAGATTGGTTCGATTAAAAC",
+      "dot_bracket": ".(((.....(((...)))........))).",
+      "length": 30
+    },
+    {
+      "accession": "CP000716.1/360504-360533",
+      "sequence": "ATTTCAATTCCTCCAAGGTAAGGTAAAAAC",
+      "dot_bracket": ".(((.....(((...)))........))).",
+      "length": 30
+    },
+    {
+      "accession": "CP000879.1/2085036-2085007",
+      "sequence": "GTTTCCATTCCTTATAGGTAGGATAAAAAG",
+      "dot_bracket": ".(((.....(((...)))........))).",
+      "length": 30
+    },
+    {
+      "accession": "CP001336.1/4172990-4173019",
+      "sequence": "ATTTCAATTCCTTATAGGTAAGCTAACAAC",
+      "dot_bracket": ".(((.....(((...)))........))).",
+      "length": 30
+    },
+    {
+      "accession": "CP000141.1/1929243-1929272",
+      "sequence": "GTTTCAATCCCAGAATGGTTCGATTAAAAC",
+      "dot_bracket": ".(((.....(((...)))........))).",
+      "length": 30
+    }
+  ]
+}

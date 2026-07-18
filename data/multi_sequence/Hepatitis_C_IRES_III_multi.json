@@ -1,0 +1,40 @@
+{
+  "name": "Hepatitis_C_IRES_III",
+  "rfam_id": "RF00061",
+  "original_sequence": "CCUGCCCCUAAUAGGGGCGACACUCCGCCAUGAAUCACUCCCCUGUGAGGAACUACUGUCUUCACGCAGAAAGCGCCUAGCCAUGGCGUUAGUAUGAGUGUCGUACAGCCUCCAGGCCCCCCCCUCCCGGGAGAGCCAUAGUGGUCUGCGGAACCGGUGAGUACACCGGAAUUGCCGGGAAGACUGGGUCCUUUCUUGGAUAAACCCACUCUAUGCCCGGCCAUUUGGGCGUGCCCCCGCAAGACUGCUAGCCGAGUAGCGUUGGGUUGCGAAAGGCCUUGUGGUACUGCCUGAUAGGGCGCUUGCGAGUGCCCCGGGAGGUCUCGUAGACCGUGCACCAUGAGCACAAAUC",
+  "original_dot_bracket": "...((((((...)))))).......................((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......)))....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+  "n_available": 35,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "KC197233.1/1-326",
+      "sequence": "GCCATGAATCACTCCCCTGTGAGGAACTACTGTCTTCACGCAGAAAGCGTCTAGCCATGGCGTTAGTATGAGTGTCGTACAGCCTCCAGGCCCCCCCCTCCCGGGAGAGCCATAGTGGTCTGCGGAACCGGTGAGTACACCGGAATTGCCGGGAAGACTGGGTCCTTTCTTGGATAAACCCACTCTATGCCCGGCCATTTGGGCGTGCCCCCGCAAGACTGCTAGCCGAGTAGCGTTGGGTTGCGAAAGGCCTTGTGGTACTGCCTGATAGGGTGCTTGCGAGTGCCCCGGGAGGTCTCGTAGACCGTGCATCATGAGCACAAATC",
+      "dot_bracket": "...............((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......)))....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+      "length": 326
+    },
+    {
+      "accession": "KC197230.1/1-326",
+      "sequence": "GCCATGAATCACTCCCCTGTGAGGAACTTCTGTCTTCACGCAGAAAGCGTCTAGCCATGGCGTTAGTATGAGTGTCGTACAGCCTCCAGGCCCCCCCCTCCCGGGAGAGCCATAGTGGTCTGCGGAACCGGTGAGTACACCGGAATTGCCGGGAAGACTGGGTCCTTTCTTGGATAAACCCACTCTATGCCCGGCCATTTGGGCGTGCCCCCGCAAGACTGCTAGCCGAGTAGCGTTGGGTTGCGAAAGGCCTTGTGGTACTGCCTGATAGGGTGCTTGCGAGTGCCCCGGGAGGTCTCGTAGACCGTGCATCATGAGCACAAATC",
+      "dot_bracket": "...............((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......)))....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+      "length": 326
+    },
+    {
+      "accession": "AJ851228.1/1-327",
+      "sequence": "ACCATGAATCACTCCCCTGTGAGGAACTACTGTCTTCACGCAGAAAGCGTCTAGCCATGGCGTTAGTATGAGTGTCGTGCAGCCTCCAGGACCCCCCCTCCCGGGAGAGCCATAGTGGTCTGCGGAACCGGTGAGTACACCGGAATTGCCAGGACGACCGGGTCCTTTCTTGGATCAAACCCGCTCTATGCCTGGAGATTTGGGCGTGCCCCCGCGAGACTGCTAGCCGAGTAGTGTTGGGTCGCGAAAGGCCTTGTGGTACTGCCTGATAGGGTGCTTGCGAGTGCCCCGGGAGGTCTCGTAGACCGTGCACCATGAGCACGAATC",
+      "dot_bracket": "...............((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......))).....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+      "length": 327
+    },
+    {
+      "accession": "AY878652.1/1-321",
+      "sequence": "TAATCACTCCCCCTTGAGGAACTAATGTCTTCACGCAGAAAGCGTCTAGCCATGGCGTTAGTATGAGTGTCGTACAGCCTCCAGGATCCCCCCTCCCGGGAGAGCCATAGTGGTCTGCGGAACCGGTGAGTACACCGGAATTGCCAGGACGACAGGGTCCTTTCTTGGATCAACCCTCTCAATGCCTGGAGATTTGGGCGTGCCCCCGCGAGACTGCTAGCCGAGTAGTGTTGGGTCGCGAAAGGCCTTGTGGTACTGCCTGATAGGGTGCTTGCGAGTGCCCCGGGAGGTCTCGTAGACCGTGCAACATGAGCACACTTC",
+      "dot_bracket": "..........((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......)))....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+      "length": 321
+    },
+    {
+      "accession": "EU158186.1/1-320",
+      "sequence": "ATCAACTCCCCTGTGAGGAACTACTGTCTTCACGCAGAAAGCGTCTAGCCATGGCGTTAGTATGAGTGTCGTGCAGCCTCCAGGATCCCCCCTCCCGGGAGAGCCATAGTGGTCTGCGGAACCGGTGAGTACACCGGAATTGCCAGGACGACCGGGTCCTTTCTTGGATCAACCCGCTCAATGCCTGGAGATTTGGGCGTGCCCCCGCGAGACTGCTAGCCGAGTAGTGTTGGGTCGCGAAAGGCCTTGTGGTACTGCCTGATAGGGTGCTTGCGAGTGCCCCGGGAGGTCTCGTAGACCGTGCATCATGAGCACATCAT",
+      "dot_bracket": ".........((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......)))....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+      "length": 320
+    }
+  ]
+}

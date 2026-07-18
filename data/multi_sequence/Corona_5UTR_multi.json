@@ -1,0 +1,40 @@
+{
+  "name": "Corona_5UTR",
+  "rfam_id": "RF03120",
+  "original_sequence": "AUUAAAGGUUUAUACCUUCCCAGGUAACAAACCAACCAACUUUCGAUCUCUUGUAGAUCUGUUCUCUAAACGAACUUUAAAAUCUGUGUGGCUGUCACUCGGCAGCAUGCCGAGUGCAGCCACACAGUAUAAUUAAUAACUAAUUACUGUCGUUGACAGGACACGAGUAACUCGUCUAUCUUCUGCAGGCUGCUUACGGUUUCGUCCGUGUUGCAGCCGAUCAUCAGCACAUCUAGGUUUCGUCCGGGUGUGACCGAAAGGUAAGAUGGAGAGCCUUGUCCCUGGUUUCAACGAGAAAA",
+  "original_dot_bracket": "......(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).))))))))......................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+  "n_available": 19,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "MT345869.1/1-293",
+      "sequence": "GGTTTATACCTTCCCAGGTAACAATCCAWTCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAGTATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGGCTGCTTACGGTTTCGTCCGTGTTGCAGCCGATCATCAGCACATCTAGGTTTTGTCCGGGTGTGACCGAAAGGTAAGATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAA",
+      "dot_bracket": "(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).))))))))......................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+      "length": 293
+    },
+    {
+      "accession": "MT345841.1/1-293",
+      "sequence": "CTYYTATACCTTCCCAGGTAACAAACCHWYCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAGTATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGGCTGCTTACGGTTTCGTCCGTGTTGCAGCCGATCATCAGCACATCTAGGTTTCGTCCGGGTGTGACCGAAAGGTAAGATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAA",
+      "dot_bracket": "(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).))))))))......................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+      "length": 293
+    },
+    {
+      "accession": "MK211374.1/1-294",
+      "sequence": "TTAGGTTTTTACCTACCCAGGAAAAGCCAACCAACTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCGCTTGGCTGTATGCCTAGTGCACCTACGCAGTACAAATATTAATAACTCTATTGTCGTTGACAAGAAACGAGTAACTCGTCCTTCTTCTGCAGACTGCTTACGGTTTCGTCCGTGTCGCAGTCGATCATCAGCATACCTAGGTTTCGTCCGGGTGTGACCGAAAGGTAAGATGGAGAGCCTTGTTCTTGGTGTCAACGAGAAAA",
+      "dot_bracket": "...(((((.(((((....))))))))))..........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).)))))))).......................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+      "length": 294
+    },
+    {
+      "accession": "MT263421.1/1-296",
+      "sequence": "ATAGGTTTATACCTTCCCAGGTAACAAACCHTTHAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAGTATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGGCTGCTTACGGTTTCGTCCGTGTTGCAGCCGATCATCAGCACATCTAGGTTTCGTCCGGGTGTGACCGAAAGGTAAGATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAA",
+      "dot_bracket": "...(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).))))))))......................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+      "length": 296
+    },
+    {
+      "accession": "DQ412043.1/1-294",
+      "sequence": "ATATTAGGTTTTTACCTACCCAGGAAAAGCCAACCAACCTCGATCTCTTGTAGATCTGTTCTTTAAACGAACTTTAAAATCTGTGTGGCTGTCGCTTGGCTGTATGCCTAGTGCACCTACACAGTATAAATAATAACTTTACTGTCGTTGACAAGAAACGGGTAACTCGTCCTTCTTCTGCAGACTGCTTACGGTTTCGTCCGTGTTGTAGTCGATCATCAGCATACCTAGGTTTCGTCCGGGTGTGACCGAAAGGTAAGATGGAGAGCCTTGTTCTTGGTGTCAACGAGAAAA",
+      "dot_bracket": "......(((((.(((((....))))))))))..........(((((.....))))).((((.......))))........((((((((.((.((((.(((.....))).)))))).))))))))....................((((((((((((.(((((...(((.(((.(((((((..((((((.(((((......)))))..))))))......)))(((((((.((......)))))))))(((....))))))).)))))).))))))))))...))))))).....",
+      "length": 294
+    }
+  ]
+}

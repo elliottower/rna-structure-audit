@@ -1,0 +1,40 @@
+{
+  "name": "manganese_riboswitch",
+  "rfam_id": "RF01786",
+  "original_sequence": "GAGGCGUCCGGAGGCGAUGACCCGCUGAUCCCCAUUUGGGCAUCAAGGGACGCGGCGAGCCAGUGAUGCAACCGGCCGGACGGCUA",
+  "original_dot_bracket": "(((((((((((.(((......((((..((((................))))))))...)))..............)))))))))))",
+  "n_available": 42,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CP000312.1/175590-175673",
+      "sequence": "ATATGTTATAGAAACGTTGATGTATATTCTGTATTTGGGCATCTGGAATATGCTGAGTTAGTGATGCAACCGACTATATTTATA",
+      "dot_bracket": "(((((((((((.(((......((((((((................))))))))...)))..............)))))))))))",
+      "length": 84
+    },
+    {
+      "accession": "CP000721.1/4369760-4369677",
+      "sequence": "ATAGTAATTGAGAGCTATGAAGAATTCTTTTTATGTGGATATTTTAAGAATTTCGAGCTATCTGTGCAGTCGACCAATTTAAAC",
+      "dot_bracket": "(((((((((((.(((......((((((((................))))))))...)))..............)))))))))))",
+      "length": 84
+    },
+    {
+      "accession": "BA000016.3/197260-197343",
+      "sequence": "AAATGTTATAGAAACGTTGATGTATATTCTGTATTTGGGCATCTGGAATATGCTGAGTTAGTGATGCAACCGACTATATTTATA",
+      "dot_bracket": "(((((((((((.(((......((((((((................))))))))...)))..............)))))))))))",
+      "length": 84
+    },
+    {
+      "accession": "CP000246.1/171340-171423",
+      "sequence": "AAATGTTATAGAAACGTTGATGTATATTCTGTATTTGGGCATCTGGAATATGCTGAGTTAGTGATGCAACCGACTATATTTATA",
+      "dot_bracket": "(((((((((((.(((......((((((((................))))))))...)))..............)))))))))))",
+      "length": 84
+    },
+    {
+      "accession": "ABDX01000006.1/72290-72207",
+      "sequence": "AAATGTTATAGAAACGTTGATGTATATTCTGTATTTGGGCATCTGGAATATGCTGAGTTAGTGATGCAACCGACTATATTTATA",
+      "dot_bracket": "(((((((((((.(((......((((((((................))))))))...)))..............)))))))))))",
+      "length": 84
+    }
+  ]
+}

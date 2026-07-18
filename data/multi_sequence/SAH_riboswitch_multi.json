@@ -1,0 +1,40 @@
+{
+  "name": "SAH_riboswitch",
+  "rfam_id": "RF01057",
+  "original_sequence": "CCGUUCGAGGGGCGCUGCAGCAGGCCUAGGCCUGUCAGGCUCGAACGGAGCGCGCUCUCAGGCCGGCCUCGCCGGUCUGUCAACGCACCAACGGCGCCCAUUCGCA",
+  "original_dot_bracket": ".(((((((............((((((..))))))......)))))))...........................................................",
+  "n_available": 51,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AATO01002448.1/1018-1089",
+      "sequence": "AATCCGAGGGGCGCTGCAGGGCTGTCGTTCGACAGTTTCAGGCTCGGATTTCTCAAACGGCGCTCATCCAAC",
+      "dot_bracket": "(((((((............((((((......))))))......)))))))......................",
+      "length": 72
+    },
+    {
+      "accession": "AE017282.2/144280-144199",
+      "sequence": "GCGCCGAGGAGCGCTGCGACGGCCCGTCGAGGGCCGCCAGGCTCGGCGGGGACAATCGGTTTTCCAACGGCGCTCTGTTTAT",
+      "dot_bracket": "(((((((............((((((.....))))))......))))))).................................",
+      "length": 82
+    },
+    {
+      "accession": "AAFX01122445.1/162-87",
+      "sequence": "GCTTCGAGGAGCGCTGCGACTTGCGTGGTTTGCAAGCCAGGCTCGGAGCATTCGACAGGAACGGCGCTCACCCACT",
+      "dot_bracket": "(((((((............((((((.....))))))......)))))))...........................",
+      "length": 76
+    },
+    {
+      "accession": "AASZ01001430.1/3908-3830",
+      "sequence": "CACCGAGGAGCGTTGCAACGGGACAAGGTCCCGCCAGGCTCGGTGAGGGCTCCATAAGTTTCAACGGCGCTTACTCTGA",
+      "dot_bracket": ".(((((............((((((...))))))......)))))...................................",
+      "length": 79
+    },
+    {
+      "accession": "AATN01000007.1/46422-46509",
+      "sequence": "GCCTGAGGAGCGCTGCAACGGTTAGCAGATATTAACTCGCTAACCGCTAGGCTCAGGCAATCATTTAGATTAACTGCGCTCATTCAAT",
+      "dot_bracket": "((((((............((((((................))))))......))))))..............................",
+      "length": 88
+    }
+  ]
+}

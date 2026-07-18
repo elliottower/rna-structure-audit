@@ -1,0 +1,483 @@
+{
+  "model": "rinalmo",
+  "timestamp": "20260713_205108",
+  "cag_repeat_counts": [
+    17,
+    21,
+    36,
+    40,
+    60
+  ],
+  "htt_structures_info": [
+    {
+      "name": "HTT_CAG17_normal",
+      "n_cag": 17,
+      "seq_len": 235,
+      "mfe": -102.30000305175781,
+      "clinical_label": "normal"
+    },
+    {
+      "name": "HTT_CAG21_normal",
+      "n_cag": 21,
+      "seq_len": 247,
+      "mfe": -105.5,
+      "clinical_label": "normal"
+    },
+    {
+      "name": "HTT_CAG36_pathogenic",
+      "n_cag": 36,
+      "seq_len": 292,
+      "mfe": -124.0,
+      "clinical_label": "pathogenic"
+    },
+    {
+      "name": "HTT_CAG40_pathogenic",
+      "n_cag": 40,
+      "seq_len": 304,
+      "mfe": -129.0,
+      "clinical_label": "pathogenic"
+    },
+    {
+      "name": "HTT_CAG60_pathogenic",
+      "n_cag": 60,
+      "seq_len": 364,
+      "mfe": -154.0,
+      "clinical_label": "pathogenic"
+    }
+  ],
+  "experiment_1_mutation_sensitivity": {
+    "model": "rinalmo",
+    "metric": "htt_mutation_sensitivity",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.0318985707582513,
+        "best_layer": 33,
+        "nuc_null_95th": 1.0865753458856495,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87,
+        "n_cag_repeats": 17,
+        "clinical_label": "normal",
+        "mfe": -102.30000305175781,
+        "seq_length": 235
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.0328377239830624,
+        "best_layer": 33,
+        "nuc_null_95th": 1.0917503334615872,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89,
+        "n_cag_repeats": 21,
+        "clinical_label": "normal",
+        "mfe": -105.5,
+        "seq_length": 247
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0249139623153165,
+        "best_layer": 5,
+        "nuc_null_95th": 1.0885865306433162,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108,
+        "n_cag_repeats": 36,
+        "clinical_label": "pathogenic",
+        "mfe": -124.0,
+        "seq_length": 292
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.027818877738557,
+        "best_layer": 5,
+        "nuc_null_95th": 1.0984990650191335,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112,
+        "n_cag_repeats": 40,
+        "clinical_label": "pathogenic",
+        "mfe": -129.0,
+        "seq_length": 304
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.0360611869393608,
+        "best_layer": 5,
+        "nuc_null_95th": 1.0985925985463678,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132,
+        "n_cag_repeats": 60,
+        "clinical_label": "pathogenic",
+        "mfe": -154.0,
+        "seq_length": 364
+      }
+    },
+    "mean_best_ratio": 1.0307060643469097,
+    "families_exceeding_nuc_null": 0,
+    "families_total": 5
+  },
+  "experiment_2_cag_variant_sensitivity": {
+    "description": "Per-variant mutation ratios from experiment 1",
+    "per_variant": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.0318985707582513,
+        "best_layer": 33,
+        "nuc_null_95th": 1.0865753458856495,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87,
+        "n_cag_repeats": 17,
+        "clinical_label": "normal",
+        "mfe": -102.30000305175781,
+        "seq_length": 235
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.0328377239830624,
+        "best_layer": 33,
+        "nuc_null_95th": 1.0917503334615872,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89,
+        "n_cag_repeats": 21,
+        "clinical_label": "normal",
+        "mfe": -105.5,
+        "seq_length": 247
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0249139623153165,
+        "best_layer": 5,
+        "nuc_null_95th": 1.0885865306433162,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108,
+        "n_cag_repeats": 36,
+        "clinical_label": "pathogenic",
+        "mfe": -124.0,
+        "seq_length": 292
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.027818877738557,
+        "best_layer": 5,
+        "nuc_null_95th": 1.0984990650191335,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112,
+        "n_cag_repeats": 40,
+        "clinical_label": "pathogenic",
+        "mfe": -129.0,
+        "seq_length": 304
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.0360611869393608,
+        "best_layer": 5,
+        "nuc_null_95th": 1.0985925985463678,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132,
+        "n_cag_repeats": 60,
+        "clinical_label": "pathogenic",
+        "mfe": -154.0,
+        "seq_length": 364
+      }
+    }
+  },
+  "experiment_3_embedding_collapse": {
+    "model": "rinalmo",
+    "metric": "htt_embedding_collapse",
+    "pairwise": {
+      "CAG17_vs_CAG21": {
+        "repeat_1": 17,
+        "repeat_2": 21,
+        "mean_flank_distance": 0.0014695178251713514,
+        "mean_5prime_distance": 0.0024113019462674856,
+        "mean_3prime_distance": 0.001286053447984159,
+        "full_mean_distance": 0.001649320125579834,
+        "n_positions_compared": 184
+      },
+      "CAG17_vs_CAG36": {
+        "repeat_1": 17,
+        "repeat_2": 36,
+        "mean_flank_distance": 0.0060494644567370415,
+        "mean_5prime_distance": 0.012374043464660645,
+        "mean_3prime_distance": 0.004817403387278318,
+        "full_mean_distance": 0.021668672561645508,
+        "n_positions_compared": 184
+      },
+      "CAG17_vs_CAG40": {
+        "repeat_1": 17,
+        "repeat_2": 40,
+        "mean_flank_distance": 0.00859347265213728,
+        "mean_5prime_distance": 0.014183284714818,
+        "mean_3prime_distance": 0.007504547480493784,
+        "full_mean_distance": 0.02935624122619629,
+        "n_positions_compared": 184
+      },
+      "CAG17_vs_CAG60": {
+        "repeat_1": 17,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.016987523064017296,
+        "mean_5prime_distance": 0.02880401723086834,
+        "mean_3prime_distance": 0.014685609377920628,
+        "full_mean_distance": 0.06793588399887085,
+        "n_positions_compared": 184
+      },
+      "CAG21_vs_CAG36": {
+        "repeat_1": 21,
+        "repeat_2": 36,
+        "mean_flank_distance": 0.0036825896240770817,
+        "mean_5prime_distance": 0.007357017137110233,
+        "mean_3prime_distance": 0.0029667920898646116,
+        "full_mean_distance": 0.012071669101715088,
+        "n_positions_compared": 184
+      },
+      "CAG21_vs_CAG40": {
+        "repeat_1": 21,
+        "repeat_2": 40,
+        "mean_flank_distance": 0.005316816736012697,
+        "mean_5prime_distance": 0.009098871611058712,
+        "mean_3prime_distance": 0.0045800525695085526,
+        "full_mean_distance": 0.01788574457168579,
+        "n_positions_compared": 184
+      },
+      "CAG21_vs_CAG60": {
+        "repeat_1": 21,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.012309893034398556,
+        "mean_5prime_distance": 0.021603640168905258,
+        "mean_3prime_distance": 0.010499423369765282,
+        "full_mean_distance": 0.05026620626449585,
+        "n_positions_compared": 184
+      },
+      "CAG36_vs_CAG40": {
+        "repeat_1": 36,
+        "repeat_2": 40,
+        "mean_flank_distance": 0.001288647181354463,
+        "mean_5prime_distance": 0.0015641867648810148,
+        "mean_3prime_distance": 0.0012349707540124655,
+        "full_mean_distance": 0.0007205605506896973,
+        "n_positions_compared": 184
+      },
+      "CAG36_vs_CAG60": {
+        "repeat_1": 36,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.004932782147079706,
+        "mean_5prime_distance": 0.006844810675829649,
+        "mean_3prime_distance": 0.004560308996587992,
+        "full_mean_distance": 0.0136946439743042,
+        "n_positions_compared": 184
+      },
+      "CAG40_vs_CAG60": {
+        "repeat_1": 40,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.0029199945274740458,
+        "mean_5prime_distance": 0.0046942392364144325,
+        "mean_3prime_distance": 0.0025743625592440367,
+        "full_mean_distance": 0.00860750675201416,
+        "n_positions_compared": 184
+      }
+    },
+    "distances_from_wt": [
+      {
+        "n_cag": 17,
+        "distance_from_wt": 0.0
+      },
+      {
+        "n_cag": 21,
+        "distance_from_wt": 0.001649320125579834
+      },
+      {
+        "n_cag": 36,
+        "distance_from_wt": 0.021668672561645508
+      },
+      {
+        "n_cag": 40,
+        "distance_from_wt": 0.02935624122619629
+      },
+      {
+        "n_cag": 60,
+        "distance_from_wt": 0.06793588399887085
+      }
+    ],
+    "collapse_metric": {
+      "mean_non_wt_distance": 0.03015252947807312,
+      "std_non_wt_distance": 0.024044878484798176,
+      "cv_non_wt_distance": 0.7974415049418517,
+      "interpretation": "Low CV = collapse (model cannot distinguish repeat counts)"
+    }
+  },
+  "experiment_4_attention_contact": {
+    "model": "rinalmo",
+    "metric": "htt_attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.05946205610576317,
+        "n_cag_repeats": 17,
+        "clinical_label": "normal"
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.05640603262156852,
+        "n_cag_repeats": 21,
+        "clinical_label": "normal"
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.054091327967126644,
+        "n_cag_repeats": 36,
+        "clinical_label": "pathogenic"
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.05267878336940014,
+        "n_cag_repeats": 40,
+        "clinical_label": "pathogenic"
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.04896614397375135,
+        "n_cag_repeats": 60,
+        "clinical_label": "pathogenic"
+      }
+    },
+    "mean_best_corr": 0.05432086880752196,
+    "n_variants": 5
+  },
+  "structure_probing": {
+    "model": "rinalmo",
+    "metric": "htt_structure_probing",
+    "per_layer": {
+      "0": {
+        "accuracy": 0.7420147596194936,
+        "n_samples": 1442
+      },
+      "1": {
+        "accuracy": 0.8149874447907092,
+        "n_samples": 1442
+      },
+      "2": {
+        "accuracy": 0.9514938575054546,
+        "n_samples": 1442
+      },
+      "3": {
+        "accuracy": 0.9694046280308533,
+        "n_samples": 1442
+      },
+      "4": {
+        "accuracy": 0.9754828504573092,
+        "n_samples": 1442
+      },
+      "5": {
+        "accuracy": 0.980709265653428,
+        "n_samples": 1442
+      },
+      "6": {
+        "accuracy": 0.9777180877613849,
+        "n_samples": 1442
+      },
+      "7": {
+        "accuracy": 0.9845238759690969,
+        "n_samples": 1442
+      },
+      "8": {
+        "accuracy": 0.9837812563267011,
+        "n_samples": 1442
+      },
+      "9": {
+        "accuracy": 0.9836168569193312,
+        "n_samples": 1442
+      },
+      "10": {
+        "accuracy": 0.9814336627109104,
+        "n_samples": 1442
+      },
+      "11": {
+        "accuracy": 0.9782945750808427,
+        "n_samples": 1442
+      },
+      "12": {
+        "accuracy": 0.9789524698176848,
+        "n_samples": 1442
+      },
+      "13": {
+        "accuracy": 0.9787355814429016,
+        "n_samples": 1442
+      },
+      "14": {
+        "accuracy": 0.9784463969431909,
+        "n_samples": 1442
+      },
+      "15": {
+        "accuracy": 0.9792273438568058,
+        "n_samples": 1442
+      },
+      "16": {
+        "accuracy": 0.9827533643089182,
+        "n_samples": 1442
+      },
+      "17": {
+        "accuracy": 0.9806949551928383,
+        "n_samples": 1442
+      },
+      "18": {
+        "accuracy": 0.9792273438568058,
+        "n_samples": 1442
+      },
+      "19": {
+        "accuracy": 0.980078407686593,
+        "n_samples": 1442
+      },
+      "20": {
+        "accuracy": 0.9797478759562853,
+        "n_samples": 1442
+      },
+      "21": {
+        "accuracy": 0.9808467770551864,
+        "n_samples": 1442
+      },
+      "22": {
+        "accuracy": 0.9802973265057359,
+        "n_samples": 1442
+      },
+      "23": {
+        "accuracy": 0.9800370604559963,
+        "n_samples": 1442
+      },
+      "24": {
+        "accuracy": 0.979420512949751,
+        "n_samples": 1442
+      },
+      "25": {
+        "accuracy": 0.9793791657191541,
+        "n_samples": 1442
+      },
+      "26": {
+        "accuracy": 0.9808467770551864,
+        "n_samples": 1442
+      },
+      "27": {
+        "accuracy": 0.9802973265057359,
+        "n_samples": 1442
+      },
+      "28": {
+        "accuracy": 0.982548904714761,
+        "n_samples": 1442
+      },
+      "29": {
+        "accuracy": 0.9816978408849737,
+        "n_samples": 1442
+      },
+      "30": {
+        "accuracy": 0.9830570080336145,
+        "n_samples": 1442
+      },
+      "31": {
+        "accuracy": 0.9830570080336145,
+        "n_samples": 1442
+      },
+      "32": {
+        "accuracy": 0.9805989397860726,
+        "n_samples": 1442
+      },
+      "33": {
+        "accuracy": 0.9828091707645006,
+        "n_samples": 1442
+      }
+    },
+    "best_accuracy": 0.9845238759690969,
+    "best_layer": 7
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "fluoride_riboswitch",
+  "rfam_id": "RF01734",
+  "original_sequence": "CCGGCAACCGGCGAUGGAGUUCGCCGCAACCGCCUCACUUGGAAUUUUUCUAUAGAGGAAGAGGGUUCUAACCUCAAAAGCUGAGGCUGAUGACUCCUACACUUCU",
+  "original_dot_bracket": ".........((((........))))......((((................................................))))...................",
+  "n_available": 280,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "URS0000BC4686_32630/1-47",
+      "sequence": "GGCGATGGTGTTCGCCATAAACGCTCTTCGGAGCTAATGACACCTAC",
+      "dot_bracket": "((((........))))......((((....)))).............",
+      "length": 47
+    },
+    {
+      "accession": "ABXA01000043.1/134014-134086",
+      "sequence": "ATATTAGAAGGGAATGAAGTTCTCCCTTAGAAAAATCTAAAACCGCATTTATGCTGATGACTTCTGTAACTAT",
+      "dot_bracket": ".........((((........))))...................(((....)))...................",
+      "length": 73
+    },
+    {
+      "accession": "AE010299.1/4831358-4831427",
+      "sequence": "TGTAACAATGGTGATGAGGTCCACCCTGATAATTGTCAAAACCGCTTATGCTGATGACTTCTACACAACT",
+      "dot_bracket": ".........((((........))))..................((....))...................",
+      "length": 70
+    },
+    {
+      "accession": "FP929050.1/1488806-1488733",
+      "sequence": "GTATGAAACGGGAATGAGGTTCTCCCACGATTAATTCGAAACCGCTAAATTTAGCTGATGACTTCTGTGTAGAC",
+      "dot_bracket": ".........((((.........)))).................((((....))))...................",
+      "length": 74
+    },
+    {
+      "accession": "AACY023333559.1/192-117",
+      "sequence": "AATAGTGGCGGGAATGAAGTGCTCCCTTCATATGATATGAAAACCGCAAACACGTGCTGATGACTTCTACGATTTT",
+      "dot_bracket": ".........((((.........))))...................(((......)))...................",
+      "length": 76
+    }
+  ]
+}

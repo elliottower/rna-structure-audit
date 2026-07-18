@@ -1,0 +1,40 @@
+{
+  "name": "SAM_riboswitch",
+  "rfam_id": "RF00162",
+  "original_sequence": "GUUCUUAUCAAGAGAAGCAGAGGGACUGGCCCGACGAAGCUUCAGCAACCGGUGUAAUGGCGAAAGCCAUGACCAAGGUGCUAAAUCCAGCAAGCUCGAACAGCUUGGAAGAUAAGAAC",
+  "original_dot_bracket": "(((((((..((((..........)))).(((((.((...((((....((((....))))..........))))..)).))))).......(((((.......)))))))))))).....",
+  "n_available": 204,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "ABGD02000008.1/40601-40696",
+      "sequence": "ACCTTATAAAGAGCGGCGGAGGGACTGGCCCTGTGAAGCCCGGCAACCTGCATATTGCAAGGTGCCAAATCCAGCGGTATGACCGAGAGATGAGGA",
+      "dot_bracket": "((((((((....(((((...(((.....)))......))))((((.((((((...)))).))))))...(....((((())))))..)))))))))",
+      "length": 96
+    },
+    {
+      "accession": "URS0000A7635A_911092/1-94",
+      "sequence": "GGCTTATCAAGAGAGGGAGAGCGACTGGCGCGAAGACCCCCGGCAACCAGAAATGGTGCCAATTCCTGCAGCGGAAACGTTGAAAGATGAGCCA",
+      "dot_bracket": "((((((((....(((((...(((.....)))......))))((((.(((..)..))))))...(....(((((...))))))..))))))))).",
+      "length": 94
+    },
+    {
+      "accession": "AAML04000010.1/122381-122487",
+      "sequence": "ATCTTATCAAGAGTGGCAGAGGGACTGGCCCTGTGAAGCCCGGCAACCAGTATATTTAATTATACATTGGTGCTAAATCCTGCAGCATTTATGCTGAAAGATGAGTA",
+      "dot_bracket": "((((((((....(((((...(((.....)))......))))((((.((((((..........))))..))))))...(....(((((...))))))..)))))))))",
+      "length": 107
+    },
+    {
+      "accession": "URS0000A7631C_911092/1-93",
+      "sequence": "GGCTTATCAAGAGAGGGTGAGCGACTGGCGCGAAGATCCCCGGCAACCAGAAATGGTGCCAATTCCTGCAGCGGAAACGTTGAAAGATGAGCC",
+      "dot_bracket": "((((((((....(((((...(((.....)))......))))((((.(((..)..))))))...(....(((((...))))))..)))))))))",
+      "length": 93
+    },
+    {
+      "accession": "CP000673.1/3384182-3384086",
+      "sequence": "TTCTTATTTTGAGAGACGGAGGGACTGGCCCTATGATGTCCGGCAACCTGAATATTTAAGGTGCTAATTCCAGCAGGTATTACCTGAGAGATAAGAA",
+      "dot_bracket": "((((((((....(((((...(((.....)))......))))((((.((((((...))).))))))...(....((((...))))))..)))))))))",
+      "length": 97
+    }
+  ]
+}

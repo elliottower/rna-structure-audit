@@ -1,0 +1,4 @@
+{
+  "model": "evo",
+  "error": "Load failed: This modeling file requires the following packages that were not found in your environment: flash_attn. Run `pip install flash_attn`"
+}

@@ -1,0 +1,40 @@
+{
+  "name": "U6_snRNA",
+  "rfam_id": "RF00026",
+  "original_sequence": "GCCAGCGGGUAACCGCUGGCCUAUGGUCACAUUGAAACGAUACAGAGAAGAUGUAGGUGUUCUUCCCCCCUAAGUUCCAGCGUUCGAGCACGCACUAACAUCUCUAUAGUAGCAUGGCCCCUGCACUAAGGAUGACACAUGUAAUCAAAGAGACGCAACCCAUUUUU",
+  "original_dot_bracket": "(((((..........)))))...................................................................................................................................................",
+  "n_available": 186,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AAHC01000890.1/7726-7624",
+      "sequence": "GTTGCTATGTTCTGGCTACTTTCATTTCAACGATACAGAGAAATTTAGCATGGTCCTTGGACAAAGATGACCCTAATATCACCTTTGAGTGCACAAAATGTTT",
+      "dot_bracket": "(((((.........)))))....................................................................................",
+      "length": 103
+    },
+    {
+      "accession": "AATM01000137.1/47790-47943",
+      "sequence": "CGATCTTCGGATCACTTTGGTCAAATTGAAACGATACAGAGAAGATTGTAAGTACCCCCCTAAGGTCGTGAGTTCGAGTTCCACTAACACCCGTCTAGAGCATGGCCCCTGCACAAGGATGACACTGCGACATTGAGAGAAACCCAATTTTTTT",
+      "dot_bracket": "(((((....)))))............................................................................................................................................",
+      "length": 154
+    },
+    {
+      "accession": "CU326409.1/117472-117365",
+      "sequence": "GTGCTCACTTCGGCAGCACATATACTAAAATTGGAACGATACAGAGAAGATTAGCATGGCCCCTGTGCAAAGAATGACACGCAAATTCTTGAAGAGTTCCATATTTTT",
+      "dot_bracket": "(((((.........))))).........................................................................................",
+      "length": 108
+    },
+    {
+      "accession": "U43841.1/336-439",
+      "sequence": "ATCCACTTCGGTGGAAATCCCATAAAATTGGAACAATACAGAGAAGATTAGCATGGCCCCTGCGCAAGGATGACACGCTCATACGAGAAGTTAAAAAGTTTTTT",
+      "dot_bracket": "(((((......)))))........................................................................................",
+      "length": 104
+    },
+    {
+      "accession": "AANV02000039.1/44432-44535",
+      "sequence": "ATCCACTTCGGTGGAAATCCCATAAAATTGGAACAATACAGAGAAGATTAGCATGGCCCCTGCGCAAGGATGACACGCTCATACGAGAAGTTAAAAAGTTTTTT",
+      "dot_bracket": "(((((......)))))........................................................................................",
+      "length": 104
+    }
+  ]
+}

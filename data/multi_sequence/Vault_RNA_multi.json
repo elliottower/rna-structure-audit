@@ -1,0 +1,40 @@
+{
+  "name": "Vault_RNA",
+  "rfam_id": "RF00006",
+  "original_sequence": "GGGCCAGCUUUAGCUCAGCGGUUACUUCGACGUGCUCCAGUUUGAGCAGGCUAUGUAACGUGGUCGGUUCGAGCAACACAACCAGCCGCUUGCCUAUCUGGUGAGUGGUUGGUUCGAGACCCGCGGGCGCUCUCUGGCCCUUUU",
+  "original_dot_bracket": ".((((((.....((((.((((....(((((...................................................................................)))))..)))))))).....)))))).....",
+  "n_available": 66,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CAAB02016770.1/2532-2438",
+      "sequence": "GCGGAGGTTTAGCTCAGGGGTTACTTCACAGCTTGTTACCACCTAAATGATCCGCGGGTCACAGGTTCCAACCCCGGGCGCCGCCCTCCGTTTTG",
+      "dot_bracket": ".((((((....((((.((((....(((((.....................................))))))))))))).....)))))).....",
+      "length": 95
+    },
+    {
+      "accession": "CAAE01015120.1/740254-740351",
+      "sequence": "GCGCTGGTTTAGCTCAGTGGTTACTTCACCACAAATCCTTTGGATTTCGCGGTCTCCTCCCAACTGGGATCCAACCACGGGCGCTGCTCAGCGTTTTT",
+      "dot_bracket": ".((((((....((((.((((....(((((........................................))))))))))))).....)))))).....",
+      "length": 98
+    },
+    {
+      "accession": "AANG01341798.1/2156-2244",
+      "sequence": "GATTGGCCGTAGCTGAGTGGTTTCTTCAAGTAAAGCATCTCCTAGCTACTCAAGTGGTTCAGGACCTGCTGGTACTTTCTAGCCCTTTT",
+      "dot_bracket": "((((((.....((((.((((....(((((.............................)))))..)))))))).....)))))).....",
+      "length": 89
+    },
+    {
+      "accession": "BAAF04097857.1/315-413",
+      "sequence": "ACATTGGTTTGGCTCAGTGGTTTTTTCTACCGGTGATTTGTCACATCTGACGGTCAGCGGTTCGAAACAGTTTGACTACAGGGACTGCCCGATGTTTTT",
+      "dot_bracket": ".((((((....((((.((((....(((((................................))))).........)))))))).....)))))).....",
+      "length": 99
+    },
+    {
+      "accession": "AAGJ04020426.1/4514-4635",
+      "sequence": "TGGCTGGCTAAGCAGTGTGGATACTTCGTATAGCTAAATGGTAAAGCCCTTATTAATCACATGAGTATTTGTGGGTTCGATCCCCACTACGTCTCTTTCTACACGCGCGATCCAGCTTTTTT",
+      "dot_bracket": ".((((((....((((.((((....(((((...............................................))))).................)))))))).....)))))).....",
+      "length": 122
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "cobalamin_riboswitch",
+  "rfam_id": "RF00174",
+  "original_sequence": "CGCAGAACAGUCAGGCAUGGUUCCCCGUGCCCGCGCCAAGCGCCCGGGGGAUCAAAUGGGAAUGUGGAACGGUCCGAUCCAAACCGGAGGACCAAAGCCUCAGCCGCCCCCGCGACUGUAUGCGGAGAGGGAGAUCGACAUGCCACUGGGGCCCGCCCCGGGAAGGCCGAUCCACCCCGAUGACCCGCGAGCCAGGAGACCAGCCAUGCGCGACACCCUUAG",
+  "original_dot_bracket": "........((((.((((((((((((((..................))))))(...)(((...(((((..............................)))))..((......))((((...((((...(...((((.....(((.((((((....))))))...))).)))))...).......))))....)).)...))))))))))).)))).......",
+  "n_available": 269,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "ABDX01000004.1/114276-114454",
+      "sequence": "TAATATTTTATATTTTTAGGTTTGATTTTAATTAAAAGGGAAAGTGGTTAAAGTCCACTACAGCCCCCGCTACTGTGATAGGATACAAGTTTCTATTTGACCACTGATTATATAAATTGGGAAGGGAGAAATGAGGATAAGCCTTAAGTCAGGATACCTGCCTAAAGATCATGAACTAA",
+      "dot_bracket": "........((((.((((((((((((()))))(...)(((...(((((.......)))))..((......))((((...((((...(...((.((.....(((.((((((.....))))))...))))))))...)......))))....)).)...))))))))))).)))).......",
+      "length": 179
+    },
+    {
+      "accession": "AAXF02000053.1/97071-97270",
+      "sequence": "CTATCTTTGTCGCGCATTGGTTTGCGACTCCCATGCGGGGGAAGCAATTAAAAGGGAATCAGGTGTAAATCCTGAACAGTCCCGCTGCTGTAAGTTCCATGCATGTTACAAGCAATTCACTCATTGCCACTGGAGACTAATCTGGGAAGGCGTTTGTAACAGGAATAAGTCAGAAGACCTACCATGCAATTATGTTTCAC",
+      "dot_bracket": "........((((.((((((((((((((..............))))))(...)(((...(((((.......)))))..((.....))((((...((((...(...((.((................(((.((((((....))))))...))))))))...)..))))....)).)...))))))))))).)))).......",
+      "length": 200
+    },
+    {
+      "accession": "AE013598.1/1368227-1368451",
+      "sequence": "TACCATGCGCGCCCCTGAGGTGACTGTCGGCTTGCCGGCGGTTTAAACGGGAATCCGGTGCGCAGATCGCCTTGGCGTGGTGCAATTCCGGAGCTGCCCCCGCAACGGTGGGCGAGACAAGGGTCTGCATGTAACACCACTGTGCGGTGCACGGGAAGGCGCAGATCCGGGAAGCGATTGCTTCCGCTCGCAAGCCCGGAGGCCGGCCTGAAGGGATTGACCCGG",
+      "dot_bracket": "........((((.((((((((.((((((........))))))(...)(((...(((((.............................)))))..((......))((((...((((....(...((.((.......(((.((((((...))))))...))))))))...)..................))))....)).)...))))))))))).)))).......",
+      "length": 225
+    },
+    {
+      "accession": "BX294144.1/76053-76291",
+      "sequence": "GCAACGTTACGTGGTGCCGGTGTTCCAAATCTTGGATCACTGGGAACAGGGAACTTCGGTGAGATTCCGAGACGGCCCGGCCGCTGTATCCGATGCGAAGTTGCTGACTTGGCAACTTCCAAGCAAACATTCCTCTTGTGCCATTGTCGTTGATCGGAATTATCCGTGACGGACGAGAAGGCGAGCGTTTGCGAGTTTGCATCGGGAGTCAGAAGACCTACCACGAAACGGACACTATG",
+      "dot_bracket": "..((((.((((((((..((((((.............))))))(...)(((...(.((((.......)))))..((.....))((((...((((...(...((.((..................................(((.((((((.....................))))))...))).))))..)...).......))))....)).)...))))))))))).)))).......",
+      "length": 239
+    },
+    {
+      "accession": "AF193754.1/4343-4143",
+      "sequence": "GCAATGAGGAAGGATTAAGGTTCTTTGTCATTGGCAAAGCTAAGAGGGAAACTGGTGCGAAAGAATTTTCAAAGCCAGTGCTGCCCCCGCAACTGTAAACGGCGAGCAAAGATCAAAATGCCACTGATATTATTATCGGGAAGGCTGATCGGACGCGGTGACCCGTCAAGTCAGGAGACCTGCCTTAAACCAAGTCATCCA",
+      "dot_bracket": "........((((.((((((((.((((((.....))))))(...)(((...(((((...................)))))..((......))((((...((((...(...((.((.....(((.((((((....))))))...))).)))))...)........))))....)).)...))))))))))).)))).......",
+      "length": 201
+    }
+  ]
+}

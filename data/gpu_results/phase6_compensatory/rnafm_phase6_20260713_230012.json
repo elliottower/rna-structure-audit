@@ -1,0 +1,36 @@
+{
+  "model": "rnafm",
+  "timestamp": "20260713_230012",
+  "phase": 6,
+  "experiment": "compensatory_double_mutation",
+  "compensatory_trained": {
+    "per_rna": {
+      "tRNA_Phe_yeast": {
+        "best_cr": 1.1814374062026465,
+        "best_layer": 2,
+        "per_layer_cr": [
+          NaN,
+          0.2737761413093103,
+          1.1814374062026465,
+          1.0584268842507103,
+          0.9949519408174733,
+          1.0010279166453047,
+          0.9999835756796548,
+          1.0000462042177045,
+          1.0002639443503138,
+          0.9941476590636255,
+          0.8682008368200838,
+          0.913508260447036,
+          0.5376344086021505
+        ],
+        "n_pairs": 20,
+        "n_gc_pairs": 12,
+        "n_au_pairs": 8
+      }
+    },
+    "mean_best_cr": 1.1814374062026465,
+    "median_best_cr": 1.1814374062026465,
+    "families_exceeding_comp_null": 0,
+    "families_total": 1
+  }
+}

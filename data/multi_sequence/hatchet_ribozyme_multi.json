@@ -1,0 +1,40 @@
+{
+  "name": "hatchet_ribozyme",
+  "rfam_id": "RF02678",
+  "original_sequence": "CCUAUACUGUGAGAAUCAGUAUCAACUUUGUGGGGCUUAUAUCUUAUUGUGUCCUUUACAGGAUAGAAAUAGAUUUAUUGGGGAUACAGAGCGUUGGCAUAGCCACUCUAAACCAAUCACAAUAAGUAUUAGUGCAGAGAAAUCAAAG",
+  "original_dot_bracket": "...((((((.......))))))...(((((...((((.(..((((((((((..................................................................)))))))))).).))).)........)))))",
+  "n_available": 109,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "URS0000D65726_12908/27-152",
+      "sequence": "TCTTCAGAAGATGACAAGCCTGTGGGGCGTAAGTAGTATTTTTAAGCGGGAGAAGAAGAGTGGCAATTGCTCTAATTAGTACTGATAATTGCAAATATTACGATCGTGCGGACGTTAAAATCAGGT",
+      "dot_bracket": "...(((.....)))...(((((...((((.(.((((((((((.................................................)))))))))).).))).)............)))))",
+      "length": 126
+    },
+    {
+      "accession": "URS0000D6BED4_12908/32-163",
+      "sequence": "GTCCTCAGAAAATGACAACCATGTGGGGCGTAAGTAATTGTATAGACATTTATATTTATTAAATACGATATATAAATATATTTGAATATTCGTATTTATGCAATTATAATCGTGCGGACGTTAAAATCATGG",
+      "dot_bracket": "....(((.....)))...(((((...((((.(.((((((((((......................................................)))))))))).).))).)............)))))",
+      "length": 132
+    },
+    {
+      "accession": "URS0000D65DEC_12908/34-116",
+      "sequence": "CTCCTTACTGTGAGAATCAGTGACAAACATGTGGGGCTTATATCTAATTCAAATTGGTATTAGTGCAGACGTTAAAACCATGT",
+      "dot_bracket": "....((((((.......))))))...(((((...((((.(..((((((....)))))).).))).)............)))))",
+      "length": 83
+    },
+    {
+      "accession": "URS0000D67D97_12908/32-157",
+      "sequence": "GTCCTCAGTAAATGACAACCATGTGGGGCGTAAGTAGTATTTTATGCAGAATAATTAGAGTGGTGATTGCTTTAATTAATACTGATAATCACAAATATTATGATCGTGCGGACGTAAAAATCATGG",
+      "dot_bracket": "....(((.....)))...(((((...((((.(.((((((((((................................................)))))))))).).))).)............)))))",
+      "length": 126
+    },
+    {
+      "accession": "URS0000D6D31A_12908/32-157",
+      "sequence": "GTCCTCAGAAAATGACAACCATGTGGGGCGTAAGTAGTATTTTATGCAGAATAATTAGAGTGGTGATTGCTTTAATTAATACTGATAATCACAAATATTATGATCGTGCGGACGTAAAAATCATGG",
+      "dot_bracket": "....(((.....)))...(((((...((((.(.((((((((((................................................)))))))))).).))).)............)))))",
+      "length": 126
+    }
+  ]
+}

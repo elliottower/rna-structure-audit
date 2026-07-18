@@ -1,0 +1,40 @@
+{
+  "name": "preQ1_riboswitch",
+  "rfam_id": "RF00522",
+  "original_sequence": "UUCAUAGUGGUUCGUAACCCUCCCACUUGAACAACCAACAAUUGUUCGAAACAAAACUAGGAAAAU",
+  "original_dot_bracket": ".....(((((............))))).......................................",
+  "n_available": 43,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "URS000080E32E_32630/1-33",
+      "sequence": "CTGGGTCGCAGTAACCCCAGTTAACAAAACAAG",
+      "dot_bracket": "(((((..........))))).............",
+      "length": 33
+    },
+    {
+      "accession": "URS000080E32E_119072/1-33",
+      "sequence": "CTGGGTCGCAGTAACCCCAGTTAACAAAACAAG",
+      "dot_bracket": "(((((..........))))).............",
+      "length": 33
+    },
+    {
+      "accession": "URS0000E60BA5_119072/1-33",
+      "sequence": "CTGGGTCGCAGTNNCCCCAGTTAACAAAACAAG",
+      "dot_bracket": "(((((..........))))).............",
+      "length": 33
+    },
+    {
+      "accession": "URS0000E60B99_119072/1-33",
+      "sequence": "CTGGGTCGCAGTNNNCCCAGTTAACAAAACAAG",
+      "dot_bracket": "(((((..........))))).............",
+      "length": 33
+    },
+    {
+      "accession": "URS000080E037_32630/1-34",
+      "sequence": "AGAGGTTCTAGCACATCCCTCTATAAAAAACTAA",
+      "dot_bracket": "(((((............)))))............",
+      "length": 34
+    }
+  ]
+}

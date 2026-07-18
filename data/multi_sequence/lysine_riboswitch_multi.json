@@ -1,0 +1,40 @@
+{
+  "name": "lysine_riboswitch",
+  "rfam_id": "RF00168",
+  "original_sequence": "AGUGAAGAUAGAGGUGCGAACUUCAUCAGUAAAAGCUUGGAGAAGAAUGAGCUUCAAUGAAAAGCUUUGAAAGGGAACGUUCGCCGAAGUGAAGAAAAACUCAUUUUUUUCUUUGCUGGUCCUGCAUUUAAGAGAUGCCGGAUUGUCAAGGCGGUGCCGCCUUGGAGAGCUAUCUCACUG",
+  "original_dot_bracket": ".....((((((....(((((((((.......((((((((.....................))))))))......))).))))))...((((((((((((......))))))))))))(((((((((((.....))))))))))).(((((((......)))))))....)))))).....",
+  "n_available": 31,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CP001186.1/1355449-1355630",
+      "sequence": "CTCAAAGGTAGAGGCCGCGATAGGAAAGAGTAAGCTATGGGAGATTTAATGGAATCTGTGATCATAGGTTGAAAGGGACTATTGCCGAAATATAAGAATAACCATCTTATTCATATATTGGGACTACATTGAATAAATGTAGTACTGTCATAAGATTTATTTTATGGAGAGCTATTTGGAGA",
+      "dot_bracket": ".....((((((.....(((((((((.......((((((((.....................)))))).))......)))))))))...((((((((((((.......))))))))))))(((((((((((.....))))))))))).(((((((......)))))))....)))))).....",
+      "length": 182
+    },
+    {
+      "accession": "CP000436.1/843556-843727",
+      "sequence": "TACATATGTAGAGGTGCGGCTGTTATAAGTAATTTTTTGAGTGGATAACGATGAAAAAAATGAAAGGAATAGTTGCCGAAATCAATTAAAAGTCATTTTAATTGGTTGGGGGCGTATTCGAAAGAAACGTCACTGTCATAGTATTTATCCACTATGGAGCGCTACTGGTTAG",
+      "dot_bracket": ".....((((((....(((((((((.......(((((((................)))))))......)))))))))...((((((((((((....))))))))))))(((((((((((.....))))))))))).(((((((........)))))))....)))))).....",
+      "length": 172
+    },
+    {
+      "accession": "AL591976.1/186683-186486",
+      "sequence": "TGGTGAGGTAGAGGTTGCGAGATGCACTAGTAATTTTTTCGAGGCGAAACAAAGACGCCGACGACAAAGAATGAACAGGTTGATCGCCGAAGTGACTATTTTCTCTTTGTTTAGAAATAGTTGTTGGGACAGTTTCCTAAAGGGGCTGGACTGCTATAAGAATTTGTCGAAATTTCTTATAGGTGTGCTATCTGACAA",
+      "dot_bracket": ".....((((((.....(((((((((.......((((((((........................))))))))......)))))))))...((((((((((((...........))))))))))))(((((((((((.....))))))))))).(((((((...............))))))).....)))))).....",
+      "length": 198
+    },
+    {
+      "accession": "AL596166.1/112469-112272",
+      "sequence": "TGGTGAGGTAGAGGTTGCGAGATGCACTAGTAATTTTTTCGAGGCGAAACAAAGACGCCAATGACAAAAAACGAACAGGTTAATCGCCGAAGTGACTATTTTTTCTTTGTATCGAAATAGTTGTTGGGACAGTTTCCTAAAGGAGCTGGACTGCTATAAGAATTTGTCGAAATTTCTTATAGGTGTGCTATCTGACAA",
+      "dot_bracket": ".....((((((.....(((((((((.......((((((((........................))))))))......)))))))))...((((((((((((...........))))))))))))(((((((((((.....))))))))))).(((((((...............))))))).....)))))).....",
+      "length": 198
+    },
+    {
+      "accession": "AM263198.1/783761-783564",
+      "sequence": "TGGTGAGGTAGAGGTTGCAAGATTCACAAGTAATTTTTTAGAAGCGAAACAAAGACGCTGATGACAAAGAATGAACAGGATGATTGCCGAAGTGACTATTTTCTCTTTGTTTAGAAATAGTTGTTGGGACAGTTTCCTAAAGGAGCTGGACTGCTATAAGAATTTGTCGAAATTTCTTATAGGTGTGCTATCTGACAA",
+      "dot_bracket": ".....((((((.....(((((((((.......((((((((........................))))))))......)))))))))...((((((((((((...........))))))))))))(((((((((((.....))))))))))).(((((((...............))))))).....)))))).....",
+      "length": 198
+    }
+  ]
+}

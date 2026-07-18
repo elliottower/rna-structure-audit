@@ -1,0 +1,131 @@
+{
+  "model": "rnafm",
+  "timestamp": "20260713_235609",
+  "phase": 6,
+  "metric": "perturbation_specificity",
+  "preregistration": "PREREGISTRATION_PHASE6_V2.md",
+  "offset": 0,
+  "results": {
+    "per_rna": {
+      "Corona_5UTR": {
+        "best_ps": 7.450580596923828e-09,
+        "best_layer": 6,
+        "per_layer_ps": [
+          -5.3644180297851564e-08,
+          -0.0032419323921203612,
+          -5.959570407867432e-05,
+          -2.6366114616394044e-05,
+          -1.7762184143066407e-06,
+          -8.434057235717774e-07,
+          7.450580596923828e-09,
+          -2.8312206268310546e-08,
+          -2.8312206268310546e-08,
+          -4.76837158203125e-08,
+          -2.9802322387695312e-08,
+          -4.32133674621582e-08,
+          -2.384185791015625e-08
+        ],
+        "n_eligible_pairs": 40,
+        "n_stems": 16,
+        "n_wc_pairs_total": 83,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.10022750709372524,
+          "mean_stem_delta": 0.00043263338707588814,
+          "mean_loop_delta": 0.00043263682388366856
+        },
+        "h3_precision": {
+          "fraction": 0.325,
+          "n": 40,
+          "partner_max_count": 13,
+          "p_value": 0.6031228041675771
+        },
+        "ps_gc_pairs": 1.9868214925130207e-08,
+        "ps_au_pairs": -6.274173134251644e-09,
+        "quarantined": false
+      },
+      "tRNA_Ala_human": {
+        "best_ps": 8.593996365865071e-05,
+        "best_layer": 4,
+        "per_layer_ps": [
+          -3.9736429850260414e-08,
+          -0.0031659205754597983,
+          -0.0031157036622365317,
+          -0.0008616745471954346,
+          8.593996365865071e-05,
+          -7.450580596923828e-06,
+          -3.3775965372721356e-07,
+          -6.953875223795573e-08,
+          -2.9802322387695312e-08,
+          -4.967053731282552e-08,
+          0.0,
+          3.9736429850260414e-08,
+          -1.9868214925130207e-08
+        ],
+        "n_eligible_pairs": 6,
+        "n_stems": 3,
+        "n_wc_pairs_total": 15,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.2683875257525218,
+          "mean_stem_delta": 0.013423025023703482,
+          "mean_loop_delta": 0.013482398108432167
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 6,
+          "partner_max_count": 3,
+          "p_value": 0.31961591220850477
+        },
+        "ps_gc_pairs": 0.0002862215042114258,
+        "ps_au_pairs": -0.00011434157689412434,
+        "quarantined": true
+      },
+      "tRNA_Phe_yeast": {
+        "best_ps": 5.960464477539063e-09,
+        "best_layer": 6,
+        "per_layer_ps": [
+          -2.384185791015625e-08,
+          -0.0035172700881958008,
+          -0.000997692346572876,
+          -0.000369107723236084,
+          -3.9964914321899414e-05,
+          -4.905462265014648e-06,
+          5.960464477539063e-09,
+          0.0,
+          -4.1723251342773435e-08,
+          -2.9802322387695312e-08,
+          -5.3644180297851564e-08,
+          -1.7881393432617187e-08,
+          -1.1920928955078126e-08
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 5,
+        "n_wc_pairs_total": 20,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.06810557001911921,
+          "mean_stem_delta": 0.0015702498370203481,
+          "mean_loop_delta": 0.0015703032846036164
+        },
+        "h3_precision": {
+          "fraction": 0.4,
+          "n": 10,
+          "partner_max_count": 4,
+          "p_value": 0.4407356602143985
+        },
+        "ps_gc_pairs": 8.344650268554687e-08,
+        "ps_au_pairs": -7.152557373046875e-08,
+        "quarantined": true
+      }
+    },
+    "mean_best_ps": 7.450580596923828e-09,
+    "median_best_ps": 7.450580596923828e-09,
+    "families_total": 1,
+    "families_quarantined": [
+      "tRNA_Ala_human",
+      "tRNA_Phe_yeast"
+    ],
+    "families_skipped": []
+  }
+}

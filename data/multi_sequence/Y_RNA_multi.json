@@ -1,0 +1,40 @@
+{
+  "name": "Y_RNA",
+  "rfam_id": "RF00019",
+  "original_sequence": "GGUUGGUCCAAGUGCAGUGGUGUUUACAACUAAUUGAUCACAGUCAGUUACAGAUUACUUUGUUCCUUCUCCAUUCCCACUGCUUCACUUGACCAGCCUUAA",
+  "original_dot_bracket": "((((((((.((..(((((((.(.....(((.((.........................)).)))...........))))))...))..))))))))))....",
+  "n_available": 79,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AAQQ01567293.1/1826-1938",
+      "sequence": "GGCTGGTCCGAAGGTAGTGAGTTATCTCAATTGATTGTTCACAGTCAGTTACAGATTGAACTCCTTGTTCTACTCTTTCCCCCCTTCTCACTACTGCACTTGACTAGTCTTTT",
+      "dot_bracket": "((((((((.((..((((((((.....................(((.((.....................)).)))...........))))))...))..))))))))))....",
+      "length": 113
+    },
+    {
+      "accession": "AADA01181485.1/19721-19833",
+      "sequence": "GGCTGGTCCGAAGGTAGTGAGTTATCTCAATTGATTGTTCACAGTCAGTTACAGATCGAACTCCTTGTTCTACTCTTTCCCCCCTTCTCACTACTGCACTTGACTAGTCTTTT",
+      "dot_bracket": "((((((((.((..((((((((.....................(((.((.....................)).)))...........))))))...))..))))))))))....",
+      "length": 113
+    },
+    {
+      "accession": "AADD01087484.1/3854-3742",
+      "sequence": "GGCTGGTCCGAAGGTAGTGAGTTATCTCAATTGATTGTTCACAGTCAGTTACAGATCGAACTCCTTGTTCTACTCTTTCCCCCCTTCTCACTACTGCACTTGACTAGTCTTTT",
+      "dot_bracket": "((((((((.((..((((((((.....................(((.((.....................)).)))...........))))))...))..))))))))))....",
+      "length": 113
+    },
+    {
+      "accession": "AANG01401391.1/4351-4239",
+      "sequence": "GGCTGGTCCGAAGGTAGTGAGTTATCTCAATTGATTGTTCACAGTCAGTTACAGATCGAACTCCTTGTTCTACTCTTTCCCCCCTTCTCACTACTGCACTTGACTAGTCTTTT",
+      "dot_bracket": "((((((((.((..((((((((.....................(((.((.....................)).)))...........))))))...))..))))))))))....",
+      "length": 113
+    },
+    {
+      "accession": "AANU01114500.1/5407-5295",
+      "sequence": "GGCTGGTCCGAAGGTAGTGAGTTATCTCAATTGATTGTTCACAGTCAGTTACAGATCGAACTCCTTGTTCTACTCTTTCCCCCCTTCTCACTACTGCACTTGACTAGTCTTTT",
+      "dot_bracket": "((((((((.((..((((((((.....................(((.((.....................)).)))...........))))))...))..))))))))))....",
+      "length": 113
+    }
+  ]
+}

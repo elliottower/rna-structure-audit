@@ -1,0 +1,40 @@
+{
+  "name": "HDV_ribozyme",
+  "rfam_id": "RF00094",
+  "original_sequence": "GGCCGGCAUGGUCCCAGCCUCCUCGCUGGCGCCGGCUGGGCAACAUUCCGAGGGGACCGUCCCCUCGGUAAUGGCGAAUGGGUCC",
+  "original_dot_bracket": "(((((.((((((.....(((.((.((..((((..((((.......)))).)))).)).)).)))..))))))..)))))......",
+  "n_available": 33,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "M92448.1/681-769",
+      "sequence": "ATGGCCGGCATGGTCCCAGCCTCCTCGCTGGCGCCGGCTGGGCAACATTCCGAAGGGACCGTCCCTTCGGTAATGGCGAATGGGACCCA",
+      "dot_bracket": "..(((((((.........(((........))))))))))......(((((((((((.(...).))))))).))))..............",
+      "length": 89
+    },
+    {
+      "accession": "AF425644.1/679-767",
+      "sequence": "ATGGCCGGCATGGTCCCAGCCTCCTCGCTGGCGCCGGCTGGGCAACATTCCGAAGGGGACCGTCCCTCGGTAATGGCGAATGGGACCCA",
+      "dot_bracket": "..(((((((.........(((........))))))))))......((((((((.(((.(...)))))))).))))..............",
+      "length": 89
+    },
+    {
+      "accession": "AB037947.1/685-775",
+      "sequence": "GTGGCCGGCATGGCCCCAGCCTCCTCGCTGGCGCCGGCTGGGCAACGATCCGAGGGGACTGTCCCTCTCGAGAATCGGCAAATGGGGCCCC",
+      "dot_bracket": "..(((((((.........(((........))))))))))......(((((((((((.(...)..))))).)).))))..............",
+      "length": 91
+    },
+    {
+      "accession": "AB037948.1/685-775",
+      "sequence": "GTGGCCGGCATGGCCCCAGCCTCCTCGCTGGCGCCGGCTGGGCAACGATCCGAGGGGACTATCCCTCTCGAGAATCGGCAAATGGGGCCCC",
+      "dot_bracket": "..(((((((.........(((........))))))))))......(((((((((((.(...)..))))).)).))))..............",
+      "length": 91
+    },
+    {
+      "accession": "X77627.1/679-767",
+      "sequence": "ATGGCCGGCATGGTCCCAGCCTCCTCGCTGGCGCCGGCTGGGCAACATTCCGAGGGGGACCGTCCCTCGGTAATGGCGAATGGGACCCA",
+      "dot_bracket": "..(((((((.........(((........))))))))))......((((((((.(((.(...)))))))).))))..............",
+      "length": 89
+    }
+  ]
+}

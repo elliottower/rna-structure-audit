@@ -1,0 +1,257 @@
+{
+  "5S_rRNA_ecoli": {
+    "rfam_id": "RF00001",
+    "n_available": 611,
+    "n_selected": 5
+  },
+  "6S_RNA": {
+    "rfam_id": "RF00013",
+    "n_available": 90,
+    "n_selected": 5
+  },
+  "7SK_RNA": {
+    "rfam_id": "RF00100",
+    "n_available": 25,
+    "n_selected": 5
+  },
+  "Bacterial_SRP": {
+    "rfam_id": "RF00169",
+    "n_available": 199,
+    "n_selected": 5
+  },
+  "CRISPR_leader": {
+    "rfam_id": "RF01315",
+    "n_available": 19,
+    "n_selected": 5
+  },
+  "Corona_5UTR": {
+    "rfam_id": "RF03120",
+    "n_available": 19,
+    "n_selected": 5
+  },
+  "Corona_s2m": {
+    "rfam_id": "RF00164",
+    "n_available": 38,
+    "n_selected": 5
+  },
+  "CrPV_IRES": {
+    "rfam_id": "RF00458",
+    "n_available": 6,
+    "n_selected": 5
+  },
+  "FMN_riboswitch": {
+    "rfam_id": "RF00050",
+    "n_available": 107,
+    "n_selected": 5
+  },
+  "HDV_ribozyme": {
+    "rfam_id": "RF00094",
+    "n_available": 33,
+    "n_selected": 5
+  },
+  "Hepatitis_C_IRES_III": {
+    "rfam_id": "RF00061",
+    "n_available": 35,
+    "n_selected": 5
+  },
+  "Histone_3prime": {
+    "rfam_id": "RF00032",
+    "n_available": 50,
+    "n_selected": 5
+  },
+  "IRE_stem_loop": {
+    "rfam_id": "RF00037",
+    "n_available": 27,
+    "n_selected": 5
+  },
+  "RNaseP_specificity": {
+    "rfam_id": "RF00010",
+    "n_available": 330,
+    "n_selected": 5
+  },
+  "SAH_riboswitch": {
+    "rfam_id": "RF01057",
+    "n_available": 51,
+    "n_selected": 5
+  },
+  "SAM_riboswitch": {
+    "rfam_id": "RF00162",
+    "n_available": 204,
+    "n_selected": 5
+  },
+  "SECIS_element": {
+    "rfam_id": "RF00031",
+    "n_available": 59,
+    "n_selected": 5
+  },
+  "SRP_RNA_helix8": {
+    "rfam_id": "RF00017",
+    "n_available": 48,
+    "n_selected": 5
+  },
+  "THF_riboswitch": {
+    "rfam_id": "RF01831",
+    "n_available": 79,
+    "n_selected": 5
+  },
+  "TPP_riboswitch": {
+    "rfam_id": "RF00059",
+    "n_available": 73,
+    "n_selected": 5
+  },
+  "T_box_leader": {
+    "rfam_id": "RF00230",
+    "n_available": 35,
+    "n_selected": 5
+  },
+  "U1_snRNA": {
+    "rfam_id": "RF00003",
+    "n_available": 63,
+    "n_selected": 5
+  },
+  "U2_snRNA_stem": {
+    "rfam_id": "RF00004",
+    "n_available": 187,
+    "n_selected": 5
+  },
+  "U4_snRNA": {
+    "rfam_id": "RF00015",
+    "n_available": 123,
+    "n_selected": 5
+  },
+  "U5_snRNA": {
+    "rfam_id": "RF00020",
+    "n_available": 131,
+    "n_selected": 5
+  },
+  "U6_snRNA": {
+    "rfam_id": "RF00026",
+    "n_available": 186,
+    "n_selected": 5
+  },
+  "Vault_RNA": {
+    "rfam_id": "RF00006",
+    "n_available": 66,
+    "n_selected": 5
+  },
+  "Y_RNA": {
+    "rfam_id": "RF00019",
+    "n_available": 79,
+    "n_selected": 5
+  },
+  "ZMP_riboswitch": {
+    "rfam_id": "RF01750",
+    "n_available": 157,
+    "n_selected": 5
+  },
+  "c_di_GMP_riboswitch": {
+    "rfam_id": "RF01051",
+    "n_available": 110,
+    "n_selected": 5
+  },
+  "cobalamin_riboswitch": {
+    "rfam_id": "RF00174",
+    "n_available": 269,
+    "n_selected": 5
+  },
+  "fluoride_riboswitch": {
+    "rfam_id": "RF01734",
+    "n_available": 280,
+    "n_selected": 5
+  },
+  "glmS_ribozyme": {
+    "rfam_id": "RF00234",
+    "n_available": 13,
+    "n_selected": 5
+  },
+  "glycine_riboswitch": {
+    "rfam_id": "RF00504",
+    "n_available": 41,
+    "n_selected": 5
+  },
+  "group_II_intron_D5": {
+    "rfam_id": "RF00029",
+    "n_available": 86,
+    "n_selected": 5
+  },
+  "group_I_intron_P4P6": {
+    "rfam_id": "RF00028",
+    "n_available": 3,
+    "n_selected": 3
+  },
+  "hammerhead_ribozyme": {
+    "rfam_id": "RF00163",
+    "n_available": 28,
+    "n_selected": 5
+  },
+  "hatchet_ribozyme": {
+    "rfam_id": "RF02678",
+    "n_available": 109,
+    "n_selected": 5
+  },
+  "lysine_riboswitch": {
+    "rfam_id": "RF00168",
+    "n_available": 31,
+    "n_selected": 5
+  },
+  "manganese_riboswitch": {
+    "rfam_id": "RF01786",
+    "n_available": 42,
+    "n_selected": 5
+  },
+  "mir_122_precursor": {
+    "rfam_id": "RF00001",
+    "n_available": 611,
+    "n_selected": 5
+  },
+  "mir_155_precursor": {
+    "rfam_id": "RF00001",
+    "n_available": 611,
+    "n_selected": 5
+  },
+  "mir_21_precursor": {
+    "rfam_id": "RF00001",
+    "n_available": 611,
+    "n_selected": 5
+  },
+  "mir_let7_precursor": {
+    "rfam_id": "RF00001",
+    "n_available": 611,
+    "n_selected": 5
+  },
+  "pistol_ribozyme": {
+    "rfam_id": "RF02679",
+    "n_available": 40,
+    "n_selected": 5
+  },
+  "preQ1_riboswitch": {
+    "rfam_id": "RF00522",
+    "n_available": 43,
+    "n_selected": 5
+  },
+  "purine_riboswitch": {
+    "rfam_id": "RF00167",
+    "n_available": 112,
+    "n_selected": 5
+  },
+  "tRNA_Ala_human": {
+    "rfam_id": "RF00005",
+    "n_available": 944,
+    "n_selected": 5
+  },
+  "tRNA_Phe_yeast": {
+    "rfam_id": "RF00005",
+    "n_available": 944,
+    "n_selected": 5
+  },
+  "tmRNA": {
+    "rfam_id": "RF00023",
+    "n_available": 27,
+    "n_selected": 5
+  },
+  "twister_ribozyme": {
+    "rfam_id": "RF02681",
+    "n_available": 111,
+    "n_selected": 5
+  }
+}

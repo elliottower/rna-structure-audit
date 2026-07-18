@@ -1,0 +1,40 @@
+{
+  "name": "mir_21_precursor",
+  "rfam_id": "RF00001",
+  "original_sequence": "UGUCGGGUAGCUUAUCAGACUGAUGUUGACUGUUGAAUCUCAUGGCAACACCAGUCGAUGGGCUGUCUGACA",
+  "original_dot_bracket": "(((((((((((((((((((((((((((((((((..........)))))))))))))))))))))))))))))",
+  "n_available": 611,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "X68666.1/1-122",
+      "sequence": "ACGTTCGGTCATACTAGTGACACATGCGCCTGAACCCATTTCGAATTCAGAAGCTAAGCGCCCTCAGGCTTGGTTAGTACTGAGGTGAGGGATCCACTCGGGAACCCCAAGTGCCGTACGTT",
+      "dot_bracket": "(((((((((....((.(((.((...((..((((((.......))..))))..))....)))))..))(((.((....(.((.....((....))......)).)..)).)))))))))))).",
+      "length": 122
+    },
+    {
+      "accession": "X00689.1/1-119",
+      "sequence": "ACATACGACCATAGGGTGTGGAGAACAGGGCTTCCCGTCCGCTCAGCCGTACTTAAGCCACACGCCGGCTGGTTAGTAGTATGGTGGGTGACCACATGCGAATCCCAGCTGTTGTATGT",
+      "dot_bracket": "(((((((((....((.(((((...((..((((((......))..))))...))....)))))..))(((.((....(.((.....((....)).....)).)..)).))))))))))))",
+      "length": 119
+    },
+    {
+      "accession": "X02249.1/3-117",
+      "sequence": "TTTGGTGACCATAGTGTTGTGGTACCACCTGACTCCATTCCGAACTCAGTAGTGAAACGTAATAACGCCGATGGTAGTGTGGGGTTTCCCCATGTGAGAGTAGGTATCGCCAGGC",
+      "dot_bracket": "(((((((((....((.(((((...((..((((((.......))..))))..))....)))))..))(((.((..(.((...((....)).....)).).)).)))))))))))).",
+      "length": 115
+    },
+    {
+      "accession": "M28193.1/1-119",
+      "sequence": "AGTTACGGCCATACCTCAGAGAATATACCGTATCCCGTTCGATCTGCGAAGTTAAGCTCTGAAGGGCGTCGTCAGTACTATAGTGGGTGACCATATGGGAATACGACGTGCTGTAGCTT",
+      "dot_bracket": "(((((((((....((.(((((...((..((((((......))..))))..))....)))))..))(((.((....(.((.....((....)).....)).)..)).)))))))))))).",
+      "length": 119
+    },
+    {
+      "accession": "X00864.1/1-119",
+      "sequence": "ACATACGACCATAGCTCTCAGAGAACTCGGGATCCCGTCTGCTCTCCTGTAGATAAGCTGACAAGCGGCCGATTAGTAGTTGGGTCGGTGACGACCAGCGAATACCGGCTGTTGTATGT",
+      "dot_bracket": "(((((((((....((.(((((...((..((((((......))..))))...))....)))))..))(((.((....(.((.....((....)).....)).)..)).))))))))))))",
+      "length": 119
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "c_di_GMP_riboswitch",
+  "rfam_id": "RF01051",
+  "original_sequence": "CUCCGGAAAUGGUAAACCCAUCGAAAGGUGGGGACACAAAGUCACGGGCCUGUAGCCGGUUAUUUUUAACCGGUAUGGCAGCCGGACUGCCGAA",
+  "original_dot_bracket": "...........((...((((((....))))))...))..((((.((((((.....((((..........))))...)))..)))))))......",
+  "n_available": 110,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CP000112.1/841128-841197",
+      "sequence": "CGAGAATCAAGCCAACCCGCCTCAGGCGGGACGGAAAGCCACGGGTCTTTCAGACAGCCGGGTTGCCTCG",
+      "dot_bracket": "...........((...((((((.))))))...))..((((.((((((.....)))..)))))))......",
+      "length": 70
+    },
+    {
+      "accession": "CP000284.1/503076-502984",
+      "sequence": "AAATGTTAAGGGCAACCTTGGTTGAAAAACCAAGGACGCAAAGTCACCGGTCTAAGGTAAGCAGCTTGCTACTATGACAGCGGAACCGCCATA",
+      "dot_bracket": "...........((...((((((......))))))...))..((((.((((((....((((........))))...)))..)))))))......",
+      "length": 93
+    },
+    {
+      "accession": "CP000251.1/2466924-2466841",
+      "sequence": "CACGCTTCAGGGCAATTCACCCGTACCCAGGGTGAAGCGCAAAGCCGCGGGTCCGGTGAACGCCGGACGGCCGTGGCCGCCGTG",
+      "dot_bracket": "...........((...((((((.......))))))...))..((((.((((((((((....)))))))..))).))))......",
+      "length": 84
+    },
+    {
+      "accession": "CP000884.1/4023666-4023571",
+      "sequence": "TTTGCGCACCAGCACACCCGTACGAAAGGCGGGGTCGCAAAGCCTCCGGTCTACCCCCGCCCTTTGACGGGCGGGCATGACAGCGGGGTTGCCAGG",
+      "dot_bracket": "...........((...(((((.(....))))))...))..((((.((((((....((((............))))...)))..)))))))......",
+      "length": 96
+    },
+    {
+      "accession": "CP000302.1/2534228-2534317",
+      "sequence": "TGCTGTGGAAGGCAAACCAGTTTTAAAGACTGGGACGCAAAGCCTCCGATCTAAAGGTTTGCTTGTACCTATGATAGCGGGGATCCCACA",
+      "dot_bracket": "...........((...((((((.....))))))...))..((((.((((((....((((......))))...)))..)))))))......",
+      "length": 90
+    }
+  ]
+}

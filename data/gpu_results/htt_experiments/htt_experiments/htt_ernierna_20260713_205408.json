@@ -1,0 +1,399 @@
+{
+  "model": "ernierna",
+  "timestamp": "20260713_205408",
+  "cag_repeat_counts": [
+    17,
+    21,
+    36,
+    40,
+    60
+  ],
+  "htt_structures_info": [
+    {
+      "name": "HTT_CAG17_normal",
+      "n_cag": 17,
+      "seq_len": 235,
+      "mfe": -102.30000305175781,
+      "clinical_label": "normal"
+    },
+    {
+      "name": "HTT_CAG21_normal",
+      "n_cag": 21,
+      "seq_len": 247,
+      "mfe": -105.5,
+      "clinical_label": "normal"
+    },
+    {
+      "name": "HTT_CAG36_pathogenic",
+      "n_cag": 36,
+      "seq_len": 292,
+      "mfe": -124.0,
+      "clinical_label": "pathogenic"
+    },
+    {
+      "name": "HTT_CAG40_pathogenic",
+      "n_cag": 40,
+      "seq_len": 304,
+      "mfe": -129.0,
+      "clinical_label": "pathogenic"
+    },
+    {
+      "name": "HTT_CAG60_pathogenic",
+      "n_cag": 60,
+      "seq_len": 364,
+      "mfe": -154.0,
+      "clinical_label": "pathogenic"
+    }
+  ],
+  "experiment_1_mutation_sensitivity": {
+    "model": "ernierna",
+    "metric": "htt_mutation_sensitivity",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.0773361364289094,
+        "best_layer": 12,
+        "nuc_null_95th": 1.085251392558583,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87,
+        "n_cag_repeats": 17,
+        "clinical_label": "normal",
+        "mfe": -102.30000305175781,
+        "seq_length": 235
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.0877832340237834,
+        "best_layer": 8,
+        "nuc_null_95th": 1.092938034170909,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89,
+        "n_cag_repeats": 21,
+        "clinical_label": "normal",
+        "mfe": -105.5,
+        "seq_length": 247
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0792934018901152,
+        "best_layer": 12,
+        "nuc_null_95th": 1.1282576052796631,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108,
+        "n_cag_repeats": 36,
+        "clinical_label": "pathogenic",
+        "mfe": -124.0,
+        "seq_length": 292
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.0947547683750911,
+        "best_layer": 12,
+        "nuc_null_95th": 1.1425104396315326,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112,
+        "n_cag_repeats": 40,
+        "clinical_label": "pathogenic",
+        "mfe": -129.0,
+        "seq_length": 304
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.0893912222401245,
+        "best_layer": 12,
+        "nuc_null_95th": 1.1945532067664768,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132,
+        "n_cag_repeats": 60,
+        "clinical_label": "pathogenic",
+        "mfe": -154.0,
+        "seq_length": 364
+      }
+    },
+    "mean_best_ratio": 1.0857117525916045,
+    "families_exceeding_nuc_null": 0,
+    "families_total": 5
+  },
+  "experiment_2_cag_variant_sensitivity": {
+    "description": "Per-variant mutation ratios from experiment 1",
+    "per_variant": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.0773361364289094,
+        "best_layer": 12,
+        "nuc_null_95th": 1.085251392558583,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87,
+        "n_cag_repeats": 17,
+        "clinical_label": "normal",
+        "mfe": -102.30000305175781,
+        "seq_length": 235
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.0877832340237834,
+        "best_layer": 8,
+        "nuc_null_95th": 1.092938034170909,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89,
+        "n_cag_repeats": 21,
+        "clinical_label": "normal",
+        "mfe": -105.5,
+        "seq_length": 247
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0792934018901152,
+        "best_layer": 12,
+        "nuc_null_95th": 1.1282576052796631,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108,
+        "n_cag_repeats": 36,
+        "clinical_label": "pathogenic",
+        "mfe": -124.0,
+        "seq_length": 292
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.0947547683750911,
+        "best_layer": 12,
+        "nuc_null_95th": 1.1425104396315326,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112,
+        "n_cag_repeats": 40,
+        "clinical_label": "pathogenic",
+        "mfe": -129.0,
+        "seq_length": 304
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.0893912222401245,
+        "best_layer": 12,
+        "nuc_null_95th": 1.1945532067664768,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132,
+        "n_cag_repeats": 60,
+        "clinical_label": "pathogenic",
+        "mfe": -154.0,
+        "seq_length": 364
+      }
+    }
+  },
+  "experiment_3_embedding_collapse": {
+    "model": "ernierna",
+    "metric": "htt_embedding_collapse",
+    "pairwise": {
+      "CAG17_vs_CAG21": {
+        "repeat_1": 17,
+        "repeat_2": 21,
+        "mean_flank_distance": 0.0020058222580701113,
+        "mean_5prime_distance": 0.0019031723495572805,
+        "mean_3prime_distance": 0.0020258191507309675,
+        "full_mean_distance": 0.0005776882171630859,
+        "n_positions_compared": 184
+      },
+      "CAG17_vs_CAG36": {
+        "repeat_1": 17,
+        "repeat_2": 36,
+        "mean_flank_distance": 0.006491424050182104,
+        "mean_5prime_distance": 0.009917420335114002,
+        "mean_3prime_distance": 0.005824022460728884,
+        "full_mean_distance": 0.007171273231506348,
+        "n_positions_compared": 184
+      },
+      "CAG17_vs_CAG40": {
+        "repeat_1": 17,
+        "repeat_2": 40,
+        "mean_flank_distance": 0.007983445189893246,
+        "mean_5prime_distance": 0.014749433845281601,
+        "mean_3prime_distance": 0.006665395572781563,
+        "full_mean_distance": 0.00905674695968628,
+        "n_positions_compared": 184
+      },
+      "CAG17_vs_CAG60": {
+        "repeat_1": 17,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.015865439549088478,
+        "mean_5prime_distance": 0.03534115105867386,
+        "mean_3prime_distance": 0.01207146979868412,
+        "full_mean_distance": 0.022866010665893555,
+        "n_positions_compared": 184
+      },
+      "CAG21_vs_CAG36": {
+        "repeat_1": 21,
+        "repeat_2": 36,
+        "mean_flank_distance": 0.005023557227104902,
+        "mean_5prime_distance": 0.006403024774044752,
+        "mean_3prime_distance": 0.004754829686135054,
+        "full_mean_distance": 0.004177272319793701,
+        "n_positions_compared": 184
+      },
+      "CAG21_vs_CAG40": {
+        "repeat_1": 21,
+        "repeat_2": 40,
+        "mean_flank_distance": 0.006305895280092955,
+        "mean_5prime_distance": 0.010013953782618046,
+        "mean_3prime_distance": 0.005583546124398708,
+        "full_mean_distance": 0.005717873573303223,
+        "n_positions_compared": 184
+      },
+      "CAG21_vs_CAG60": {
+        "repeat_1": 21,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.01369041483849287,
+        "mean_5prime_distance": 0.028772972524166107,
+        "mean_3prime_distance": 0.010752254165709019,
+        "full_mean_distance": 0.017424166202545166,
+        "n_positions_compared": 184
+      },
+      "CAG36_vs_CAG40": {
+        "repeat_1": 36,
+        "repeat_2": 40,
+        "mean_flank_distance": 0.0017742731142789125,
+        "mean_5prime_distance": 0.0012838979018852115,
+        "mean_3prime_distance": 0.0018698008498176932,
+        "full_mean_distance": 0.0002446770668029785,
+        "n_positions_compared": 184
+      },
+      "CAG36_vs_CAG60": {
+        "repeat_1": 36,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.006407271139323711,
+        "mean_5prime_distance": 0.013055016286671162,
+        "mean_3prime_distance": 0.0051122563891112804,
+        "full_mean_distance": 0.005101561546325684,
+        "n_positions_compared": 184
+      },
+      "CAG40_vs_CAG60": {
+        "repeat_1": 40,
+        "repeat_2": 60,
+        "mean_flank_distance": 0.004972785711288452,
+        "mean_5prime_distance": 0.00840150285512209,
+        "mean_3prime_distance": 0.004304853733628988,
+        "full_mean_distance": 0.0036971569061279297,
+        "n_positions_compared": 184
+      }
+    },
+    "distances_from_wt": [
+      {
+        "n_cag": 17,
+        "distance_from_wt": 0.0
+      },
+      {
+        "n_cag": 21,
+        "distance_from_wt": 0.0005776882171630859
+      },
+      {
+        "n_cag": 36,
+        "distance_from_wt": 0.007171273231506348
+      },
+      {
+        "n_cag": 40,
+        "distance_from_wt": 0.00905674695968628
+      },
+      {
+        "n_cag": 60,
+        "distance_from_wt": 0.022866010665893555
+      }
+    ],
+    "collapse_metric": {
+      "mean_non_wt_distance": 0.009917929768562317,
+      "std_non_wt_distance": 0.008111391205045759,
+      "cv_non_wt_distance": 0.8178512445971444,
+      "interpretation": "Low CV = collapse (model cannot distinguish repeat counts)"
+    }
+  },
+  "experiment_4_attention_contact": {
+    "model": "ernierna",
+    "metric": "htt_attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.07676337969393791,
+        "n_cag_repeats": 17,
+        "clinical_label": "normal"
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.07408050650913457,
+        "n_cag_repeats": 21,
+        "clinical_label": "normal"
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.06939883350583724,
+        "n_cag_repeats": 36,
+        "clinical_label": "pathogenic"
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.06784217323413706,
+        "n_cag_repeats": 40,
+        "clinical_label": "pathogenic"
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.06224673016118883,
+        "n_cag_repeats": 60,
+        "clinical_label": "pathogenic"
+      }
+    },
+    "mean_best_corr": 0.07006632462084712,
+    "n_variants": 5
+  },
+  "structure_probing": {
+    "model": "ernierna",
+    "metric": "htt_structure_probing",
+    "per_layer": {
+      "0": {
+        "accuracy": 0.7695171440641152,
+        "n_samples": 1442
+      },
+      "1": {
+        "accuracy": 0.8038913735867593,
+        "n_samples": 1442
+      },
+      "2": {
+        "accuracy": 0.8805408597216647,
+        "n_samples": 1442
+      },
+      "3": {
+        "accuracy": 0.940325295476433,
+        "n_samples": 1442
+      },
+      "4": {
+        "accuracy": 0.9693738279009183,
+        "n_samples": 1442
+      },
+      "5": {
+        "accuracy": 0.9769805185227266,
+        "n_samples": 1442
+      },
+      "6": {
+        "accuracy": 0.9728039817106607,
+        "n_samples": 1442
+      },
+      "7": {
+        "accuracy": 0.9777885022063488,
+        "n_samples": 1442
+      },
+      "8": {
+        "accuracy": 0.9792974607729782,
+        "n_samples": 1442
+      },
+      "9": {
+        "accuracy": 0.9851020962041227,
+        "n_samples": 1442
+      },
+      "10": {
+        "accuracy": 0.9852952652970679,
+        "n_samples": 1442
+      },
+      "11": {
+        "accuracy": 0.9851020962041227,
+        "n_samples": 1442
+      },
+      "12": {
+        "accuracy": 0.9784463969431909,
+        "n_samples": 1442
+      }
+    },
+    "best_accuracy": 0.9852952652970679,
+    "best_layer": 10
+  }
+}

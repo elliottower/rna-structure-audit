@@ -20,32 +20,16 @@ base_image = (
         "numpy",
         "scipy",
         "tqdm",
-        "transformers>=4.40.0",
+        "transformers>=4.40.0,<5.0",
         "multimolecule",
         "matplotlib",
+        "scikit-learn",
+        "einops",
     )
     .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
     .add_local_dir("scripts", "/root/project/scripts")
     .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
     .add_local_file("pretrained/pytorch_model.bin", "/root/project/pretrained/pytorch_model.bin")
-)
-
-caduceus_image = (
-    modal.Image.from_registry("nvidia/cuda:12.1.0-devel-ubuntu22.04", add_python="3.11")
-    .pip_install(
-        "torch>=2.2.0",
-        "numpy",
-        "scipy",
-        "tqdm",
-        "transformers>=4.40.0",
-        "matplotlib",
-        "packaging",
-        "ninja",
-    )
-    .pip_install("causal-conv1d", "mamba-ssm")
-    .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
-    .add_local_dir("scripts", "/root/project/scripts")
-    .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
 )
 
 vol = modal.Volume.from_name("causal-rna-phase6-results", create_if_missing=True)
@@ -60,7 +44,7 @@ GPU_OVERRIDES = {
     "evo": "A100",
     "rinalmo": "A100",
 }
-CADUCEUS_MODELS = {"caduceus"}
+SKIP_MODELS = {"caduceus"}
 
 
 @app.function(
@@ -83,18 +67,10 @@ def run_model_a100(model_name: str, seed: int = 42, compute_null: bool = True):
     return _run_model(model_name, seed, compute_null)
 
 
-@app.function(
-    image=caduceus_image,
-    gpu="A10G",
-    timeout=86400,
-    volumes={"/results": vol},
-)
-def run_model_caduceus(model_name: str, seed: int = 42, compute_null: bool = True):
-    return _run_model(model_name, seed, compute_null)
-
-
 def _run_model(model_name, seed, compute_null):
+    import os
     import sys
+    os.chdir("/root/project")
     sys.path.insert(0, "/root/project")
 
     import json
@@ -188,9 +164,9 @@ def main(
             print(f"  SKIP {model_name}: non-character tokenizer (use --allow-non-character)")
             continue
 
-        if model_name in CADUCEUS_MODELS:
-            run_fn = run_model_caduceus
-            gpu = "A10G (caduceus image)"
+        if model_name in SKIP_MODELS:
+            print(f"  SKIP {model_name}: requires mamba-ssm CUDA build (run separately)")
+            continue
         elif GPU_OVERRIDES.get(model_name) == "A100":
             run_fn = run_model_a100
             gpu = "A100"

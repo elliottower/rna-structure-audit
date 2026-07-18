@@ -1,0 +1,4 @@
+{
+  "model": "caduceus",
+  "error": "Load failed: This modeling file requires the following packages that were not found in your environment: mamba_ssm. Run `pip install mamba_ssm`"
+}

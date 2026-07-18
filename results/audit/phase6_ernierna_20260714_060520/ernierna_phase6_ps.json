@@ -1,0 +1,1566 @@
+{
+  "model": "ernierna",
+  "timestamp": "20260714_060520",
+  "phase": 6,
+  "metric": "perturbation_specificity",
+  "preregistration": "PREREGISTRATION_PHASE6_V2.md",
+  "offset": 0,
+  "seed": 42,
+  "tokenizer_caveated": false,
+  "results": {
+    "per_rna": {
+      "5S_rRNA_ecoli": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (4 found)",
+        "n_wc_pairs_total": 4
+      },
+      "6S_RNA": {
+        "best_ps": 0.10879210755228996,
+        "best_layer": 11,
+        "per_layer_ps": [
+          -4.0978193283081055e-08,
+          2.3171305656433105e-05,
+          -0.0011396333575248718,
+          -0.00326678529381752,
+          -0.0033118687570095062,
+          -0.0029458440840244293,
+          -0.0025468356907367706,
+          -0.0021217577159404755,
+          -0.0011870302259922028,
+          -0.000511854887008667,
+          0.03480413928627968,
+          0.10879210755228996,
+          0.05524083971977234
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 10,
+        "n_wc_pairs_total": 43,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0014872167194614084,
+          "mean_stem_delta": 0.00973189122536603,
+          "mean_loop_delta": 0.006532941051587767
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 3,
+          "partner_max_count": 3,
+          "p_value": 0.03703703703703703
+        },
+        "ps_gc_pairs": 0.09395938366651535,
+        "ps_au_pairs": 0.12362483143806458,
+        "quarantined": false,
+        "null_95th_primary": -0.04468573842729841,
+        "null_95th_conservative": 0.0018727098192487443,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "7SK_RNA": {
+        "best_ps": -1.9868214925130207e-08,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -1.9868214925130207e-08,
+          -2.0722548166910807e-06,
+          -0.0007194658120473226,
+          -0.00321694016456604,
+          -0.0036700785160064696,
+          -0.004050515095392863,
+          -0.0037234365940093995,
+          -0.0024356385072072345,
+          -0.0012985428174336752,
+          -0.0007533212502797445,
+          -0.00023993849754333496,
+          -0.0013574461142222087,
+          -0.002671957015991211
+        ],
+        "n_eligible_pairs": 30,
+        "n_stems": 17,
+        "n_wc_pairs_total": 80,
+        "positive_control": {
+          "pass": false,
+          "p_value": 2.887661196672392e-43,
+          "mean_stem_delta": 5.673062626420829e-09,
+          "mean_loop_delta": 1.5504098351980226e-08
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -1.7881393432617187e-08,
+        "ps_au_pairs": -2.384185791015625e-08,
+        "quarantined": false,
+        "null_95th_primary": -5.960464477539063e-08,
+        "null_95th_conservative": 0.003187274932861328,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": false
+      },
+      "Bacterial_SRP": {
+        "best_ps": 0.14959571453241202,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.501967210036058e-08,
+          1.2040138244628906e-05,
+          0.0015555299245394194,
+          0.004414196197803204,
+          0.0037797964536226713,
+          0.001310421870304988,
+          0.0018744514538691593,
+          0.0026052685884328988,
+          0.0012607895410977877,
+          0.00011542210212120644,
+          0.024732002845177285,
+          0.08095274063257071,
+          0.14959571453241202
+        ],
+        "n_eligible_pairs": 13,
+        "n_stems": 6,
+        "n_wc_pairs_total": 27,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.3210762777376105e-07,
+          "mean_stem_delta": 0.017128720598400763,
+          "mean_loop_delta": 0.008896077352940006
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 4,
+          "partner_max_count": 4,
+          "p_value": 0.012345679012345677
+        },
+        "ps_gc_pairs": 0.2286413162946701,
+        "ps_au_pairs": 0.11446433597140843,
+        "quarantined": false,
+        "null_95th_primary": -0.0836687684059143,
+        "null_95th_conservative": 0.00010298490524291992,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "CRISPR_leader": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Corona_5UTR": {
+        "best_ps": 0.026848585903644563,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.21540641784668e-08,
+          4.120171070098877e-06,
+          0.000440564751625061,
+          -0.0006411239504814148,
+          -0.0023928180336952208,
+          -0.002955539524555206,
+          -0.003808651864528656,
+          -0.004276269674301147,
+          -0.0037557199597358704,
+          -0.003256787359714508,
+          0.013665178418159485,
+          0.02506737858057022,
+          0.026848585903644563
+        ],
+        "n_eligible_pairs": 40,
+        "n_stems": 16,
+        "n_wc_pairs_total": 83,
+        "positive_control": {
+          "pass": true,
+          "p_value": 3.030231413985092e-09,
+          "mean_stem_delta": 0.0058130744009306946,
+          "mean_loop_delta": 0.004236361462818949
+        },
+        "h3_precision": {
+          "fraction": 0.5833333333333334,
+          "n": 12,
+          "partner_max_count": 7,
+          "p_value": 0.06644763953101097
+        },
+        "ps_gc_pairs": 0.029046600773220972,
+        "ps_au_pairs": 0.024419201047796952,
+        "quarantined": false,
+        "null_95th_primary": -0.00481530825297038,
+        "null_95th_conservative": -2.9802322387695312e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "Corona_s2m": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "CrPV_IRES": {
+        "best_ps": 0.0040276022184462775,
+        "best_layer": 11,
+        "per_layer_ps": [
+          -5.960464477539063e-08,
+          -9.451593671526228e-07,
+          -0.000668028990427653,
+          -0.0005874208041599818,
+          -0.004049803529466901,
+          -0.004486873036339169,
+          -0.005463023980458577,
+          -0.0032808383305867514,
+          -0.0021351944832574753,
+          -0.001636919521150135,
+          0.0028507482437860397,
+          0.0040276022184462775,
+          0.002097671940213158
+        ],
+        "n_eligible_pairs": 21,
+        "n_stems": 7,
+        "n_wc_pairs_total": 40,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.541750994115599e-09,
+          "mean_stem_delta": 0.015960778041802813,
+          "mean_loop_delta": 0.009137858531157958
+        },
+        "h3_precision": {
+          "fraction": 0.14285714285714285,
+          "n": 7,
+          "partner_max_count": 1,
+          "p_value": 0.9414723365340649
+        },
+        "ps_gc_pairs": 0.00615633385522025,
+        "ps_au_pairs": 0.0029632364000592914,
+        "quarantined": false,
+        "null_95th_primary": -0.005123528838157654,
+        "null_95th_conservative": 1.2209782233605005e-06,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "FMN_riboswitch": {
+        "best_ps": 0.1597464850970677,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.9802322387695312e-08,
+          -4.019056047712054e-06,
+          -0.0012102297374180385,
+          -0.004763449941362653,
+          -0.008853329079491752,
+          -0.009084199156079973,
+          -0.007000582558768136,
+          -0.0036843035902295795,
+          -0.0015637959752764022,
+          -0.0008090393883841378,
+          0.05978219423975263,
+          0.14815296871321543,
+          0.1597464850970677
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 6,
+        "n_wc_pairs_total": 28,
+        "positive_control": {
+          "pass": true,
+          "p_value": 7.658124075995904e-06,
+          "mean_stem_delta": 0.01900754083286632,
+          "mean_loop_delta": 0.006457974815815337
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 5,
+          "partner_max_count": 5,
+          "p_value": 0.004115226337448558
+        },
+        "ps_gc_pairs": 0.15577789147694907,
+        "ps_au_pairs": 0.16272293031215668,
+        "quarantined": false,
+        "null_95th_primary": -0.06352618469132322,
+        "null_95th_conservative": 2.0224849383036292e-05,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "HDV_ribozyme": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Hepatitis_C_IRES_III": {
+        "best_ps": 0.007784257332483928,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -3.54789552234468e-08,
+          -3.915457498459589e-06,
+          -0.0008536194052015032,
+          -0.001981765031814575,
+          -0.004365858577546619,
+          -0.006088578984850929,
+          -0.0060436853340693885,
+          -0.005476745821180798,
+          -0.004825704154514131,
+          -0.004067645186469669,
+          0.004135642732892718,
+          0.0023800404298873175,
+          0.007784257332483928
+        ],
+        "n_eligible_pairs": 42,
+        "n_stems": 19,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": true,
+          "p_value": 7.518501859331168e-07,
+          "mean_stem_delta": 0.004874607594623836,
+          "mean_loop_delta": 0.0034859093591117747
+        },
+        "h3_precision": {
+          "fraction": 0.6,
+          "n": 10,
+          "partner_max_count": 6,
+          "p_value": 0.07656353198191335
+        },
+        "ps_gc_pairs": 0.010677214591733871,
+        "ps_au_pairs": -0.00036862221631136805,
+        "quarantined": false,
+        "null_95th_primary": -0.006294888092411889,
+        "null_95th_conservative": 0.0030280060238308377,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "Histone_3prime": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "IRES_HCV_domainII": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "IRE_stem_loop": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (14 found)",
+        "n_wc_pairs_total": 14
+      },
+      "RNaseP_specificity": {
+        "skipped": true,
+        "reason": "sequence/dot_bracket length mismatch (94 vs 91)"
+      },
+      "SAH_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAM_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SECIS_element": {
+        "best_ps": 0.02771498097313775,
+        "best_layer": 10,
+        "per_layer_ps": [
+          -3.9736429850260414e-08,
+          -5.059772067599826e-06,
+          0.002044154538048638,
+          0.006623340977562798,
+          0.0059457884894477,
+          0.004668441083696153,
+          0.006537245379553901,
+          0.0066971249050564235,
+          0.0009150836202833387,
+          -0.002073751555548774,
+          0.02771498097313775,
+          0.02264623509513007,
+          0.017527971002790663
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 4,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0010464721400023178,
+          "mean_stem_delta": 0.04003998486682622,
+          "mean_loop_delta": 0.029170668085014777
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 3,
+          "partner_max_count": 3,
+          "p_value": 0.03703703703703703
+        },
+        "ps_gc_pairs": 0.028504212697347004,
+        "ps_au_pairs": 0.027320365111033123,
+        "quarantined": false,
+        "null_95th_primary": -0.021551770823342458,
+        "null_95th_conservative": -3.4059797014508927e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "SRP_RNA_helix8": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (4 found)",
+        "n_wc_pairs_total": 4
+      },
+      "THF_riboswitch": {
+        "best_ps": 0.16210390329360963,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -4.3710072835286455e-08,
+          5.897680918375651e-05,
+          -0.0011967817942301433,
+          -0.004875946044921875,
+          -0.005225849151611328,
+          -0.003607741991678874,
+          -0.003366235891977946,
+          -0.0025185426076253254,
+          -0.0010607083638509115,
+          -0.001112536589304606,
+          0.023606773217519125,
+          0.07253406445185344,
+          0.16210390329360963
+        ],
+        "n_eligible_pairs": 15,
+        "n_stems": 6,
+        "n_wc_pairs_total": 29,
+        "positive_control": {
+          "pass": true,
+          "p_value": 4.674224498607116e-05,
+          "mean_stem_delta": 0.01599726732711346,
+          "mean_loop_delta": 0.008795016970338123
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 4,
+          "partner_max_count": 4,
+          "p_value": 0.012345679012345677
+        },
+        "ps_gc_pairs": 0.16441739598910013,
+        "ps_au_pairs": 0.15284993251164755,
+        "quarantined": false,
+        "null_95th_primary": -0.054861389100551605,
+        "null_95th_conservative": -3.725290298461914e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "TPP_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "T_box_leader": {
+        "best_ps": 0.11535717795292537,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.483526865641276e-08,
+          -1.1374553044637044e-06,
+          -0.0019036779801050823,
+          -0.005384234090646108,
+          -0.0074393004179000854,
+          -0.008894825975100199,
+          -0.008917632202307383,
+          -0.006551916400591533,
+          -0.006148604055245717,
+          -0.004215543468793233,
+          0.00874707599480947,
+          0.03299503525098165,
+          0.11535717795292537
+        ],
+        "n_eligible_pairs": 24,
+        "n_stems": 8,
+        "n_wc_pairs_total": 44,
+        "positive_control": {
+          "pass": true,
+          "p_value": 2.709143102364488e-11,
+          "mean_stem_delta": 0.009240377308993504,
+          "mean_loop_delta": 0.00399752895105375
+        },
+        "h3_precision": {
+          "fraction": 0.8888888888888888,
+          "n": 9,
+          "partner_max_count": 8,
+          "p_value": 0.000965300005080526
+        },
+        "ps_gc_pairs": 0.11960082704370673,
+        "ps_au_pairs": 0.11176639795303345,
+        "quarantined": false,
+        "null_95th_primary": -0.03894183776880566,
+        "null_95th_conservative": 0.00022471390272441622,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "U1_snRNA": {
+        "best_ps": 0.12477529900414604,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -4.6832220894949776e-08,
+          -2.795032092503139e-05,
+          0.0009064887251172747,
+          -0.0004215283053261893,
+          0.00028843539101736885,
+          -0.00011618648256574358,
+          0.00017278960772923062,
+          0.0007819959095546178,
+          0.0004317377294812884,
+          0.0006544334547860282,
+          0.029542237520217896,
+          0.09371015855244227,
+          0.12477529900414604
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 8,
+        "n_wc_pairs_total": 40,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.5899605349085953,
+          "mean_stem_delta": 0.018083263532162577,
+          "mean_loop_delta": 0.01763719275218098
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 1,
+          "partner_max_count": 1,
+          "p_value": 0.3333333333333333
+        },
+        "ps_gc_pairs": 0.12255504230658214,
+        "ps_au_pairs": 0.13809683918952942,
+        "quarantined": false,
+        "null_95th_primary": -0.08626538515090942,
+        "null_95th_conservative": -3.9736429850260414e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "U2_snRNA_stem": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U4_snRNA": {
+        "best_ps": 0.11945071816444397,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -1.7029898507254463e-08,
+          -1.783881868634905e-06,
+          -0.0008347460201808385,
+          -0.0037444446768079486,
+          -0.003818486418042864,
+          -0.0022292775767190115,
+          -0.001190300498689924,
+          -0.0011012426444462367,
+          -0.0014441055910927908,
+          -0.0007690915039607457,
+          0.030989523444856917,
+          0.09315289344106402,
+          0.11945071816444397
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 5,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.1336304971400734e-05,
+          "mean_stem_delta": 0.016373009240927817,
+          "mean_loop_delta": 0.010389957550112131
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 6,
+          "partner_max_count": 6,
+          "p_value": 0.0013717421124828527
+        },
+        "ps_gc_pairs": 0.12065643613988702,
+        "ps_au_pairs": 0.11502975225448608,
+        "quarantined": false,
+        "null_95th_primary": -0.024633427560329445,
+        "null_95th_conservative": -1.7881393432617187e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "U5_snRNA": {
+        "best_ps": 0.19125746687253317,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.2981906467013886e-08,
+          -8.314847946166992e-06,
+          -0.0010788705613878039,
+          -0.003871351480484009,
+          -0.00431348548995124,
+          -0.004066500398847792,
+          -0.003227406077914768,
+          -0.0025506317615509033,
+          -0.0019625259770287406,
+          -0.0009595619307623969,
+          0.03284380502170987,
+          0.1375773416625129,
+          0.19125746687253317
+        ],
+        "n_eligible_pairs": 18,
+        "n_stems": 4,
+        "n_wc_pairs_total": 29,
+        "positive_control": {
+          "pass": true,
+          "p_value": 2.7703916657583965e-12,
+          "mean_stem_delta": 0.0284943141435322,
+          "mean_loop_delta": 0.012611392892016725
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 10,
+          "partner_max_count": 10,
+          "p_value": 1.693508780843028e-05
+        },
+        "ps_gc_pairs": 0.228139728307724,
+        "ps_au_pairs": 0.1617516577243805,
+        "quarantined": false,
+        "null_95th_primary": -0.043888264521956454,
+        "null_95th_conservative": -5.21540641784668e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "U6_snRNA": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "Vault_RNA": {
+        "best_ps": 0.0935250073671341,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.9802322387695312e-08,
+          -2.5816261768341064e-05,
+          -0.00044906139373779297,
+          -0.0003763958811759949,
+          -0.0008977949619293213,
+          -0.0012909024953842163,
+          -0.0014206916093826294,
+          -0.0008481815457344055,
+          -0.0008495301008224487,
+          -0.00033865123987197876,
+          0.02132149040699005,
+          0.04727425426244736,
+          0.0935250073671341
+        ],
+        "n_eligible_pairs": 8,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00015491523185028557,
+          "mean_stem_delta": 0.020573720335960388,
+          "mean_loop_delta": 0.00573931180618026
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 2,
+          "partner_max_count": 2,
+          "p_value": 0.1111111111111111
+        },
+        "ps_gc_pairs": 0.08388723645891462,
+        "ps_au_pairs": 0.1609894037246704,
+        "quarantined": false,
+        "null_95th_primary": -0.008807525038719177,
+        "null_95th_conservative": -4.470348358154297e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "Y_RNA": {
+        "best_ps": 0.026289003235953196,
+        "best_layer": 11,
+        "per_layer_ps": [
+          1.7029898507254463e-08,
+          1.0967254638671875e-05,
+          -7.981061935424805e-05,
+          -0.0007437382425580706,
+          -0.0009653738566807338,
+          -0.0008122410093035017,
+          -0.00032694850649152486,
+          -9.08970832824707e-05,
+          -0.0003275275230407715,
+          -0.0012929694993155344,
+          0.007703372410365513,
+          0.026289003235953196,
+          0.020822107791900635
+        ],
+        "n_eligible_pairs": 7,
+        "n_stems": 3,
+        "n_wc_pairs_total": 21,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.008298684731683924,
+          "mean_stem_delta": 0.017319648315682227,
+          "mean_loop_delta": 0.008956842053504216
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 2,
+          "partner_max_count": 2,
+          "p_value": 0.1111111111111111
+        },
+        "ps_gc_pairs": 0.04684950411319733,
+        "ps_au_pairs": -0.0011249979337056477,
+        "quarantined": false,
+        "null_95th_primary": -0.017190585533777874,
+        "null_95th_conservative": 1.9868214925130207e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "ZMP_riboswitch": {
+        "best_ps": 0.10873724520206451,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -4.470348358154297e-08,
+          -2.2252400716145835e-06,
+          -0.00034122665723164874,
+          -0.0006713966528574625,
+          -0.0006148318449656168,
+          -0.0012658735116322835,
+          -0.0010971824328104656,
+          -0.0008074144522349039,
+          -0.00017955899238586426,
+          -0.00023033718268076578,
+          0.02678002913792928,
+          0.052140469352404274,
+          0.10873724520206451
+        ],
+        "n_eligible_pairs": 12,
+        "n_stems": 3,
+        "n_wc_pairs_total": 19,
+        "positive_control": {
+          "pass": true,
+          "p_value": 6.587913602135572e-05,
+          "mean_stem_delta": 0.022062512131424638,
+          "mean_loop_delta": 0.005923806217269622
+        },
+        "h3_precision": {
+          "fraction": 0.8333333333333334,
+          "n": 6,
+          "partner_max_count": 5,
+          "p_value": 0.017832647462277085
+        },
+        "ps_gc_pairs": 0.10636688023805618,
+        "ps_au_pairs": 0.11347797513008118,
+        "quarantined": false,
+        "null_95th_primary": -0.009341314733028414,
+        "null_95th_conservative": 1.4173388481139655e-05,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "c_di_GMP_riboswitch": {
+        "best_ps": 0.13137954473495483,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.2351741790771484e-08,
+          1.4901161193847656e-06,
+          -0.0005281195044517517,
+          -0.001958586275577545,
+          -0.0010713115334510803,
+          -0.001653142273426056,
+          -0.0009344145655632019,
+          -0.0002168416976928711,
+          -0.000580132007598877,
+          -0.00025665760040283203,
+          0.0339149609208107,
+          0.08684505522251129,
+          0.13137954473495483
+        ],
+        "n_eligible_pairs": 8,
+        "n_stems": 5,
+        "n_wc_pairs_total": 21,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.0488376802503777e-05,
+          "mean_stem_delta": 0.020832019971638194,
+          "mean_loop_delta": 0.009099865332245827
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 0.12117022275924683,
+        "ps_au_pairs": 0.2028447985649109,
+        "quarantined": false,
+        "null_95th_primary": null,
+        "null_95th_conservative": null,
+        "null_available": false,
+        "exceeds_null_primary": null,
+        "exceeds_null_conservative": null
+      },
+      "cobalamin_riboswitch": {
+        "best_ps": 0.14892193249293736,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -1.7029898507254463e-08,
+          -1.175062997000558e-06,
+          0.0003510543278285435,
+          0.0016178062983921596,
+          0.00011632697922842843,
+          -0.00043317675590515137,
+          -0.00023108720779418945,
+          -0.0005465320178440639,
+          -0.0005715361663273402,
+          -0.00031485302107674736,
+          0.04453838723046439,
+          0.10674230967249189,
+          0.14892193249293736
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 7,
+        "n_wc_pairs_total": 40,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.7695569718419758e-07,
+          "mean_stem_delta": 0.010457864937256301,
+          "mean_loop_delta": 0.002578334399392187
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 3,
+          "partner_max_count": 3,
+          "p_value": 0.03703703703703703
+        },
+        "ps_gc_pairs": 0.15433906184302437,
+        "ps_au_pairs": 0.13917109966278077,
+        "quarantined": false,
+        "null_95th_primary": -0.06657267468316215,
+        "null_95th_conservative": 5.3243977682931085e-05,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "fluoride_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "glmS_ribozyme": {
+        "best_ps": 0.17208913510495966,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -1.625581221147017e-08,
+          -5.933371457186613e-07,
+          0.0005288042805411599,
+          0.0014782818880948153,
+          0.0011274950070814652,
+          -0.0003093941645188765,
+          -0.00039366971362720835,
+          -0.0006424947218461471,
+          -0.0008471851999109441,
+          -0.0008556896989995784,
+          0.04275783354585821,
+          0.09766135161573236,
+          0.17208913510495966
+        ],
+        "n_eligible_pairs": 22,
+        "n_stems": 6,
+        "n_wc_pairs_total": 35,
+        "positive_control": {
+          "pass": true,
+          "p_value": 3.120115930884898e-12,
+          "mean_stem_delta": 0.013877462335568958,
+          "mean_loop_delta": 0.0033366392047205653
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 11,
+          "partner_max_count": 11,
+          "p_value": 5.645029269476759e-06
+        },
+        "ps_gc_pairs": 0.19977468252182007,
+        "ps_au_pairs": 0.14901784559090933,
+        "quarantined": false,
+        "null_95th_primary": -0.07171635400681273,
+        "null_95th_conservative": -1.9868214925130207e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "glycine_riboswitch": {
+        "best_ps": 0.19732589191860622,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -1.9868214925130207e-08,
+          -0.0001619259516398112,
+          -0.0007820592986212836,
+          -0.001965390311347114,
+          -0.0026527908113267687,
+          -0.003142853577931722,
+          -0.0008321073320176867,
+          0.00021221902635362413,
+          0.0009147458606296115,
+          0.0024178226788838706,
+          0.07197392649120754,
+          0.13015631834665933,
+          0.19732589191860622
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 3,
+        "n_wc_pairs_total": 21,
+        "positive_control": {
+          "pass": true,
+          "p_value": 7.392203818846076e-07,
+          "mean_stem_delta": 0.026249888466625678,
+          "mean_loop_delta": 0.006310811941174494
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 4,
+          "partner_max_count": 4,
+          "p_value": 0.012345679012345677
+        },
+        "ps_gc_pairs": 0.22206928730010986,
+        "ps_au_pairs": 0.16639664769172668,
+        "quarantined": false,
+        "null_95th_primary": -0.021085411310195923,
+        "null_95th_conservative": 0.0005451440811157227,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "group_II_intron_D5": {
+        "best_ps": 0.1655722459157308,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.9802322387695312e-08,
+          2.1904706954956055e-05,
+          -0.0008642176787058512,
+          0.004918346802393596,
+          0.00467526912689209,
+          0.0038763086001078286,
+          0.00309865673383077,
+          0.00467910369237264,
+          0.0030138095219930014,
+          0.0037388900915781655,
+          0.03748899698257446,
+          0.12097048759460449,
+          0.1655722459157308
+        ],
+        "n_eligible_pairs": 6,
+        "n_stems": 2,
+        "n_wc_pairs_total": 18,
+        "positive_control": {
+          "pass": true,
+          "p_value": 4.048376782448624e-05,
+          "mean_stem_delta": 0.022789379244758972,
+          "mean_loop_delta": 0.004641048228129363
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 2,
+          "partner_max_count": 2,
+          "p_value": 0.1111111111111111
+        },
+        "ps_gc_pairs": 0.2352895736694336,
+        "ps_au_pairs": 0.15162878036499022,
+        "quarantined": false,
+        "null_95th_primary": -0.11409329374631245,
+        "null_95th_conservative": 0.00029736757278442383,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "group_I_intron_P4P6": {
+        "best_ps": 0.020530600296823603,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.5096692537006578e-08,
+          -9.850451820775083e-07,
+          0.00011155166124042712,
+          0.00021316503223619963,
+          -0.002234963994277151,
+          -0.00409484537024247,
+          -0.005062263262899299,
+          -0.0036670534234297903,
+          -0.0029974924890618575,
+          -0.0026850198444567227,
+          0.006193945282383969,
+          0.014068776055386192,
+          0.020530600296823603
+        ],
+        "n_eligible_pairs": 19,
+        "n_stems": 9,
+        "n_wc_pairs_total": 43,
+        "positive_control": {
+          "pass": true,
+          "p_value": 2.401956480874944e-07,
+          "mean_stem_delta": 0.00886444314714556,
+          "mean_loop_delta": 0.004348584948604936
+        },
+        "h3_precision": {
+          "fraction": 0.6666666666666666,
+          "n": 3,
+          "partner_max_count": 2,
+          "p_value": 0.2592592592592592
+        },
+        "ps_gc_pairs": 0.014953297376632691,
+        "ps_au_pairs": 0.02672760354148017,
+        "quarantined": false,
+        "null_95th_primary": -0.03148718674977621,
+        "null_95th_conservative": 3.311369154188368e-07,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "hammerhead_ribozyme": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hatchet_ribozyme": {
+        "best_ps": 0.0035265215805598666,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -2.9802322387695312e-08,
+          -6.4287866864885605e-06,
+          -4.185523305620466e-05,
+          -0.000579514673777989,
+          -0.0003134267670767648,
+          -0.00025541867528642925,
+          8.958152362278529e-05,
+          -4.101225308009556e-05,
+          -8.255243301391602e-06,
+          -0.00044668572289603096,
+          -0.00034173471587044854,
+          -0.007647118398121425,
+          0.0035265215805598666
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 3,
+        "n_wc_pairs_total": 24,
+        "positive_control": {
+          "pass": true,
+          "p_value": 3.0959832843427638e-06,
+          "mean_stem_delta": 0.013559234903213825,
+          "mean_loop_delta": 0.006663587604250226
+        },
+        "h3_precision": {
+          "fraction": 0.875,
+          "n": 8,
+          "partner_max_count": 7,
+          "p_value": 0.002591068434689833
+        },
+        "ps_gc_pairs": 0.0025547146797180176,
+        "ps_au_pairs": 0.0036884893973668418,
+        "quarantined": false,
+        "null_95th_primary": -0.0014939063361712871,
+        "null_95th_conservative": 3.5831757954188755e-05,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "lysine_riboswitch": {
+        "best_ps": 0.17328495891005904,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.518948590313947e-08,
+          5.4902500576443144e-06,
+          -0.0004990873513398347,
+          -0.0034732399163422763,
+          -0.004743737203103525,
+          -0.004475966647819236,
+          -0.003028048409356011,
+          -0.0016224869975337275,
+          -0.0010040115427087854,
+          -0.00013996936656810618,
+          0.037600206004248724,
+          0.08515292847598041,
+          0.17328495891005904
+        ],
+        "n_eligible_pairs": 27,
+        "n_stems": 8,
+        "n_wc_pairs_total": 45,
+        "positive_control": {
+          "pass": true,
+          "p_value": 2.065652110968652e-15,
+          "mean_stem_delta": 0.009650499930840158,
+          "mean_loop_delta": 0.0026118148992091052
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 13,
+          "partner_max_count": 13,
+          "p_value": 6.272254743863065e-07
+        },
+        "ps_gc_pairs": 0.2082950711250305,
+        "ps_au_pairs": 0.15269077525419347,
+        "quarantined": false,
+        "null_95th_primary": -0.05908428430557251,
+        "null_95th_conservative": 2.7901452520619266e-05,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "manganese_riboswitch": {
+        "best_ps": 0.1399255527390374,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -7.28501213921441e-08,
+          -2.9007593790690103e-06,
+          -9.205606248643663e-05,
+          -0.0004594988293117947,
+          -0.0005204015307956272,
+          -0.0006333655781216092,
+          -0.0009335213237338596,
+          0.001427855756547716,
+          0.002093811829884847,
+          0.001220617029401991,
+          0.022641453478071425,
+          0.06409634484185113,
+          0.1399255527390374
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 4,
+        "n_wc_pairs_total": 19,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0002164633889897421,
+          "mean_stem_delta": 0.018612955425594664,
+          "mean_loop_delta": 0.006486051060535289
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 3,
+          "partner_max_count": 3,
+          "p_value": 0.03703703703703703
+        },
+        "ps_gc_pairs": 0.14101291447877884,
+        "ps_au_pairs": 0.13122665882110596,
+        "quarantined": false,
+        "null_95th_primary": -0.013033854961395263,
+        "null_95th_conservative": 0.00187227725982666,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "mir_122_precursor": {
+        "best_ps": 0.19056313733259836,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.960464477539063e-08,
+          -7.952253023783365e-06,
+          -0.0007547487815221151,
+          -0.0017773906389872234,
+          -0.0018392503261566162,
+          -0.00034879644711812335,
+          0.010767564177513123,
+          0.03908415138721466,
+          0.024095396200815838,
+          0.02139495809872945,
+          0.08207251131534576,
+          0.16308599213759103,
+          0.19056313733259836
+        ],
+        "n_eligible_pairs": 12,
+        "n_stems": 3,
+        "n_wc_pairs_total": 33,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00048270820006013733,
+          "mean_stem_delta": 0.020871800719163353,
+          "mean_loop_delta": 0.015804915589356573
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 6,
+          "partner_max_count": 6,
+          "p_value": 0.0013717421124828527
+        },
+        "ps_gc_pairs": 0.20679086446762085,
+        "ps_au_pairs": 0.17897190366472518,
+        "quarantined": false,
+        "null_95th_primary": -0.04703599989414216,
+        "null_95th_conservative": 1.7195940017693772e-07,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "mir_155_precursor": {
+        "best_ps": 0.19056313733259836,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.960464477539063e-08,
+          -7.952253023783365e-06,
+          -0.0007547487815221151,
+          -0.0017773906389872234,
+          -0.0018392503261566162,
+          -0.00034879644711812335,
+          0.010767564177513123,
+          0.03908415138721466,
+          0.024095396200815838,
+          0.02139495809872945,
+          0.08207251131534576,
+          0.16308599213759103,
+          0.19056313733259836
+        ],
+        "n_eligible_pairs": 12,
+        "n_stems": 3,
+        "n_wc_pairs_total": 33,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00048270820006013733,
+          "mean_stem_delta": 0.020871800719163353,
+          "mean_loop_delta": 0.015804915589356573
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 6,
+          "partner_max_count": 6,
+          "p_value": 0.0013717421124828527
+        },
+        "ps_gc_pairs": 0.20679086446762085,
+        "ps_au_pairs": 0.17897190366472518,
+        "quarantined": false,
+        "null_95th_primary": -0.044888047277927404,
+        "null_95th_conservative": 1.1534988880157415e-05,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "mir_21_precursor": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_let7_precursor": {
+        "best_ps": 0.19056313733259836,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -5.960464477539063e-08,
+          -7.952253023783365e-06,
+          -0.0007547487815221151,
+          -0.0017773906389872234,
+          -0.0018392503261566162,
+          -0.00034879644711812335,
+          0.010767564177513123,
+          0.03908415138721466,
+          0.024095396200815838,
+          0.02139495809872945,
+          0.08207251131534576,
+          0.16308599213759103,
+          0.19056313733259836
+        ],
+        "n_eligible_pairs": 12,
+        "n_stems": 3,
+        "n_wc_pairs_total": 33,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00048270820006013733,
+          "mean_stem_delta": 0.020871800719163353,
+          "mean_loop_delta": 0.015804915589356573
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 6,
+          "partner_max_count": 6,
+          "p_value": 0.0013717421124828527
+        },
+        "ps_gc_pairs": 0.20679086446762085,
+        "ps_au_pairs": 0.17897190366472518,
+        "quarantined": false,
+        "null_95th_primary": -0.04443502604961396,
+        "null_95th_conservative": 1.586973667144709e-06,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "pistol_ribozyme": {
+        "best_ps": 0.1375881830851237,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -7.947285970052083e-08,
+          -1.4967388576931424e-05,
+          -0.00018321143256293403,
+          -0.0008860230445861816,
+          -0.0017360316382514106,
+          -0.0025214950243631997,
+          -0.00201081567340427,
+          -0.0022714734077453613,
+          -0.0018582608964708117,
+          -0.0014063914616902669,
+          0.012796560923258463,
+          0.08565391434563531,
+          0.1375881830851237
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 3,
+        "n_wc_pairs_total": 16,
+        "positive_control": {
+          "pass": true,
+          "p_value": 5.03659089104073e-06,
+          "mean_stem_delta": 0.024788875092742264,
+          "mean_loop_delta": 0.009861719946489267
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 3,
+          "partner_max_count": 3,
+          "p_value": 0.03703703703703703
+        },
+        "ps_gc_pairs": 0.16474157571792603,
+        "ps_au_pairs": 0.11586546897888184,
+        "quarantined": false,
+        "null_95th_primary": -0.013066112995147705,
+        "null_95th_conservative": 0.0014186739921569825,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "preQ1_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "purine_riboswitch": {
+        "best_ps": 0.1968228928744793,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -3.3527612686157227e-08,
+          -6.474554538726807e-06,
+          -0.0007526800036430359,
+          -0.0026479586958885193,
+          -0.002916429191827774,
+          -0.0025769881904125214,
+          -0.0014505498111248016,
+          -0.0007827207446098328,
+          -0.0008653923869132996,
+          9.794160723686218e-05,
+          0.07965349033474922,
+          0.17479578778147697,
+          0.1968228928744793
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 3,
+        "n_wc_pairs_total": 22,
+        "positive_control": {
+          "pass": true,
+          "p_value": 5.454057720160575e-10,
+          "mean_stem_delta": 0.027118988768305888,
+          "mean_loop_delta": 0.004885564076489416
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 10,
+          "partner_max_count": 10,
+          "p_value": 1.693508780843028e-05
+        },
+        "ps_gc_pairs": 0.2099656343460083,
+        "ps_au_pairs": 0.17491832375526428,
+        "quarantined": false,
+        "null_95th_primary": -0.044648682139813906,
+        "null_95th_conservative": -3.3527612686157227e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "tRNA_Ala_human": {
+        "best_ps": 0.1783552567164103,
+        "best_layer": 11,
+        "per_layer_ps": [
+          -3.9736429850260414e-08,
+          -6.179014841715495e-06,
+          -0.0003871222337086995,
+          -0.0005801618099212646,
+          0.004450867573420207,
+          0.0260711411635081,
+          0.03902424375216166,
+          0.05437081058820089,
+          0.034411072731018066,
+          0.030142545700073242,
+          0.09608473380406697,
+          0.1783552567164103,
+          0.08879201610883077
+        ],
+        "n_eligible_pairs": 6,
+        "n_stems": 3,
+        "n_wc_pairs_total": 15,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00629191562006355,
+          "mean_stem_delta": 0.05184654189252305,
+          "mean_loop_delta": 0.026834413519612063
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 1,
+          "partner_max_count": 1,
+          "p_value": 0.3333333333333333
+        },
+        "ps_gc_pairs": 0.2362705866495768,
+        "ps_au_pairs": 0.12043992678324382,
+        "quarantined": true,
+        "null_95th_primary": -0.13844827810923258,
+        "null_95th_conservative": -1.9868214925130207e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "tRNA_Phe_yeast": {
+        "best_ps": 0.28049740195274353,
+        "best_layer": 11,
+        "per_layer_ps": [
+          -4.76837158203125e-08,
+          4.118680953979492e-06,
+          -0.0005829095840454102,
+          -0.0008010983467102051,
+          0.0010004997253417968,
+          0.028792232275009155,
+          0.06624386310577393,
+          0.10174898505210876,
+          0.08197150230407715,
+          0.06419455409049987,
+          0.1628861665725708,
+          0.28049740195274353,
+          0.17958949208259584
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 5,
+        "n_wc_pairs_total": 20,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.8928267490331621,
+          "mean_stem_delta": 0.0426371965652857,
+          "mean_loop_delta": 0.0432366712225808
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 2,
+          "partner_max_count": 2,
+          "p_value": 0.1111111111111111
+        },
+        "ps_gc_pairs": 0.3315208315849304,
+        "ps_au_pairs": 0.22947397232055664,
+        "quarantined": true,
+        "null_95th_primary": -0.20872247219085693,
+        "null_95th_conservative": -3.9736429850260414e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "tmRNA": {
+        "best_ps": 0.14854496717453003,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -3.2094808725210335e-08,
+          3.4777017740102915e-06,
+          -0.0002026053575369028,
+          -0.0014729912464435284,
+          -0.0017031362423529993,
+          -0.0015152967893160307,
+          -0.001110241963313176,
+          -0.0009629795184502235,
+          -0.0009459096651810866,
+          -0.00031965283247140737,
+          0.04250785708427429,
+          0.11435799186046307,
+          0.14854496717453003
+        ],
+        "n_eligible_pairs": 26,
+        "n_stems": 10,
+        "n_wc_pairs_total": 65,
+        "positive_control": {
+          "pass": true,
+          "p_value": 2.6248662730258265e-16,
+          "mean_stem_delta": 0.008106164745297826,
+          "mean_loop_delta": 0.0023361540105437248
+        },
+        "h3_precision": {
+          "fraction": 1.0,
+          "n": 8,
+          "partner_max_count": 8,
+          "p_value": 0.0001524157902758725
+        },
+        "ps_gc_pairs": 0.16100114087263742,
+        "ps_au_pairs": 0.13786824686186655,
+        "quarantined": false,
+        "null_95th_primary": -0.06988196671009064,
+        "null_95th_conservative": -4.0978193283081055e-08,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "twister_ribozyme": {
+        "best_ps": 0.0006778359413146973,
+        "best_layer": 12,
+        "per_layer_ps": [
+          -3.5762786865234374e-08,
+          -9.167194366455079e-06,
+          -0.0012512803077697754,
+          -0.0029037952423095702,
+          -0.005175262689590454,
+          -0.006215393543243408,
+          -0.0058985471725463865,
+          -0.005518674850463867,
+          -0.0068400979042053224,
+          -0.006370973587036133,
+          -0.005493080615997315,
+          -0.0037898898124694826,
+          0.0006778359413146973
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 5,
+        "n_wc_pairs_total": 20,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0004687658126877705,
+          "mean_stem_delta": 0.01631209208415105,
+          "mean_loop_delta": 0.009991020905344112
+        },
+        "h3_precision": {
+          "fraction": 0.5,
+          "n": 2,
+          "partner_max_count": 1,
+          "p_value": 0.5555555555555556
+        },
+        "ps_gc_pairs": -0.00036199603761945454,
+        "ps_au_pairs": 0.0031041105588277182,
+        "quarantined": false,
+        "null_95th_primary": 0.002349764108657837,
+        "null_95th_conservative": 0.002349764108657837,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      }
+    },
+    "mean_best_ps": 0.11697033101550192,
+    "median_best_ps": 0.13875686791208053,
+    "families_exceeding_null_primary": 28,
+    "families_exceeding_null_conservative": 28,
+    "families_no_null": [
+      "c_di_GMP_riboswitch"
+    ],
+    "families_total": 30,
+    "families_quarantined": [
+      "tRNA_Ala_human",
+      "tRNA_Phe_yeast"
+    ],
+    "families_skipped": [
+      "5S_rRNA_ecoli",
+      "CRISPR_leader",
+      "Corona_s2m",
+      "HDV_ribozyme",
+      "Histone_3prime",
+      "IRES_HCV_domainII",
+      "IRE_stem_loop",
+      "RNaseP_specificity",
+      "SAH_riboswitch",
+      "SAM_riboswitch",
+      "SRP_RNA_helix8",
+      "TPP_riboswitch",
+      "U2_snRNA_stem",
+      "U6_snRNA",
+      "fluoride_riboswitch",
+      "hammerhead_ribozyme",
+      "mir_21_precursor",
+      "preQ1_riboswitch"
+    ],
+    "families_failed_gate": [
+      "7SK_RNA",
+      "U1_snRNA"
+    ]
+  }
+}

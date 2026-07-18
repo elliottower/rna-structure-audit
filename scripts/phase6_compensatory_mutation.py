@@ -70,7 +70,7 @@ def parse_stems(dot_bracket, sequence):
     opens = dot_bracket.count("(")
     closes = dot_bracket.count(")")
     if opens != closes:
-        raise ValueError(f"Unbalanced dot-bracket: {opens} opens vs {closes} closes")
+        return []
     all_pairs = parse_dot_bracket(dot_bracket)
     wc_pairs = [(i, j) for i, j in all_pairs if (sequence[i], sequence[j]) in WC_PAIRS]
     pair_set = set(wc_pairs)

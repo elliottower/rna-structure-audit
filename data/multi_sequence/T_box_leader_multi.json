@@ -1,0 +1,40 @@
+{
+  "name": "T_box_leader",
+  "rfam_id": "RF00230",
+  "original_sequence": "AAAUUUAAAACAACAAGAAAGUAACUUUGAUUUUGAAAUCUUUAGGAAGUUGGUGGUUGUGCAAACCAACGUUUUCAGCAAAGUGAAUGGGCUUGUGAUUAACUAAUAAAUUUGAUUUAAAAAAAUAAAGAAUCACGGCCGCUUCCGUUACAGAGCAACUUGUUUUUUGACAAGUUCUAAGAAAAUCAUUUGAUUUUAAAUUUACGGUGGCACCGCGCUCAAAGCGCCCGUAGG",
+  "original_dot_bracket": "......((.....((((......((((((........(((........((((((..........))))))))).....)))))).......))))...))............(((((((.........)))))))(((......)))..................................(((((((..)))))))......((((.......(((((...)))))))))...",
+  "n_available": 35,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AL591980.1/61543-61342",
+      "sequence": "GAAATAGCGATGAATTGGAGTAGTAATCTGCATATTTTGATGTGAAGAGAGCTGACGGTTGGTGCAAGTCAGTCACAAAATCTGGATGAACTTACCATGGAGCTTGGGTGTATCCCCGTTTTCCGCGTTAAGGAATTGATAAGTTGAGTGGTCAAACACTAATGTGGGTGGTACCGCGGGAGAAGCATCTCTCGTCCCATGG",
+      "dot_bracket": "......((......((((.......((((((........(((........((((((...........))))))))).....)))))).......))))...))..((((())))).(((.....)))...................((((((()))))))....((((.......(((((..........)))))))))...",
+      "length": 202
+    },
+    {
+      "accession": "AE017334.2/2761487-2761277",
+      "sequence": "CGAAAATCGTTGAAGGGAAATAGTACATATGTCTTCTTGCGAAAGAGAGTGGAATTCACCGGCTGAAAGATTCCTCGTATAGAATATATCGAACCTATCCCTGAGTCTTAAATGAAAGTTTAGGCGTTCGCCTGCGTTATAGGCACCAAGTGGATATCTATGTATATCAATTAAGGTGGTACCGCGGAACAATGACCGTTTCGTCCTTTTT",
+      "dot_bracket": "......((......((((.......((((((........(((........((((((............))))))))).......)))))).......))))...))(((((((....)))))))(((......)))................(((((((..)))))))....((((.......(((((...........)))))))))...",
+      "length": 211
+    },
+    {
+      "accession": "BX571857.1/1715591-1715290",
+      "sequence": "TTTAATATAGGATTTGGGAAGAGTAAGTTCAAATTATTTTAAAGAGAGCATATGATTTGGTGTGAGTATGTAAATGATTTTTACTGAAGGTAGCCCACAGAGTATCTTAGCTGAACGTGATTAATAGTAGGCTAAGACGTGTTTGAGCGTTAATCATAATCTAGAGTGCTTGAAGAGATGAAGCATTTCAAATTTCACGATGATAGTATTGGTATGATTATTCCAATTATGTTAAAAGAGTGAATTTGATATTAAACATCCTTCTTGAATATAGGTGGTACCACGGAATATCCGTCCTATTT",
+      "dot_bracket": "......((......((((.......((((((.....(((........((((((............))))))))).....))))))........))))....))..(((((((.................))))))).(((......)))...................(((((((.....................................................................................)))))))....((((.......(((((...)))))))))...",
+      "length": 302
+    },
+    {
+      "accession": "AM180355.1/849427-849661",
+      "sequence": "GTAAATGCAATGAAAGAGGAAAGTATTTTGATTAAACTTAGTAAAGAGATAAACACCTAGGCTGGGAGTGTTTTCTAAGAGGTCATGAGAAGTTCCCTCTGGAGTAACAGAGCTGAAATTTTACAGTAGGCTTTGACGTCAAAAACGCGTTAAGTTTGTTAGAGGTGGTTTGATGATTTTTAAATTGTTAAACTACTAGGGTGGTACCGCGAAACTATAGCCTTTCGTCCCTAGA",
+      "dot_bracket": "......((......((((.......((((((.......(((.........((((((...........)))))).))).....))))))........))))...))..(((((((..............))))))).(((.......)))..................(((((((............)))))))....((((.......(((((..........)))))))))...",
+      "length": 235
+    },
+    {
+      "accession": "AE017334.2/4266551-4266319",
+      "sequence": "ATAAATGCCTTGAAGGGGAAGAGTATAACAAGAAACGTCTTCAGAGAGGAGAATCATTAGCTGGGAGATTCTCTAGATAGTTATGTTAGAAGGTAGCCCTGGAGCATCTTTTCTGAACGGAATAGTTCTCATTAGGAAAAGACGGATTTGTCCGTTATCAAGTTAAGAGTATAAGCAAATTCCTGGATTTGTTTGTAAATAAAGGTGGTACCGCGATGTCCCTCGTCCTTTTT",
+      "dot_bracket": "......((......((((.......((((((.......(((........((((((...........))))))..))).....))))))........))))...))..(((((((....................))))))).(((......)))...............(((((((..............)))))))....((((.......(((((....)))))))))...",
+      "length": 233
+    }
+  ]
+}

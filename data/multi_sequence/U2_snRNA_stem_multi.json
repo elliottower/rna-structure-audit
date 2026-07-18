@@ -1,0 +1,40 @@
+{
+  "name": "U2_snRNA_stem",
+  "rfam_id": "RF00004",
+  "original_sequence": "AUCCUUUGCUUUGGCUUAGAUUCAAAUUGAAAUUUGAUCAAGUGCGUAUAUCCUUAUACUAACAAUAUCGGAGAAAAGCUGAU",
+  "original_dot_bracket": "((((((((((((..(((((.........)))))..((((.........)))).((((((......)))))).)))))))))))",
+  "n_available": 187,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AAFO01000053.1/189105-188894",
+      "sequence": "ATCTCTTTGCCTTTTGGCTTAGATCCAGTGTAGTATCTGTTCTTTTCAGTGTAACAACTGAAATGTCATCATTGATGACTTTACATTTATGTTACAAATTTATTTATTTTTGGATATTGGGTAGATTGATTTATTAAAGTGGGCTTGCTCACAGTCTTTCTACATAGTGTCGTTGCCACTGTACTTTTATTTTGGCTTCTGACGCAAATTTT",
+      "dot_bracket": "...(((.((((....)))).)))....................((((((........))))))(((((((...)))))))........................................((((((((...........(((((..)))))....))))))))...((((((.((((((............))))))..)))))).......",
+      "length": 212
+    },
+    {
+      "accession": "AACQ01000018.1/49571-49783",
+      "sequence": "ATCTCTTTGCCTTTTGGCTTAGATCCAGTGTAGTATCTGTTCTTTTCAGTGTAACAACTGAAATGTCATCATTGATGACTTTACATTTATGTTACAAATTTATTTATTTTTGGATATTGGGTAGATTGATTTATTAAAGTGGGCTTGCTCACAGTCTTTCTACATAGTGTCGTTGCCACTGTACTTTTATTTTGGCTTCTGACGCAAATTTTT",
+      "dot_bracket": "...(((.((((....)))).)))....................((((((........))))))(((((((...)))))))........................................((((((((...........(((((..)))))....))))))))..((((((.((((((..............))))))..)))))).......",
+      "length": 213
+    },
+    {
+      "accession": "AY007788.1/537-683",
+      "sequence": "ATATCTTCTCGGCTATTTAGCTAAGATCATGTTTATAAACTGTTCTTATCAGAGTAACTCCTGATACTGCCTTCGGGCAAAGGAATAGAAATTATAACTCAAGGTTGTTTCCCTGGAGTTCCACGTTTCCAGGGGAGCAACTCTTTT",
+      "dot_bracket": "......(((.((((....)))).)))....................((((((........)))))).(((((..))))).........................((((((.((((((..........)))))).)))))).......",
+      "length": 147
+    },
+    {
+      "accession": "M58665.1/571-739",
+      "sequence": "ATATCTTCTCGGCTATTTAGCTAAGATCATGTTTATAAACTGTTCTTATCAGAGTAACTCCTGATACTGCCTTCGGGCAAAGGAATAGAAATTATATCTCAAGGTTGTTTCCCTGGAGTTCCACGTTTCCAGGGAGCAACTCTTTTTTTCTCCTAGGAGCAGAACATCT",
+      "dot_bracket": "......(((.((((....)))).)))....................((((((........)))))).(((((..))))).......................((...(((((..))))).))..((((((.((((((...........))))))..)))))).......",
+      "length": 169
+    },
+    {
+      "accession": "U23406.1/206-352",
+      "sequence": "ATATCTTCTCGGCTATTTAGCTAAGATCATGTTTATAAACTGTTCTTATCAGAGTAACTCCTGATATTGCCTTCGGGCAAAGGAATAGAAATCATGGTACTAGGTTGTTTCTCTGGAGTTCCACCTTTCCAGGGGAGCAGCTACCTT",
+      "dot_bracket": "......(((.((((....)))).)))....................((((((........))))))((((((..))))))........................((((((.((((((..........)))))).)))))).......",
+      "length": 147
+    }
+  ]
+}

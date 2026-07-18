@@ -1,0 +1,40 @@
+{
+  "name": "pistol_ribozyme",
+  "rfam_id": "RF02679",
+  "original_sequence": "ACUCGACUAGACGAGUAUAAACUACAUUAAGCCUAGUGCGUUAUAGCCGUAAAUAAGAAGUAAACGGCUAUAGGUUGUA",
+  "original_dot_bracket": "((((........))))......((((....(.......).((((((((.................))))))))..))))",
+  "n_available": 40,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "ABPY01006746.1/503-437",
+      "sequence": "AGAGGTCACAGCCTCTTAAAATAGACATTAAGCTGTGAGCGTCTCCCGTATTAACGGGAGGGTTGTA",
+      "dot_bracket": "((((........)))).......((((....(.......).((((((((....))))))))..))))",
+      "length": 67
+    },
+    {
+      "accession": "ACWC01000004.1/40409-40346",
+      "sequence": "AGTCGTGGCGGCGACGTTAAATAGGCATTAAGCCGCCAGCGTTCCCCTCATTGGGGAGGTTGCA",
+      "dot_bracket": "((((........)))).......((((....(.......).((((((.....))))))..))))",
+      "length": 64
+    },
+    {
+      "accession": "ABPY01006745.1/33-98",
+      "sequence": "ACAGGTTTGCGCCTGTATAAATAGACATTAAGCGCAAAGCGTCCCGCAATTGTTGCGGGGGTTGTA",
+      "dot_bracket": "((((........)))).......((((....(.......).(((((((.....)))))))..))))",
+      "length": 66
+    },
+    {
+      "accession": "AFHW01000093.1/13318-13252",
+      "sequence": "ACTGGTTCGAGCCAGTAAAAAAAGGCCGATAAGCTCGAAGCGTTCCACTCTTAGAGTGGAGGAGGCA",
+      "dot_bracket": "((((........)))).......((((.....(.......).((((((((...))))))))..))))",
+      "length": 67
+    },
+    {
+      "accession": "CP002400.1/1057607-1057686",
+      "sequence": "CACCGTGGCGGCGGTGTAAAACAAACATTAAGCCGCCAGCGTCCCGGAACAAGGCATTTTCCGATTCTCCGGGGGTTGCA",
+      "dot_bracket": "((((........)))).......((((....(.......).((((((((.................))))))))..))))",
+      "length": 80
+    }
+  ]
+}

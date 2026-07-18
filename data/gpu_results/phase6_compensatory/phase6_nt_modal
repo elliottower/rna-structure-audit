@@ -1,0 +1,452 @@
+{
+  "model": "nt",
+  "timestamp": "20260714_082334",
+  "phase": 6,
+  "metric": "perturbation_specificity",
+  "preregistration": "PREREGISTRATION_PHASE6_V2.md",
+  "offset": 0,
+  "seed": 42,
+  "tokenizer_caveated": true,
+  "results": {
+    "per_rna": {
+      "5S_rRNA_ecoli": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (4 found)",
+        "n_wc_pairs_total": 4
+      },
+      "6S_RNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "7SK_RNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Bacterial_SRP": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "CRISPR_leader": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Corona_5UTR": {
+        "best_ps": 0.0,
+        "best_layer": 0,
+        "per_layer_ps": [
+          0.0,
+          -7.092952728271484e-06,
+          -9.130438168843587e-05,
+          -8.483727773030599e-05,
+          -8.744001388549805e-05,
+          -9.059906005859375e-06,
+          -0.00017711520195007324,
+          -0.00036781032880147296,
+          -0.00016609827677408853,
+          -0.00024159749348958334,
+          -0.0001392066478729248,
+          -0.0002593696117401123,
+          -0.00020543734232584635
+        ],
+        "n_eligible_pairs": 40,
+        "n_stems": 16,
+        "n_wc_pairs_total": 83,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0008384331026261888,
+          "mean_stem_delta": 0.029139841881891095,
+          "mean_loop_delta": 0.009640845709613391
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -1.9868214925130207e-08,
+        "ps_au_pairs": 1.9868214925130207e-08,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 6.1492125193278e-06,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Corona_s2m": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "CrPV_IRES": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "FMN_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "HDV_ribozyme": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Hepatitis_C_IRES_III": {
+        "best_ps": -5.960464477539063e-08,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -5.960464477539063e-08,
+          -2.3990869522094727e-06,
+          -5.9410929679870605e-05,
+          -0.00010675191879272461,
+          -0.0001475512981414795,
+          -0.00013718008995056152,
+          -0.00023184716701507568,
+          -0.00013363361358642578,
+          -0.00015813112258911133,
+          -0.00022655725479125977,
+          -8.021295070648193e-05,
+          -0.00022400915622711182,
+          -0.0002170354127883911
+        ],
+        "n_eligible_pairs": 42,
+        "n_stems": 19,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.06878623759520149,
+          "mean_stem_delta": 0.011011710201484568,
+          "mean_loop_delta": 0.019874025687594516
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -5.960464477539063e-08,
+        "ps_au_pairs": null,
+        "quarantined": false,
+        "null_95th_primary": -5.960464477539063e-08,
+        "null_95th_conservative": 0.00030757486820220947,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Histone_3prime": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "IRES_HCV_domainII": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "IRE_stem_loop": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (14 found)",
+        "n_wc_pairs_total": 14
+      },
+      "RNaseP_specificity": {
+        "skipped": true,
+        "reason": "sequence/dot_bracket length mismatch (94 vs 91)"
+      },
+      "SAH_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAM_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SECIS_element": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "SRP_RNA_helix8": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (4 found)",
+        "n_wc_pairs_total": 4
+      },
+      "THF_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "TPP_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "T_box_leader": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U1_snRNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U2_snRNA_stem": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "U4_snRNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U5_snRNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "U6_snRNA": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "Vault_RNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "Y_RNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "ZMP_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "c_di_GMP_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "cobalamin_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "fluoride_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "glmS_ribozyme": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "glycine_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_II_intron_D5": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "group_I_intron_P4P6": {
+        "best_ps": 0.005082607269287109,
+        "best_layer": 11,
+        "per_layer_ps": [
+          0.0,
+          -9.5367431640625e-07,
+          9.5367431640625e-07,
+          -7.328391075134277e-05,
+          -2.3484230041503906e-05,
+          0.0004087686538696289,
+          0.0003483593463897705,
+          -0.003305494785308838,
+          -0.0011810362339019775,
+          -0.0008854866027832031,
+          0.0031967759132385254,
+          0.005082607269287109,
+          0.0018053054809570312
+        ],
+        "n_eligible_pairs": 19,
+        "n_stems": 9,
+        "n_wc_pairs_total": 43,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.18650627342216625,
+          "mean_stem_delta": 0.015124805738453878,
+          "mean_loop_delta": 0.011757048598506993
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": 0.02339911460876465,
+        "ps_au_pairs": -0.01323390007019043,
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": NaN,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": false
+      },
+      "hammerhead_ribozyme": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "hatchet_ribozyme": {
+        "best_ps": 0.00045117735862731934,
+        "best_layer": 9,
+        "per_layer_ps": [
+          -8.940696716308594e-08,
+          -4.827976226806641e-06,
+          -0.00017818808555603027,
+          3.9458274841308594e-05,
+          2.372264862060547e-05,
+          -1.831352710723877e-05,
+          -0.00011371076107025146,
+          -0.0008329600095748901,
+          -0.0004128366708755493,
+          0.00045117735862731934,
+          -8.347630500793457e-05,
+          -0.0005019307136535645,
+          -6.0617923736572266e-05
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 3,
+        "n_wc_pairs_total": 24,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.2800108721413352,
+          "mean_stem_delta": 0.019124814629367607,
+          "mean_loop_delta": 0.014719964056224612
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -0.001150369644165039,
+        "ps_au_pairs": 0.0009850263595581055,
+        "quarantined": false,
+        "null_95th_primary": 0.0014428943395614624,
+        "null_95th_conservative": 0.0032531172037124634,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "lysine_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "manganese_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_122_precursor": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_155_precursor": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "mir_21_precursor": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (0 found)",
+        "n_wc_pairs_total": 0
+      },
+      "mir_let7_precursor": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "pistol_ribozyme": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "preQ1_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "purine_riboswitch": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Ala_human": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tRNA_Phe_yeast": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "tmRNA": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      },
+      "twister_ribozyme": {
+        "skipped": true,
+        "reason": "no valid PS values"
+      }
+    },
+    "mean_best_ps": 0.0,
+    "median_best_ps": 0.0,
+    "families_exceeding_null_primary": 0,
+    "families_exceeding_null_conservative": 0,
+    "families_no_null": [],
+    "families_total": 1,
+    "families_quarantined": [],
+    "families_skipped": [
+      "5S_rRNA_ecoli",
+      "6S_RNA",
+      "7SK_RNA",
+      "Bacterial_SRP",
+      "CRISPR_leader",
+      "Corona_s2m",
+      "CrPV_IRES",
+      "FMN_riboswitch",
+      "HDV_ribozyme",
+      "Histone_3prime",
+      "IRES_HCV_domainII",
+      "IRE_stem_loop",
+      "RNaseP_specificity",
+      "SAH_riboswitch",
+      "SAM_riboswitch",
+      "SECIS_element",
+      "SRP_RNA_helix8",
+      "THF_riboswitch",
+      "TPP_riboswitch",
+      "T_box_leader",
+      "U1_snRNA",
+      "U2_snRNA_stem",
+      "U4_snRNA",
+      "U5_snRNA",
+      "U6_snRNA",
+      "Vault_RNA",
+      "Y_RNA",
+      "ZMP_riboswitch",
+      "c_di_GMP_riboswitch",
+      "cobalamin_riboswitch",
+      "fluoride_riboswitch",
+      "glmS_ribozyme",
+      "glycine_riboswitch",
+      "group_II_intron_D5",
+      "hammerhead_ribozyme",
+      "lysine_riboswitch",
+      "manganese_riboswitch",
+      "mir_122_precursor",
+      "mir_155_precursor",
+      "mir_21_precursor",
+      "mir_let7_precursor",
+      "pistol_ribozyme",
+      "preQ1_riboswitch",
+      "purine_riboswitch",
+      "tRNA_Ala_human",
+      "tRNA_Phe_yeast",
+      "tmRNA",
+      "twister_ribozyme"
+    ],
+    "families_failed_gate": [
+      "Hepatitis_C_IRES_III",
+      "group_I_intron_P4P6",
+      "hatchet_ribozyme"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "SECIS_element",
+  "rfam_id": "RF00031",
+  "original_sequence": "UUUGCAUUAAUGAGGAUUACACAGAAAACCUUUGUUAAGGACUUGUGUAGAUCUGAUAAUUGGCAAA",
+  "original_dot_bracket": "(((((.........((((((((((.....(((....)))...))))))).))).........)))))",
+  "n_available": 59,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AF195141.1/689-759",
+      "sequence": "GACTGACATTATGAAGGCCTGTACTGAAGACAGCAAGCTGTTAGTACAGACCAGATGCTTTCTTGGCAGGC",
+      "dot_bracket": "(((((..........((((((((((.....(((....)))..))))))))))..............)))))",
+      "length": 71
+    },
+    {
+      "accession": "AC092237.1/57223-57161",
+      "sequence": "CATTCAACTTATGAGGATTATTTCTTAAAGGCCTCTGGCTCGGAAATAGTCTGAACCTTATTG",
+      "dot_bracket": "(((((..........((((((((((.....(((...)))..)))))))))).......)))))",
+      "length": 63
+    },
+    {
+      "accession": "X58295.1/1384-1453",
+      "sequence": "TGGCGTCTTCATGAGGGAGGGGCCCAAAGCCCTTGTGGGCGGACCTCCCCTGAGCCTGTCTGAGGGGCCA",
+      "dot_bracket": "(((((..........((((((((((....(((....))).))))))))))...............)))))",
+      "length": 70
+    },
+    {
+      "accession": "AF096875.1/5504-5568",
+      "sequence": "GTGTGCGAATGATAACTACTGACGAAAGAGCTGTCTGCTCAGTCTGTGGTTGGATGTAGTCACAC",
+      "dot_bracket": "(((((........((((((((((.....(((.....)))..)))))))))).........)))))",
+      "length": 65
+    },
+    {
+      "accession": "AY119185.1/838-902",
+      "sequence": "GAGCCCTATGATCGATGATTGGCAAATCCTCTCGAGGAACCGATCGTTGAGAACCCCTTTGCCTT",
+      "dot_bracket": "(((((.......((((((((((.....(((....)))..))))))))))...........)))))",
+      "length": 65
+    }
+  ]
+}

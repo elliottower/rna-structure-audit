@@ -1,0 +1,40 @@
+{
+  "name": "RNaseP_specificity",
+  "rfam_id": "RF00010",
+  "original_sequence": "GAGGAAAGUCCGGGCUCCAUAGGGCAGGGUGCCAGGUAACGCCUGGGGGGGAAACCCACGACCAGUGCAACAGAGAGCAAACCGCCGAUGGCCC",
+  "original_dot_bracket": "........((((((.((((((((..((((((........))))))...)))))))).........((((((.......)))))).))))))",
+  "n_available": 330,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "CR767821.1/1094194-1094531",
+      "sequence": "TCAGGTAAGAAAGTAGTTGCTGTATTTCATAATGCAGAGGAAAGTCCGGACTCCAAGGGAAAATGGTGACAGGTAACTCCTGTCGGAGGTAACTCTAGGTATAGGACTACAGAAAATAACCGCCTTACTAATAAGGTAAGGGTGAAAAGGTGTGGTAAGAGCACACCGTACTTATGGCAACATATAGTAGCTAAGCAACCACCACCAGGAGCAAGACTAAAAGAGATATATGTGTTTTCCCTCACAATTATCTAGGTAAGTCGCGTGAGGTAGATAGCAATATTTATCCCAGATGAATAACTACACAAACAGAATCCGGCTTACTCTTACCTGACCAT",
+      "dot_bracket": "((((((((((((((((((.(((((((....))))))).............((((.........((((((((((.....)))))(((((....)))).)((...(((((...........((((((((....))))))..)).......((((((.......))))))(((((((((....))).))))).)..)))..)))))))))))))...((((.....((((((.(((((......))))).)))))).....))))......((((((((....))))))))..........)))))))..................)))))))))))....",
+      "length": 338
+    },
+    {
+      "accession": "ABCH01000023.1/63801-64207",
+      "sequence": "GAAGTTGACTGGATAGTCGCTGCTTCGTTGACGTCCCCTTGAGCTTGTCTTGGGGGAGACTGACGGAGGGGAGGAACGTCCGGGCTCCACAGAGCAGGGTGCCAGGTAACGCCTGGGGGGCGTGAGCCCACGACAAGTGCAGCAGAGAGAAGACCGCCGATGGCTCCATTTCTTCGGAAGGAGCACAGGTAAGGGTGAAAGGGTGCGGTAAGAGCGCACCGGACGACTGGTAACAGTTCGTTGCAAGGTAAACTCCACCCGGAGCAAGACCAAATAGGCTTCCACATTGCGTTGCTCGCGTATGGAGGCGGGTAGGTTGCTCGAGCCAGTGAGCGATTGCTGGCCTAGACGAATGGCTATCACCGCTTCGGCGGATACAGAACCCGGCGTACAGGTCAACTTCACCT",
+      "dot_bracket": "((((((((((((((((((.(((((((((..................................))))))))).............((((........((((((((((.....)))))(((((....)))).)((...(((((............(((((..((((((..............)))).)))))..)).......((((((.......))))))(((((((((....))).))))).)..)))..)))))))))))))...((((......((((((....(((((.....))))).)))))).....))))......((((((((....))))))))..........)))))))..............................).))))))))))....",
+      "length": 407
+    },
+    {
+      "accession": "CP000083.1/4670434-4669999",
+      "sequence": "CGAGTTGACCAGACAATCGCTGCTTTATCGTTGTAGTTTAAATTTCGATTTGAACTAAACAGATAGAGGGGAGGAAAGTCCGGGCTCCAATGAGCAGGGTGCCAGGTAACGCCTGGGCGGCGTGAGCCGACGACAAGTGCAGCAGAGAGAAGACCGCCGATGGCCGCTTGCGGAACAGGTAAGGCTGAAAGGGTGCGGTAAGAGCGCACCGGATTGCTGGTAACAGTAATTGCAGGGTAAACTCCACCTGGAGCAAGACCAAATAGGGTTTCATGATTATTAAAACGCAAGTTTTGATAATATAAGCGTGGCTCGCGTGGAAACCGGGTAGGTTGCTTGAGCTATAGAGCGATTTATAGCCTAGACGAATGATTGTCATCTCTTTTGCTTTTAGTAAAGGAGCTACAAAACCCGGCTTATGTGGTCAACTCAACTA",
+      "dot_bracket": "((((((((((((((((((.(((((((((..................................))))))))).............((((........((((((((((.....)))))(((((....)))).)((...(((((............(((((..((((((....)))).)))))..)).......((((((.......))))))(((((((((....)))))))).)..)))..)))))))))))))...((((......((((((...............................(((((.....))))).)))))).....))))......((((((((....))))))))..........)))))))..........................................)..))))))))))....",
+      "length": 436
+    },
+    {
+      "accession": "BX571872.1/169334-168958",
+      "sequence": "GGAGTTGACTAGACAGTCGCTGCTTTATCATTAATCCTTTGGATGATAGATGGAGGAGAGGAAAGTCCGGGCTCCACAGGGCAGGGTGCCAGATAACGTCTGGGGGGTGAAAGCCCACGACCAGTGCAACAGAGAGCAAACCGCCGATGGCTTACTTAATGTAGGATCAGGTAAGGGTGAAAGGGTGCGGTAAGAGCGCACCGCACGGCTGGTAACAGTTCGTGGCACGGTAAACTCCACTCGGAGCAAGGCCAAATAGGGGTTCATTAGGTACGGCCCGTATCGAACCCGGGTAGGCTGCTTGAGCCAGTGCGTAAGTGCTGGCCTAGATGAATGATTGTCCACGACAGAACCCGGCTTATCGGTCAACTTCACAA",
+      "dot_bracket": "((((((((((((((((((.(((((((((.....................))))))))).............((((........((((((((((.....)))))(((((....)))).)((...(((((............(((((..((((((..........)))))))))..)).......((((((.......))))))(((((((((....))).))))).)..)))..)))))))))))))...((((......((((((....(((((.....))))))))))).....))))......((((((((....))))))))..........)))))))...................).))))))))))....",
+      "length": 377
+    },
+    {
+      "accession": "CP000236.1/343907-343570",
+      "sequence": "TCAGGTAAAAAAGTAGTTGCTGTATTGTAAAGTACAGAGGAAAGTCCGGACTCCAAGGGAAAATGGTGACAGGTAATCCCTGTCGGAGGTGACTCTAGGTAAAGGGCTACAGAAAATAACCGCCTTGTTACAAGGTAAGGGTGAAAAGGCGTGGTAAGAGCACACCGTACTTATGGCAACATATAGTAGCTAAGTAACCACCACCAGGAGCAAGACTAAGAAGAGGTATTTGTGTTTTCCCTCACAATTACCCAGGTGAGTCGCGTGAGGTAGGTAGCGATATCTATCCCAGATGAATAACTACATAAACAGAATCCGGCTTATTTTTACCTGGCAAG",
+      "dot_bracket": "((((((((((((((((((.(((((((....))))))).............((((.........((((((((((.....)))))(((((....)))).)((...(((((...........((((((((...))))))..)).......((((((.......))))))(((((((((....))).))))).)..)))..)))))))))))))...((((......((((((.(((((......))))).)))))).....))))......((((((((....))))))))..........)))))))..................)))))))))))....",
+      "length": 338
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "group_II_intron_D5",
+  "rfam_id": "RF00029",
+  "original_sequence": "GAGAGCCAAAUGAAUCGAAAGAUUCAUGUUUGGUUCGGGAAGGGAUUAUGGAAUUUUGGAAAGGAAUGGAAAAAUAAUCUACUUUCAU",
+  "original_dot_bracket": "..((((((((.(((((....)))))...))))))))..((((.((................................))..)).))..",
+  "n_available": 86,
+  "n_selected": 5,
+  "sequences": [
+    {
+      "accession": "AJ130746.1/1754-1835",
+      "sequence": "TTGAGCCGTATGCGAAGGAAACTTGCACGTGCGGTTCTTTGCTTTGAGGGGGGAAAGCTTGAAAGAGCCTATCCATCCTGAT",
+      "dot_bracket": "..((((((((.(((((.....)))))...)))))))).........((((.((..................))..))))...",
+      "length": 82
+    },
+    {
+      "accession": "U77945.1/1848-1919",
+      "sequence": "AACCGCCGTGTACGGAACCGTACGCACGGTGGTGTGAGAGGACGGCGGGTGTGAATCCGCCTCCTACTCGAT",
+      "dot_bracket": "..((((((((.(((....)))...))))))))..((((.((.....................))..))))..",
+      "length": 72
+    },
+    {
+      "accession": "X02819.1/3326-3410",
+      "sequence": "GAGAGCCGTATAATTACGAAAGTATCCCGTACGGTTCGGTGACGAGCCGTGTCAACCCTGCAAAGGGAATGCGTCTTAGTTCAAT",
+      "dot_bracket": "..((((((((.(((((.....)))))...))))))))..((((.((............................))..)).))..",
+      "length": 85
+    },
+    {
+      "accession": "M68929.1/120754-120816",
+      "sequence": "GGGAGCCGGATGAGGGAGAAATTTCTCACGTCCGGATCTTTGAGAGCCTCCGGGCTACTCTCT",
+      "dot_bracket": "..((((((((.(((((......)))))...))))))))..((((.((......))..))))..",
+      "length": 63
+    },
+    {
+      "accession": "M81726.1/5191-5288",
+      "sequence": "GTGAGCCGTATGATGGGCAACTATCTCCTGCGGTTCGGAGAGGACTCAGCTGTTAGTTAGTACCCCCGTCGGTTTCGGGGTGGACCCTTTTACTCTAT",
+      "dot_bracket": "..((((((((.(((((....)))))...))))))))..((((.((...........................................))..))))..",
+      "length": 98
+    }
+  ]
+}
