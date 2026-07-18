@@ -1,0 +1,28 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\signature{Elliot Tower}
+\address{Independent Researcher \\ elliot@elliottower.ai}
+
+\begin{document}
+\begin{letter}{Editors \\ \textit{RNA}}
+
+\opening{Dear Editors,}
+
+I am submitting ``A Three-Rung Evaluation of RNA Structure Awareness in Foundation Models'' for consideration as a Methods article under Bioinformatics and Databases in \textit{RNA}.
+
+The paper introduces a three-rung evaluation framework for measuring whether RNA foundation models encode secondary structure. Each rung demands a strictly stronger form of structural knowledge: stem-versus-loop discrimination under a nucleotide-stratified permutation null (Rung~1), survival of a dinucleotide-stratified null (Rung~2), and partner specificity---whether a model knows which specific position pairs with which---tested against a within-stem derangement null (Rung~3).
+
+The main methodological contribution is composition control. Stems are 68.5\% GC while loops are 43.9\%, and this enrichment inflates embedding-level structure metrics by approximately $3\times$. The nucleotide-stratified permutation null absorbs this confound; the dinucleotide extension absorbs second-order context effects. Among 52 Rfam families and ten models spanning five architectures (1.2M--7B parameters), composition controls absorb nearly all apparent structure signal, with a single family (HCV IRES domain~III) surviving both orders.
+
+The most demanding test---Rung~3, partner specificity---produces the clearest positive results. Two RNA-pretrained models clear this rung: ERNIE-RNA (86M, mean PS = 0.117, 28/30 families exceeding the derangement null) and RiNALMo (650M, mean PS = 0.215, 30/31 families). These results reveal two pathways to partner specificity: architectural pairing bias at moderate scale, or sufficient scale with standard attention. Both require RNA pretraining; DNA-pretrained models produce near-zero signal regardless of scale. All eight remaining models produce perturbation specificity at least two orders of magnitude lower.
+
+All evaluations were preregistered with SHA-frozen protocols before data analysis. An HTT mRNA case study extends the framework to clinically relevant repeat-expansion sequences and exposes RNA-FM embedding collapse across pathogenic alleles. Analysis code and preregistration documents are archived in a public repository.
+
+I am the sole author and declare no competing interests. The manuscript is not under consideration elsewhere.
+
+\closing{Thank you,}
+
+\end{letter}
+\end{document}
