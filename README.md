@@ -2,13 +2,46 @@
 
 Three-rung benchmark for evaluating whether RNA/DNA foundation models encode genuine secondary structure or composition shortcuts.
 
+[![Open Quickstart in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elliottower/rna-structure-audit/blob/main/notebooks/quickstart.ipynb) [![Open BYOM Tutorial in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elliottower/rna-structure-audit/blob/main/notebooks/bring_your_own_model.ipynb)
+
 ## Install
 
 ```bash
 pip install rna-structure-audit
 ```
 
-## Usage
+For pre-built adapters (ERNIE-RNA, RiNALMo, RNA-FM, and 7 more):
+
+```bash
+pip install rna-structure-audit[all-models]
+```
+
+## Quick start
+
+```python
+from rna_structure_audit.adapters import ERNIERNAAdapter
+from rna_structure_audit.evaluate import evaluate
+
+results = evaluate(ERNIERNAAdapter(), device="cuda")
+print(results["report"]["grade"])  # A
+```
+
+## Pre-built adapters
+
+| Adapter | Model | Params | Grade |
+|---------|-------|--------|-------|
+| `ERNIERNAAdapter` | ERNIE-RNA | 86M | A |
+| `RiNALMoAdapter` | RiNALMo | 650M | A |
+| `SpliceBERTAdapter` | SpliceBERT | 19M | D |
+| `UTRLMAdapter` | UTR-LM | 1.2M | D |
+| `RNAFMAdapter` | RNA-FM | 99M | D |
+| `NTAdapter` | Nucleotide Transformer v2 | 56M | D |
+| `HyenaDNAAdapter` | HyenaDNA | 5.4M | D |
+| `CaduceusAdapter` | Caduceus | 14M | D |
+| `EvoAdapter` | Evo | 7B | D |
+| `DNABERT2Adapter` | DNABERT-2 | 117M | D |
+
+## Bring your own model
 
 Write an adapter for your model:
 
@@ -50,6 +83,8 @@ results = evaluate(adapter, device="cuda")
 print(results["report"]["grade"])  # A, B, C, or D
 ```
 
+See the [Bring Your Own Model tutorial](notebooks/bring_your_own_model.ipynb) for a full walkthrough.
+
 ## Grading
 
 | Grade | Meaning |
@@ -67,4 +102,4 @@ print(results["report"]["grade"])  # A, B, C, or D
 
 ## Citation
 
-Tower, E. (2026). Composition Confounds Inflate Apparent Structure Awareness in RNA Foundation Models.
+Tower, E. (2026). A Three-Rung Evaluation of RNA Structure Awareness in Foundation Models.

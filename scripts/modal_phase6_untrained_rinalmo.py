@@ -14,14 +14,14 @@ app = modal.App("causal-rna-phase6-untrained-rinalmo")
 base_image = (
     modal.Image.debian_slim(python_version="3.11")
     .pip_install(
-        "torch==2.2.0",
-        "numpy==1.26.4",
-        "scipy==1.13.0",
-        "tqdm==4.66.4",
-        "transformers==4.44.0",
-        "multimolecule==0.0.30",
-        "matplotlib==3.9.0",
-        "scikit-learn==1.5.0",
+        "torch>=2.2.0",
+        "numpy",
+        "scipy",
+        "tqdm",
+        "transformers>=4.40.0",
+        "multimolecule",
+        "matplotlib",
+        "scikit-learn",
     )
     .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
     .add_local_dir("scripts", "/root/project/scripts")

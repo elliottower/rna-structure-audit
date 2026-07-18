@@ -31,6 +31,7 @@ dependencies = [
 [project.optional-dependencies]
 all-models = [
     "transformers>=4.30.0",
+    "multimolecule>=0.2.0",
     "einops>=0.6.0",
 ]
 experiments = [
