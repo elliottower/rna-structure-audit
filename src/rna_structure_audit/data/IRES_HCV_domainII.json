@@ -1,0 +1,8 @@
+{
+  "name": "IRES_HCV_domainII",
+  "sequence": "GCCAGCCCCCGAUUGGGGGCGACACUCCACCAUGGAUCACUCCCUGUCAGGCGUUCCGCAGUCCCCGUCCUUCCUUCUGUUAGGAC",
+  "dot_bracket": "(((((.(((((((.((.((.(((((((((((((.........)))))))..........)))))))).)).))))))).)))))..",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": null,
+  "length": 86
+}

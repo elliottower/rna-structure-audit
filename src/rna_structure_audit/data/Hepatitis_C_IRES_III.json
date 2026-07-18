@@ -1,0 +1,10 @@
+{
+  "name": "Hepatitis_C_IRES_III",
+  "sequence": "CCUGCCCCUAAUAGGGGCGACACUCCGCCAUGAAUCACUCCCCUGUGAGGAACUACUGUCUUCACGCAGAAAGCGCCUAGCCAUGGCGUUAGUAUGAGUGUCGUACAGCCUCCAGGCCCCCCCCUCCCGGGAGAGCCAUAGUGGUCUGCGGAACCGGUGAGUACACCGGAAUUGCCGGGAAGACUGGGUCCUUUCUUGGAUAAACCCACUCUAUGCCCGGCCAUUUGGGCGUGCCCCCGCAAGACUGCUAGCCGAGUAGCGUUGGGUUGCGAAAGGCCUUGUGGUACUGCCUGAUAGGGCGCUUGCGAGUGCCCCGGGAGGUCUCGUAGACCGUGCACCAUGAGCACAAAUC",
+  "dot_bracket": "...((((((...)))))).......................((((.((((.....((((...(((.((...((((((.......))))))....)).)))....))))))))))))......(((((((((.(.((..(((((((((((((..((((((....))))))(((..(((((..((.(((((((......)))....)))).))....)))))..))).(((....))))))).)))))))))))).((((.((..(((((......)))))..)).))))((((....))))((........)))))))))))...........((((.......)))).....",
+  "source": "Rfam RF00061 seed alignment member (AB047639.1/2-353)",
+  "rfam_id": "RF00061",
+  "length": 352,
+  "seed_member": "AB047639.1/2-353",
+  "seed_members_available": 35
+}

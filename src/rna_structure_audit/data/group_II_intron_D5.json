@@ -1,0 +1,10 @@
+{
+  "name": "group_II_intron_D5",
+  "sequence": "GAGAGCCAAAUGAAUCGAAAGAUUCAUGUUUGGUUCGGGAAGGGAUUAUGGAAUUUUGGAAAGGAAUGGAAAAAUAAUCUACUUUCAU",
+  "dot_bracket": "..((((((((.(((((....)))))...))))))))..((((.((................................))..)).))..",
+  "source": "Rfam RF00029 seed alignment member (Z00044.2/12705-12618)",
+  "rfam_id": "RF00029",
+  "length": 88,
+  "seed_member": "Z00044.2/12705-12618",
+  "seed_members_available": 86
+}

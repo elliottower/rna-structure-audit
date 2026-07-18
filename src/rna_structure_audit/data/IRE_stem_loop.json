@@ -1,0 +1,10 @@
+{
+  "name": "IRE_stem_loop",
+  "sequence": "CGCAGUUCUUGCUUCAACAGUGCUUGAACGGAACUCG",
+  "dot_bracket": "((.((((((.(.((((((...).))))))))))))))",
+  "source": "Rfam RF00037 seed alignment member (BC063337.1/26-62)",
+  "rfam_id": "RF00037",
+  "length": 37,
+  "seed_member": "BC063337.1/26-62",
+  "seed_members_available": 26
+}

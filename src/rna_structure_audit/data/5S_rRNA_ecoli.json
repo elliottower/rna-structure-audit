@@ -1,0 +1,8 @@
+{
+  "name": "5S_rRNA_ecoli",
+  "sequence": "UGCCUGGCGGCCGUAGCGCGGUGGUCCCACCUGACCCCAUGCCGAACUCAGAAGUGAAACGCCGUAGCGCCGAUGGUAGUGUGGGGUCUCCCCAUGCGAGAGUAGGGAACUGCCAGGCAU",
+  "dot_bracket": "(((((((...(((((...........))))).(((((...((((((((.......)))).)))).....))))).......(((((.......))))))))))))...............",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00001",
+  "length": 120
+}

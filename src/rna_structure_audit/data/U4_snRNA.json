@@ -1,0 +1,10 @@
+{
+  "name": "U4_snRNA",
+  "sequence": "AUCUUUGCGCUUGGGGCAAUGACGCAGCUAGUGAGGUUCUAACCGAGGCGCGUCAAUUGCUGGUUGAAAACUAUUUCCAAACCCCCUCCUUGGCCUGGGUUACGCCCAGGCCAUCGAGAAUUUCUGGAAGGGCUCCCUAAGGGGUAAAGCC",
+  "dot_bracket": "....................(((((.(((.....(((....)))..))))))))...............................(((.((((((((((.....)))))))))).)))............((((.............))))",
+  "source": "Rfam RF00015 seed alignment member (AM479189.1/4511-4661)",
+  "rfam_id": "RF00015",
+  "length": 151,
+  "seed_member": "AM479189.1/4511-4661",
+  "seed_members_available": 123
+}

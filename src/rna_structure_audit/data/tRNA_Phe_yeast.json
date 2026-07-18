@@ -1,0 +1,8 @@
+{
+  "name": "tRNA_Phe_yeast",
+  "sequence": "GCGGAUUUAGCUCAGUUGGGAGAGCGCCAGACUGAAGAUCUGGAGGUCCUGUGUUCGAUCCACAGAAUUCGCACCA",
+  "dot_bracket": "(((((((..((((........)))).(((((.......))))).....(((((.......))))))))))))....",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00005",
+  "length": 76
+}

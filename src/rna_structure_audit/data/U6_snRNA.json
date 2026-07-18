@@ -1,0 +1,10 @@
+{
+  "name": "U6_snRNA",
+  "sequence": "GCCAGCGGGUAACCGCUGGCCUAUGGUCACAUUGAAACGAUACAGAGAAGAUGUAGGUGUUCUUCCCCCCUAAGUUCCAGCGUUCGAGCACGCACUAACAUCUCUAUAGUAGCAUGGCCCCUGCACUAAGGAUGACACAUGUAAUCAAAGAGACGCAACCCAUUUUU",
+  "dot_bracket": "(((((..........)))))...................................................................................................................................................",
+  "source": "Rfam RF00026 seed alignment member (AFQF01002057.1/12805-12639)",
+  "rfam_id": "RF00026",
+  "length": 167,
+  "seed_member": "AFQF01002057.1/12805-12639",
+  "seed_members_available": 185
+}

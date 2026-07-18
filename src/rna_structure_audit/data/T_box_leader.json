@@ -1,0 +1,10 @@
+{
+  "name": "T_box_leader",
+  "sequence": "AAAUUUAAAACAACAAGAAAGUAACUUUGAUUUUGAAAUCUUUAGGAAGUUGGUGGUUGUGCAAACCAACGUUUUCAGCAAAGUGAAUGGGCUUGUGAUUAACUAAUAAAUUUGAUUUAAAAAAAUAAAGAAUCACGGCCGCUUCCGUUACAGAGCAACUUGUUUUUUGACAAGUUCUAAGAAAAUCAUUUGAUUUUAAAUUUACGGUGGCACCGCGCUCAAAGCGCCCGUAGG",
+  "dot_bracket": "......((.....((((......((((((........(((........((((((..........))))))))).....)))))).......))))...))............(((((((.........)))))))(((......)))..................................(((((((..)))))))......((((.......(((((...)))))))))...",
+  "source": "Rfam RF00230 seed alignment member (AE005176.1/68627-68394)",
+  "rfam_id": "RF00230",
+  "length": 234,
+  "seed_member": "AE005176.1/68627-68394",
+  "seed_members_available": 35
+}

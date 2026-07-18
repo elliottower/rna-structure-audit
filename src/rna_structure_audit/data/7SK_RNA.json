@@ -1,0 +1,10 @@
+{
+  "name": "7SK_RNA",
+  "sequence": "GGAUGUGAGGGCGAUCUGGCUGCGACAUCUGUCACCCCAUUGAUCGCCAGGGUUGAUUCGGCUGAUCUGGCUGGCUAGGCGGGUGUCCCCUUCCUCCCUCACCGCUCCAUGUGCGUCCCUCCCGAAGCUGCGCGCUCGGUCGAAGAGGACGACCUUCCCCGAUAGAGGAGAGGACCGUCCAUCGGUCAAGGGUAUACGAGUAGCUGCGCUCCCCUGCUAGAACCUCCAAACAAGCUCUCAAGGUCCAUUUGUAGGAGAACGUAGGGUAGUCAAGCUUCCAAGACUCCAGACACAUCCAAAUGAGGCGCUGCACGUGGCAGUCUGCCUUCCUUU",
+  "dot_bracket": "(((.(((((((.((...((....((((((((((.(((((..(((((((...........))).)))))))..))...)))))))))).)).))..)))))))...))).......((((((((((.((.....))))))(((....(((......))).)))..)))).))...............................(((...((.((((((......((((..(((((.............))))).))))...)))))).))...)))......................(((.((((((((((.....)))))..)))))..)))",
+  "source": "Rfam RF00100 seed alignment member (AAGU03002674.1/25068-24736)",
+  "rfam_id": "RF00100",
+  "length": 333,
+  "seed_member": "AAGU03002674.1/25068-24736",
+  "seed_members_available": 26
+}

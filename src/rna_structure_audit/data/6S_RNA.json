@@ -1,0 +1,10 @@
+{
+  "name": "6S_RNA",
+  "sequence": "AUUUCUCUGAGAUGUUCGCAAGCGGGCCAGUCCCCUGAGCCGAUAUUUCAUACCACAAGAAUGUGGCGCUCCGCGGUUGGUGAGCAUGCUCGGUCCGUCCGAGAAGCCUUAAAACUGCGACGACACAUUCACCUUGAACCAAGGGUUCAAGGGUUACAGCCUGCGGCGGCAUCUCGGAGAUUCC",
+  "dot_bracket": ".((((((((((((((.(((...........((((.((((((.................(((.((((((.(.(((((((.....((...(((((.....)))))..)).....)))))))))))))).))).............)))))).))))...........)))))))))))))))))..",
+  "source": "Rfam RF00013 seed alignment member (M12965.1/109-292)",
+  "rfam_id": "RF00013",
+  "length": 184,
+  "seed_member": "M12965.1/109-292",
+  "seed_members_available": 90
+}

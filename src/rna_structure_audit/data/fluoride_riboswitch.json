@@ -1,0 +1,10 @@
+{
+  "name": "fluoride_riboswitch",
+  "sequence": "CCGGCAACCGGCGAUGGAGUUCGCCGCAACCGCCUCACUUGGAAUUUUUCUAUAGAGGAAGAGGGUUCUAACCUCAAAAGCUGAGGCUGAUGACUCCUACACUUCU",
+  "dot_bracket": ".........((((........))))......((((................................................))))...................",
+  "source": "Rfam RF01734 seed alignment member (CP000240.1/171311-171206)",
+  "rfam_id": "RF01734",
+  "length": 106,
+  "seed_member": "CP000240.1/171311-171206",
+  "seed_members_available": 280
+}

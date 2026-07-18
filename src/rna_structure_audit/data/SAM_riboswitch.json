@@ -1,0 +1,8 @@
+{
+  "name": "SAM_riboswitch",
+  "sequence": "GUUCUUAUCAAGAGAAGCAGAGGGACUGGCCCGACGAAGCUUCAGCAACCGGUGUAAUGGCGAAAGCCAUGACCAAGGUGCUAAAUCCAGCAAGCUCGAACAGCUUGGAAGAUAAGAAC",
+  "dot_bracket": "(((((((..((((..........)))).(((((.((...((((....((((....))))..........))))..)).))))).......(((((.......)))))))))))).....",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00162",
+  "length": 119
+}

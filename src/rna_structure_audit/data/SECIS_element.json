@@ -1,0 +1,10 @@
+{
+  "name": "SECIS_element",
+  "sequence": "UUUGCAUUAAUGAGGAUUACACAGAAAACCUUUGUUAAGGACUUGUGUAGAUCUGAUAAUUGGCAAA",
+  "dot_bracket": "(((((.........((((((((((.....(((....)))...))))))).))).........)))))",
+  "source": "Rfam RF00031 seed alignment member (AF288740.1/1291-1357)",
+  "rfam_id": "RF00031",
+  "length": 67,
+  "seed_member": "AF288740.1/1291-1357",
+  "seed_members_available": 59
+}

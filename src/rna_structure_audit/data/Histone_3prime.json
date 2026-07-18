@@ -1,0 +1,10 @@
+{
+  "name": "Histone_3prime",
+  "sequence": "ACAACGGCUCUUUUAAGAGCCACCACAUGUGACCGAAAGAGCAUUU",
+  "dot_bracket": ".....((((((....)))))).........................",
+  "source": "Rfam RF00032 seed alignment member (CAAE01014536.1/93243-93288)",
+  "rfam_id": "RF00032",
+  "length": 46,
+  "seed_member": "CAAE01014536.1/93243-93288",
+  "seed_members_available": 46
+}

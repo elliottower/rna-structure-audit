@@ -1,0 +1,8 @@
+{
+  "name": "SRP_RNA_helix8",
+  "sequence": "GGGCUCAGUGGCUCGAUUUGGACUUAGAUGCUCCAACCUGUAAGCUCAGGUAGGAUGUAAACGGCUGAGCCUGGAGGCAGAAGCUGCCCC",
+  "dot_bracket": "((((((.((((((((.((((((.((.....)).)))))).)))))))).))))))..(((((((((..........))))))))).....",
+  "source": "Phase 1 curated (PDB/Rfam)",
+  "rfam_id": "RF00017",
+  "length": 90
+}

@@ -1,0 +1,10 @@
+{
+  "name": "c_di_GMP_riboswitch",
+  "sequence": "CUCCGGAAAUGGUAAACCCAUCGAAAGGUGGGGACACAAAGUCACGGGCCUGUAGCCGGUUAUUUUUAACCGGUAUGGCAGCCGGACUGCCGAA",
+  "dot_bracket": "...........((...((((((....))))))...))..((((.((((((.....((((..........))))...)))..)))))))......",
+  "source": "Rfam RF01051 seed alignment member (CP001098.1/769828-769735)",
+  "rfam_id": "RF01051",
+  "length": 94,
+  "seed_member": "CP001098.1/769828-769735",
+  "seed_members_available": 110
+}

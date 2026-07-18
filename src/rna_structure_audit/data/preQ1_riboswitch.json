@@ -1,0 +1,10 @@
+{
+  "name": "preQ1_riboswitch",
+  "sequence": "UUCAUAGUGGUUCGUAACCCUCCCACUUGAACAACCAACAAUUGUUCGAAACAAAACUAGGAAAAU",
+  "dot_bracket": ".....(((((............))))).......................................",
+  "source": "Rfam RF00522 seed alignment member (AE004439.1/209165-209100)",
+  "rfam_id": "RF00522",
+  "length": 66,
+  "seed_member": "AE004439.1/209165-209100",
+  "seed_members_available": 43
+}

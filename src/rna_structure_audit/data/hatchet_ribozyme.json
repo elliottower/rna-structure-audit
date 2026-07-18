@@ -1,0 +1,10 @@
+{
+  "name": "hatchet_ribozyme",
+  "sequence": "CCUAUACUGUGAGAAUCAGUAUCAACUUUGUGGGGCUUAUAUCUUAUUGUGUCCUUUACAGGAUAGAAAUAGAUUUAUUGGGGAUACAGAGCGUUGGCAUAGCCACUCUAAACCAAUCACAAUAAGUAUUAGUGCAGAGAAAUCAAAG",
+  "dot_bracket": "...((((((.......))))))...(((((...((((.(..((((((((((..................................................................)))))))))).).))).)........)))))",
+  "source": "Rfam RF02678 seed alignment member (URS0000D6BD63_12908/19-166)",
+  "rfam_id": "RF02678",
+  "length": 148,
+  "seed_member": "URS0000D6BD63_12908/19-166",
+  "seed_members_available": 109
+}

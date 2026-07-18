@@ -1,0 +1,10 @@
+{
+  "name": "cobalamin_riboswitch",
+  "sequence": "CGCAGAACAGUCAGGCAUGGUUCCCCGUGCCCGCGCCAAGCGCCCGGGGGAUCAAAUGGGAAUGUGGAACGGUCCGAUCCAAACCGGAGGACCAAAGCCUCAGCCGCCCCCGCGACUGUAUGCGGAGAGGGAGAUCGACAUGCCACUGGGGCCCGCCCCGGGAAGGCCGAUCCACCCCGAUGACCCGCGAGCCAGGAGACCAGCCAUGCGCGACACCCUUAG",
+  "dot_bracket": "........((((.((((((((((((((..................))))))(...)(((...(((((..............................)))))..((......))((((...((((...(...((((.....(((.((((((....))))))...))).)))))...).......))))....)).)...))))))))))).)))).......",
+  "source": "Rfam RF00174 seed alignment member (CP000830.1/164274-164053)",
+  "rfam_id": "RF00174",
+  "length": 222,
+  "seed_member": "CP000830.1/164274-164053",
+  "seed_members_available": 269
+}

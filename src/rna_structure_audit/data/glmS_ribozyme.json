@@ -1,0 +1,10 @@
+{
+  "name": "glmS_ribozyme",
+  "sequence": "CCUAUAAUUAUAGCGCCCGAACUAAGCGCCCGAAAAAAGGCUUAGUUGACGAGGAUGGAGGUUAUCGAAUUUUCGGCGGAUGCCUCCCGGCUGAUUAUGCAGAUCACAGCCGUAAGGAUUUCUUCAAACCAAGGGGGUAACUCCUUGAACAAAGAGAAAUCACAUGAUCUU",
+  "dot_bracket": "...................((((((((.(........).)))))))).........(((((...((((....))))......)))))((((((.............))))))....(((((((......(((((((....))))))).......)))))))..........",
+  "source": "Rfam RF00234 seed alignment member (FJ935779.1/2022-2192)",
+  "rfam_id": "RF00234",
+  "length": 171,
+  "seed_member": "FJ935779.1/2022-2192",
+  "seed_members_available": 13
+}

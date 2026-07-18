@@ -1,0 +1,10 @@
+{
+  "name": "manganese_riboswitch",
+  "sequence": "GAGGCGUCCGGAGGCGAUGACCCGCUGAUCCCCAUUUGGGCAUCAAGGGACGCGGCGAGCCAGUGAUGCAACCGGCCGGACGGCUA",
+  "dot_bracket": "(((((((((((.(((......((((..((((................))))))))...)))..............)))))))))))",
+  "source": "Rfam RF01786 seed alignment member (AACY020292692.1/343-428)",
+  "rfam_id": "RF01786",
+  "length": 86,
+  "seed_member": "AACY020292692.1/343-428",
+  "seed_members_available": 42
+}

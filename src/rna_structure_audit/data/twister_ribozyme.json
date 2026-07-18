@@ -1,0 +1,10 @@
+{
+  "name": "twister_ribozyme",
+  "sequence": "GCAAAGCCCAAGGCCCGGUCUAUCGUCUGCCUGUGUUCUGCCACAGGCAGCGGCAGACUACGACCCGUGUAAGCCGGGUGCACCCCGCAAGGGGUGCGGCGCUCACAGCUUUAGCU",
+  "dot_bracket": "...((((.....(((..(((...................................)))....((((.........))))((((((......))))))))).......)))).....",
+  "source": "Rfam RF02681 seed alignment member (URS0000D6974B_12908/1-116)",
+  "rfam_id": "RF02681",
+  "length": 116,
+  "seed_member": "URS0000D6974B_12908/1-116",
+  "seed_members_available": 111
+}

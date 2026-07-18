@@ -1,0 +1,10 @@
+{
+  "name": "Y_RNA",
+  "sequence": "GGUUGGUCCAAGUGCAGUGGUGUUUACAACUAAUUGAUCACAGUCAGUUACAGAUUACUUUGUUCCUUCUCCAUUCCCACUGCUUCACUUGACCAGCCUUAA",
+  "dot_bracket": "((((((((.((..(((((((.(.....(((.((.........................)).)))...........))))))...))..))))))))))....",
+  "source": "Rfam RF00019 seed alignment member (ABDC01154708.1/21315-21214)",
+  "rfam_id": "RF00019",
+  "length": 102,
+  "seed_member": "ABDC01154708.1/21315-21214",
+  "seed_members_available": 79
+}
