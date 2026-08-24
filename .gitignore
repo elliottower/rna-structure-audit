@@ -23,3 +23,9 @@ results/superseded_volume/
 
 # Dry-run output from paper/patches/*.py --diff
 paper/patches/*.diff
+
+# internal audit packets and review correspondence: local only
+reviews/
+
+# Scratch run output
+logs/

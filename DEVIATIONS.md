@@ -15,6 +15,92 @@ Preregistrations governing this work, with sha256 of each frozen document:
 
 ---
 
+## 2026-08-24 — Three defects in the Rungs 1-2 pipeline; the affected numbers are held for one re-run
+
+**Registrations:** `docs/PREREGISTRATION_EXPANDED_RFAM.md` (H6b, H7, H11),
+`docs/PREREG_PHASE4_EXPANDED_MODELS.md` (H20, H21).
+
+**Written before the re-run.** No model has been run against a corrected null or
+a corrected token assignment. The defects, the fixes, which registered decisions
+each one touches and which way each correction can move them are fixed here in
+advance of any value computed under them. `scripts/audit_untrained_false_positives.py`
+and `scripts/audit_token_alignment.py` reproduce every number below and load no
+model weights.
+
+**D10. The Rung 1 null rejects at 9.1% where it is set at 5%.** Seven models were
+run with randomly initialized weights, so the rate at which those runs exceed
+their own composition-preserving null is a false-positive rate. Pooled: 30 of 329
+family-runs, 9.1%, exact binomial one-sided p = 1.3e-3. The null permutes stem
+and loop labels within nucleotide strata, which scatters them, while the
+annotation puts them in contiguous runs; a model whose embedding pools
+neighboring positions separates the real assignment from the permuted one for
+that reason alone. NT v2, whose token spans six nucleotides, sits at 10 of 47.
+The five character-level models sit at 14 of 235, one-sided 95% lower bound
+0.036, which is consistent with 5% and does not establish it. The corrected null
+preserves run structure, by circular rotation or by a permutation restricted to
+preserve run lengths.
+
+**D11. DNABERT-2's per-position embeddings are placed by a guess.** `phases_1_to_5.py:61-76`
+maps nucleotide *i* to token `i * n_tokens / n_nucleotides`, which assumes
+byte-pair tokens are all the same width. They run 1 to 8 nucleotides, and a
+complement substitution re-segments the sequence, so 45.9% of mutation trials
+subtract a wild-type row from a mutant row describing a different stretch of the
+molecule. The corrected assignment uses the tokenizer's own character offsets.
+NT v2's `i // 6` is exact inside its tiling, misplaces 1.2% of nucleotides at the
+tail, and never mispairs the two arms.
+
+**D12. The attention contact map is built on the same assumption.**
+`_aggregate_contacts_to_tokens` gives token *t* the window `[6t, 6t+6)` for both
+non-character models. For DNABERT-2, 1,207 of 1,361 token rows share no
+nucleotide with the token they stand for and mean window overlap is 0.074.
+
+**Which registered decisions move.** H6b (RNA-FM exceeds the nucleotide null in
+at least 8 families; observed 0 of 47) and H7 (at least one family survives the
+dinucleotide null; observed 30 for ERNIE-RNA) read exceedance counts and are
+decided against the D10 null. H20 (DNABERT-2 trained minus untrained attention
+below 0.05; observed 0.009) and H21 (DNABERT-2 trained rho below 0.20; observed
+0.199) are decided on the D12 contact map. H11 (NT v2 attention above 0.15
+trained and below 0.05 untrained; observed 0.242 and 0.246) reads NT v2's, whose
+mean window overlap is 0.936. No registered hypothesis is decided on DNABERT-2's
+Rung 1 or Rung 2 values; those appear in the tables only.
+
+**The direction of these corrections.** A null that rejects too often inflates
+exceedance counts, so correcting D10 weakens the discrimination claims and
+strengthens the negative ones, which is the direction that favors what this work
+reports. D12 runs the other way: both hypotheses it touches currently read PASS,
+and H21 passes by 0.001. Nothing about the order in which the three were found
+distinguishes the honest case from the motivated one, and the entry is written
+before the re-run for the same reason the entry above it was.
+
+**The pattern across the day's corrections is itself worth recording.** Of the
+defects found on 2026-08-24, most move a number in the direction the manuscript
+argues for. A run of same-signed corrections is what motivated cleaning produces,
+and it is also what a manuscript that overclaimed produces when it is audited.
+The record cannot settle which, so it states the run rather than leaving it to be
+noticed: every correction is committed with its detector, each detector reads
+data rather than model output where that is possible, and each entry precedes the
+computation it licenses.
+
+**Cost, and why it is one pass.** Per-position cosine distances are not stored.
+The deposited Rung 1 files carry `best_ratio`, `best_layer`, the two null
+thresholds, and the stem and loop counts, with nothing per layer or per position,
+so neither the null nor the token assignment can be corrected from stored values.
+All three defects need the embeddings, so all three are fixed in one GPU pass
+over the 17 runs. That pass stores per-position distances, which makes a future
+change of null a local recomputation.
+
+**Amendment to the post hoc attention bound.** `scripts/generate_results_tables.py`
+carried a bound of 0.025 on the trained-minus-untrained attention correlation,
+below which a correlation is read as architectural rather than learned. The bound
+is not registered; it was raised to 0.05 on 2026-08-24, after the deltas were
+seen, which is the configuration in which a threshold is chosen to fit the data.
+Two of the seven deltas it covers are DNABERT-2's, which D12 makes
+uninterpretable. The manuscript reports the seven deltas and the widest gap as a
+factor of the baseline it moved from, and makes no bounded claim, until the
+re-run supplies a contact map the deltas can be computed against.
+
+---
+
 ## 2026-08-24 — Unattributed annotations repaired; confirmatory set moves to N = 36 and the H1(a) gate to 8
 
 **Registration:** `PREREGISTRATION_PHASE6_V2.md` (2026-07-13, SHA `c19aa59`).
@@ -167,6 +253,13 @@ than argued away. `5S_rRNA_ecoli` is left unrepaired and out of the panel, and i
 was the panel's only rRNA family, so the analyzed panel now spans eight classes
 rather than nine and carries no ribosomal RNA. Ribosomal RNA is the structural
 class with the deepest experimental annotation, and no result here speaks to it.
+The confirmatory set carries no transfer RNA either. The panel's two tRNA
+families are the two quarantined for pilot foreknowledge, so the 36 families the
+Rung 3 hypotheses are decided on contain neither of the two classes whose folds
+are best characterized; Rungs 1 and 2, where the quarantine does not apply, do
+include both. `scripts/registered_quarantine.py` reads the quarantine out of the
+frozen registration rather than repeating it, checks that the document's two
+statements of it agree, and reports what it leaves.
 The panel composition is generated from the records by
 `scripts/generate_panel_description.py` rather than described by hand.
 

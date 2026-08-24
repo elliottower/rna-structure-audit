@@ -160,6 +160,141 @@ manuscript about the expanded one.
 
 ---
 
+## D10. The Rung 1 null rejects more often than the 5% it is set at
+
+**Detector:** `scripts/audit_untrained_false_positives.py`
+
+Seven models were run with randomly initialized weights. A random network's
+stem-versus-loop ratio is not knowledge of structure, so the rate at which those
+runs exceed their own composition-preserving null estimates the null's
+false-positive rate against a registered 5%. Pooled over 329 family-runs it is
+30, or 9.1%; exact binomial, one-sided, p = 1.3e-3.
+
+The excess is not spread evenly across the seven:
+
+| stratum | exceedances | rate |
+|---|---|---|
+| the five character-level tokenizers | 14/235 | 0.060 |
+| NT v2 | 10/47 | 0.213 |
+| DNABERT-2 | 6/47 | 0.128 |
+
+DNABERT-2 is D11 and its Rung 1 values mean nothing either way. NT v2 is not:
+its expansion misplaces 1.2% of nucleotides and never compares the wrong pair.
+What NT v2 has is a six-nucleotide token. The null permutes stem and loop labels
+within nucleotide strata, which scatters them; the annotation does not, because
+stems and loops are contiguous runs. An embedding that averages six consecutive
+positions therefore separates the real labels from the permuted ones through run
+structure alone, and the wider the token the larger the separation. Any
+positional encoding or convolutional receptive field does the same thing more
+weakly; the token width is what makes it visible at 21%.
+
+The five character-level models sit at 0.060 with a one-sided 95% lower bound of
+0.036. That is consistent with nominal and does not establish it: 235 trials do
+not separate 0.05 from 0.07.
+
+**Consequence for the reported result.** A null whose threshold is too low
+inflates every exceedance count at Rungs 1 and 2, so the discrimination claims
+weaken and the negative claims strengthen. H6b (RNA-FM exceeds the nucleotide
+null in at least 8 families, observed 0/47) and H7 (at least one family survives
+the dinucleotide null, observed 30 for ERNIE-RNA) are the registered decisions
+that read these counts.
+
+**Fix.** A null that preserves run structure: circular rotation of the label
+vector, or a permutation restricted to preserve run lengths. Per-position cosine
+distances are not stored -- the deposited files carry `best_ratio`, `best_layer`,
+the two null thresholds and the stem and loop counts, and nothing per layer or
+per position -- so recomputing against a different null needs the embeddings
+again. It is one GPU pass over all 17 runs, and it is the same pass as D11 and
+D12.
+
+---
+
+## D11. DNABERT-2's per-position embeddings are placed by a guess about its tokenizer
+
+**Detector:** `scripts/audit_token_alignment.py`
+
+Rungs 1 and 2 read the cosine distance at the mutated nucleotide. Eight of the
+ten models emit one token per nucleotide, so that position is a row of the hidden
+state. NT v2 and DNABERT-2 do not, and `scripts/phases_1_to_5.py:61-76` expands
+their token embeddings back to nucleotides with two closed-form guesses: `i // 6`
+for NT v2, which assumes the sequence tiles into non-overlapping 6-mers, and
+`i * n_tokens / n_nucleotides` for DNABERT-2, which assumes every byte-pair token
+is the same width. Recovering each token's true span by decoding it -- both
+tokenizers emit literal nucleotide strings, and the reconstruction is checked
+against the sequence -- gives, over the 47 analyzed families and their 6,364
+positions:
+
+| | NT v2 | DNABERT-2 |
+|---|---|---|
+| token widths | 6 nt (1042 tokens), 1 nt (112) | 1 to 8 nt |
+| nucleotides given a token that does not contain them | 74 (1.2%) | 3,361 (52.8%) |
+| mutations that change the token count | 0 | 1,509 (23.7%) |
+| mutations comparing rows that describe different stretches | 0 | 2,923 (45.9%) |
+
+The two models fail differently. NT v2 tiles the sequence into 6-mers and pads
+the remainder with single-nucleotide tokens, so `i // 6` is exact inside the
+tiling and clamps at the tail; a complement substitution never changes the token
+count, so both arms carry the identical misplacement and the metric compares one
+position of the molecule against itself at six-nucleotide resolution. The values
+are attenuated.
+
+DNABERT-2's byte-pair tokens run 1 to 8 nucleotides and a substitution
+re-segments the sequence, so in nearly half its trials the metric subtracts a
+mutant row from a wild-type row describing a different stretch of the molecule.
+That is not error around a true value; there is no pair.
+
+**Consequence for the reported result.** DNABERT-2's Rungs 1 and 2 are
+uninterpretable rather than imprecise: mean ratio 1.003, 8 of 47 exceeding the
+nucleotide null, 5 of those 8 surviving the dinucleotide null. Untrained
+DNABERT-2's mean ratio of 8.416 is not explained by this defect and is not
+explained by anything else either -- the expansion does not read the weights, so
+it should corrupt both arms alike, and trained DNABERT-2 sits at 1.003. NT v2's
+values carry a bounded attenuation and stand with the caveat.
+
+Rung 3 does not call the expansion and already flags both models through
+`NON_CHARACTER_TOKENIZERS` (`scripts/phase6_compensatory_mutation.py:51`). Rungs
+1 and 2 have no such flag, so the caveat is applied where the defect is smallest
+and omitted where it is largest.
+
+**Fix.** Assign nucleotide *i* to the token whose character span contains it,
+from the tokenizer's own offsets. Needs the embeddings, so it goes in the pass
+with D10 and D12.
+
+---
+
+## D12. The attention-contact map for DNABERT-2 is built on the same 6-mer assumption
+
+**Detector:** `scripts/audit_token_alignment.py`
+
+The attention rung maps the other way, from the nucleotide contact map onto token
+pairs, and `_aggregate_contacts_to_tokens` (`scripts/phases_1_to_5.py:79-89`)
+gives token *t* the window `[6t, 6t+6)` for both non-character models. DNABERT-2
+averages 4.7 nucleotides per token, so its token rows outrun the sequence:
+
+| | NT v2 | DNABERT-2 |
+|---|---|---|
+| token rows | 1,154 | 1,361 |
+| rows whose window starts past the end of the sequence | 74 (6.4%) | 281 (20.6%) |
+| rows whose window shares no nucleotide with the token | 74 (6.4%) | 1,207 (88.7%) |
+| mean overlap between window and token | 0.936 | 0.074 |
+
+**Consequence for the reported result.** DNABERT-2's attention-contact
+correlation of 0.199 is a correlation against a contact map that describes, for
+89% of its rows, a part of the molecule the token does not cover. Two registered
+hypotheses are decided on it and both currently read PASS: H21 (DNABERT-2 trained
+rho < 0.20, observed 0.199, under the threshold by 0.001) and H20 (trained minus
+untrained below 0.05, observed 0.009). The post hoc architectural bound in
+`scripts/generate_results_tables.py` reads the same delta. NT v2's 0.242, which
+decides H11, carries a mean window overlap of 0.936 and moves little.
+
+The direction is worth stating plainly: correcting this can only put two PASS
+verdicts at risk, and H21 passes by 0.001.
+
+**Fix.** Build the token contact map from the token spans, in the pass with D10
+and D11.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

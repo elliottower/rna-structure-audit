@@ -28,8 +28,9 @@ from pathlib import Path
 
 from scipy.stats import mannwhitneyu
 
+from registered_quarantine import QUARANTINE
+
 REPO = Path(__file__).resolve().parents[1]
-QUARANTINE = {"tRNA_Phe_yeast", "tRNA_Ala_human"}
 
 # (display label, domain, results file, bold in the table).
 ROWS = [
