@@ -2,6 +2,17 @@
 
 Three-rung benchmark for evaluating whether RNA/DNA foundation models encode genuine secondary structure or composition shortcuts.
 
+> **Correction, 2026-08-24.** Four of the 52 evaluation families carried wrong
+> annotations, and three of them were the same 5S rRNA sequence under three
+> microRNA names. The annotations are fixed; the results in `results/` were
+> computed before the fix and have not been re-run, so `data/` and `results/`
+> are inconsistent until the runs are repeated. No verdict changes. See
+> [docs/CHANGELOG.md](docs/CHANGELOG.md) for what moves and by how much, and
+> `scripts/audit_duplicate_families.py` to reproduce it.
+>
+> The `as-submitted` branch reconstructs the state the submitted manuscript's
+> numbers were computed from. `main` is the corrected line.
+
 [![Open Quickstart in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elliottower/rna-structure-audit/blob/main/notebooks/quickstart.ipynb) [![Open BYOM Tutorial in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elliottower/rna-structure-audit/blob/main/notebooks/bring_your_own_model.ipynb)
 
 ## Install

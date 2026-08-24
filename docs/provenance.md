@@ -3,6 +3,62 @@
 Dated record of what was measured, what changed, and which file settled it.
 Nothing here belongs in the manuscript.
 
+## 2026-08-24 — three families were one 5S rRNA sequence under three names
+
+Until commit `5fc8914` (2026-08-23 23:27), `data/rfam_families/` held one
+byte-identical sequence and dot-bracket under three names.
+`mir_122_precursor`, `mir_155_precursor` and `mir_let7_precursor` all carried
+`K02350.1/1-119`, a seed member of **RF00001, 5S ribosomal RNA**, with
+`source` and `rfam_id` fields naming RF00001 in each file.
+`mir_21_precursor` carried a separate 72-nt near-perfect hairpin whose `source`
+reads "Phase 1 curated (PDB/Rfam)" and whose `rfam_id` also reads RF00001; no
+Rfam family with that accession is a microRNA precursor. `5S_rRNA_ecoli` is the
+only family that should carry RF00001, and it does.
+
+`scripts/audit_duplicate_families.py` recovers the pre-fix annotations from git,
+groups them by content, and reports 52 files against 50 distinct
+(sequence, dot-bracket) pairs. All 52 are distinct after the fix, and the four
+now carry RF00684, RF00731, RF00658 and RF00027.
+
+**No result has been re-run.** Every file in `results/` was computed against the
+pre-fix annotations, so the deposited per-family records still treat one 5S rRNA
+sequence as three independent families. The stored values confirm this directly:
+within each model the three carry PS values equal to sixteen significant figures
+(RiNALMo 0.4867751399676005, ERNIE-RNA 0.19056313733259836), and each passes the
+positive-control gate, exceeds its null, and contributes an H3 precision of
+1.000. `data/rfam_families/` and `results/` are inconsistent until the Phase 1–6
+runs are repeated.
+
+What moves is in `docs/CHANGELOG.md`. RiNALMo's mean PS goes from 0.2098 over
+N = 32 to 0.1913 collapsing the duplicates to one representative and 0.1811
+dropping them; ERNIE-RNA's from 0.1136 to 0.1084 and 0.1056. Stem/loop GC goes
+from 59.7% / 45.6% with 42 of 52 families above the diagonal to 58.1% / 45.6%
+with 40 of 52, which is why `paper_v12.tex` and the submitted manuscript print
+different composition confounds. Neither collapsing nor dropping is the
+registered analysis: `PREREGISTRATION_PHASE6_V2.md` fixes N = 32.
+
+No verdict moves. H1 and H3 hold for both leaders at every variant, the
+separation from the remaining models stays near 30x, and the number of models
+encoding pairing partners is unchanged.
+
+DNABERT-2 is the exception to the identical-inputs-identical-outputs check: it
+returns 0.9304, 0.9449 and 0.9034 for the three duplicates in
+`results/dnabert2_phases15_dinuc.json`, so that run carries an unseeded
+stochastic component. RiNALMo and ERNIE-RNA return identical Rung 1 ratios, as
+identical inputs require.
+
+## 2026-08-24 — figures and analysis code were never committed
+
+`.gitignore` in the pre-rewrite repository ignored `figures/` wholesale, so
+`figure2_composition` and `figure3_partner_specificity` — both referenced by the
+submitted manuscript — were never tracked, and the manuscript did not build from
+a clean checkout. Fourteen files existed only in the old working tree:
+`plot_figure2.py`, `plot_figure3.py`, `multi_seq_ps.py` (the 51-family,
+253-sequence multi-sequence evaluation the manuscript reports),
+`parse_stockholm.py` (which produced the corrected Rfam annotations),
+`generate_supplementary_tables.py`, six Modal wrappers, and
+`results/rinalmo_untrained_phase6_ps.json`. All are now tracked.
+
 ## 2026-08-24 — Table 5 was computed over 34 families; the registration specifies 32
 
 `PREREGISTRATION_PHASE6_V2.md` (frozen 2026-07-13, commit `891d6af` after the
@@ -52,8 +108,10 @@ H2₆ fails either way).
 - **H2₆ rank-biserial.** v10 prints `rb = −0.28, p = 0.265`. It does not reproduce
   from the Table 5 means under either sign convention, at either N = 32 or N = 34;
   both give `rb = +0.04, p = 1.000` from `mannwhitneyu` over 5 RNA and 5 DNA models.
-  The FAIL verdict is unchanged, and v11 prints the reproducible figure. Where v10's
-  −0.28 came from is not recoverable from the stored results.
+  The FAIL verdict is unchanged either way. `paper_v11.tex:750`, `paper_v12.tex:750`
+  and the submitted `rna-structure-audit_v14.tex:328` still print −0.28; the figure
+  has not been corrected in any manuscript. Where it came from is not recoverable
+  from the stored results.
 
 ### Order of operations
 
