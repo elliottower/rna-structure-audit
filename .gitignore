@@ -1,15 +1,14 @@
-.venv/
-pretrained/
 __pycache__/
 *.pyc
 .DS_Store
-data/*.pt
-data/*.json
-data/factorization/
-figures/
-uv.lock
+.venv/
+# LaTeX build artifacts
 *.aux
 *.log
 *.out
+*.fls
+*.fdb_latexmk
 *.synctex.gz
-.pytest_cache/
+*.nav
+*.snm
+*.toc

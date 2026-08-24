@@ -29,7 +29,6 @@ base_image = (
     .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
     .add_local_dir("scripts", "/root/project/scripts")
     .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
-    .add_local_file("pretrained/pytorch_model.bin", "/root/project/pretrained/pytorch_model.bin")
 )
 
 vol = modal.Volume.from_name("causal-rna-phase6-results", create_if_missing=True)
