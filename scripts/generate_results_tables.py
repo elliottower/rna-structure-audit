@@ -36,6 +36,7 @@ on rather than recomputed against a panel it was never registered for.
 
 import json
 import math
+import zlib
 from pathlib import Path
 
 import numpy as np
@@ -91,6 +92,11 @@ BY_KEY = {key: (short, size, domain, macro) for key, short, size, domain, macro 
 # ---------------------------------------------------------------------------
 
 
+def shown(path: Path) -> str:
+    """Relative to the repo where it is under it, absolute where it is not."""
+    return str(path.relative_to(REPO)) if path.is_relative_to(REPO) else str(path)
+
+
 def load(key: str) -> dict:
     """The two result files and the stamp for one model directory."""
     directory = RESULTS / key
@@ -100,7 +106,7 @@ def load(key: str) -> dict:
     missing = [p for p in (phases, phase6, stamp) if not p.exists()]
     if missing:
         raise FileNotFoundError(
-            f"{key}: missing " + ", ".join(str(p.relative_to(REPO)) for p in missing))
+            f"{key}: missing " + ", ".join(shown(p) for p in missing))
     return {
         "phases": json.loads(phases.read_text()),
         "phase6": json.loads(phase6.read_text())["results"],
@@ -147,6 +153,43 @@ def load_all() -> dict:
     return runs
 
 
+def load_transversion() -> dict:
+    """Every model's transversion control, from the directories beside the runs.
+
+    The control writes to `<model>_transversion/` rather than into the run it
+    controls: `_run_model` empties a directory whose stored stamp disagrees with
+    the one it is about to write, and the control is launched from a later
+    commit than the Watson-Crick runs, so sharing a directory would have the
+    control delete the numbers it exists to be compared against.
+
+    The substitution alphabet travels in the payload as well as in the directory
+    name, and is checked here on two counts. A substitution that leaves a
+    nucleotide unchanged is dropped by `run_mutation_sensitivity` from both the
+    stem and the loop mean without saying so, and two files naming different
+    alphabets would put two substitutions in one column.
+    """
+    controls = {}
+    for key, *_ in MODELS:
+        path = RESULTS / f"{key}_transversion" / f"{key}_transversion.json"
+        if not path.exists():
+            raise FileNotFoundError(f"{key}: missing {shown(path)}")
+        payload = json.loads(path.read_text())
+        alphabet = payload.get("complement")
+        if not alphabet:
+            raise ValueError(f"{key}: the transversion file does not name its alphabet")
+        fixed = sorted(n for n, sub in alphabet.items() if n == sub)
+        if fixed:
+            raise ValueError(
+                f"{key}: the transversion alphabet leaves {', '.join(fixed)} "
+                "unchanged, so those positions leave both means silently")
+        controls[key] = {"alphabet": alphabet, "mutation": payload["mutation_trained"]}
+    alphabets = {json.dumps(c["alphabet"], sort_keys=True) for c in controls.values()}
+    if len(alphabets) != 1:
+        raise ValueError(f"{len(alphabets)} transversion alphabets across the panel; "
+                         "the control column would mix two substitutions")
+    return controls
+
+
 def scored(section: dict) -> dict:
     """Per-family entries that hold a result rather than a skip reason."""
     if section.get("skipped"):
@@ -182,14 +225,42 @@ def mutation_stats(run: dict, rng) -> dict:
     }
 
 
+def mutation_all(runs: dict) -> dict:
+    """`mutation_stats` once per run, on a bootstrap stream fixed by the key.
+
+    Threading one generator through the renderers ties every interval to the
+    order the renderers happen to be called in, and the same model's CI then
+    differs between the table that prints it and the macro that quotes it --
+    v12 was assembled that way, with four independent streams over the same
+    families. Seeding from the key makes an interval a property of the model.
+    """
+    return {key: mutation_stats(run, np.random.default_rng(
+                [SEED, zlib.crc32(key.encode())]))
+            for key, run in runs.items()}
+
+
 def attention_mean(run: dict) -> float | None:
     """Mean best-head-best-layer Spearman rho, or None for an SSM."""
     entries = scored(run["phases"]["attention_trained"])
     return mean([body["best_corr"] for body in entries.values()]) if entries else None
 
 
+def attention_per_family(run: dict) -> dict:
+    """Best-head-best-layer rho for each family, for trained-untrained deltas."""
+    return {name: body["best_corr"]
+            for name, body in scored(run["phases"]["attention_trained"]).items()}
+
+
 def probing_accuracy(run: dict) -> float | None:
     return run["phases"]["probing"].get("best_accuracy")
+
+
+def probing_layer(run: dict) -> int | None:
+    return run["phases"]["probing"].get("best_layer")
+
+
+# Balanced accuracy on a two-class target, which is what the probe reports.
+PROBE_CHANCE = 0.5
 
 
 def fmt_ci(interval: dict | None, digits: int = 2) -> str:
@@ -198,10 +269,10 @@ def fmt_ci(interval: dict | None, digits: int = 2) -> str:
     return f"[{interval['ci_lower']:.{digits}f}, {interval['ci_upper']:.{digits}f}]"
 
 
-def rung1_table(runs: dict, rng) -> str:
+def rung1_table(runs: dict, mut: dict) -> str:
     rows = []
     for key, short, size, domain, _macro in MODELS:
-        stats_ = mutation_stats(runs[key], rng)
+        stats_ = mut[key]
         rho = attention_mean(runs[key])
         accuracy = probing_accuracy(runs[key])
         rows.append(
@@ -215,7 +286,7 @@ def rung1_table(runs: dict, rng) -> str:
     for key in UNTRAINED_KEYS:
         short = BY_KEY[key][0]
         run = runs[f"{key}_untrained"]
-        stats_ = mutation_stats(run, rng)
+        stats_ = mut[f"{key}_untrained"]
         rho = attention_mean(run)
         accuracy = probing_accuracy(run)
         untrained.append(
@@ -225,7 +296,7 @@ def rung1_table(runs: dict, rng) -> str:
             + (f" & {rho:.3f}" if rho is not None else " & ---")
             + (f" & ${accuracy - 0.5:+.3f}$" if accuracy is not None else " & ---")
             + r" \\")
-    n_scored = mutation_stats(runs["ernierna"], rng)["n_scored"]
+    n_scored = mut["ernierna"]["n_scored"]
     return r"""\begin{table}[htbp]
 \centering
 \caption{Mutation sensitivity across ten models on the repaired panel
@@ -250,9 +321,9 @@ seed and load through the same adapter as the trained row above them.}
 """
 
 
-def rung2_table(runs: dict, rng) -> str:
+def rung2_table(mut: dict) -> str:
     trained = sorted(
-        ((key, mutation_stats(runs[key], rng)) for key, *_ in MODELS),
+        ((key, mut[key]) for key, *_ in MODELS),
         key=lambda pair: -pair[1]["exceeds_nuc"])
     rows = []
     for key, stats_ in trained:
@@ -264,7 +335,7 @@ def rung2_table(runs: dict, rng) -> str:
                     + f" & {retention} & {fmt_ci(stats_['retention'])} \\\\")
     untrained = []
     for key in UNTRAINED_KEYS:
-        stats_ = mutation_stats(runs[f"{key}_untrained"], rng)
+        stats_ = mut[f"{key}_untrained"]
         retention = (f"{100 * stats_['survives_dinuc'] / stats_['exceeds_nuc']:.0f}\\%"
                      if stats_["exceeds_nuc"] else "---")
         untrained.append(f"{BY_KEY[key][0]} untrained".ljust(26)
@@ -342,6 +413,14 @@ def rung3_stats(run: dict) -> dict:
     summary["ps_values"] = [body["best_ps"] for body in nonq.values()]
     summary["exceed_conservative"] = sum(
         1 for body in passing.values() if body.get("exceeds_null_conservative") is True)
+    # Where PS peaks, among the families that pass the gate: a peak at layer 0
+    # or 1 is what a positional-encoding artifact looks like, and the count is
+    # what says whether the peak is the model's or one family's.
+    summary["peak_layers"] = [body["best_layer"] for body in passing.values()
+                              if isinstance(body.get("best_layer"), int)]
+    summary["n_ps_layers"] = max(
+        (len(body["per_layer_ps"]) for body in entries.values()
+         if isinstance(body.get("per_layer_ps"), list)), default=0)
     summary["h3_counts"] = (
         sum(body["h3_precision"]["partner_max_count"] for body in passing.values()
             if isinstance(body.get("h3_precision"), dict)
@@ -439,22 +518,20 @@ def rung3_table(runs: dict, rung3: dict) -> str:
 # ---------------------------------------------------------------------------
 
 
-def sign_test(runs: dict, key: str) -> tuple[int, int, float]:
+def sign_test(mut: dict, key: str) -> tuple[int, int, float]:
     """Families where the trained ratio beats the untrained one, and a binomial p."""
-    trained = mutation_stats(runs[key], np.random.default_rng(SEED))["per_family"]
-    untrained = mutation_stats(runs[f"{key}_untrained"],
-                               np.random.default_rng(SEED))["per_family"]
+    trained = mut[key]["per_family"]
+    untrained = mut[f"{key}_untrained"]["per_family"]
     shared = sorted(set(trained) & set(untrained))
     wins = sum(1 for name in shared if trained[name] > untrained[name])
     p_value = stats.binomtest(wins, len(shared), 0.5, alternative="greater").pvalue
     return wins, len(shared), float(p_value)
 
 
-def ratio_readings(runs: dict, key: str) -> tuple[float, float]:
+def ratio_readings(mut: dict, key: str) -> tuple[float, float]:
     """Mean of per-family trained/untrained ratios, and ratio of the two means."""
-    trained = mutation_stats(runs[key], np.random.default_rng(SEED))["per_family"]
-    untrained = mutation_stats(runs[f"{key}_untrained"],
-                               np.random.default_rng(SEED))["per_family"]
+    trained = mut[key]["per_family"]
+    untrained = mut[f"{key}_untrained"]["per_family"]
     shared = sorted(name for name in set(trained) & set(untrained)
                     if untrained[name] > 0)
     per_family = float(np.mean([trained[name] / untrained[name] for name in shared]))
@@ -467,10 +544,9 @@ def verdict(passes: bool) -> str:
     return r"\textbf{PASS}" if passes else "FAIL"
 
 
-def hypothesis_rows(runs: dict, rung3: dict) -> list[tuple[str, str, str, str, str]]:
+def hypothesis_rows(runs: dict, rung3: dict,
+                    mutation: dict) -> list[tuple[str, str, str, str, str]]:
     """(tag, criterion, panel, result, verdict) for every registered hypothesis."""
-    rng = np.random.default_rng(SEED)
-    mutation = {key: mutation_stats(runs[key], rng) for key in runs}
     rows = []
 
     rows.append(("H1", r"RNA-FM trained/untrained ratio $\geq 2.0$",
@@ -478,7 +554,7 @@ def hypothesis_rows(runs: dict, rung3: dict) -> list[tuple[str, str, str, str, s
                  f"{PHASE1_H1_RATIO:.2f}$\\times$", verdict(False)))
 
     for tag, key in [("H6", "rnafm"), ("H14", "rinalmo"), ("H19", "splicebert")]:
-        per_family, _of_means = ratio_readings(runs, key)
+        per_family, _of_means = ratio_readings(mutation, key)
         # H19 is registered in the passing direction: SpliceBERT is expected to
         # fall below 2.0, and the registration says so explicitly.
         below = tag == "H19"
@@ -511,7 +587,7 @@ def hypothesis_rows(runs: dict, rung3: dict) -> list[tuple[str, str, str, str, s
                  verdict(best_probe[1] - 0.5 >= 0.02)))
 
     for tag, key in [("H10", "rnafm"), ("H15", "rinalmo"), ("H17", "ernierna")]:
-        wins, total, p_value = sign_test(runs, key)
+        wins, total, p_value = sign_test(mutation, key)
         passes = wins >= 0.75 * total and p_value < 0.01
         rows.append((tag, f"{BY_KEY[key][0]} trained $>$ untrained in "
                      r"$\geq 75\%$ of families", r"repaired, $N = \panelN{}$",
@@ -581,8 +657,8 @@ def hypothesis_rows(runs: dict, rung3: dict) -> list[tuple[str, str, str, str, s
     return rows
 
 
-def hypotheses_table(runs: dict, rung3: dict) -> str:
-    rows = hypothesis_rows(runs, rung3)
+def hypotheses_table(runs: dict, rung3: dict, mut: dict) -> str:
+    rows = hypothesis_rows(runs, rung3, mut)
     body = "\n".join(f"{tag:<8} & {criterion} & {panel} & {result} & {mark} \\\\"
                      for tag, criterion, panel, result, mark in rows)
     eligible = rung3["ernierna"]["eligible"]
@@ -676,8 +752,142 @@ def provenance_table(runs: dict) -> str:
 # ---------------------------------------------------------------------------
 
 
-def macros(runs: dict, rung3: dict) -> str:
-    rng = np.random.default_rng(SEED)
+def peak_layer(stats_: dict) -> tuple[int, int, int] | None:
+    """The layer PS most often peaks at, how many families peak there, and of how many."""
+    layers = stats_["peak_layers"]
+    if not layers:
+        return None
+    modal = max(set(layers), key=layers.count)
+    return modal, layers.count(modal), len(layers)
+
+
+def transversion_ratio(control: dict) -> float:
+    """Mean best ratio over the families the control scored."""
+    return mean([body["best_ratio"] for body in scored(control["mutation"]).values()])
+
+
+def claim_failures(runs: dict, rung3: dict, mut: dict, controls: dict) -> list[str]:
+    """Every sentence in the body the repaired panel contradicts.
+
+    A macro carries a number, not an ordering. The body says ERNIE-RNA exceeds
+    the null in more families than any other model, that RNA-FM has the highest
+    mean ratio, that RiNALMo and ERNIE-RNA separate from the third model on
+    perturbation specificity; a re-run that reverses any of those leaves the
+    sentence standing beside a table that contradicts it, with every number in
+    the sentence correct. The claims are re-read here from the files the tables
+    come from, and a flip aborts with what the ordering now is, so the sentence
+    is rewritten against data rather than discovered by a reader.
+    """
+    ps = {key: (rung3[key]["mean_ps"] or 0.0) for key, *_ in MODELS}
+    ranked_ps = sorted(ps, key=lambda key: -ps[key])
+    attn = {key: attention_mean(runs[key]) for key in UNTRAINED_KEYS}
+    rna_attn = {key: value for key, value in attn.items() if key in RNA_KEYS}
+
+    failures = []
+
+    def require(holds: bool, sentence: str, observed: str) -> None:
+        if not holds:
+            failures.append(f"  the body says: {sentence}\n     the panel says: {observed}")
+
+    def short(key: str) -> str:
+        return BY_KEY[key][0]
+
+    top_exceed = max(mut, key=lambda key: mut[key]["exceeds_nuc"] if key in ps else -1)
+    require(top_exceed == "ernierna",
+            "ERNIE-RNA exceeds the null in more families than any other model",
+            f"{short(top_exceed)} does, in {mut[top_exceed]['exceeds_nuc']}")
+
+    top_ratio = max(ps, key=lambda key: mut[key]["mean_ratio"])
+    require(top_ratio == "rnafm", "RNA-FM has the highest mean ratio",
+            f"{short(top_ratio)} does, at {mut[top_ratio]['mean_ratio']:.3f}")
+
+    top_probe = max((key for key in ps if probing_accuracy(runs[key]) is not None),
+                    key=lambda key: probing_accuracy(runs[key]))
+    require(top_probe == "ernierna", "ERNIE-RNA has the strongest probing signal",
+            f"{short(top_probe)} does, at {probing_accuracy(runs[top_probe]):.3f}")
+
+    for key in ("ernierna", "rinalmo"):
+        require(mut[key]["ci"]["ci_lower"] > 1.0,
+                f"{short(key)}'s ratio CI excludes 1.0",
+                f"it is {fmt_ci(mut[key]['ci'])}")
+    require(mut["dnabert2"]["ci"]["ci_lower"] < 1.0 < mut["dnabert2"]["ci"]["ci_upper"],
+            "DNABERT-2's ratio CI straddles 1.0",
+            f"it is {fmt_ci(mut['dnabert2']['ci'])}")
+    require(mut["dnabert2"]["mean_ratio"] < 1.0, "DNABERT-2's mean ratio falls below 1.0",
+            f"it is {mut['dnabert2']['mean_ratio']:.3f}")
+
+    top_attn = max(attn, key=lambda key: attn[key])
+    require(top_attn == "nt", "NT~v2 has the highest attention-contact correlation",
+            f"{short(top_attn)} does, at {attn[top_attn]:.3f}")
+    require(attention_mean(runs["nt_untrained"]) >= attn["nt"],
+            "untrained NT~v2 matches or exceeds trained NT~v2 on attention",
+            f"trained {attn['nt']:.3f} against untrained "
+            f"{attention_mean(runs['nt_untrained']):.3f}")
+    require(min(rna_attn, key=lambda key: rna_attn[key]) == "rnafm",
+            "RNA-FM ranks last on attention among the RNA models",
+            f"{short(min(rna_attn, key=lambda key: rna_attn[key]))} does")
+    for key in RNA_KEYS:
+        delta = attn[key] - attention_mean(runs[f"{key}_untrained"])
+        require(abs(delta) < 0.025,
+                f"{short(key)}'s trained attention stays within 0.025 of untrained",
+                f"the delta is {delta:+.3f}")
+
+    require(ranked_ps[:3] == ["rinalmo", "ernierna", "caduceus"],
+            "RiNALMo, ERNIE-RNA and Caduceus are the top three on perturbation "
+            "specificity, in that order",
+            "the order is " + ", ".join(short(key) for key in ranked_ps[:3]))
+    third = ps[ranked_ps[2]]
+    require(third > 0 and ps[ranked_ps[1]] / third >= 30,
+            "the two leaders stand at least a factor of 30 above the third model",
+            f"the factor is {ps[ranked_ps[1]] / third:.1f}" if third > 0
+            else f"{short(ranked_ps[2])} has non-positive mean PS")
+    require(ps["dnabert2"] < 0, "DNABERT-2's mean PS is negative",
+            f"it is {ps['dnabert2']:.4f}")
+    require(rung3["hyenadna"]["h3"] is not None and rung3["hyenadna"]["h3"] < 1 / 3,
+            "HyenaDNA's H3 fraction falls below the 1/3 chance baseline",
+            f"it is {rung3['hyenadna']['h3']}")
+    require(ps["ernierna"] / max(rung3["ernierna_untrained"]["mean_ps"] or 0.0, 1e-30) >= 1e5,
+            "untrained ERNIE-RNA sits orders of magnitude below trained on PS",
+            f"trained {ps['ernierna']:.4g} against untrained "
+            f"{rung3['ernierna_untrained']['mean_ps']:.4g}")
+    for key in ("evo", "caduceus"):
+        layer = probing_layer(runs[key])
+        require(layer is not None and layer <= 1,
+                f"{short(key)}'s probing accuracy peaks at layer 0 or 1",
+                f"it peaks at layer {layer}")
+    require(mut["evo"]["mean_ratio"] > mut["caduceus"]["mean_ratio"],
+            "Evo reaches a higher mean ratio than Caduceus",
+            f"Evo {mut['evo']['mean_ratio']:.3f}, "
+            f"Caduceus {mut['caduceus']['mean_ratio']:.3f}")
+
+    watson_crick = {key: mut[key]["mean_ratio"] for key, *_ in MODELS}
+    for key, control in controls.items():
+        require(scored(control["mutation"]).keys() == set(mut[key]["per_family"]),
+                f"{short(key)}'s control covers the families its run covered",
+                f"control {len(scored(control['mutation']))} families, "
+                f"run {len(mut[key]['per_family'])}")
+        require(transversion_ratio(control) > 0,
+                f"{short(key)}'s transversion ratio is a number to report",
+                f"it is {transversion_ratio(control)}")
+    require(watson_crick, "the panel holds models", "it does not")
+
+    return failures
+
+
+def check_claims(runs: dict, rung3: dict, mut: dict, controls: dict) -> None:
+    """Abort rather than print a superlative the table beside it contradicts."""
+    failures = claim_failures(runs, rung3, mut, controls)
+    if failures:
+        raise ValueError("the repaired panel contradicts the body:\n"
+                         + "\n".join(failures))
+
+
+# ---------------------------------------------------------------------------
+# Macros for the prose
+# ---------------------------------------------------------------------------
+
+
+def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
     lines = [r"% Written by scripts/generate_results_tables.py. Do not edit."]
 
     def macro(name: str, value: str) -> None:
@@ -701,13 +911,21 @@ def macros(runs: dict, rung3: dict) -> str:
           str(len({stack(run["stamp"]) for run in runs.values()})))
 
     for key, _short, _size, _domain, name in MODELS:
-        stats_ = mutation_stats(runs[key], rng)
+        stats_ = mut[key]
         macro(f"ratio{name}", f"{stats_['mean_ratio']:.3f}")
+        macro(f"ci{name}", fmt_ci(stats_["ci"]))
         macro(f"exceed{name}", f"{stats_['exceeds_nuc']}")
         macro(f"dinuc{name}", f"{stats_['survives_dinuc']}")
+        if stats_["exceeds_nuc"]:
+            macro(f"retain{name}", f"{stats_['survives_dinuc']} of "
+                  f"{stats_['exceeds_nuc']}")
+            macro(f"retainPct{name}",
+                  f"{100 * stats_['survives_dinuc'] / stats_['exceeds_nuc']:.0f}\\%")
         accuracy = probing_accuracy(runs[key])
         if accuracy is not None:
             macro(f"probe{name}", f"{accuracy:.3f}")
+            macro(f"probeDelta{name}", f"{accuracy - PROBE_CHANCE:+.3f}")
+            macro(f"probeLayer{name}", str(probing_layer(runs[key])))
         rho = attention_mean(runs[key])
         if rho is not None:
             macro(f"attn{name}", f"{rho:.3f}")
@@ -720,17 +938,71 @@ def macros(runs: dict, rung3: dict) -> str:
             macro(f"cons{name}", f"{three['exceed_conservative']}/{three['gate']}")
         if three["h3"] is not None:
             macro(f"hthree{name}", f"{three['h3']:.3f}")
+        peak = peak_layer(three)
+        if peak is not None:
+            modal, at_modal, total = peak
+            macro(f"psPeak{name}", str(modal))
+            macro(f"psLayers{name}", str(three["n_ps_layers"]))
+            macro(f"psPeakCount{name}", f"{at_modal} of {total}")
 
-    macro("familiesScored", str(mutation_stats(runs["ernierna"], rng)["n_scored"]))
-    macro("expectedFalsePositives",
-          f"{0.05 * mutation_stats(runs['ernierna'], rng)['n_scored']:.1f}")
+    # The untrained rows the prose quotes directly: the false-positive check in
+    # Rung 1 and the architecture-without-training paragraph in Rung 3.
+    for key in UNTRAINED_KEYS:
+        name = BY_KEY[key][3]
+        stats_ = mut[f"{key}_untrained"]
+        macro(f"exceedUntrained{name}", f"{stats_['exceeds_nuc']}")
+        macro(f"ratioUntrained{name}", f"{stats_['mean_ratio']:.3f}")
+        untrained_rho = attention_mean(runs[f"{key}_untrained"])
+        if untrained_rho is not None and attention_mean(runs[key]) is not None:
+            macro(f"attnUntrained{name}", f"{untrained_rho:.3f}")
+            macro(f"attnDelta{name}",
+                  f"{attention_mean(runs[key]) - untrained_rho:+.3f}")
+            # Whether the mean delta is one family or all of them.
+            trained_family = attention_per_family(runs[key])
+            untrained_family = attention_per_family(runs[f"{key}_untrained"])
+            shared = sorted(set(trained_family) & set(untrained_family))
+            deltas = [trained_family[n] - untrained_family[n] for n in shared]
+            higher = sum(1 for value in deltas if value > 0)
+            macro(f"attnFamilyDelta{name}", f"{mean(deltas):+.3f}")
+            macro(f"attnHigherTrained{name}", str(higher))
+            macro(f"attnHigherUntrained{name}", str(len(deltas) - higher))
+        three = rung3[f"{key}_untrained"]
+        if three["mean_ps"] is not None:
+            macro(f"psUntrained{name}", render_ps(three["mean_ps"]))
+        macro(f"gateUntrained{name}", f"{three['gate']}/{three['eligible']}")
+        if three["gate"]:
+            macro(f"nullUntrained{name}", f"{three['exceed']}/{three['gate']}")
+        wins, total, _p = sign_test(mut, key)
+        macro(f"sign{name}", f"{wins}/{total}")
+        macro(f"signPct{name}", f"{100 * wins / total:.0f}\\%")
+
+    macro("familiesScored", str(mut["ernierna"]["n_scored"]))
+    macro("expectedFalsePositives", f"{0.05 * mut['ernierna']['n_scored']:.1f}")
 
     # Both readings of the ambiguous "mean trained/untrained ratio", so the
     # choice the table makes is visible rather than buried in this script.
     for key in ["rnafm", "rinalmo", "splicebert"]:
-        per_family, of_means = ratio_readings(runs, key)
+        per_family, of_means = ratio_readings(mut, key)
         macro(f"tuPerFamily{BY_KEY[key][3]}", f"{per_family:.2f}")
         macro(f"tuOfMeans{BY_KEY[key][3]}", f"{of_means:.2f}")
+
+    # The transversion control, against the Watson-Crick run family for family.
+    alphabet = next(iter(controls.values()))["alphabet"]
+    macro("transversionAlphabet",
+          ", ".join(f"{nuc}$\\to${sub}" for nuc, sub in sorted(alphabet.items())
+                    if nuc != "T"))
+    deviations = {}
+    for key, control in controls.items():
+        name = BY_KEY[key][3]
+        ratio = transversion_ratio(control)
+        macro(f"trans{name}", f"{ratio:.3f}")
+        deviation = 100 * (ratio - mut[key]["mean_ratio"]) / mut[key]["mean_ratio"]
+        macro(f"transDelta{name}", f"{deviation:+.1f}\\%")
+        deviations[key] = abs(deviation)
+    widest = max(deviations, key=lambda key: deviations[key])
+    macro("transversionWidest", BY_KEY[widest][0])
+    macro("transversionWidestDeviation", f"{deviations[widest]:.1f}\\%")
+    macro("transversionBound", f"{math.ceil(deviations[widest]):d}\\%")
     return "\n".join(lines) + "\n"
 
 
@@ -739,24 +1011,26 @@ def macros(runs: dict, rung3: dict) -> str:
 
 def main() -> int:
     runs = load_all()
+    controls = load_transversion()
     rung3 = {key: rung3_stats(run) for key, run in runs.items()}
-    rng = np.random.default_rng(SEED)
+    mut = mutation_all(runs)
+    check_claims(runs, rung3, mut, controls)
     GENERATED.mkdir(parents=True, exist_ok=True)
     written = {
-        "rung1_table.tex": rung1_table(runs, rng),
-        "rung2_table.tex": rung2_table(runs, rng),
+        "rung1_table.tex": rung1_table(runs, mut),
+        "rung2_table.tex": rung2_table(mut),
         "rung3_table.tex": rung3_table(runs, rung3),
         "attention_table.tex": attention_table(runs),
         "provenance_table.tex": provenance_table(runs),
-        "hypotheses_table.tex": hypotheses_table(runs, rung3),
-        "results_macros.tex": macros(runs, rung3),
+        "hypotheses_table.tex": hypotheses_table(runs, rung3, mut),
+        "results_macros.tex": macros(runs, rung3, mut, controls),
     }
     for name, text in written.items():
         (GENERATED / name).write_text(text)
         print(f"  wrote paper/generated/{name}  ({len(text.splitlines())} lines)")
 
     print("\nRegistered hypotheses:")
-    for tag, criterion, panel, result, mark in hypothesis_rows(runs, rung3):
+    for tag, criterion, panel, result, mark in hypothesis_rows(runs, rung3, mut):
         plain = mark.replace(r"\textbf{", "").replace("}", "")
         print(f"  {tag:<8} {plain:<5} {result}")
     return 0
