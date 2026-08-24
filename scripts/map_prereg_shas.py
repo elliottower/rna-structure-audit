@@ -24,11 +24,12 @@ Read-only. Writes nothing.
 """
 
 import subprocess
+import sys
 from pathlib import Path
 
 GITHUB = Path.home() / "Documents" / "GitHub"
 AUDIT = GITHUB / "rna-structure-audit"
-PUBLIC = GITHUB / "rna-sa-public"
+PUBLIC = GITHUB / (sys.argv[1] if len(sys.argv) > 1 else "rna-sa-public")
 
 CITED = {
     "Phase 1": "694b43b",
