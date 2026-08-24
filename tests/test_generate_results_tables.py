@@ -148,22 +148,61 @@ def _write_run(directory, key, stamp):
 
 
 def _stamp(**overrides):
-    base = {"commit": "abc123", "panel_sha256": "f" * 64, "n_families": g.PANEL_N,
-            "withdrawn": ["a", "b", "c", "d", "e"], "seeding": "family name"}
+    base = {"commit": "abc123ff", "panel_sha256": "f" * 64, "n_families": g.PANEL_N,
+            "withdrawn": ["a", "b", "c", "d", "e"], "seeding": "family name",
+            "device": "cuda",
+            "libraries": {"torch": "2.4.1", "transformers": "4.44.2",
+                          "multimolecule": None, "flash-attn": None,
+                          "mamba-ssm": None}}
     base.update(overrides)
     return base
 
 
-def test_a_single_disagreeing_stamp_aborts_the_build(tmp_path, monkeypatch):
-    monkeypatch.setattr(g, "RESULTS", tmp_path)
-    keys = [k for k, *_ in g.MODELS] + [f"{k}_untrained" for k in g.UNTRAINED_KEYS]
-    for key in keys:
-        _write_run(tmp_path / key, key, _stamp())
-    assert len(g.load_all()) == len(keys)
+def _all_keys():
+    return [k for k, *_ in g.MODELS] + [f"{k}_untrained" for k in g.UNTRAINED_KEYS]
 
-    _write_run(tmp_path / "evo", "evo", _stamp(commit="def456"))
-    with pytest.raises(ValueError, match="commit"):
+
+@pytest.mark.parametrize("field, value", [
+    ("panel_sha256", "e" * 64),
+    ("withdrawn", ["a", "b", "c", "d", "z"]),
+    ("seeding", "a fixed global seed"),
+])
+def test_one_run_disagreeing_on_the_data_aborts_the_build(tmp_path, monkeypatch,
+                                                          field, value):
+    monkeypatch.setattr(g, "RESULTS", tmp_path)
+    for key in _all_keys():
+        _write_run(tmp_path / key, key, _stamp())
+    assert len(g.load_all()) == len(_all_keys())
+
+    _write_run(tmp_path / "evo", "evo", _stamp(**{field: value}))
+    with pytest.raises(ValueError, match=field):
         g.load_all()
+
+
+def test_a_differing_commit_is_carried_into_the_provenance_table(tmp_path, monkeypatch):
+    """The one stamp field allowed to differ, because no stack loads every model.
+
+    Allowing it is only defensible if the difference reaches the reader, so the
+    build must not abort and every distinct commit must appear in the table.
+    """
+    monkeypatch.setattr(g, "RESULTS", tmp_path)
+    for key in _all_keys():
+        _write_run(tmp_path / key, key, _stamp())
+    _write_run(tmp_path / "evo", "evo", _stamp(commit="def4567"))
+    _write_run(tmp_path / "nt_untrained", "nt_untrained",
+               _stamp(commit="9876543", libraries={"torch": "2.1.2",
+                                                   "transformers": "4.49.0",
+                                                   "flash-attn": "2.5.8"}))
+
+    runs = g.load_all()
+    table = g.provenance_table(runs)
+
+    assert table.count(r"\\") == len(runs) + 1  # one per run, plus the header
+    for short in ("abc123f", "def4567", "9876543"):
+        assert short in table
+    assert "flash-attn 2.5.8" in table
+    assert r"\provenanceCommits}{3}" in g.macros(runs, {
+        key: g.rung3_stats(runs[key]) for key in runs})
 
 
 def test_a_run_on_the_unrepaired_panel_aborts_the_build(tmp_path, monkeypatch):

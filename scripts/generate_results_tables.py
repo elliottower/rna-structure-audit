@@ -108,22 +108,29 @@ def load(key: str) -> dict:
     }
 
 
-def load_all() -> dict:
-    """Every model that ran, with one stamp checked against all the others.
+# The stamp fields that determine the numbers. A run disagreeing on any of them
+# analyzed different data or drew different randomness, and a table mixing it
+# with the others is a table no reader can attribute.
+IDENTICAL_FIELDS = ("panel_sha256", "n_families", "withdrawn", "seeding")
 
-    A results directory left from an earlier run has a different panel hash or a
-    different commit, and a table assembled from a mixture of the two is a table
-    no reader can attribute. The check is here as well as in the v13 patch
-    because this script writes the numbers the patch only copies.
+
+def load_all() -> dict:
+    """Every model that ran, with the stamps checked against each other.
+
+    The commit is deliberately not in `IDENTICAL_FIELDS`. No stack loads all ten
+    models, so the runs are launched in groups and a later group carries a later
+    commit; requiring one commit would mean re-running every finished model to
+    change a string. What it costs is that the reader has to be told which cell
+    came from which commit, so `provenance_table.tex` prints the commit, the
+    library stack and the device for all seventeen runs.
     """
     keys = [key for key, *_ in MODELS] + [f"{key}_untrained" for key in UNTRAINED_KEYS]
     runs = {key: load(key) for key in keys}
     stamps = {key: run["stamp"] for key, run in runs.items()}
-    for field in ("commit", "panel_sha256", "n_families", "withdrawn", "seeding"):
+    for field in IDENTICAL_FIELDS:
         values = {key: json.dumps(stamp[field], sort_keys=True)
                   for key, stamp in stamps.items()}
-        distinct = sorted(set(values.values()))
-        if len(distinct) != 1:
+        if len(set(values.values())) != 1:
             lines = "\n".join(f"    {key:22s} {value}" for key, value in sorted(values.items()))
             raise ValueError(f"models disagree on stamp field {field!r}:\n{lines}")
     any_stamp = next(iter(stamps.values()))
@@ -133,8 +140,10 @@ def load_all() -> dict:
     if len(any_stamp["withdrawn"]) != PANEL_CURATED - PANEL_N:
         raise ValueError(f"{len(any_stamp['withdrawn'])} withdrawn records, "
                          f"not {PANEL_CURATED - PANEL_N}")
-    print(f"  {len(runs)} runs at commit {any_stamp['commit'][:12]}, panel "
-          f"{any_stamp['panel_sha256'][:12]}, {any_stamp['n_families']} families")
+    commits = sorted({stamp["commit"] for stamp in stamps.values()})
+    print(f"  {len(runs)} runs on panel {any_stamp['panel_sha256'][:12]}, "
+          f"{any_stamp['n_families']} families, "
+          f"{len(commits)} commit(s): {', '.join(c[:7] for c in commits)}")
     return runs
 
 
@@ -606,6 +615,63 @@ reported in the text. Sources: \texttt{PREREGISTRATION\_EXPANDED\_RFAM}
 
 
 # ---------------------------------------------------------------------------
+# Provenance
+# ---------------------------------------------------------------------------
+
+
+def stack(stamp: dict) -> str:
+    """The library versions that could move a number, as one cell."""
+    libs = stamp["libraries"]
+    parts = [f"torch {libs['torch']}", f"transformers {libs['transformers']}"]
+    for name in ("multimolecule", "flash-attn", "mamba-ssm"):
+        if libs.get(name):
+            parts.append(f"{name} {libs[name]}")
+    return ", ".join(parts)
+
+
+def provenance_table(runs: dict) -> str:
+    """One row per container, so every cell in the results tables is attributable."""
+    rows = []
+    for key, short, _size, _domain, _macro in MODELS:
+        for name, weights in ((key, "pretrained"),
+                              (f"{key}_untrained", "randomized")):
+            if name not in runs:
+                continue
+            stamp = runs[name]["stamp"]
+            rows.append(" & ".join([
+                short if weights == "pretrained" else f"{short} (untrained)",
+                weights,
+                stamp["device"],
+                r"\texttt{" + stamp["commit"][:7] + "}",
+                r"\footnotesize " + stack(stamp),
+            ]) + r" \\")
+
+    any_stamp = next(iter(runs.values()))["stamp"]
+    return "\n".join([
+        r"% Written by scripts/generate_results_tables.py. Do not edit.",
+        r"\begin{table}[htbp]",
+        r"\centering",
+        r"\small",
+        r"\caption{Provenance for each run behind the results tables. Every run "
+        r"analyzes the same panel (SHA-256 \texttt{" + any_stamp["panel_sha256"][:12] +
+        r"}, " + str(any_stamp["n_families"]) + " families, " +
+        str(len(any_stamp["withdrawn"])) + r" withdrawn) under the same "
+        r"family-derived seeding. No single library stack loads all ten models, "
+        r"so the stack is given per run, and so is the commit.}",
+        r"\label{tab:provenance}",
+        r"\begin{tabular}{lllll}",
+        r"\toprule",
+        r"Model & Weights & Device & Commit & Library stack \\",
+        r"\midrule",
+        *rows,
+        r"\bottomrule",
+        r"\end{tabular}",
+        r"\end{table}",
+        "",
+    ])
+
+
+# ---------------------------------------------------------------------------
 # Macros for the prose
 # ---------------------------------------------------------------------------
 
@@ -622,6 +688,12 @@ def macros(runs: dict, rung3: dict) -> str:
     macro("gateThreshold", str(gate_threshold(eligible)))
     macro("gateRegistered", "7")
     macro("bootstrapB", f"{N_BOOTSTRAP:,}".replace(",", "{,}"))
+
+    any_stamp = next(iter(runs.values()))["stamp"]
+    macro("panelHashShort", r"\texttt{" + any_stamp["panel_sha256"][:12] + "}")
+    macro("provenanceRuns", str(len(runs)))
+    macro("provenanceCommits",
+          str(len({run["stamp"]["commit"] for run in runs.values()})))
 
     for key, _short, _size, _domain, name in MODELS:
         stats_ = mutation_stats(runs[key], rng)
@@ -670,6 +742,7 @@ def main() -> int:
         "rung2_table.tex": rung2_table(runs, rng),
         "rung3_table.tex": rung3_table(runs, rung3),
         "attention_table.tex": attention_table(runs),
+        "provenance_table.tex": provenance_table(runs),
         "hypotheses_table.tex": hypotheses_table(runs, rung3),
         "results_macros.tex": macros(runs, rung3),
     }
