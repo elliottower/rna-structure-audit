@@ -396,6 +396,41 @@ with eager attention.}
 """
 
 
+def transversion_table(mut: dict, controls: dict) -> str:
+    """Watson-Crick against transversion mean ratio, one row per model."""
+    rows = []
+    for key, short, size, domain, _macro in MODELS:
+        watson = mut[key]["mean_ratio"]
+        control = transversion_ratio(controls[key])
+        rows.append((abs(control - watson) / watson,
+                     f"{short} ({size}, {domain})".ljust(26)
+                     + f" & {watson:.3f} & {control:.3f}"
+                     + f" & ${100 * (control - watson) / watson:+.1f}$\\%"
+                     + r" \\"))
+    body = "\n".join(row for _deviation, row in sorted(rows, key=lambda pair: -pair[0]))
+    alphabet = next(iter(controls.values()))["alphabet"]
+    written = ", ".join(f"{nuc}$\\to${sub}" for nuc, sub in sorted(alphabet.items())
+                        if nuc != "T")
+    return r"""\begin{table}[htbp]
+\centering
+\caption{Mutation sensitivity under the Watson-Crick substitution and under a
+substitution that leaves no position paired with the partner it had (""" + written + r"""; T
+follows U). Rows are ordered by the size of the change. A model whose ratio
+depends on the substituted nucleotide being a complement rather than on the
+pairing being broken would move between the two columns.}
+\label{tab:transversion}
+\small
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Model} & \textbf{Watson-Crick} & \textbf{Transversion} & \textbf{Change} \\
+\midrule
+""" + body + r"""
+\bottomrule
+\end{tabular}
+\end{table}
+"""
+
+
 # ---------------------------------------------------------------------------
 # Rung 3
 # ---------------------------------------------------------------------------
@@ -540,6 +575,18 @@ def ratio_readings(mut: dict, key: str) -> tuple[float, float]:
     return per_family, of_means
 
 
+def domain_effect(rung3: dict) -> tuple[float, float]:
+    """H2$_6$: rank-biserial and Mann-Whitney p for RNA against DNA mean PS.
+
+    Computed here rather than twice, because the body and the hypothesis table
+    both quote it and v12 printed two different values for the same test.
+    """
+    rna = [rung3[key]["mean_ps"] or 0.0 for key in RNA_KEYS]
+    dna = [rung3[key]["mean_ps"] or 0.0 for key in DNA_KEYS]
+    u_stat, p_value = stats.mannwhitneyu(rna, dna, alternative="two-sided")
+    return 2 * u_stat / (len(rna) * len(dna)) - 1, float(p_value)
+
+
 def verdict(passes: bool) -> str:
     return r"\textbf{PASS}" if passes else "FAIL"
 
@@ -632,10 +679,7 @@ def hypothesis_rows(runs: dict, rung3: dict,
     rows.append((r"H1$_6$", f"$\\geq 1$ model: PS $> 0$, $\\geq {gate}$ fam $>$ null",
                  f"confirmatory, $N = {eligible}$", detail, verdict(any_repaired)))
 
-    rna = [rung3[key]["mean_ps"] or 0.0 for key in RNA_KEYS]
-    dna = [rung3[key]["mean_ps"] or 0.0 for key in DNA_KEYS]
-    u_stat, p_value = stats.mannwhitneyu(rna, dna, alternative="two-sided")
-    rank_biserial = 2 * u_stat / (len(rna) * len(dna)) - 1
+    rank_biserial, p_value = domain_effect(rung3)
     rows.append((r"H2$_6$", r"RNA PS $>$ DNA PS (rb $> 0.5$)",
                  f"confirmatory, $N = {eligible}$",
                  f"rb $= {rank_biserial:+.2f}$, $p = {p_value:.3f}$",
@@ -869,7 +913,33 @@ def claim_failures(runs: dict, rung3: dict, mut: dict, controls: dict) -> list[s
         require(transversion_ratio(control) > 0,
                 f"{short(key)}'s transversion ratio is a number to report",
                 f"it is {transversion_ratio(control)}")
-    require(watson_crick, "the panel holds models", "it does not")
+    ranked_probe = sorted((key for key in ps if probing_accuracy(runs[key]) is not None),
+                          key=lambda key: -probing_accuracy(runs[key]))
+    require(ranked_probe[1] == "rinalmo", "RiNALMo has the second-strongest probing signal",
+            f"{short(ranked_probe[1])} does")
+
+    def retention(key: str) -> float:
+        stats_ = mut[key]
+        return (stats_["survives_dinuc"] / stats_["exceeds_nuc"]
+                if stats_["exceeds_nuc"] else 0.0)
+
+    for key in ("nt", "hyenadna", "evo"):
+        require(retention(key) > 0.5,
+                f"{short(key)} retains the majority of its first-order survivors",
+                f"it retains {mut[key]['survives_dinuc']} of {mut[key]['exceeds_nuc']}")
+    for key in ("caduceus", "dnabert2", "splicebert"):
+        require(retention(key) <= 0.5,
+                f"{short(key)} loses most of its first-order survivors",
+                f"it retains {mut[key]['survives_dinuc']} of {mut[key]['exceeds_nuc']}")
+
+    beaten = [key for key in RNA_KEYS if ps[key] < ps["caduceus"]]
+    require(sorted(beaten) == sorted(["splicebert", "rnafm", "utrlm"]),
+            "Caduceus exceeds SpliceBERT, RNA-FM and UTR-LM on perturbation specificity",
+            "it exceeds " + (", ".join(short(key) for key in beaten) or "no RNA model"))
+
+    for key in ("evo", "caduceus"):
+        require(transversion_ratio(controls[key]) > 0,
+                f"{short(key)}'s control ran", "it did not")
 
     return failures
 
@@ -933,6 +1003,8 @@ def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
         if three["mean_ps"] is not None:
             macro(f"ps{name}", render_ps(three["mean_ps"]))
         macro(f"gate{name}", f"{three['gate']}/{three['eligible']}")
+        macro(f"gateCount{name}", str(three["gate"]))
+        macro(f"eligible{name}", str(three["eligible"]))
         if three["gate"]:
             macro(f"null{name}", f"{three['exceed']}/{three['gate']}")
             macro(f"cons{name}", f"{three['exceed_conservative']}/{three['gate']}")
@@ -952,6 +1024,9 @@ def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
         stats_ = mut[f"{key}_untrained"]
         macro(f"exceedUntrained{name}", f"{stats_['exceeds_nuc']}")
         macro(f"ratioUntrained{name}", f"{stats_['mean_ratio']:.3f}")
+        if stats_["exceeds_nuc"]:
+            macro(f"retainUntrained{name}", f"{stats_['survives_dinuc']} of "
+                  f"{stats_['exceeds_nuc']}")
         untrained_rho = attention_mean(runs[f"{key}_untrained"])
         if untrained_rho is not None and attention_mean(runs[key]) is not None:
             macro(f"attnUntrained{name}", f"{untrained_rho:.3f}")
@@ -975,6 +1050,10 @@ def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
         wins, total, _p = sign_test(mut, key)
         macro(f"sign{name}", f"{wins}/{total}")
         macro(f"signPct{name}", f"{100 * wins / total:.0f}\\%")
+
+    rank_biserial, p_value = domain_effect(rung3)
+    macro("domainRankBiserial", f"{rank_biserial:+.2f}")
+    macro("domainP", f"{p_value:.3f}")
 
     macro("familiesScored", str(mut["ernierna"]["n_scored"]))
     macro("expectedFalsePositives", f"{0.05 * mut['ernierna']['n_scored']:.1f}")
@@ -1023,6 +1102,7 @@ def main() -> int:
         "attention_table.tex": attention_table(runs),
         "provenance_table.tex": provenance_table(runs),
         "hypotheses_table.tex": hypotheses_table(runs, rung3, mut),
+        "transversion_table.tex": transversion_table(mut, controls),
         "results_macros.tex": macros(runs, rung3, mut, controls),
     }
     for name, text in written.items():

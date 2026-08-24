@@ -381,3 +381,26 @@ def test_peak_layer_reports_the_modal_layer_and_how_many_families_reach_it():
 
     assert g.peak_layer(stats) == (33, 4, 5)
     assert stats["n_ps_layers"] == 34
+
+
+def test_the_transversion_table_leads_with_the_model_that_moved_most(tmp_path, monkeypatch):
+    monkeypatch.setattr(g, "RESULTS", tmp_path)
+    for key in _all_keys():
+        _write_run(tmp_path / key, key, _stamp())
+    for index, (key, *_) in enumerate(g.MODELS):
+        # The widest sits mid-list, so MODELS order alone cannot pass this.
+        _write_transversion(tmp_path, key,
+                            ratio=3.0 if index == 6 else 1.0 + 0.02 * index)
+    runs = g.load_all()
+
+    table = g.transversion_table(g.mutation_all(runs), g.load_transversion())
+
+    body = table.split(r"\midrule")[1]
+    assert all(short in body for _key, short, *_ in g.MODELS), (
+        "a model missing from the table is a control silently dropped")
+    order = sorted((short for _key, short, *_ in g.MODELS), key=body.index)
+    mut, controls = g.mutation_all(runs), g.load_transversion()
+    widest = max(g.MODELS, key=lambda m: abs(
+        g.transversion_ratio(controls[m[0]]) - mut[m[0]]["mean_ratio"]))
+    assert order[0] == widest[1], (
+        "the widest deviation belongs at the top, beside the bound the prose quotes")
