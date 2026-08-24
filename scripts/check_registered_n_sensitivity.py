@@ -15,14 +15,16 @@ registered as ceil(4 * 0.05 * N). H1(b), H2 and H3 fix their thresholds
 independently of N -- p < 0.0167, rank-biserial > 0.5, and a binomial test
 against 1/3 -- and depend on the sample only through the data.
 
-The gate does move, from 7 to 8. H1(a) nonetheless cannot flip, and the reason is
-structural rather than empirical: every null in this pipeline is computed within a
-family, so a family's exceedance flag does not depend on which other families are
-present. No repair removes a scored family from the set -- none of the eleven
-unattributed records carries a scored Rung 3 record -- so the exceedance count is
-non-decreasing under the repairs while the gate rises by one. A model already
-clearing the gate by a margin larger than one clears it afterwards whatever the
-entering families do.
+The gate does move, from 7 to 8, and H1(a) holds at the raised gate. Each null is
+built inside one family, so the distribution a family is compared against does not
+depend on which other families are present -- but the draw did, until
+`family_seed.py`: both rungs seeded from a family's position in the loaded panel,
+so withdrawing five records would have shifted the stream every later family
+received. Reseeding from the family name redraws every null once, so the no-flip
+argument rests on how much room each family has rather than on its flag being
+fixed. `check_h1a_margin.py` measures that room. No repair removes a scored family
+-- none of the eleven unattributed records carries a scored Rung 3 record -- so
+entering families can only add to the count.
 
 H1(b) has no such argument. The Wilcoxon statistic is computed across families,
 so the entering families can move it in either direction, and its outcome is not
@@ -110,15 +112,16 @@ def main() -> None:
             for n, _ in stages)
         print(f"  {model:<10} {over} of {passing} exceed their null   {verdicts}")
         margin = over - hi
-        print(f"{'':<12}clears the raised gate of {hi} by {margin}; "
-              f"{'cannot' if margin > 0 else 'could'} flip when families enter")
+        print(f"{'':<12}clears the raised gate of {hi} by {margin} against the "
+              f"entering families,\n{'':<12}which can only add; the reseed is the "
+              f"perturbation this count cannot bound")
 
-    print("\n  Exceedance flags are per-family: the null is a within-family "
-          "derangement, so a\n  family's flag does not depend on which other "
-          "families are present. No repair\n  removes a scored family, so these "
-          "counts can only rise. H1(a) is therefore\n  settled at the raised "
-          "gate before the re-run. H1(b), a Wilcoxon across families,\n  is not, "
-          "and its outcome is left open here.")
+    print("\n  No repair removes a scored family, so these counts can only "
+          "rise. The nulls are\n  redrawn once, because they are now seeded from "
+          "family names rather than from\n  panel positions, so run "
+          "check_h1a_margin.py for how much room each family has\n  above its own "
+          "threshold. H1(b), a Wilcoxon across families, is left open here\n  and "
+          "is reported whichever way it lands.")
 
 
 if __name__ == "__main__":
