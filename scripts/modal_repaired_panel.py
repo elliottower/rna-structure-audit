@@ -9,12 +9,32 @@ to it digit for digit. The panel itself also changed -- four annotations
 repaired against Rfam seed alignments, five records withdrawn -- so this run
 replaces the table rather than patching it. See DEVIATIONS.md, 2026-08-24.
 
-Both images are copied from the scripts that produced the deposited results,
-pin for pin. Nothing here was derived by trying versions until one imported:
-`modal_all_phases.py` left transformers and multimolecule unpinned, so what it
-resolved to in July is unrecoverable, and every attempt to re-derive that
-resolution has failed on a different package. The two pinned images below are
-the ones that ran.
+Every image is copied from the script that produced the deposited results for
+the models it serves, pin for pin. Nothing here was derived by trying versions
+until one imported: `modal_all_phases.py` left transformers and multimolecule
+unpinned, so what it resolved to in July is unrecoverable, and every attempt to
+re-derive that resolution has failed on a different package.
+
+Four stacks, because no single one loads all ten models, and each is the newest
+that works for its models rather than the oldest that works for any:
+
+    torch 2.6.0  / transformers 5.14.1 / multimolecule 0.2.0
+        RiNALMo, UTR-LM, ERNIE-RNA, SpliceBERT
+        from modal_ernierna_ablation.py and modal_multiseq_rinalmo.py
+    torch 2.4.1  / transformers 4.44.2
+        RNA-FM, NT, HyenaDNA -- NT's remote code calls
+        find_pruneable_heads_and_indices, dropped in transformers 5
+    torch 2.4.0  / transformers 4.28.0 (python 3.10)
+        DNABERT-2, whose remote code predates the 4.29 attention refactor
+        from modal_rerun_phases15_dinuc.py
+    torch 2.1.2  / transformers 4.49.0 / flash-attn 2.5.8
+        Evo alone. Its remote code hard-requires flash-attn, which builds only
+        against this torch and Triton 2.1.0. Confined to one container: it is
+        old enough that transformers refuses torch.load under CVE-2025-32434,
+        and too old for the aten.rms_norm that multimolecule 0.2.0 calls.
+
+Caduceus shares the 2.4.1 pins but needs its own image, because mamba-ssm
+compiles against the installed torch with a GPU attached.
 
 The output directory is keyed on the model and not on a timestamp. A timestamped
 directory means a restarted container resumes nothing, having written its
@@ -59,69 +79,82 @@ def with_project(image):
     )
 
 
-# Verbatim from `modal_phase6_flashattn_models.py`, which produced
-# `results/phase6_all/phase6_evo_20260715_073218`. Three of these pins are load-
-# bearing and none of them is the newest available: Triton 2.1.0 is the last
-# release accepting `tl.dot(..., trans_b=True)`, which DNABERT-2's bundled
-# flash_attn_triton.py calls; torch 2.1.2 is what that Triton and flash-attn
-# 2.5.8 build against; and multimolecule 0.1.0 is the last release importable
-# under transformers 4.49.0. Nine of the ten models load here.
-main_image = with_project(
-    modal.Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04", add_python="3.11")
-    .apt_install("git")
-    .pip_install(
-        "torch==2.1.2",
-        "triton==2.1.0",
-        "packaging",
-        "ninja",
-        "wheel",
-        "setuptools",
-        "numpy==1.26.4",
-        "scipy==1.13.1",
-        "tqdm==4.66.4",
-        "transformers==4.49.0",
-        "multimolecule==0.1.0",
-        "matplotlib==3.9.0",
-        "scikit-learn==1.5.0",
-        "einops==0.8.0",
-    )
-    .pip_install(
-        "flash-attn==2.5.8",
-        extra_options="--no-build-isolation",
-        gpu="A10G",
+MULTIMOL_PACKAGES = ("numpy==1.26.4", "scipy==1.14.1", "tqdm==4.66.5",
+                     "matplotlib==3.9.2", "scikit-learn==1.5.2", "einops==0.8.0")
+
+# From `modal_ernierna_ablation.py` and `modal_multiseq_rinalmo.py`, plus
+# torchmetrics: multimolecule 0.2.0 imports it through danling without depending
+# on it, so the container dies at adapter load without it.
+multimol_image = with_project(
+    modal.Image.debian_slim(python_version="3.11").pip_install(
+        "torch==2.6.0",
+        "transformers==5.14.1",
+        "multimolecule==0.2.0",
+        "torchmetrics==1.4.1",
+        *MULTIMOL_PACKAGES,
     )
 )
 
-# Verbatim from `modal_caduceus_phases.py`. Caduceus dispatches to a mamba-ssm
-# CUDA kernel, so both wheels compile against the installed torch with a GPU
-# attached, which is why it cannot share the image above.
+# The three models that load through plain transformers with trust_remote_code.
+# NT is the binding constraint: its remote code imports
+# find_pruneable_heads_and_indices, which transformers 5 removed.
+legacy_image = with_project(
+    modal.Image.debian_slim(python_version="3.11").pip_install(
+        "torch==2.4.1",
+        "transformers==4.44.2",
+        *MULTIMOL_PACKAGES,
+    )
+)
+
+# From `modal_rerun_phases15_dinuc.py`, which produced
+# results/dnabert2_phases15_dinuc.json. The patch runs at build time and
+# pre-downloads the model, so the cached remote code is rewritten before any
+# container imports it.
+dnabert2_image = with_project(
+    modal.Image.debian_slim(python_version="3.10")
+    .pip_install("torch==2.4.0", "transformers==4.28.0", *MULTIMOL_PACKAGES)
+    .add_local_file("scripts/patch_dnabert2_flash_attn.py",
+                    "/root/patch_dnabert2_flash_attn.py", copy=True)
+    .run_commands("python /root/patch_dnabert2_flash_attn.py")
+)
+
+# From `modal_phase6_flashattn_models.py`, which produced
+# results/phase6_all/phase6_evo_20260715_073218. Evo only.
+evo_image = with_project(
+    modal.Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04", add_python="3.11")
+    .apt_install("git")
+    .pip_install(
+        "torch==2.1.2", "triton==2.1.0",
+        "packaging", "ninja", "wheel", "setuptools",
+        "numpy==1.26.4", "scipy==1.13.1", "tqdm==4.66.4",
+        "transformers==4.49.0", "multimolecule==0.1.0",
+        "matplotlib==3.9.0", "scikit-learn==1.5.0", "einops==0.8.0",
+    )
+    .pip_install("flash-attn==2.5.8", extra_options="--no-build-isolation", gpu="A10G")
+)
+
+# From `modal_caduceus_phases.py`. Both wheels compile against the installed
+# torch, so they are built with a GPU attached and without build isolation.
 caduceus_image = with_project(
     modal.Image.from_registry("nvidia/cuda:12.1.0-devel-ubuntu22.04", add_python="3.11")
     .apt_install("git")
     .pip_install(
-        "torch==2.4.1",
-        "numpy==1.26.4",
-        "scipy==1.14.1",
-        "tqdm==4.66.5",
-        "transformers==4.44.2",
-        "multimolecule==0.2.0",
-        "matplotlib==3.9.2",
-        "scikit-learn==1.5.2",
-        "einops==0.8.0",
-        "packaging==24.1",
-        "ninja==1.11.1.1",
-        "wheel==0.44.0",
-        "setuptools==75.1.0",
+        "torch==2.4.1", "transformers==4.44.2", "multimolecule==0.2.0",
+        *MULTIMOL_PACKAGES,
+        "packaging==24.1", "ninja==1.11.1.1", "wheel==0.44.0", "setuptools==75.1.0",
     )
     .run_commands("pip install --no-build-isolation causal-conv1d==1.4.0", gpu="A10G")
-    .run_commands("pip install --no-build-isolation mamba-ssm==2.2.4", gpu="A10G"),
+    .run_commands("pip install --no-build-isolation mamba-ssm==2.2.4", gpu="A10G")
 )
 
 vol = modal.Volume.from_name("rna-repaired-panel-results", create_if_missing=True)
 
-MAIN_MODELS = ["rnafm", "rinalmo", "utrlm", "ernierna", "splicebert",
-               "nt", "hyenadna", "evo", "dnabert2"]
-AVAILABLE_MODELS = MAIN_MODELS + ["caduceus"]
+# Which image each model runs under. Evo and DNABERT-2 and Caduceus are one
+# model each, so they are named by the routing rather than listed.
+MULTIMOL_MODELS = ["rinalmo", "utrlm", "ernierna", "splicebert"]
+LEGACY_MODELS = ["rnafm", "nt", "hyenadna"]
+AVAILABLE_MODELS = MULTIMOL_MODELS + LEGACY_MODELS + ["evo", "dnabert2", "caduceus"]
+
 A100_MODELS = {"evo", "rinalmo"}
 # Three models have no CPU path. The Evo adapter refuses to put 7B parameters on
 # a CPU, mamba-ssm has no CPU kernel, and DNABERT-2's Triton attention asserts
@@ -146,10 +179,12 @@ def panel_stamp(families):
 def _allow_torch_load():
     """Let transformers 4.49 load a checkpoint under torch 2.1.2.
 
-    Copied from `modal_phase6_flashattn_models.py`. transformers refuses
-    `torch.load` below 2.6 over CVE-2025-32434, and torch is held at 2.1.2 for
-    Triton 2.1.0. Every model loaded here is one this project has already
-    loaded from the same pinned revision.
+    Copied from `modal_phase6_flashattn_models.py`, and reached only on the Evo
+    image: transformers refuses `torch.load` below torch 2.6 over
+    CVE-2025-32434, and Evo's torch is held at 2.1.2 by flash-attn. The other
+    three images are above the threshold and the attribute is absent, so this is
+    a no-op there. Evo is loaded from the same pinned revision this project has
+    loaded it from since July.
     """
     import transformers.modeling_utils as modeling_utils
     import transformers.utils.import_utils as import_utils
@@ -290,37 +325,58 @@ def _run_model(model_name, commit, phase6_only):
 
 
 def _smoke(model_name):
-    """Import, load the panel, load the model, score the six shortest families.
+    """Import, load the panel, load the model, score six families.
 
     Ten GPU containers that all die on the same missing package cost far more
     than one container that finds it. This runs the same import path, the same
     adapter load and the same device placement as the real thing.
+
+    Families are tried shortest-first until six score, rather than the six
+    shortest being taken outright. A 6-mer tokenizer resolves a 30-nucleotide
+    family into too few tokens to perturb, so NT scored none of the six shortest
+    and HyenaDNA one -- a property of the selection, which would have read here
+    as a broken container.
     """
     import os
     os.chdir("/root/project")
 
     from phase6_compensatory_mutation import load_rfam_families, run_phase6
 
-    families = load_rfam_families()
+    families = sorted(load_rfam_families(), key=lambda f: len(f["sequence"]))
     adapter, device = _load_on_device(model_name)
-    shortest = sorted(families, key=lambda f: len(f["sequence"]))[:6]
-    scored = run_phase6(adapter, shortest, device=device, compute_null=False)
-    ok = [n for n, r in scored["per_rna"].items() if not r.get("skipped")]
+    ok = []
+    for family in families:
+        scored = run_phase6(adapter, [family], device=device, compute_null=False)
+        if not scored["per_rna"][family["name"]].get("skipped"):
+            ok.append(family["name"])
+        if len(ok) == 6:
+            break
     print(f"{model_name}: {len(families)} families, loaded on {device}, scored {ok}")
     print(f"  libraries: {_library_versions()}")
     if not ok:
-        raise RuntimeError(f"{model_name} scored no family among the six shortest")
+        raise RuntimeError(f"{model_name} scored no family in the whole panel")
     return model_name
 
 
-@app.function(image=main_image, timeout=3600)
-def smoke_main(model_name: str):
+@app.function(image=multimol_image, timeout=3600)
+def smoke_multimol(model_name: str):
     return _smoke(model_name)
 
 
-@app.function(image=main_image, gpu="A10G", timeout=3600)
-def smoke_main_gpu(model_name: str):
-    """For the models on the main image with no CPU path."""
+@app.function(image=legacy_image, timeout=3600)
+def smoke_legacy(model_name: str):
+    return _smoke(model_name)
+
+
+@app.function(image=evo_image, gpu="A10G", timeout=3600)
+def smoke_evo(model_name: str = "evo"):
+    """On a GPU, because the Evo adapter refuses to place 7B parameters on a CPU."""
+    return _smoke(model_name)
+
+
+@app.function(image=dnabert2_image, gpu="A10G", timeout=3600)
+def smoke_dnabert2(model_name: str = "dnabert2"):
+    """On a GPU, because the bundled Triton attention asserts `q.is_cuda`."""
     return _smoke(model_name)
 
 
@@ -330,13 +386,28 @@ def smoke_caduceus(model_name: str = "caduceus"):
     return _smoke(model_name)
 
 
-@app.function(image=main_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
-def run_main_a10g(model_name: str, commit: str, phase6_only: bool = False):
+@app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
+def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False):
     return _run_model(model_name, commit, phase6_only)
 
 
-@app.function(image=main_image, gpu="A100", timeout=86400, volumes={"/results": vol})
-def run_main_a100(model_name: str, commit: str, phase6_only: bool = False):
+@app.function(image=multimol_image, gpu="A100", timeout=86400, volumes={"/results": vol})
+def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False):
+    return _run_model(model_name, commit, phase6_only)
+
+
+@app.function(image=legacy_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
+def run_legacy(model_name: str, commit: str, phase6_only: bool = False):
+    return _run_model(model_name, commit, phase6_only)
+
+
+@app.function(image=evo_image, gpu="A100", timeout=86400, volumes={"/results": vol})
+def run_evo(model_name: str, commit: str, phase6_only: bool = False):
+    return _run_model(model_name, commit, phase6_only)
+
+
+@app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
+def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False):
     return _run_model(model_name, commit, phase6_only)
 
 
@@ -347,11 +418,30 @@ def run_caduceus(model_name: str, commit: str, phase6_only: bool = False):
 
 def _route(model_name):
     """The (function, label) each model runs under."""
+    if model_name == "evo":
+        return run_evo, "evo/A100"
+    if model_name == "dnabert2":
+        return run_dnabert2, "dnabert2/A10G"
     if model_name == "caduceus":
         return run_caduceus, "caduceus/A10G"
+    if model_name in LEGACY_MODELS:
+        return run_legacy, "legacy/A10G"
     if model_name in A100_MODELS:
-        return run_main_a100, "main/A100"
-    return run_main_a10g, "main/A10G"
+        return run_multimol_a100, "multimol/A100"
+    return run_multimol_a10g, "multimol/A10G"
+
+
+def _smoke_route(model_name):
+    """The smoke function for a model, on its own image."""
+    if model_name == "evo":
+        return smoke_evo
+    if model_name == "dnabert2":
+        return smoke_dnabert2
+    if model_name == "caduceus":
+        return smoke_caduceus
+    if model_name in LEGACY_MODELS:
+        return smoke_legacy
+    return smoke_multimol
 
 
 @app.local_entrypoint()
@@ -372,17 +462,14 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
 
     if smoke_only:
         print(f"Smoke check, {len(requested)} models: {requested}")
-        # return_exceptions, so one broken adapter reports itself alongside the
-        # nine that work instead of hiding them behind its own traceback.
-        on_cpu = [m for m in requested
-                  if m in MAIN_MODELS and m not in GPU_SMOKE_MODELS]
-        outcomes = dict(zip(on_cpu, smoke_main.map(on_cpu, return_exceptions=True)))
-        for model_name in requested:
-            if model_name in on_cpu:
-                continue
-            fn = smoke_caduceus if model_name == "caduceus" else smoke_main_gpu
+        # Spawned rather than called, so one broken adapter reports itself
+        # alongside the nine that work instead of hiding them behind its own
+        # traceback, and so the four images build concurrently.
+        handles = {m: _smoke_route(m).spawn(m) for m in requested}
+        outcomes = {}
+        for model_name, handle in handles.items():
             try:
-                outcomes[model_name] = fn.remote(model_name)
+                outcomes[model_name] = handle.get()
             except Exception as exc:  # noqa: BLE001 -- reported, not swallowed
                 outcomes[model_name] = exc
 
