@@ -73,8 +73,17 @@ def main() -> int:
 
     matching = [label for label, s, l in PRINTED
                 if f"{stem_mean:.1f}" == f"{s:.1f}" and f"{loop_mean:.1f}" == f"{l:.1f}"]
-    assert len(matching) == 1, f"expected exactly one manuscript to match, got {matching}"
-    print(f"\nsource of record for the 52-family confound: {matching[0]}")
+    print()
+    if matching:
+        print(f"the annotations on this branch are the ones {matching[0]} was "
+              f"computed from")
+    else:
+        print("no manuscript reproduces from these annotations. On main this is "
+              "the expected\nstate: commit 5fc8914 corrected four family "
+              "annotations and no run has been\nrepeated, so results/ still "
+              "carries values computed against the pre-fix data.\nThe "
+              "as-submitted branch holds those annotations.")
+    assert len(matching) <= 1, f"two manuscripts cannot both match: {matching}"
     return 0
 
 
