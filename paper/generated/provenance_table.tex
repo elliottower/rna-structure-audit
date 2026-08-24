@@ -1,0 +1,30 @@
+% Written by scripts/generate_results_tables.py. Do not edit.
+\begin{table}[htbp]
+\centering
+\small
+\caption{Provenance for each run behind the results tables. Every run analyzes the same panel (SHA-256 \texttt{5c4d6f6d4c32}, 47 families, 5 withdrawn) under the same family-derived seeding. No single library stack loads all ten models, so the stack is given per run, and so is the commit.}
+\label{tab:provenance}
+\begin{tabular}{lllll}
+\toprule
+Model & Weights & Device & Commit & Library stack \\
+\midrule
+ERNIE-RNA & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+ERNIE-RNA (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+RiNALMo & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+RiNALMo (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+RNA-FM & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.4.1, transformers 4.44.2 \\
+RNA-FM (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.4.1, transformers 4.44.2 \\
+UTR-LM & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+UTR-LM (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+SpliceBERT & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+SpliceBERT (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.6.0, transformers 5.14.1, multimolecule 0.2.0 \\
+NT~v2 & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.4.1, transformers 4.44.2 \\
+NT~v2 (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.4.1, transformers 4.44.2 \\
+DNABERT-2 & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.4.0, transformers 4.28.0 \\
+DNABERT-2 (untrained) & randomized & cuda & \texttt{036fccb} & \footnotesize torch 2.4.0, transformers 4.28.0 \\
+HyenaDNA & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.4.1, transformers 4.44.2 \\
+Caduceus & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.4.1, transformers 4.44.2, multimolecule 0.2.0, mamba-ssm 2.2.4 \\
+Evo & pretrained & cuda & \texttt{2355a53} & \footnotesize torch 2.1.2, transformers 4.49.0, multimolecule 0.1.0, flash-attn 2.5.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
