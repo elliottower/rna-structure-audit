@@ -158,12 +158,21 @@ TRAINED_MODELS = MULTIMOL_MODELS + LEGACY_MODELS + ["evo", "dnabert2", "caduceus
 # Randomized-weight controls, by the procedure in
 # `modal_phase6_untrained_all.py`: the trained adapter is loaded and every
 # parameter re-initialized, so the architecture and the tokenizer are held and
-# only the learned weights are destroyed. Three, not ten, because these are the
-# three the manuscript compares against -- ERNIE-RNA carries an untrained row in
-# Rungs 1 and 3, RNA-FM one in Rung 1, and NT one in the attention table -- and
-# H10 and H11 are defined as trained-versus-untrained differences, so without
-# them two registered hypotheses have no result.
-UNTRAINED_MODELS = ["ernierna_untrained", "rnafm_untrained", "nt_untrained"]
+# only the learned weights are destroyed.
+#
+# Seven, not ten, and the seven are chosen by what a registered hypothesis or a
+# reported row needs rather than by symmetry. H10 (RNA-FM sign test), H11 (NT
+# attention, trained versus untrained), H14 and H15 (RiNALMo ratio and sign
+# test), H17 (ERNIE-RNA sign test), H19 (SpliceBERT ratio) and H20 (DNABERT-2
+# attention contrast) are all defined as a trained-versus-untrained difference,
+# so without the control the hypothesis has no result at all. UTR-LM carries no
+# such hypothesis but does carry an untrained row in the attention table.
+# HyenaDNA, Caduceus and Evo appear in no trained-versus-untrained comparison
+# the manuscript reports, and Evo's control would cost an A100 to produce a
+# number nothing reads.
+UNTRAINED_MODELS = ["ernierna_untrained", "rnafm_untrained", "nt_untrained",
+                    "rinalmo_untrained", "splicebert_untrained",
+                    "dnabert2_untrained", "utrlm_untrained"]
 RANDOM_INIT_SEED = 42
 
 AVAILABLE_MODELS = TRAINED_MODELS + UNTRAINED_MODELS
