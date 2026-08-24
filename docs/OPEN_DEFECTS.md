@@ -133,7 +133,30 @@ and only the cross-reference is dangling. The frozen document is not edited; see
 
 ---
 
-## Not yet checked
+## D9. The printed class breakdown describes a different panel
+
+**Detector:** `scripts/audit_panel_classes.py`
+
+`paper_v12.tex:215-218` gives the composition as tRNAs (7), rRNAs (4), ribozymes
+(6), riboswitches (8), snRNAs (5), cis-regulatory elements (9), miRNA precursors
+(5), CRISPR repeats (3), other ncRNAs (5). Five of those counts are wrong, and
+not as a matter of classification judgment — the filenames fix the membership:
+
+| class | printed | deposited |
+|---|---|---|
+| tRNAs | 7 | 2 |
+| rRNAs | 4 | 1 |
+| riboswitches | 8 | 14 |
+| CRISPR repeats | 3 | 1 |
+| miRNA precursors | 5 | 4 |
+
+The errors cancel and the list still sums to 52, which is how it survived
+proofreading. Same failure as D3: a description of the pilot panel carried into a
+manuscript about the expanded one.
+
+---
+
+## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing
   checks (`verify_paper_rung12_figures.py`, `verify_paper_phase6_figures.py`,
