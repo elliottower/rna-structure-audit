@@ -123,6 +123,9 @@ MAIN_MODELS = ["rnafm", "rinalmo", "utrlm", "ernierna",
                "splicebert", "nt", "hyenadna", "evo"]
 AVAILABLE_MODELS = MAIN_MODELS + ["dnabert2", "caduceus"]
 A100_MODELS = {"evo", "rinalmo"}
+# Two models have no CPU path at all: the Evo adapter raises rather than load 7B
+# parameters onto a CPU, and mamba-ssm has no CPU kernel. They smoke on a GPU.
+GPU_SMOKE_MODELS = {"evo", "caduceus"}
 
 
 def panel_stamp(families):
@@ -292,6 +295,12 @@ def smoke_dnabert2(model_name: str = "dnabert2"):
     return _smoke(model_name)
 
 
+@app.function(image=main_image, gpu="A10G", timeout=3600)
+def smoke_main_gpu(model_name: str):
+    """For the models on the main image that refuse to load without a GPU."""
+    return _smoke(model_name)
+
+
 @app.function(image=caduceus_image, gpu="A10G", timeout=3600)
 def smoke_caduceus(model_name: str = "caduceus"):
     """On a GPU, because mamba-ssm has no CPU kernel to fall back to."""
@@ -347,14 +356,37 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
 
     if smoke_only:
         print(f"Smoke check, {len(requested)} models: {requested}")
-        on_main = [m for m in requested if m in MAIN_MODELS]
-        if on_main:
-            for name in smoke_main.map(on_main, order_outputs=False):
-                print(f"  ok: {name}")
-        if "dnabert2" in requested:
-            print(f"  ok: {smoke_dnabert2.remote('dnabert2')}")
-        if "caduceus" in requested:
-            print(f"  ok: {smoke_caduceus.remote('caduceus')} (GPU)")
+        # return_exceptions, so one broken adapter reports itself alongside the
+        # nine that work instead of hiding them behind its own traceback.
+        on_cpu = [m for m in requested
+                  if m in MAIN_MODELS and m not in GPU_SMOKE_MODELS]
+        outcomes = dict(zip(on_cpu, smoke_main.map(on_cpu, return_exceptions=True)))
+        for model_name in requested:
+            if model_name in on_cpu:
+                continue
+            if model_name == "caduceus":
+                fn = smoke_caduceus
+            elif model_name in GPU_SMOKE_MODELS:
+                fn = smoke_main_gpu
+            else:
+                fn = smoke_dnabert2
+            try:
+                outcomes[model_name] = fn.remote(model_name)
+            except Exception as exc:  # noqa: BLE001 -- reported, not swallowed
+                outcomes[model_name] = exc
+
+        print()
+        failed = []
+        for model_name in requested:
+            result = outcomes.get(model_name)
+            if isinstance(result, BaseException):
+                failed.append(model_name)
+                print(f"  FAIL {model_name:12s} {type(result).__name__}: {result}")
+            else:
+                print(f"  ok   {model_name}")
+        if failed:
+            raise SystemExit(f"\n{len(failed)} of {len(requested)} failed: {failed}")
+        print(f"\nAll {len(requested)} models load and score.")
         return
 
     print(f"Repaired-panel re-run at {commit[:12]}, {len(requested)} models: {requested}")
