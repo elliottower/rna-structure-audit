@@ -694,6 +694,11 @@ def macros(runs: dict, rung3: dict) -> str:
     macro("provenanceRuns", str(len(runs)))
     macro("provenanceCommits",
           str(len({run["stamp"]["commit"] for run in runs.values()})))
+    # Counted from the versions themselves, not from the four image definitions
+    # in modal_repaired_panel.py: two images sharing a pin set would make the
+    # count of images wrong and the count of stacks right.
+    macro("provenanceStacks",
+          str(len({stack(run["stamp"]) for run in runs.values()})))
 
     for key, _short, _size, _domain, name in MODELS:
         stats_ = mutation_stats(runs[key], rng)
