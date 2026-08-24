@@ -1,0 +1,170 @@
+{
+  "rule": {
+    "defect_threshold": 0.25,
+    "max_non_canonical": 0.05,
+    "max_length_delta": 0.3
+  },
+  "n_deposited": 32,
+  "n_after": 36,
+  "rung12_now": 49,
+  "rung12_after": 47,
+  "rung12_removed": [
+    "5S_rRNA_ecoli",
+    "IRES_HCV_domainII",
+    "SRP_RNA_helix8"
+  ],
+  "rung12_returned": [
+    "hammerhead_ribozyme"
+  ],
+  "gate_deposited": 7,
+  "gate_after": 8,
+  "counts": {
+    "DEFER": 1,
+    "ADOPT MEMBER": 3,
+    "DROP": 4,
+    "ADOPT STRUCTURE": 1,
+    "NO REPAIR": 2
+  },
+  "decisions": [
+    {
+      "name": "5S_rRNA_ecoli",
+      "non_canonical_before": 0.7,
+      "length_before": 120,
+      "quarantined": false,
+      "excluded_post_hoc": false,
+      "rfam_id": "RF00001",
+      "disposition": "DEFER",
+      "reason": "the name asserts E. coli; RF00001's seed carries no E. coli member; a substitute would leave the name false, and the stored sequence needs an annotation from outside the seed alignment"
+    },
+    {
+      "name": "HDV_ribozyme",
+      "non_canonical_before": 0.5769,
+      "length_before": 85,
+      "quarantined": false,
+      "excluded_post_hoc": false,
+      "rfam_id": "RF00094",
+      "disposition": "ADOPT MEMBER",
+      "accession": "AF209859.1/689-775",
+      "reason": "closest clean RF00094 member by length (2% apart)",
+      "sequence": "UGGCCGGCAUGGUCCCAGCCUCCUCGUCGGCGCCGGCCGGGCAACAUUCCGAGGGGACCGUCCCUCGGUAAUGGCGAAUGGGACCCA",
+      "dot_bracket": ".(((((((.........(((........))))))))))......(((((((((((.(...)))))))).))))..............",
+      "length_after": 87,
+      "non_canonical_after": 0.0,
+      "n_wc": 22,
+      "n_eligible": 13,
+      "qualifies": true
+    },
+    {
+      "name": "IRES_HCV_domainII",
+      "non_canonical_before": 0.5517,
+      "length_before": 86,
+      "quarantined": false,
+      "excluded_post_hoc": false,
+      "rfam_id": "RF00061",
+      "disposition": "DROP",
+      "reason": "the name asserts domain II of the HCV IRES, not the whole IRES; every seed member is a whole molecule"
+    },
+    {
+      "name": "RNaseP_specificity",
+      "non_canonical_before": 0.5769,
+      "length_before": 94,
+      "quarantined": false,
+      "excluded_post_hoc": true,
+      "rfam_id": "RF00010",
+      "disposition": "DROP",
+      "reason": "the name asserts the specificity domain of RNase P, not the whole RNA; every seed member is a whole molecule"
+    },
+    {
+      "name": "SAM_riboswitch",
+      "non_canonical_before": 0.5161,
+      "length_before": 119,
+      "quarantined": false,
+      "excluded_post_hoc": false,
+      "rfam_id": "RF00162",
+      "disposition": "ADOPT STRUCTURE",
+      "accession": "URS000080DDBE_1423/1-119",
+      "reason": "the stored sequence is this seed member exactly; only the structure was fabricated",
+      "sequence": "GUUCUUAUCAAGAGAAGCAGAGGGACUGGCCCGACGAAGCUUCAGCAACCGGUGUAAUGGCGAAAGCCAUGACCAAGGUGCUAAAUCCAGCAAGCUCGAACAGCUUGGAAGAUAAGAAC",
+      "dot_bracket": "(.(((((((....(((((...(((.....)))......)))))((((.((((((................))))..))))))...(....((((((.....))))))..)))))))).)",
+      "length_after": 119,
+      "non_canonical_after": 0.0303,
+      "n_wc": 32,
+      "n_eligible": 16,
+      "qualifies": true
+    },
+    {
+      "name": "SRP_RNA_helix8",
+      "non_canonical_before": 0.7742,
+      "length_before": 90,
+      "quarantined": false,
+      "excluded_post_hoc": false,
+      "rfam_id": "RF00017",
+      "disposition": "DROP",
+      "reason": "no RF00017 member projects to a structure under 5% non-canonical"
+    },
+    {
+      "name": "TPP_riboswitch",
+      "non_canonical_before": 0.5714,
+      "length_before": 104,
+      "quarantined": false,
+      "excluded_post_hoc": false,
+      "rfam_id": "RF00059",
+      "disposition": "ADOPT MEMBER",
+      "accession": "AARF01000324.1/6363-6261",
+      "reason": "closest clean RF00059 member by length (1% apart)",
+      "sequence": "UUUUUUCACUAGGGGCGCCCGUACGGGCUGAGACAGAAUGGUUUCUGGACCCUUUGAACCUGAUCUGGAUUAUACCAGCGUAGGAAAGUGGGAAUGCAUGAAU",
+      "dot_bracket": ".....(((((((((.((((((..)))))......(((((..))))))..)))).....((((..((((......))))..))))..)))))............",
+      "length_after": 103,
+      "non_canonical_after": 0.0357,
+      "n_wc": 25,
+      "n_eligible": 12,
+      "qualifies": true
+    },
+    {
+      "name": "U2_snRNA_stem",
+      "non_canonical_before": 0.5385,
+      "length_before": 83,
+      "quarantined": false,
+      "excluded_post_hoc": true,
+      "rfam_id": "RF00004",
+      "disposition": "DROP",
+      "reason": "the name asserts a stem of U2 snRNA, not the whole snRNA; every seed member is a whole molecule"
+    },
+    {
+      "name": "hammerhead_ribozyme",
+      "non_canonical_before": 0.4444,
+      "length_before": 38,
+      "quarantined": false,
+      "excluded_post_hoc": true,
+      "rfam_id": "RF00163",
+      "disposition": "ADOPT MEMBER",
+      "accession": "AF036748.1/120-164",
+      "reason": "closest clean RF00163 member by length (18% apart)",
+      "sequence": "AUCCAGCUGACGAGUCCUAAAUAGGGUGAAACGCGCGUCCUGGAU",
+      "dot_bracket": "((((((.......((((......))))...(((()))).))))))",
+      "length_after": 45,
+      "non_canonical_after": 0.0,
+      "n_wc": 12,
+      "n_eligible": 6,
+      "qualifies": false
+    },
+    {
+      "name": "tRNA_Ala_human",
+      "non_canonical_before": 0.2381,
+      "length_before": 75,
+      "quarantined": true,
+      "excluded_post_hoc": false,
+      "disposition": "NO REPAIR",
+      "reason": "24% non-canonical; the annotation describes its own sequence"
+    },
+    {
+      "name": "tRNA_Phe_yeast",
+      "non_canonical_before": 0.0,
+      "length_before": 76,
+      "quarantined": true,
+      "excluded_post_hoc": false,
+      "disposition": "NO REPAIR",
+      "reason": "0% non-canonical; the annotation describes its own sequence"
+    }
+  ]
+}

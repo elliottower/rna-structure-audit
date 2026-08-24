@@ -13,11 +13,211 @@ Preregistrations governing this work, with sha256 of each frozen document:
 
 ---
 
+---
+
+## 2026-08-24 — Unattributed annotations repaired; confirmatory set moves to N = 36 and the H1(a) gate to 8
+
+**Registration:** `PREREGISTRATION_PHASE6_V2.md` (2026-07-13, SHA `c19aa59`).
+
+**Written before the re-run.** No model has been run against any repaired
+annotation. This entry fixes the repair rule, the disposition of every affected
+record, the resulting N, the resulting gate and the reporting plan in advance of
+any result computed under them. `scripts/repair_annotations.py` reproduces every
+disposition below and writes `docs/annotation_repair_manifest.json`.
+
+**What was found.** A dot-bracket annotation that belongs to its sequence pairs
+almost only Watson-Crick and GU; one copied onto a different sequence pairs
+whatever sits at those positions. `scripts/audit_annotation_validity.py` computes
+that fraction for all 52 families. The 41 records naming an Rfam seed member
+reach at most 18% non-canonical pairs. Of the 11 naming none, nine run 24-77%.
+The two groups do not overlap, and the criterion reads no model output, so the
+detection is independent of any outcome.
+
+**The rule**, applied in order to all 11 records naming no seed member:
+
+1. Annotation at most 25% non-canonical — **no repair**; it describes its own sequence.
+2. Sequence is an exact seed member — **adopt structure**; the sequence is kept byte for byte.
+3. No member of the family projects to a structure under 5% non-canonical — **drop**.
+4. The name asserts a subdomain — **drop**; every seed member is a whole molecule.
+5. The name asserts an organism the seed cannot supply — **defer**; a substitute would leave the name false.
+6. Closest clean member differs in length by more than 30% — **drop**.
+7. Otherwise **adopt member**, the one closest in length among members at most 5% non-canonical.
+
+Rule 6's threshold sits in an empty band: the candidates produce length
+differences of 0, 1, 2, 18, 71, 210 and 269 percent, so every threshold between
+18 and 71 partitions them identically. Rules 4 and 5 are the only ones reading
+anything but the data, and the claim each name makes is written out in the script.
+
+**Dispositions.**
+
+| family | disposition | length | non-canonical | Rung 3 after |
+|---|---|---|---|---|
+| SAM_riboswitch | adopt structure | 119 → 119 | 52% → 3% | qualifies |
+| HDV_ribozyme | adopt member | 85 → 87 | 58% → 0% | qualifies |
+| TPP_riboswitch | adopt member | 104 → 103 | 57% → 4% | qualifies |
+| hammerhead_ribozyme | adopt member | 38 → 45 | 44% → 0% | no (12 WC pairs) |
+| 5S_rRNA_ecoli | defer | 120 | 70% | — |
+| IRES_HCV_domainII | drop | 86 | 55% | — |
+| SRP_RNA_helix8 | drop | 90 | 77% | — |
+| RNaseP_specificity | drop | 94 | 58% | — |
+| U2_snRNA_stem | drop | 83 | 54% | — |
+| tRNA_Ala_human | no repair | 75 | 24% | quarantined |
+| tRNA_Phe_yeast | no repair | 76 | 0% | quarantined |
+
+`5S_rRNA_ecoli` is deferred rather than substituted because RF00001's seed carries
+no *E. coli* member: the stored sequence is 120 nt and shares 92% of its 8-mers
+with a seed member, so it is genuine 5S rRNA, and replacing it would leave the
+family name asserting an organism the record no longer holds. Repairing it needs
+an annotation for the sequence actually stored, which a seed alignment cannot
+supply.
+
+**The rule is applied to all eleven, not to the six inside the analysis.** The
+three families excluded post hoc for unbalanced brackets were excluded on the
+strength of the same defective annotations, so that exclusion was not independent
+of the defect; `hammerhead_ribozyme` returns to the Rungs 1-2 panel under a valid
+annotation. The two quarantined families are a separate matter: `PREREGISTRATION_PHASE6_V2.md`
+lines 13 and 147 quarantine them because pilot values were observed under a weaker
+metric before the registration was written, which is foreknowledge and not data
+quality. `tRNA_Phe_yeast`'s annotation is 0% non-canonical. Both quarantines stand
+on their original grounds.
+
+**Consequence for the registered set.** Applying the frozen eligibility criteria
+to the repaired annotations, `HDV_ribozyme`, `SAM_riboswitch` and
+`TPP_riboswitch` become eligible — their fabricated structures pair so
+non-canonically that they carried 6, 13 and 8 Watson-Crick pairs against a
+threshold of 15, and their repaired structures carry 22, 32 and 25. With
+`mir_21_precursor`, entering under the correction recorded below, the confirmatory
+set moves from N = 32 to N = 36. The Rungs 1-2 panel moves from 49 families to 47:
+`5S_rRNA_ecoli`, `IRES_HCV_domainII` and `SRP_RNA_helix8` leave, `hammerhead_ribozyme`
+returns.
+
+**No registered rule changed.** The eligibility criteria — at least 15 canonical
+WC pairs, stems of at least 3 consecutive WC pairs, the two terminal pairs of each
+stem excluded, at least 5 eligible interior pairs remaining — are as frozen, and
+`scripts/repair_annotations.py` applies them through the analysis package's own
+`_parse_stems` and `_get_eligible_pairs` rather than restating them.
+`PREREGISTRATION_PHASE6_V2.md:29` states in advance that "the exact count of
+eligible families depends on data quality," and the document nowhere enumerates
+the confirmatory families by name.
+
+**The registered decision threshold moves.** H1 condition (a) is the only
+confirmatory criterion carrying N: exceedances must reach `ceil(4 × 0.05 × N)`.
+That is `ceil(6.4) = 7` at N = 32 and `ceil(7.2) = 8` at N = 36. H1(b), H2 and H3
+fix their thresholds independently of N. `scripts/check_registered_n_sensitivity.py`
+recomputes the gate at all three counts.
+
+**The direction of the correction.** Every repair moves a family into eligibility
+and none out, and the gate rises. A rising gate makes H1 harder to satisfy, which
+is the direction favoring the negative reading this work reports elsewhere. That
+is the configuration in which motivated data cleaning would appear, and no
+argument made afterwards distinguishes it from the honest case. What is offered
+instead is the order of operations: the criterion that flagged the defect reads no
+model output, the repair rule was written before it was applied and applied
+uniformly, and this entry precedes the re-run in the commit history.
+
+**What the correction can and cannot move.** H1(a) cannot flip. Every null here is
+a within-family derangement, so a family's exceedance flag does not depend on
+which other families are present, and no repair removes a scored family — none of
+the eleven carries a scored Rung 3 record. The stored counts are 28 of 29 for
+RiNALMo and 28 of 30 for ERNIE-RNA, both clearing the raised gate of 8 by 20, and
+entering families can only raise them. H1(b) is a Wilcoxon across families and has
+no such argument: the entering families can move it either way, and its outcome is
+left open.
+
+**Reporting.** The manuscript reports the analysis as run on the repaired data,
+N = 36, and states the H1(a) verdict at both the registered gate of 7 and the
+raised gate of 8 in the main text. A supplementary panel table gives all 52
+families with Rfam accession, seed member and length, and records the disposition
+of each repaired record. This supersedes the reporting decision in the entry
+below, which was taken when the correction moved N by one and left the gate
+unchanged: a correction that leaves the decision threshold in place is a defect in
+the inputs and the corrected number stands alone, while a correction that moves
+the threshold raises a robustness question the reader is entitled to see answered.
+
+**Residual exposure.** Families enter a confirmatory set after results for the
+others were known. The eligibility rule was frozen, is mechanical, and is applied
+by committed code; this entry predates the entering families being scored; the
+gate change is shown not to affect H1(a) by an argument that does not depend on
+their values. None of that makes the sequence invisible, and it is stated rather
+than argued away. `5S_rRNA_ecoli` is left unrepaired and out of the panel, so the
+panel is smaller than the one registered for reasons this record carries.
+
+---
+
+## 2026-08-24 — Phase 6 confirmatory set moves from 32 families to 33
+
+**Registration:** `PREREGISTRATION_PHASE6_V2.md` (2026-07-13, SHA `c19aa59`).
+
+**What changed.** Commit `5fc8914` replaced the annotations for
+`mir_122_precursor`, `mir_155_precursor`, `mir_21_precursor` and
+`mir_let7_precursor`. Before it, the first three carried one byte-identical
+sequence and dot-bracket — `K02350.1/1-119`, an RF00001 (5S ribosomal RNA) seed
+member — under three microRNA names, and the fourth carried a hand-made 72-nt
+hairpin also labeled RF00001. All four now carry their own Rfam seed members
+(RF00684, RF00731, RF00658, RF00027) and all 52 families are distinct.
+
+**Consequence for the registered set.** Applying the frozen eligibility criteria
+to the corrected annotations, `mir_21_precursor` becomes eligible: 16 canonical
+Watson-Crick pairs, 3 stems, 7 eligible interior pairs, against thresholds of 15
+and 5. Eligible families move from 34 to 35 and the confirmatory set from N = 32
+to N = 33. The other three corrected families were eligible before and remain
+eligible. The quarantine is untouched: `tRNA_Phe_yeast` and `tRNA_Ala_human` were
+not among the four.
+
+**No registered rule changed.** The eligibility criteria — at least 15 canonical
+WC pairs, stems of at least 3 consecutive WC pairs, the two terminal pairs of each
+stem excluded, at least 5 eligible interior pairs remaining — are as frozen.
+`scripts/scope_rerun.py` applies them through the analysis package's own
+`_parse_stems` and `_get_eligible_pairs` rather than restating them, so the
+eligibility determination is made by the same code that made it at N = 32.
+`PREREGISTRATION_PHASE6_V2.md:29` states in advance that "the exact count of
+eligible families depends on data quality," and the document nowhere enumerates
+the 32 families by name.
+
+**The registered decision threshold does not move.** H1 condition (a) is the only
+confirmatory criterion carrying N: exceedances must reach `ceil(4 × 0.05 × N)`.
+That is `ceil(6.4) = 7` at N = 32 and `ceil(6.6) = 7` at N = 33. H1(b), H2 and H3
+fix their thresholds independently of N. `scripts/check_registered_n_sensitivity.py`
+recomputes both.
+
+**Timing.** This entry is written before any model has been run against the
+corrected annotations. `mir_21_precursor` has no computed PS value under the
+preregistered metric at the time of writing, so the registration's closing
+statement — "PS is fully a priori across all families" — still holds for the
+family entering the set.
+
+**Reporting.** The manuscript reports the analysis as run on the deposited data:
+N = 33, derived from the registered criteria. The superseded count is not printed.
+The registration's both-counts convention at line 79 covers the primary and
+independently-max'd nulls, which are two defensible readings of the same data; a
+count computed from annotations that were wrong is not a second reading, and
+printing it beside the correct one would ask a reader to adjudicate a defect in
+the inputs. This record and `docs/CHANGELOG.md` carry the correction.
+
+**Residual exposure.** A family enters a confirmatory set after results for the
+other 32 were known. The eligibility rule was frozen, is mechanical, and is
+applied by committed code, and this entry predates the family being scored; none
+of that makes the sequence invisible, and it is stated rather than argued away.
+
+**Defect in the frozen document.** `PREREGISTRATION_PHASE6_V2.md:29` refers to a
+"Families Pending" section that the document does not contain. The eligibility
+criteria are stated in full at lines 29–37 and in the kill criteria at lines
+128–131, so nothing is missing from the plan; the cross-reference points at a
+section that was never written. The frozen file is left as it stands.
+
+**Status of the stored results.** Every file in `results/` was computed against
+the superseded annotations and none has been re-run. Until the four families are
+re-evaluated, `data/` and `results/` are inconsistent. See `docs/CHANGELOG.md`
+for what moves and by how much, and `scripts/audit_duplicate_families.py` to
+reproduce it.
+
+---
+
 ## Data corrections (2026-08-23)
 
 **Three family files were duplicates of a fourth.** `mir_122_precursor.json`,
 `mir_155_precursor.json` and `mir_let7_precursor.json` in `data/rfam_families/`
-contained byte-identical sequence and structure, all labelled `RF00001` (5S rRNA)
+contained byte-identical sequence and structure, all labeled `RF00001` (5S rRNA)
 with source `K02350.1/1-119`. They were counted as three independent families in
 every exceedance count, every bootstrap resample over families, and every binomial
 test. The defect is visible in the stored results: six models return bit-identical
@@ -28,7 +228,7 @@ mir-122 `RF00684`, mir-155 `RF00731`. Protocol, hypotheses and decision threshol
 are unchanged; only the input data is corrected.
 
 **mir-21 carried the wrong accession and an unbalanced structure.**
-`mir_21_precursor.json` held a genuine mir-21 sequence but was labelled `RF00001`
+`mir_21_precursor.json` held a genuine mir-21 sequence but was labeled `RF00001`
 and its dot-bracket had 33 opening against 29 closing brackets, which placed it
 among the three families excluded post hoc for unbalanced annotations. Rebuilt from
 `RF00658`.
