@@ -100,6 +100,40 @@ See the [Bring Your Own Model tutorial](notebooks/bring_your_own_model.ipynb) fo
 2. **Dinucleotide null** — Of families passing Rung 1, how many survive when the null is stratified by dinucleotide context?
 3. **Partner specificity** — When position i is mutated, is perturbation at its base-pairing partner j greater than at j's stem-adjacent neighbors? Controlled by within-stem derangement null.
 
+## The paper and its verification
+
+The manuscript is [`paper/paper_v12.pdf`](paper/paper_v12.pdf). Every figure it
+prints in Tables 1, 2 and 5 is re-derived from `results/` by a script in
+`scripts/`, so the paper can be checked against the data without re-running a
+model:
+
+```bash
+for s in verify_paper_rung12_figures verify_paper_phase6_figures \
+         verify_artifact_regenerates audit_attention_rho check_freeze_order; do
+    uv run --no-project --with numpy --with scipy --with tqdm --python 3.12 \
+        python "scripts/$s.py"
+done
+```
+
+| Script | What it checks |
+|--------|----------------|
+| `verify_paper_rung12_figures.py` | every mean ratio, interval, exceedance count and retention rate in Tables 1 and 2, against `results/bootstrap_cis.json` |
+| `verify_paper_phase6_figures.py` | Table 5 and the Rung 3 prose figures, recomputed from the per-family values with the two quarantined families excluded |
+| `verify_artifact_regenerates.py` | the deposited artifact against the per-family inputs, leaf by leaf |
+| `audit_attention_rho.py` | each attention correlation in Table 1 against the run that produced it |
+| `check_freeze_order.py` | that no run is dated before the preregistration it is reported against |
+
+The three scripts that read the manuscript resolve the highest-numbered
+`paper/paper_vN.tex`, so they cannot silently keep checking a superseded
+version; the two `verify_paper_*` scripts also accept an explicit path.
+
+`verify_artifact_regenerates.py` re-runs the bootstrap over the per-family
+result files and compares 269 leaf values against the deposited
+`results/bootstrap_cis.json`. `docs/provenance.md` records what was measured,
+what changed, and which file settled it. The preregistrations are at the
+repository root and in `preregistration/`; `docs/sha_map.md` maps the commit
+ids frozen documents quote to their present-day equivalents.
+
 ## Citation
 
 Tower, E. (2026). A Three-Rung Evaluation of RNA Structure Awareness in Foundation Models.

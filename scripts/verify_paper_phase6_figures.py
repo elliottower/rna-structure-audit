@@ -1,7 +1,9 @@
 """Check every Phase 6 figure in the manuscript against the stored results.
 
 Run:  uv run --no-project --with scipy --python 3.12 python \
-          scripts/verify_paper_phase6_figures.py [paper/paper_v11.tex]
+          scripts/verify_paper_phase6_figures.py [paper/paper_vN.tex]
+
+With no argument it checks the highest-numbered manuscript in paper/.
 
 Table 5 is parsed out of the .tex and each cell is recomputed from the
 per-family values in results/, with the two quarantined families excluded as
