@@ -17,3 +17,6 @@ __pycache__/
 cover-letter.tex
 cover_letter*.tex
 submissions/README.md
+
+# superseded volume pulls: kept for comparison, never deposited
+results/superseded_volume/

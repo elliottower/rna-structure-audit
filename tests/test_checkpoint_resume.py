@@ -88,7 +88,8 @@ def test_phase6_resume_matches_uninterrupted_run(scored_families, tmp_path):
     resumed = run_phase6(StubAdapter(), scored_families, compute_null=True,
                          checkpoint=FamilyCheckpoint(path))
 
-    assert json.loads(path.read_text()).keys() == {f["name"] for f in scored_families}
+    assert json.loads(path.read_text())["done"].keys() == {
+        f["name"] for f in scored_families}
     assert resumed == straight
 
 
@@ -116,7 +117,7 @@ def test_a_crash_leaves_the_finished_families_recoverable(scored_families, tmp_p
         run_phase6(exploding, scored_families, compute_null=True,
                    checkpoint=FamilyCheckpoint(path))
 
-    salvaged = json.loads(path.read_text())
+    salvaged = json.loads(path.read_text())["done"]
     assert set(salvaged) == {scored_families[0]["name"]}, (
         "the crash should leave exactly the family that finished before it")
 
@@ -124,3 +125,75 @@ def test_a_crash_leaves_the_finished_families_recoverable(scored_families, tmp_p
                          checkpoint=FamilyCheckpoint(path))
     straight = run_phase6(StubAdapter(), scored_families, compute_null=True)
     assert resumed == straight
+
+
+def _poison(value):
+    """Every number replaced, so a resumed shard cannot match by coincidence."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return 999.0
+    if isinstance(value, dict):
+        return {k: _poison(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_poison(v) for v in value]
+    return value
+
+
+def _write_shards(path, families, stamp):
+    run_phase6(StubAdapter(), families, compute_null=True,
+               checkpoint=FamilyCheckpoint(path, stamp=stamp))
+    stored = json.loads(path.read_text())
+    stored["done"] = _poison(stored["done"])
+    path.write_text(json.dumps(stored))
+    return stored["done"]
+
+
+def test_shards_from_a_different_stamp_do_not_reach_the_result(scored_families, tmp_path):
+    path = tmp_path / "phase6.json"
+    poisoned = _write_shards(path, scored_families[:1],
+                             {"commit": "aaa", "libraries": {"torch": "2.1.2"}})
+    assert poisoned, "the fixture must leave a shard for the guard to discard"
+
+    resumed = run_phase6(StubAdapter(), scored_families, compute_null=True,
+                         checkpoint=FamilyCheckpoint(
+                             path, stamp={"commit": "bbb", "libraries": {"torch": "2.1.2"}}))
+    straight = run_phase6(StubAdapter(), scored_families, compute_null=True)
+    assert resumed == straight
+
+
+def test_a_library_version_alone_discards_the_shards(scored_families, tmp_path):
+    path = tmp_path / "phase6.json"
+    _write_shards(path, scored_families[:1],
+                  {"commit": "aaa", "libraries": {"torch": "2.1.2"}})
+
+    resumed = run_phase6(StubAdapter(), scored_families, compute_null=True,
+                         checkpoint=FamilyCheckpoint(
+                             path, stamp={"commit": "aaa", "libraries": {"torch": "2.4.1"}}))
+    straight = run_phase6(StubAdapter(), scored_families, compute_null=True)
+    assert resumed == straight
+
+
+def test_shards_written_before_stamps_existed_are_discarded(scored_families, tmp_path):
+    path = tmp_path / "phase6.json"
+    run_phase6(StubAdapter(), scored_families[:1], compute_null=True,
+               checkpoint=FamilyCheckpoint(path))
+    assert "stamp" not in json.loads(path.read_text()) or \
+        json.loads(path.read_text())["stamp"] is None
+
+    resumed = run_phase6(StubAdapter(), scored_families, compute_null=True,
+                         checkpoint=FamilyCheckpoint(path, stamp={"commit": "aaa"}))
+    straight = run_phase6(StubAdapter(), scored_families, compute_null=True)
+    assert resumed == straight
+
+
+def test_a_matching_stamp_still_resumes(scored_families, tmp_path):
+    path = tmp_path / "phase6.json"
+    stamp = {"commit": "aaa", "libraries": {"torch": "2.1.2"}}
+    poisoned = _write_shards(path, scored_families[:1], stamp)
+
+    resumed = run_phase6(StubAdapter(), scored_families, compute_null=True,
+                         checkpoint=FamilyCheckpoint(path, stamp=stamp))
+    first = scored_families[0]["name"]
+    assert resumed["per_rna"][first] == poisoned[first], (
+        "an unchanged stamp must reuse the stored shard rather than recompute it")
