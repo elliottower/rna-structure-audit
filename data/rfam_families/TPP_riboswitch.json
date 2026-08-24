@@ -1,8 +1,8 @@
 {
   "name": "TPP_riboswitch",
-  "sequence": "GCGUUCCUAUAAUGUUGAUAUGGAUUUGAUUAACAGAAGAUCGGCGAACCUGCAUUAAAGAGAGCGGACGGAUUAAUAGUCUGAUCACGAAGUCGAGAAUUCCC",
-  "dot_bracket": "..(((((((..((((.........)))).(((((.((.......)).)))))....(((((...(((((.........)))))...))))).))))))).....",
-  "source": "Phase 1 curated (PDB/Rfam)",
+  "sequence": "UUUUUUCACUAGGGGCGCCCGUACGGGCUGAGACAGAAUGGUUUCUGGACCCUUUGAACCUGAUCUGGAUUAUACCAGCGUAGGAAAGUGGGAAUGCAUGAAU",
+  "dot_bracket": ".....(((((((((.((((((..)))))......(((((..))))))..)))).....((((..((((......))))..))))..)))))............",
+  "source": "Rfam RF00059 seed alignment member (AARF01000324.1/6363-6261)",
   "rfam_id": "RF00059",
-  "length": 104
+  "length": 103
 }

@@ -251,22 +251,38 @@ def main() -> int:
         print("\n  Dry run. No family record was written. Pass --apply to write.")
         return 0
 
-    written = 0
+    repaired, withdrawn = 0, 0
     for d in decisions:
-        if d["disposition"] not in ("ADOPT STRUCTURE", "ADOPT MEMBER"):
-            continue
         path = FAMILIES / f"{d['name']}.json"
         record = json.loads(path.read_text())
-        record["sequence"] = d["sequence"]
-        record["dot_bracket"] = d["dot_bracket"]
-        record["length"] = len(d["sequence"])
-        record["rfam_id"] = d["rfam_id"]
-        record["source"] = (f"Rfam {d['rfam_id']} seed alignment member "
-                            f"({d['accession']})")
+        if d["disposition"] in ("ADOPT STRUCTURE", "ADOPT MEMBER"):
+            record["sequence"] = d["sequence"]
+            record["dot_bracket"] = d["dot_bracket"]
+            record["length"] = len(d["sequence"])
+            record["rfam_id"] = d["rfam_id"]
+            record["source"] = (f"Rfam {d['rfam_id']} seed alignment member "
+                                f"({d['accession']})")
+            record.pop("excluded", None)
+            repaired += 1
+        elif d["disposition"] in ("DROP", "DEFER"):
+            # The record stays on disk -- it is the evidence for the drop -- and
+            # carries the exclusion so that `load_rfam_families` skips it. A
+            # deleted file and an excluded one look identical to a reader.
+            record["excluded"] = {"reason": d["reason"],
+                                  "rule": d["disposition"],
+                                  "logged": "DEVIATIONS.md, 2026-08-24"}
+            withdrawn += 1
+        else:
+            continue
         path.write_text(json.dumps(record, indent=2) + "\n")
-        written += 1
-    print(f"\n  wrote {written} repaired records into "
-          f"{FAMILIES.relative_to(REPO)}/")
+
+    # 52 records on disk, five excluded, and the Rungs 1-2 panel is what loads.
+    loaded = sum(1 for f in FAMILIES.glob("*.json")
+                 if "excluded" not in json.loads(f.read_text()))
+    assert loaded == rung12_after, f"{loaded} load, panel says {rung12_after}"
+    print(f"\n  wrote {repaired} repaired and {withdrawn} withdrawn records "
+          f"into {FAMILIES.relative_to(REPO)}/")
+    print(f"  {loaded} of {len(list(FAMILIES.glob('*.json')))} families now load")
     return 0
 
 

@@ -4,5 +4,10 @@
   "dot_bracket": "........((((((.((((((((..((((((........))))))...)))))))).........((((((.......)))))).))))))",
   "source": "Phase 1 curated (PDB/Rfam)",
   "rfam_id": "RF00010",
-  "length": 94
+  "length": 94,
+  "excluded": {
+    "reason": "the name asserts the specificity domain of RNase P, not the whole RNA; every seed member is a whole molecule",
+    "rule": "DROP",
+    "logged": "DEVIATIONS.md, 2026-08-24"
+  }
 }

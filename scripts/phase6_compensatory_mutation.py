@@ -398,6 +398,10 @@ def load_rfam_families(family_names=None):
                 fam = json.load(fh)
             if family_names and fam["name"] not in family_names:
                 continue
+            # Records whose annotation could not be repaired against the Rfam
+            # seed alignment carry an `excluded` block; see DEVIATIONS.md.
+            if "excluded" in fam:
+                continue
             families.append(fam)
         return families
     raise FileNotFoundError(f"No rfam_families directory at {rfam_dir}.")

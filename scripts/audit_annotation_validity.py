@@ -29,6 +29,16 @@ QUARANTINE = {"tRNA_Phe_yeast", "tRNA_Ala_human"}
 EXCLUDED_POST_HOC = {"U2_snRNA_stem", "hammerhead_ribozyme", "RNaseP_specificity"}
 
 
+def withdrawn_families() -> set[str]:
+    """Families carrying an `excluded` block, written by repair_annotations.py.
+
+    The block is what `load_rfam_families` reads, so this is the same set the
+    pipeline sees, not a second list that can drift from it.
+    """
+    return {json.loads(f.read_text())["name"] for f in FAMILIES.glob("*.json")
+            if "excluded" in json.loads(f.read_text())}
+
+
 def pairs_of(structure: str) -> list[tuple[int, int]]:
     stack, pairs = [], []
     for i, char in enumerate(structure):
@@ -72,6 +82,7 @@ def rung3_membership() -> dict[str, str]:
 
 
 def main() -> None:
+    withdrawn = withdrawn_families()
     rows = []
     for path in sorted(FAMILIES.glob("*.json")):
         record = json.loads(path.read_text())
@@ -89,6 +100,8 @@ def main() -> None:
             status.append("quarantined")
         if name in EXCLUDED_POST_HOC:
             status.append("excluded post hoc")
+        if name in withdrawn:
+            status.append("withdrawn, unrepairable")
         print(f"  {name:<28}{fraction:>7.0%}{n_pairs:>7}  "
               f"{'named' if traced else 'ABSENT':<11}{', '.join(status)}")
 
@@ -101,7 +114,8 @@ def main() -> None:
 
     scored = rung3_membership()
     live = [(f, n) for f, n, _, _ in rows
-            if f > 0.25 and n not in EXCLUDED_POST_HOC and n not in QUARANTINE]
+            if f > 0.25 and n not in EXCLUDED_POST_HOC and n not in QUARANTINE
+            and n not in withdrawn]
     print(f"\n  families above 25% that are neither excluded nor quarantined, and "
           f"so are\n  inside the reported analysis: {len(live)}")
     for fraction, name in live:

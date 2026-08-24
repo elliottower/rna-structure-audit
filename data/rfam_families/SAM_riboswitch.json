@@ -1,8 +1,8 @@
 {
   "name": "SAM_riboswitch",
   "sequence": "GUUCUUAUCAAGAGAAGCAGAGGGACUGGCCCGACGAAGCUUCAGCAACCGGUGUAAUGGCGAAAGCCAUGACCAAGGUGCUAAAUCCAGCAAGCUCGAACAGCUUGGAAGAUAAGAAC",
-  "dot_bracket": "(((((((..((((..........)))).(((((.((...((((....((((....))))..........))))..)).))))).......(((((.......)))))))))))).....",
-  "source": "Phase 1 curated (PDB/Rfam)",
+  "dot_bracket": "(.(((((((....(((((...(((.....)))......)))))((((.((((((................))))..))))))...(....((((((.....))))))..)))))))).)",
+  "source": "Rfam RF00162 seed alignment member (URS000080DDBE_1423/1-119)",
   "rfam_id": "RF00162",
   "length": 119
 }
