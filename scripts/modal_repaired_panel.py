@@ -153,7 +153,20 @@ vol = modal.Volume.from_name("rna-repaired-panel-results", create_if_missing=Tru
 # model each, so they are named by the routing rather than listed.
 MULTIMOL_MODELS = ["rinalmo", "utrlm", "ernierna", "splicebert"]
 LEGACY_MODELS = ["rnafm", "nt", "hyenadna"]
-AVAILABLE_MODELS = MULTIMOL_MODELS + LEGACY_MODELS + ["evo", "dnabert2", "caduceus"]
+TRAINED_MODELS = MULTIMOL_MODELS + LEGACY_MODELS + ["evo", "dnabert2", "caduceus"]
+
+# Randomized-weight controls, by the procedure in
+# `modal_phase6_untrained_all.py`: the trained adapter is loaded and every
+# parameter re-initialized, so the architecture and the tokenizer are held and
+# only the learned weights are destroyed. Three, not ten, because these are the
+# three the manuscript compares against -- ERNIE-RNA carries an untrained row in
+# Rungs 1 and 3, RNA-FM one in Rung 1, and NT one in the attention table -- and
+# H10 and H11 are defined as trained-versus-untrained differences, so without
+# them two registered hypotheses have no result.
+UNTRAINED_MODELS = ["ernierna_untrained", "rnafm_untrained", "nt_untrained"]
+RANDOM_INIT_SEED = 42
+
+AVAILABLE_MODELS = TRAINED_MODELS + UNTRAINED_MODELS
 
 A100_MODELS = {"evo", "rinalmo"}
 # Three models have no CPU path. The Evo adapter refuses to put 7B parameters on
@@ -161,6 +174,11 @@ A100_MODELS = {"evo", "rinalmo"}
 # `q.is_cuda`. They smoke on a GPU; the rest smoke on a CPU for a tenth of the
 # cost.
 GPU_SMOKE_MODELS = {"evo", "dnabert2", "caduceus"}
+
+
+def base_model(model_name):
+    """The adapter a run loads, with any control suffix removed."""
+    return model_name[:-len("_untrained")] if model_name.endswith("_untrained") else model_name
 
 
 def panel_stamp(families):
@@ -212,16 +230,47 @@ def _library_versions():
     return out
 
 
+def _randomize(model, seed):
+    """Destroy the learned weights and keep the architecture.
+
+    Verbatim from `modal_phase6_untrained_all.py`, with the torch generator
+    seeded as well: that script seeded numpy, and every initializer it calls
+    draws from torch's generator, so its controls were not reproducible. Nothing
+    carries over from those runs, so seeding here costs no comparability.
+    """
+    import torch
+
+    torch.manual_seed(seed)
+    before = sum(p.numel() for p in model.parameters())
+    with torch.no_grad():
+        for _, param in model.named_parameters():
+            if param.dim() >= 2:
+                torch.nn.init.xavier_normal_(param)
+            else:
+                torch.nn.init.normal_(param, std=0.02)
+    after = sum(p.numel() for p in model.parameters())
+    assert before == after, "parameter count changed during randomization"
+    return after
+
+
 def _load_on_device(model_name):
-    """Adapter, loaded and moved, with the device it landed on."""
+    """Adapter, loaded and moved, with the device it landed on.
+
+    A `_untrained` suffix loads the trained adapter and then re-initializes it,
+    which is what makes the control a control: same tokenizer, same shapes, same
+    forward, no learned weights.
+    """
     import torch
 
     from phase6_compensatory_mutation import load_adapter
 
     _allow_torch_load()
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    adapter = load_adapter(model_name)
+    adapter = load_adapter(base_model(model_name))
     adapter.load()
+    if model_name.endswith("_untrained"):
+        n = _randomize(adapter.model, RANDOM_INIT_SEED)
+        print(f"  randomized {n:,} parameters at seed {RANDOM_INIT_SEED}")
     if getattr(adapter, "model", None) is not None and device == "cuda":
         adapter.model = adapter.model.to(device)
     return adapter, device
@@ -265,6 +314,9 @@ def _run_model(model_name, commit, phase6_only):
         "deviation": "DEVIATIONS.md, 2026-08-24",
         "libraries": _library_versions(),
         "device": device,
+        "weights": ("randomized, xavier_normal_ on matrices and normal_(0, 0.02) "
+                    f"on vectors, seed {RANDOM_INIT_SEED}"
+                    if model_name.endswith("_untrained") else "pretrained"),
     }
     print(f"[{now()}] {model_name}: {len(families)} families, panel "
           f"{stamp['panel_sha256'][:12]}, withdrawn {withdrawn}")
@@ -309,13 +361,13 @@ def _run_model(model_name, commit, phase6_only):
 
     print(f"[{now()}] {model_name}: phase 6 perturbation specificity")
     phase6 = run_phase6(adapter, families, device=device, compute_null=True,
-                        offset=ADAPTER_OFFSETS.get(model_name, 0),
+                        offset=ADAPTER_OFFSETS.get(base_model(model_name), 0),
                         checkpoint=checkpoint("phase6"))
     save(f"{model_name}_phase6_ps.json",
          {"phase": 6, "metric": "perturbation_specificity",
           "preregistration": "PREREGISTRATION_PHASE6_V2.md",
-          "offset": ADAPTER_OFFSETS.get(model_name, 0),
-          "tokenizer_caveated": model_name in NON_CHARACTER_TOKENIZERS,
+          "offset": ADAPTER_OFFSETS.get(base_model(model_name), 0),
+          "tokenizer_caveated": base_model(model_name) in NON_CHARACTER_TOKENIZERS,
           "results": phase6})
     print(f"[{now()}] {model_name} COMPLETE. mean PS {phase6.get('mean_best_ps')}, "
           f"confirmatory {phase6.get('families_total')}, "
@@ -417,7 +469,8 @@ def run_caduceus(model_name: str, commit: str, phase6_only: bool = False):
 
 
 def _route(model_name):
-    """The (function, label) each model runs under."""
+    """The (function, label) each model runs under, chosen by its adapter."""
+    model_name = base_model(model_name)
     if model_name == "evo":
         return run_evo, "evo/A100"
     if model_name == "dnabert2":
@@ -433,6 +486,7 @@ def _route(model_name):
 
 def _smoke_route(model_name):
     """The smoke function for a model, on its own image."""
+    model_name = base_model(model_name)
     if model_name == "evo":
         return smoke_evo
     if model_name == "dnabert2":
@@ -461,7 +515,11 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
         raise SystemExit(f"Unknown models: {unknown}")
 
     if smoke_only:
-        print(f"Smoke check, {len(requested)} models: {requested}")
+        # A control loads the same adapter on the same image as its trained
+        # counterpart, so smoking both twice buys nothing.
+        requested = sorted({base_model(m) for m in requested},
+                           key=lambda m: AVAILABLE_MODELS.index(m))
+        print(f"Smoke check, {len(requested)} adapters: {requested}")
         # Spawned rather than called, so one broken adapter reports itself
         # alongside the nine that work instead of hiding them behind its own
         # traceback, and so the four images build concurrently.
