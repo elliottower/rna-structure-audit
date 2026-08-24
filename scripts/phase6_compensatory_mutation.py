@@ -600,13 +600,9 @@ def main():
                         help="Skip null computation (for quick testing)")
     parser.add_argument("--offset", type=int, default=None,
                         help="Override token offset (default: per-adapter lookup)")
-    parser.add_argument("--seed", type=int, default=42,
-                        help="Random seed for derangement null (saved in output)")
     parser.add_argument("--allow-non-character", action="store_true",
                         help="Run non-character tokenizers (NT, DNABERT-2) with caveated results")
     args = parser.parse_args()
-
-    np.random.seed(args.seed)
 
     DATA_OUT.mkdir(parents=True, exist_ok=True)
     families = load_rfam_families(args.families)
@@ -641,7 +637,7 @@ def main():
             "metric": "perturbation_specificity",
             "preregistration": "PREREGISTRATION_PHASE6_V2.md",
             "offset": offset,
-            "seed": args.seed,
+            "seeding": "family_seed.family_rng, derived from the family name",
             "tokenizer_caveated": tokenizer_caveated,
             "results": trained_results,
         }
