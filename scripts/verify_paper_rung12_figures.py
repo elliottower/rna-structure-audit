@@ -64,7 +64,7 @@ def matches(printed: str, value: float) -> bool:
 
 
 def main(argv: list) -> int:
-    paper = Path(argv[1]) if len(argv) > 1 else DEFAULT_PAPER
+    paper = Path(argv[1]).resolve() if len(argv) > 1 else DEFAULT_PAPER
     text = paper.read_text()
     models = json.loads(ARTIFACT.read_text())["models"]
     print(f"checking {paper.relative_to(REPO)} against "

@@ -136,4 +136,6 @@ ids frozen documents quote to their present-day equivalents.
 
 ## Citation
 
-Tower, E. (2026). A Three-Rung Evaluation of RNA Structure Awareness in Foundation Models.
+Tower, E. (2026). A Graded Evaluation of RNA Structure Awareness in Foundation
+Models: From Stem-Loop Discrimination to Partner Specificity. Zenodo.
+https://doi.org/10.5281/zenodo.21362717

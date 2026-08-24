@@ -12,3 +12,8 @@ __pycache__/
 *.nav
 *.snm
 *.toc
+
+# submission correspondence stays out of the public repo
+cover-letter.tex
+cover_letter*.tex
+submissions/README.md
