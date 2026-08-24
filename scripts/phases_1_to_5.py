@@ -10,6 +10,7 @@ import math
 
 import numpy as np
 
+from family_checkpoint import FamilyCheckpoint, no_checkpoint
 from family_seed import family_rng
 from scipy import stats
 from scipy.spatial.distance import cosine
@@ -175,7 +176,7 @@ def _extract_dnabert2_attention(model, tokens):
 
 
 def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
-                             n_permutations=1000):
+                             n_permutations=1000, checkpoint=None):
     """Mutation sensitivity ratio with composition-controlled null.
 
     Returns per-family best_ratio, nucleotide-stratified null, dinucleotide null.
@@ -184,12 +185,16 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
 
     results = {"model": model_key, "metric": "mutation_sensitivity",
                "n_permutations": n_permutations, "per_rna": {}}
-    all_ratios = []
+    ckpt = checkpoint if checkpoint is not None else no_checkpoint()
 
     for rna_idx, rna in enumerate(tqdm(families, desc=f"Phase 1-5 [{model_key}]")):
+        if rna["name"] in ckpt.done:
+            results["per_rna"][rna["name"]] = ckpt.done[rna["name"]]
+            continue
         valid, reason = _validate_rna(rna)
         if not valid:
             results["per_rna"][rna["name"]] = {"skipped": reason}
+            ckpt.record(rna["name"], {"skipped": reason})
             continue
 
         seq = rna["sequence"]
@@ -336,8 +341,13 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
             rna_result["exceeds_dinuc_null"] = best_ratio > dinuc_null_95th
 
         results["per_rna"][rna["name"]] = rna_result
-        all_ratios.append(best_ratio)
+        ckpt.record(rna["name"], rna_result)
 
+    # Read back from per_rna rather than accumulating in the loop: a resumed
+    # run never executes the loop body for a checkpointed family, so a list
+    # appended in the loop would hold only the families this container did.
+    all_ratios = [r["best_ratio"] for r in results["per_rna"].values()
+                  if "best_ratio" in r]
     results["mean_best_ratio"] = float(np.mean(all_ratios)) if all_ratios else 0.0
     results["median_best_ratio"] = float(np.median(all_ratios)) if all_ratios else 0.0
     n_exceed = sum(1 for r in results["per_rna"].values() if r.get("exceeds_nuc_null"))
@@ -346,20 +356,25 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
     return results
 
 
-def run_attention_contact(adapter, model_key, families, device="cuda"):
+def run_attention_contact(adapter, model_key, families, device="cuda", checkpoint=None):
     """Attention-contact Spearman correlation."""
     import torch
 
     results = {"model": model_key, "metric": "attention_contact", "per_rna": {}}
+    ckpt = checkpoint if checkpoint is not None else no_checkpoint()
 
     if model_key not in ATTENTION_MODELS:
         results["skipped"] = "no attention (SSM architecture)"
         return results
 
     for rna in tqdm(families, desc=f"Attention [{model_key}]"):
+        if rna["name"] in ckpt.done:
+            results["per_rna"][rna["name"]] = ckpt.done[rna["name"]]
+            continue
         valid, reason = _validate_rna(rna)
         if not valid:
             results["per_rna"][rna["name"]] = {"skipped": reason}
+            ckpt.record(rna["name"], {"skipped": reason})
             continue
 
         seq = rna["sequence"]
@@ -380,6 +395,7 @@ def run_attention_contact(adapter, model_key, families, device="cuda"):
 
         if attentions is None:
             results["per_rna"][rna["name"]] = {"skipped": "no attention returned"}
+            ckpt.record(rna["name"], {"skipped": "no attention returned"})
             continue
 
         contact_map = _parse_structure_to_contacts(db)
@@ -418,9 +434,9 @@ def run_attention_contact(adapter, model_key, families, device="cuda"):
                     best_corr = float(rho)
                     best_layer = layer_idx
 
-        results["per_rna"][rna["name"]] = {
-            "best_corr": best_corr, "best_layer": best_layer,
-        }
+        entry = {"best_corr": best_corr, "best_layer": best_layer}
+        results["per_rna"][rna["name"]] = entry
+        ckpt.record(rna["name"], entry)
 
     return results
 

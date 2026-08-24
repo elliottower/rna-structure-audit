@@ -24,6 +24,7 @@ import torch
 from scipy import stats
 from tqdm import tqdm
 
+from family_checkpoint import FamilyCheckpoint, no_checkpoint
 from family_seed import family_rng
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -467,42 +468,51 @@ def load_adapter(model_name):
     return adapters[model_name]()
 
 
-def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
+def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0,
+               checkpoint=None):
     results = {"per_rna": {}}
+    ckpt = checkpoint if checkpoint is not None else no_checkpoint()
+
+    def record(name, entry):
+        results["per_rna"][name] = entry
+        ckpt.record(name, entry)
 
     for fam in tqdm(families, desc=f"Phase 6 [{adapter.name}]"):
         name = fam["name"]
+        if name in ckpt.done:
+            results["per_rna"][name] = ckpt.done[name]
+            continue
         seq = fam["sequence"]
         db = fam["dot_bracket"]
         quarantined = name in QUARANTINED
 
         if len(seq) != len(db):
-            results["per_rna"][name] = {
+            record(name, {
                 "skipped": True,
                 "reason": f"sequence/dot_bracket length mismatch ({len(seq)} vs {len(db)})",
-            }
+            })
             continue
 
         stems = parse_stems(db, seq)
         n_wc_total = sum(len(s) for s in stems)
 
         if n_wc_total < 15:
-            results["per_rna"][name] = {
+            record(name, {
                 "skipped": True,
                 "reason": f"< 15 WC pairs ({n_wc_total} found)",
                 "n_wc_pairs_total": n_wc_total,
-            }
+            })
             continue
 
         eligible = get_eligible_pairs(seq, stems)
 
         if len(eligible) < 5:
-            results["per_rna"][name] = {
+            record(name, {
                 "skipped": True,
                 "reason": f"< 5 eligible interior pairs ({len(eligible)} found)",
                 "n_wc_pairs_total": n_wc_total,
                 "n_stems": len(stems),
-            }
+            })
             continue
 
         delta_profiles, stem_pos, loop_pos, n_layers = compute_delta_profiles(
@@ -511,7 +521,7 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
 
         ps_result = compute_ps_from_deltas(eligible, delta_profiles, n_layers)
         if ps_result is None:
-            results["per_rna"][name] = {"skipped": True, "reason": "no valid PS values"}
+            record(name, {"skipped": True, "reason": "no valid PS values"})
             continue
 
         best_layer = ps_result["best_layer"]
@@ -553,7 +563,7 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
                 entry["exceeds_null_primary"] = None
                 entry["exceeds_null_conservative"] = None
 
-        results["per_rna"][name] = entry
+        record(name, entry)
 
     active = {k: v for k, v in results["per_rna"].items()
               if not v.get("skipped") and not v.get("quarantined")
