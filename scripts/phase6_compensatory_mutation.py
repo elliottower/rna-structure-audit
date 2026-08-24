@@ -26,6 +26,7 @@ from tqdm import tqdm
 
 from family_checkpoint import FamilyCheckpoint, no_checkpoint
 from family_seed import family_rng
+from token_spans import content_spans, nucleotide_rows
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -49,6 +50,24 @@ ADAPTER_OFFSETS = {
     "dnabert2": 0,
 }
 NON_CHARACTER_TOKENIZERS = {"nt", "dnabert2"}
+SUBWORD_RESOLUTIONS = {"6mer", "bpe"}
+
+
+def _row_map(adapter, sequence):
+    """Hidden-state row holding each nucleotide, or None when rows are nucleotides.
+
+    Reading `emb[k]` for nucleotide `k` is right only for the eight models
+    that emit one token per nucleotide. NT v2 puts six nucleotides in a token,
+    so a 106-nucleotide family has about eighteen rows and every partner
+    position in a stem falls past the end of the array; the bounds check below
+    then drops the pair, and a family that loses all of its pairs is recorded
+    as having no valid PS values. That discarded 34 of NT v2's 38 qualifying
+    families and 30 of DNABERT-2's; see docs/OPEN_DEFECTS.md, D13.
+    """
+    if getattr(adapter, "token_resolution", "nucleotide") not in SUBWORD_RESOLUTIONS:
+        return None
+    spans = content_spans(adapter.tokenizer, sequence.replace("U", "T"))
+    return nucleotide_rows(spans, len(sequence))
 
 
 def parse_dot_bracket(db_string):
@@ -142,6 +161,7 @@ def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device=
     tokens_wt = adapter.tokenize(sequence).to(device)
     layers_wt = adapter.get_all_layer_embeddings(tokens_wt)
     n_layers = len(layers_wt)
+    rows_wt = _row_map(adapter, sequence)
 
     all_positions = set(range(len(sequence)))
     stem_positions = set()
@@ -165,6 +185,7 @@ def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device=
         seq_mut = complement_swap(sequence, pos_i)
         tokens_mut = adapter.tokenize(seq_mut).to(device)
         layers_mut = adapter.get_all_layer_embeddings(tokens_mut)
+        rows_mut = None if rows_wt is None else _row_map(adapter, seq_mut)
 
         for layer_idx in range(n_layers):
             emb_wt = layers_wt[layer_idx]
@@ -181,9 +202,12 @@ def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device=
 
             deltas_this_layer = {}
             for k in positions_needed:
-                k_off = k + offset
-                if k_off < emb_wt.shape[0] and k_off < emb_mut.shape[0]:
-                    deltas_this_layer[k] = cosine_distance(emb_wt[k_off], emb_mut[k_off])
+                if rows_wt is None:
+                    k_wt = k_mut = k + offset
+                else:
+                    k_wt, k_mut = int(rows_wt[k]), int(rows_mut[k])
+                if k_wt < emb_wt.shape[0] and k_mut < emb_mut.shape[0]:
+                    deltas_this_layer[k] = cosine_distance(emb_wt[k_wt], emb_mut[k_mut])
 
             for pidx in pair_indices:
                 delta_profiles[pidx][layer_idx] = deltas_this_layer

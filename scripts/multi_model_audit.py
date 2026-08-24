@@ -32,6 +32,8 @@ from scipy.linalg import subspace_angles
 from sklearn.decomposition import PCA
 from tqdm import tqdm
 
+from token_spans import content_bounds
+
 REPEAT_COUNTS = [10, 15, 18, 21, 24, 27, 30, 36, 40, 50, 60, 80]
 WT_REPEATS = 21
 FLANK_SIZE = 50
@@ -152,6 +154,8 @@ class RNAFMAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
+        # `tokenize` above builds the ids as [2] + nucleotides + [3], so the
+        # brackets are this file's own and the slice cannot drift.
         return [hs[0, 1:-1, :] for hs in out.hidden_states]
 
 
@@ -188,11 +192,12 @@ class NTAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        # Strip CLS/EOS, expand 6-mer tokens to per-nucleotide by repeating
+        # NT v2 emits <cls> and no closing token, so the rows that carry
+        # sequence are found from the tokenization rather than assumed.
         layers = []
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
         for hs in out.hidden_states:
-            emb = hs[0, 1:-1, :]  # strip special tokens
-            layers.append(emb)
+            layers.append(hs[0, start:stop, :])
         return layers
 
 
@@ -353,7 +358,8 @@ class RiNALMoAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── UTR-LM adapter ───────────────────────────────────────────────────────────
@@ -384,7 +390,8 @@ class UTRLMAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── ERNIE-RNA adapter ────────────────────────────────────────────────────────
@@ -415,7 +422,8 @@ class ERNIERNAAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── SpliceBERT adapter ───────────────────────────────────────────────────────
@@ -446,7 +454,8 @@ class SpliceBERTAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── DNABERT-2 adapter ────────────────────────────────────────────────────────
@@ -485,7 +494,8 @@ class DNABERT2Adapter(ModelAdapter):
         last_hidden = out.last_hidden_state if hasattr(out, 'last_hidden_state') else (out[0] if isinstance(out, tuple) else out)
         if last_hidden.dim() == 2:
             last_hidden = last_hidden.unsqueeze(0)
-        return [last_hidden[0, 1:-1, :]]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [last_hidden[0, start:stop, :]]
 
 
 # ── HTT mRNA variant construction ───────────────────────────────────────────

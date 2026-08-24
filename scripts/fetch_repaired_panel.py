@@ -29,8 +29,11 @@ VOLUME = "rna-repaired-panel-results"
 # What a finished directory holds, by the kind of run it is. `<key>` stands for
 # the directory name, which is also the prefix every stage writes under.
 EXPECTED = {
-    "transversion": ["<key>.json", "stamp.json"],
-    "run": ["<key>_phases_1_to_5.json", "<key>_phase6_ps.json", "stamp.json"],
+    # A transversion directory is named `<model>_transversion`, so `<key>`
+    # already carries the suffix the runner puts in the file name.
+    "transversion": ["<key>.json", "<key>_positions.json", "stamp.json"],
+    "run": ["<key>_phases_1_to_5.json", "<key>_rung1_positions.json",
+            "<key>_phase6_ps.json", "stamp.json"],
 }
 
 

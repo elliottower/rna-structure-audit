@@ -378,6 +378,17 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         return FamilyCheckpoint(out_dir / f"_shards_{stage}.json", stamp=stamp,
                                 on_write=vol.commit)
 
+    def positions(stage):
+        """Per-position distances, written as a shard file that is kept.
+
+        Same machinery as a checkpoint -- atomic write, volume commit, stamp
+        guard -- because the requirement is the same: a container reclaimed
+        after thirty families must not take the thirty with it. The file is a
+        deliverable rather than scratch, so it is named for the run.
+        """
+        return FamilyCheckpoint(out_dir / f"{model_name}_{stage}_positions.json",
+                                stamp=stamp, on_write=vol.commit)
+
     def save(name, payload):
         payload = {"model": model_name, "stamp": stamp,
                    "completed": now(), **payload}
@@ -399,7 +410,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         # name, so a file read on its own still says which substitution produced
         # it.
         mutation = run_mutation_sensitivity(adapter, key, families, device=device,
-                                            checkpoint=checkpoint("transversion"))
+                                            checkpoint=checkpoint("transversion"),
+                                            positions=positions("transversion"))
         save(f"{model_name}_transversion.json",
              {"experiment": "transversion_control",
               "complement": TRANSVERSION_COMPLEMENT,
@@ -413,7 +425,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         print(f"[{now()}] {model_name}: mutation sensitivity")
         mutation = run_mutation_sensitivity(adapter, key, families,
                                             device=device,
-                                            checkpoint=checkpoint("mutation"))
+                                            checkpoint=checkpoint("mutation"),
+                                            positions=positions("rung1"))
         print(f"[{now()}] {model_name}: attention-contact")
         attention = run_attention_contact(adapter, key, families, device=device,
                                           checkpoint=checkpoint("attention"))

@@ -295,6 +295,95 @@ and D11.
 
 ---
 
+## D13. Rung 3 reads the hidden state at the nucleotide index, whatever the tokenizer emits
+
+**Detector:** `scripts/audit_rung3_token_alignment.py`
+
+`compute_delta_profiles` (`scripts/phase6_compensatory_mutation.py:153`) reads
+`emb[k + offset]` for nucleotide *k*, with `offset = 0` for every model in the
+panel. For the eight models that emit one token per nucleotide a row is a
+position and the read is right. NT v2 puts six nucleotides in a token, so a
+106-nucleotide family has about eighteen rows; the partner position *j* of a
+stem pair sits in the second half of the molecule and is past the end of that
+array. The bounds test then drops the pair, and a family that loses all of its
+pairs is written out as `"no valid PS values"` -- the same `skipped` field a
+registered filter writes, so the loss reads as a filter in the stored file.
+
+Over the 38 of 47 analyzed families that clear the registered Rung 3 filters:
+
+| | NT v2 | DNABERT-2 | RiNALMo |
+|---|---|---|---|
+| families keeping at least one pair | 4 | 8 | 38 |
+| eligible pairs scored | 16 of 583 (2.7%) | 28 of 583 (4.8%) | 583 of 583 |
+| median distance from a scored position to the nearer edge of the token read for it | 110 nt | 124 nt | 0 |
+| largest such distance | 230 nt | 264 nt | 0 |
+
+Recomputing which pairs clear the bounds test, from the two tokenizers and the
+panel alone, reproduces the deposited scored/skipped partition exactly for both
+models. The detector loads no weights.
+
+**Consequence for the reported result.** NT v2's and DNABERT-2's Rung 3 values
+are computed on 2.7% and 4.8% of their pairs, read from tokens describing a
+different part of the molecule, over 4 and 8 families. Three confirmatory
+hypotheses use them. H1 asks whether at least one model reaches mean PS > 0 with
+enough families exceeding their own null; restoring coverage can only add
+candidates. H2 compares RNA-pretrained against DNA-pretrained mean PS, and two of
+the five DNA-pretrained models are these two, so the correction moves the
+comparison the manuscript's claim rests on and can move it either way. H3's
+per-pair precision is a mean over families that these two models barely populate.
+
+The command-line entry point refuses both models unless `--allow-non-character`
+is passed (`NON_CHARACTER_TOKENIZERS`, `scripts/phase6_compensatory_mutation.py:52`).
+`scripts/modal_repaired_panel.py` calls `run_phase6` directly and does not reach
+that guard, which is how the deposited values were produced.
+
+**Fix.** Map each nucleotide to the row holding it, from the tokenizer's own
+spans (`scripts/token_spans.py`), for adapters whose `token_resolution` is a
+subword scheme. Written and under test; the values change only when the pass
+that fixes D10 to D12 runs.
+
+---
+
+## D14. NT v2's last content token is discarded in every family
+
+**Detector:** `scripts/audit_special_token_slices.py`
+
+`NTAdapter.get_all_layer_embeddings` sliced `hs[0, 1:-1, :]` under a comment
+reading "Strip CLS/EOS". NT v2's tokenizer emits `<cls>` and nothing after the
+sequence, in all 47 families, so the trailing element of that slice is a content
+token rather than a special one:
+
+| | leading specials | trailing specials | `1:-1` |
+|---|---|---|---|
+| NT v2 | 1 in 47 of 47 | 0 in 47 of 47 | drops a content token |
+| DNABERT-2 | 1 in 47 of 47 | 1 in 47 of 47 | correct |
+
+Across the panel that removes 92 nucleotides' worth of embedding rows, in every
+family. The four multimolecule RNA tokenizers cannot be loaded in either stack
+the detector runs under; it names them as unmeasured rather than passing them.
+
+**Consequence for the reported result.** Every NT v2 number in the paper reads a
+hidden state one row short. Rungs 1 and 2 place positions into that array through
+the D11 expansion, whose tail clamping already touches the same region. Rung 3
+loses a further row on top of D13. The attention rung takes the same slice, and
+NT v2's contact correlation of 0.242 -- the highest in the panel, and the value
+H11 is decided on -- is computed on it.
+
+**Fix.** Every adapter that slices now takes its bounds from its own
+tokenization (`content_bounds`, `scripts/token_spans.py`) instead of a constant.
+Correctness stops depending on knowing each wrapper's convention, and an
+unexpected layout raises instead of silently misaligning. RNA-FM builds its ids
+in this repository and keeps its literal slice, with the reason written at the
+call site.
+
+**A canary weakens.** The four multimolecule models' slices move from hardcoded
+to derived in the same change. Their results are bit-identical across re-runs
+only if their tokenizers bracket symmetrically, which could not be checked on the
+machine available. NT v2's results will move; a move in the other four is the
+measurement, not a regression.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

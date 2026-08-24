@@ -15,6 +15,64 @@ Preregistrations governing this work, with sha256 of each frozen document:
 
 ---
 
+## 2026-08-24 — Two further defects: Rung 3 scored 2.7% of NT v2's pairs, and NT v2 lost an embedding row in every family
+
+**Registrations:** `PREREGISTRATION_PHASE6_V2.md` (H1, H2, H3),
+`docs/PREREGISTRATION_EXPANDED_RFAM.md` (H11).
+
+**Written before the re-run.** Both defects were found while preparing the pass
+that fixes D10 to D12, and no model has been run against either fix. The
+measurements, the registered decisions each defect touches and the direction each
+correction can move them are fixed here in advance of any value computed under
+them. `scripts/audit_rung3_token_alignment.py` and
+`scripts/audit_special_token_slices.py` reproduce every number below and load no
+model weights.
+
+**D13. Rung 3 reads the hidden state at the nucleotide index for every model.**
+`compute_delta_profiles` reads `emb[k + offset]` for nucleotide *k* with
+`offset = 0` throughout. Eight models emit one token per nucleotide and the read
+is right. NT v2 emits about one row per six nucleotides, so the partner position
+of a stem pair is past the end of the array; the pair is dropped by the bounds
+test and a family that loses all of its pairs is recorded as `"no valid PS
+values"`, the same field a registered filter writes. Of the 38 families clearing
+the registered Rung 3 filters, NT v2 keeps 4 and DNABERT-2 keeps 8. NT v2's
+reported Rung 3 rests on 16 of 583 eligible pairs and DNABERT-2's on 28, each
+read from a token whose nearer edge is a median of 110 and 124 nucleotides from
+the position it stands for. Recomputing the bounds test from the two tokenizers and
+the panel reproduces the deposited scored/skipped partition exactly. The
+corrected read maps each nucleotide to its row through the tokenizer's spans.
+
+**D14. NT v2's adapter stripped a content token as though it were a separator.**
+NT v2's tokenizer emits `<cls>` and nothing after the sequence, in all 47
+families, and `NTAdapter.get_all_layer_embeddings` sliced `hs[0, 1:-1, :]`. The
+last content token of every family is discarded, 92 nucleotides across the panel,
+in all rungs including attention. DNABERT-2 brackets symmetrically and is
+unaffected. Every adapter now derives its slice from its own tokenization.
+
+**Which registered decisions move.** H1 (at least one model reaching mean PS > 0
+with enough families exceeding their own derangement null), H2 (RNA-pretrained
+mean PS above DNA-pretrained, rank-biserial > 0.5) and H3 (per-pair precision
+above 1/3) are all computed over models that include NT v2 and DNABERT-2, and
+D13 restores those two models from 4 and 8 families to their full qualifying set.
+H11 (NT v2 attention correlation above 0.15 trained and below 0.05 untrained;
+observed 0.242 and 0.246) reads a hidden state D14 shortens. No other registered
+decision reads either model's Rung 3.
+
+**The direction of these corrections.** D13 runs against what this work reports.
+Two of the five DNA-pretrained models in H2 are the two whose coverage was near
+zero, and the registration already anticipated that multi-nucleotide tokens would
+dilute their PS -- the defect is not dilution but near-total loss, and restoring
+the pairs can only raise the DNA-pretrained side of a comparison the manuscript
+argues goes the other way. H1 becomes easier to pass, since restoring coverage
+adds candidates and removes none. D14's direction is not predictable: an extra
+row changes NT v2's per-layer distances in both arms of every ratio.
+
+**Cost.** Neither defect needs a pass of its own. Both live in the embedding
+read, so both are fixed in the single pass over the 17 runs that D10 to D12
+already require.
+
+---
+
 ## 2026-08-24 — Three defects in the Rungs 1-2 pipeline; the affected numbers are held for one re-run
 
 **Registrations:** `docs/PREREGISTRATION_EXPANDED_RFAM.md` (H6b, H7, H11),

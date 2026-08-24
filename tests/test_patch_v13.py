@@ -7,6 +7,7 @@ execute, which is the worst moment to discover it. `build` is separated from
 `main` so these run without the generated tables or the results on disk.
 """
 
+import ast
 import importlib.util
 import re
 from pathlib import Path
@@ -97,24 +98,42 @@ def test_replace_table_refuses_a_label_it_cannot_find_once():
         patch.replace_table(V12, "tab:does_not_exist", "whatever")
 
 
-def test_the_patch_introduces_macros_and_names_them_consistently():
-    used = patch.macros_used()
-    assert used, "the patch replaces hand-carried numbers with macros; it uses none"
-    assert used == {name for name in used if name.startswith(("panel", "provenance"))}, \
-        "an unexpected macro family: the two checks below only cover these two"
+def test_the_patch_replaces_hand_carried_numbers_with_macros():
+    assert patch.macros_used()
 
 
-def test_every_panel_macro_is_one_the_panel_generator_defines():
+def _results_generator_macros():
+    """Every name `generate_results_tables.py` can emit, its templates expanded.
+
+    Most are written as `macro(f"prefix{name}")` inside a loop over the models,
+    so a pattern matching only literal names sees a tenth of them, and a check
+    built on one would pass while the manuscript picked up an undefined control
+    sequence.
+
+    The expansion is generous: a prefix written inside a loop over some of the
+    models expands over all ten. So this catches a name no generator writes at
+    all, without the results on disk, and `main` catches the rest against the
+    files the generators actually produced.
+    """
+    source = (REPO / "scripts" / "generate_results_tables.py").read_text()
+    models = next(ast.literal_eval(node.value)
+                  for node in ast.parse(source).body
+                  if isinstance(node, ast.Assign)
+                  and node.targets[0].id == "MODELS")
+    suffixes = [macro_suffix for *_, macro_suffix in models]
+
+    names = set(re.findall(r'macro\("([a-zA-Z]+)"', source))
+    for prefix in re.findall(r'macro\(f"([a-zA-Z]+)\{', source):
+        names.update(prefix + suffix for suffix in suffixes)
+    return names
+
+
+def test_every_macro_the_patch_writes_is_one_a_generator_defines():
     # panel_description.tex is on disk already -- it is computed from
-    # data/rfam_families/ and needs no GPU run.
-    defined = set(re.findall(r"\\newcommand\{\\([a-zA-Z]+)\}",
-                             (REPO / "paper/generated/panel_description.tex").read_text()))
-    assert {n for n in patch.macros_used() if n.startswith("panel")} <= defined
-
-
-def test_every_provenance_macro_is_one_the_results_generator_writes():
-    # Not on disk until the runs land, so the check is against the literal
-    # macro("name", ...) calls that write it.
-    source = (REPO / "scripts/generate_results_tables.py").read_text()
-    written = set(re.findall(r'macro\("([a-zA-Z]+)"', source))
-    assert {n for n in patch.macros_used() if n.startswith("provenance")} <= written
+    # data/rfam_families/ and needs no GPU run. The results macros are not on
+    # disk until the runs land, so those are checked against the calls that
+    # write them.
+    panel = set(re.findall(r"\\newcommand\{\\([a-zA-Z]+)\}",
+                           (REPO / "paper/generated/panel_description.tex").read_text()))
+    missing = patch.macros_used() - panel - _results_generator_macros()
+    assert not missing, f"no generator writes {sorted(missing)}"
