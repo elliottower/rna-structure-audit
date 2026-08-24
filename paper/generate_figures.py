@@ -7,9 +7,10 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 
-RESULTS_CAUSAL = Path("/Users/elliottower/Documents/GitHub/causal-rna/results")
-RESULTS_EXPANDED = Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam")
-OUT_DIR = Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/paper/figures")
+REPO = Path(__file__).resolve().parents[1]
+RESULTS_CAUSAL = REPO / "results"
+RESULTS_EXPANDED = REPO / "data" / "expanded_rfam"
+OUT_DIR = REPO / "paper" / "figures"
 OUT_DIR.mkdir(exist_ok=True)
 
 MODEL_FILES = {
@@ -32,19 +33,23 @@ MODEL_DOMAIN = {
     "Caduceus": "DNA", "Evo": "DNA",
 }
 
+# Mean PS and H3 precision over the 32 confirmatory families, as
+# PREREGISTRATION_PHASE6_V2.md specifies. Both are printed by
+# scripts/generate_table5_registered.py, which recomputes them from stored
+# per-family values; keep the two in step.
 RUNG3_PS = {
-    "RiNALMo": 0.2150, "ERNIE-RNA": 0.1204,
-    "Caduceus": 0.0034, "Evo": 0.0011,
-    "SpliceBERT": 0.0002, "HyenaDNA": 0.0003,
-    "RNA-FM": 0.0001, "UTR-LM": 0.00001,
-    "NT v2": 0.001, "DNABERT-2": -0.016,
+    "RiNALMo": 0.209786, "ERNIE-RNA": 0.113559,
+    "Caduceus": 0.003495, "Evo": 0.001512,
+    "SpliceBERT": 0.000230, "HyenaDNA": 0.000275,
+    "RNA-FM": 0.000097, "UTR-LM": 0.000007,
+    "NT v2": 0.001383, "DNABERT-2": -0.0161,
 }
 
 RUNG3_H3 = {
-    "RiNALMo": 0.882, "ERNIE-RNA": 0.874,
+    "RiNALMo": 0.874, "ERNIE-RNA": 0.870,
     "Caduceus": 0.416, "RNA-FM": 0.325,
-    "UTR-LM": 0.350, "SpliceBERT": 0.276,
-    "HyenaDNA": 0.083, "Evo": 0.278,
+    "UTR-LM": 0.350, "SpliceBERT": 0.265,
+    "HyenaDNA": 0.070, "Evo": 0.278,
 }
 
 DINUC_DATA = {
@@ -454,11 +459,30 @@ def fig_ablation():
     plt.close(fig)
 
 
-if __name__ == "__main__":
-    fig_overview()
-    fig_heatmap_tall()
-    fig_heatmap_wide()
-    fig_htt()
-    fig_transversion()
-    fig_ablation()
+FIGURES = {
+    "overview": fig_overview,
+    "heatmap_tall": fig_heatmap_tall,
+    "heatmap_wide": fig_heatmap_wide,
+    "htt": fig_htt,
+    "transversion": fig_transversion,
+    "ablation": fig_ablation,
+}
+
+
+def main(argv: list[str]) -> int:
+    """Regenerate every figure, or only those named on the command line."""
+    names = argv[1:] or list(FIGURES)
+    unknown = [n for n in names if n not in FIGURES]
+    if unknown:
+        print(f"unknown figures: {unknown}; choose from {list(FIGURES)}")
+        return 1
+    for name in names:
+        FIGURES[name]()
     print("Done.")
+    return 0
+
+
+if __name__ == "__main__":
+    from sys import argv
+
+    raise SystemExit(main(argv))
