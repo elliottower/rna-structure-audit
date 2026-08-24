@@ -115,14 +115,38 @@ instead is the order of operations: the criterion that flagged the defect reads 
 model output, the repair rule was written before it was applied and applied
 uniformly, and this entry precedes the re-run in the commit history.
 
-**What the correction can and cannot move.** H1(a) cannot flip. Every null here is
-a within-family derangement, so a family's exceedance flag does not depend on
-which other families are present, and no repair removes a scored family — none of
-the eleven carries a scored Rung 3 record. The stored counts are 28 of 29 for
-RiNALMo and 28 of 30 for ERNIE-RNA, both clearing the raised gate of 8 by 20, and
-entering families can only raise them. H1(b) is a Wilcoxon across families and has
-no such argument: the entering families can move it either way, and its outcome is
-left open.
+**Amendment, same day, before the run: the nulls are reseeded.** Each null is
+built inside one family — Rungs 1-2 permute stem and loop labels within
+nucleotide strata of that family's own sequence, Rung 3 deranges partner
+assignments within that family's own stems — so the distribution a family's
+threshold is drawn from does not depend on which other families are present. The
+draw did. `phases_1_to_5.py` seeded from `42 + rna_idx * 1000`, the family's
+position in the loaded list, and `phase6_compensatory_mutation.py` seeded one
+global generator that every family then drew from in panel order. Withdrawing five
+records shifts the stream every later family receives, so families whose
+annotation never changed would have received different nulls. `scripts/family_seed.py`
+now derives each family's generator from its name, which makes the implementation
+match the definition: a family's null is reproducible across runs and unaffected
+by panel membership. The cost is that every family's null is redrawn once at this
+run, so no per-family null in the re-run is comparable digit for digit with the
+deposited one.
+
+**What the correction can and cannot move.** H1(a) does not fail under the repair,
+and with the nulls redrawn the claim rests on margins rather than on invariance.
+`scripts/check_h1a_margin.py` measures, for every scored family, the gap between
+its PS and its primary null 95th percentile, against the distance between the two
+registered null constructions — a far larger perturbation than reseeding one of
+them. Two families for RiNALMo and none for ERNIE-RNA have a gap smaller than that
+distance. Were every one of them to cross the wrong way, the counts would be 26
+and 28 against the raised gate of 8. No repair removes a scored family, since none
+of the eleven carries a scored Rung 3 record, and entering families can only add.
+H1(a) holds with a margin of at least 18 families.
+
+**H1(b) is open, and is reported whichever way it lands.** It is a one-sample
+Wilcoxon across families, so the three entering families can move it in either
+direction and nothing above bounds it. The manuscript reports the statistic, its
+p-value and the verdict against the registered alpha of 0.0167 whether or not the
+test passes.
 
 **Reporting.** The manuscript reports the analysis as run on the repaired data,
 N = 36, and states the H1(a) verdict at both the registered gate of 7 and the

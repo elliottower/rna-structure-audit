@@ -56,15 +56,26 @@ def gate(n: int) -> int:
     return math.ceil(MULTIPLIER * ALPHA * n)
 
 
-def exceedances(rel: str) -> tuple[int, int]:
-    """(families exceeding their own null 95th percentile, families scored)."""
+def scored_families(rel: str) -> dict[str, dict]:
+    """The families the registered Rung 3 analysis scores, from a results file.
+
+    A family counts when it carries a numeric PS, is not skipped, is not
+    quarantined for pilot foreknowledge, and passes its positive control. This is
+    the one definition of the confirmatory set; every script that needs it imports
+    from here rather than restating the filter, because a second copy drifts.
+    """
     body = json.loads((REPO / rel).read_text())["results"]["per_rna"]
     scored = {name: record for name, record in body.items()
               if isinstance(record, dict) and not record.get("skipped")
               and isinstance(record.get("best_ps"), (int, float))
               and name not in QUARANTINE}
-    passing = [r for r in scored.values()
-               if (r.get("positive_control") or {}).get("pass")]
+    return {name: record for name, record in scored.items()
+            if (record.get("positive_control") or {}).get("pass")}
+
+
+def exceedances(rel: str) -> tuple[int, int]:
+    """(families exceeding their own null 95th percentile, families scored)."""
+    passing = list(scored_families(rel).values())
     over = [r for r in passing
             if isinstance(r.get("null_95th_primary"), (int, float))
             and r["best_ps"] > r["null_95th_primary"]]

@@ -9,6 +9,8 @@ These are pure analysis functions — no Modal, no model loading.
 import math
 
 import numpy as np
+
+from family_seed import family_rng
 from scipy import stats
 from scipy.spatial.distance import cosine
 from sklearn.linear_model import LogisticRegression
@@ -262,7 +264,10 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
         best_ratio = real_ratios_per_layer[best_layer_idx]["ratio"]
 
         valid_layers = sorted(real_ratios_per_layer.keys())
-        perm_rng = np.random.default_rng(42 + rna_idx * 1000)
+        # Seeded from the family name, not its position in the panel: the null
+        # is defined within the family, so withdrawing another record must not
+        # change this family's draws. See DEVIATIONS.md, 2026-08-24.
+        perm_rng = family_rng(rna["name"])
         nucs_full = np.array(list(seq[:n_pos]))
 
         null_max_ratios = []

@@ -24,6 +24,8 @@ import torch
 from scipy import stats
 from tqdm import tqdm
 
+from family_seed import family_rng
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 COMPLEMENT = {"A": "U", "U": "A", "C": "G", "G": "C"}
@@ -243,18 +245,19 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
     }
 
 
-def generate_derangement(n):
+def generate_derangement(n, rng):
     """Generate a random derangement of range(n). No element maps to itself."""
     if n < 2:
         return list(range(n))
     while True:
         perm = list(range(n))
-        np.random.shuffle(perm)
+        rng.shuffle(perm)
         if all(perm[i] != i for i in range(n)):
             return perm
 
 
-def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_derangements=1000):
+def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, rng,
+                     n_derangements=1000):
     """Within-stem derangement null.
 
     Shuffles partner assignments within each stem, recomputes PS from
@@ -289,7 +292,7 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_der
 
         for sid, pair_idxs in derangeable.items():
             k = len(pair_idxs)
-            derangement = generate_derangement(k)
+            derangement = generate_derangement(k, rng)
             j_positions = [eligible_pairs[pair_idxs[orig]]["j"] for orig in range(k)]
             j_prev_positions = [eligible_pairs[pair_idxs[orig]]["j_prev"] for orig in range(k)]
             j_next_positions = [eligible_pairs[pair_idxs[orig]]["j_next"] for orig in range(k)]
@@ -517,7 +520,8 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
 
         null_result = None
         if compute_null:
-            null_result = derangement_null(eligible, delta_profiles, n_layers, best_layer)
+            null_result = derangement_null(eligible, delta_profiles, n_layers,
+                                           best_layer, family_rng(name))
 
         h3 = h3_precision_test(ps_result["pair_details"], eligible)
 

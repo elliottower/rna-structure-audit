@@ -48,9 +48,31 @@ def pairs_of(dot_bracket):
     return pairs
 
 
+def panel_reconciliation(families):
+    """Does the analyzed count agree with the repair manifest?
+
+    D9 reached the manuscript because a class breakdown summed to the right
+    total while five of its counts were wrong. A total that reconciles is
+    exactly the check that passes while the composition under it is wrong, so
+    this asserts the analyzed count against the number repair_annotations.py
+    derived independently, and lists the withdrawn records by name.
+    """
+    manifest = pathlib.Path(__file__).resolve().parents[1] / "docs/annotation_repair_manifest.json"
+    withdrawn = sorted(n for n, fam in families.items() if "excluded" in fam)
+    analyzed = len(families) - len(withdrawn)
+    if not manifest.exists():
+        return withdrawn, [("panel reconciliation", "no repair manifest to check against")]
+    expected = json.load(open(manifest)).get("rung12_after")
+    if expected is None or analyzed == expected:
+        return withdrawn, []
+    return withdrawn, [("panel reconciliation",
+                        f"{analyzed} families load but the repair manifest derives "
+                        f"{expected}; withdrawn: {', '.join(withdrawn) or 'none'}")]
+
+
 def audit(directory):
     families = read_families(directory)
-    findings = []
+    withdrawn, findings = panel_reconciliation(read_families(directory))
 
     by_sequence = collections.defaultdict(list)
     by_accession = collections.defaultdict(list)
@@ -69,6 +91,8 @@ def audit(directory):
             findings.append(("reused accession", f"{accession}: {', '.join(sorted(names))}"))
 
     for name, fam in sorted(families.items()):
+        if name in withdrawn:
+            continue
         sequence, structure = fam.get("sequence", ""), fam.get("dot_bracket", "")
         if len(sequence) != len(structure):
             findings.append(("length disagreement",
@@ -100,7 +124,12 @@ def main():
     args = parser.parse_args()
 
     families, findings = audit(args.dir)
-    print(f"{len(families)} families in {args.dir}\n")
+    withdrawn = sorted(n for n, fam in families.items() if "excluded" in fam)
+    print(f"{len(families)} families in {args.dir}: "
+          f"{len(families) - len(withdrawn)} analyzed, {len(withdrawn)} withdrawn")
+    if withdrawn:
+        print(f"  withdrawn and not audited below: {', '.join(withdrawn)}")
+    print()
 
     if not findings:
         print("  no findings")
@@ -108,8 +137,9 @@ def main():
         grouped = collections.defaultdict(list)
         for kind, detail in findings:
             grouped[kind].append(detail)
-        for kind in ("duplicate sequence", "reused accession", "length disagreement",
-                     "unbalanced structure", "non-canonical pairs"):
+        for kind in ("panel reconciliation", "duplicate sequence", "reused accession",
+                     "length disagreement", "unbalanced structure",
+                     "non-canonical pairs"):
             if kind not in grouped:
                 continue
             print(f"  {kind} ({len(grouped[kind])})")
@@ -118,7 +148,8 @@ def main():
             print()
 
     blocking = [k for k, _ in findings if k in
-                {"duplicate sequence", "length disagreement"}]
+                {"duplicate sequence", "length disagreement",
+                 "panel reconciliation"}]
     if args.strict and blocking:
         sys.exit(1)
 
