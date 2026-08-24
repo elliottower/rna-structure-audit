@@ -1,13 +1,24 @@
-"""Compute bootstrap confidence intervals and BH-corrected statistics.
+"""Superseded. Bootstrap confidence intervals, with p-values assigned by lookup.
 
-Reads all result JSON files and computes:
-- Bootstrap 95% CIs on mean mutation sensitivity ratio
-- Bootstrap 95% CIs on dinuc retention rate (where available)
-- Expected false positive counts under each null
-- BH-corrected family-level exceedance counts
+This script produced the intervals printed in Tables 1 and 2 up to paper_v11.
+It is retained because scripts/audit_table12_sources.py needs it to attribute
+those printed bounds, and because the Benjamini-Hochberg counts v11 quoted came
+from nowhere else. It is not run to produce results.
+
+Two defects retire it. Its exceedance p-values are not measured but assigned
+from a lookup table keyed on effect size (0.001 above 2x the null threshold,
+0.005 above 1.5x, 0.01 above 1.2x, 0.03 otherwise), and Benjamini-Hochberg
+applied to those values is arithmetic on invented inputs. It also wrote
+results/bootstrap_cis.json, the same filename scripts/compute_bootstrap_cis.py
+writes, in an incompatible flat schema, so running it overwrote the shipped
+artifact with a file no other script could read.
+
+scripts/compute_bootstrap_cis.py is the source of record. The output path below
+is changed so this script can no longer overwrite it.
 
 Usage:
-    uv run --with numpy python compute_cis.py
+    uv run --no-project --with numpy --python 3.12 python \
+        scripts/superseded/compute_cis.py
 """
 
 import json
@@ -15,18 +26,21 @@ from pathlib import Path
 
 import numpy as np
 
+REPO = Path(__file__).resolve().parents[2]
+EXPANDED = REPO / "data" / "gpu_results" / "expanded_rfam"
+
 MODEL_FILES = {
-    "ERNIE-RNA": Path("/Users/elliottower/Documents/GitHub/causal-rna/results/ernierna_phases15_dinuc.json"),
-    "RiNALMo": Path("/Users/elliottower/Documents/GitHub/causal-rna/results/rinalmo_phases_1_to_5.json"),
-    "RNA-FM": Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/rnafm_expanded_20260716.json"),
-    "UTR-LM": Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/utrlm_phases_1_to_5.json"),
-    "SpliceBERT": Path("/Users/elliottower/Documents/GitHub/causal-rna/results/splicebert_phases15_dinuc.json"),
-    "NT v2": Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/nt_expanded_20260716.json"),
-    "DNABERT-2": Path("/Users/elliottower/Documents/GitHub/causal-rna/results/dnabert2_phases15_dinuc.json"),
-    "HyenaDNA": Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/hyenadna_expanded_20260716.json"),
-    "Caduceus": Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/caduceus_expanded_20260716.json"),
-    "Evo": Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/evo_expanded_20260716.json"),
-    "ERNIE-RNA untrained": Path("/Users/elliottower/Documents/GitHub/causal-rna/results/ernierna_untrained_phases15.json"),
+    "ERNIE-RNA": REPO / "results/ernierna_phases15_dinuc.json",
+    "RiNALMo": REPO / "results/rinalmo_phases_1_to_5.json",
+    "RNA-FM": EXPANDED / "rnafm_expanded_20260716.json",
+    "UTR-LM": EXPANDED / "utrlm_phases_1_to_5.json",
+    "SpliceBERT": REPO / "results/splicebert_phases15_dinuc.json",
+    "NT v2": EXPANDED / "nt_expanded_20260716.json",
+    "DNABERT-2": REPO / "results/dnabert2_phases15_dinuc.json",
+    "HyenaDNA": EXPANDED / "hyenadna_expanded_20260716.json",
+    "Caduceus": EXPANDED / "caduceus_expanded_20260716.json",
+    "Evo": EXPANDED / "evo_expanded_20260716.json",
+    "ERNIE-RNA untrained": REPO / "results/ernierna_untrained_phases15.json",
 }
 
 N_BOOTSTRAP = 10_000
@@ -180,7 +194,7 @@ def main():
         stats = compute_model_stats(model_name, families)
         results.append(stats)
 
-    out_path = Path("/Users/elliottower/Documents/GitHub/rna-structure-awareness/paper/bootstrap_cis.json")
+    out_path = REPO / "results" / "superseded_compute_cis_flat.json"
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)
 

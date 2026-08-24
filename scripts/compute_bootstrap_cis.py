@@ -2,8 +2,13 @@
 
 Loads per-model result JSON files, extracts per-family metrics, and computes
 bootstrap CIs for mutation sensitivity, null-exceedance fractions, attention
-contact correlation, and probing accuracy. Applies BH correction for
-multiple-testing on nucleotide null exceedance.
+contact correlation, and probing accuracy. It computes no p-values: the result
+files store a binary exceedance against each family's own 95th-percentile null
+and not the permutation distribution behind it, so per-family significance is
+reported as an exceedance count beside the count expected under independence.
+
+This is the source of record for every interval Tables 1 and 2 print; see
+scripts/verify_paper_rung12_figures.py.
 
 Usage:
     uv run --with numpy --with scipy --with statsmodels --with tqdm \
@@ -11,7 +16,6 @@ Usage:
 """
 
 import json
-import sys
 import datetime
 from pathlib import Path
 
@@ -23,26 +27,28 @@ from tqdm import tqdm
 # Paths
 # ---------------------------------------------------------------------------
 
-RESULTS_CAUSAL = Path("/Users/elliottower/Documents/GitHub/causal-rna/results")
-RESULTS_EXPANDED = Path(
-    "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam"
-)
+# These lived in causal-rna (gone) and rna-structure-awareness (deprecated)
+# until 2026-08-24. Every file was verified byte-identical to its counterpart in
+# the old tree before the five that were missing here were copied in.
+REPO = Path(__file__).resolve().parents[1]
+RESULTS = REPO / "results"
+RESULTS_EXPANDED = REPO / "data" / "gpu_results" / "expanded_rfam"
 
 MODEL_FILES = {
-    "ERNIE-RNA": RESULTS_CAUSAL / "ernierna_phases15_dinuc.json",
-    "RiNALMo": RESULTS_CAUSAL / "rinalmo_phases_1_to_5.json",
+    "ERNIE-RNA": RESULTS / "ernierna_phases15_dinuc.json",
+    "RiNALMo": RESULTS / "rinalmo_phases_1_to_5.json",
     "RNA-FM": RESULTS_EXPANDED / "rnafm_expanded_20260716.json",
     "UTR-LM": RESULTS_EXPANDED / "utrlm_phases_1_to_5.json",
-    "SpliceBERT": RESULTS_CAUSAL / "splicebert_phases15_dinuc.json",
+    "SpliceBERT": RESULTS / "splicebert_phases15_dinuc.json",
     "NT v2": RESULTS_EXPANDED / "nt_expanded_20260716.json",
-    "DNABERT-2": RESULTS_CAUSAL / "dnabert2_phases15_dinuc.json",
+    "DNABERT-2": RESULTS / "dnabert2_phases15_dinuc.json",
     "HyenaDNA": RESULTS_EXPANDED / "hyenadna_expanded_20260716.json",
     "Caduceus": RESULTS_EXPANDED / "caduceus_expanded_20260716.json",
     "Evo": RESULTS_EXPANDED / "evo_expanded_20260716.json",
-    "ERNIE-RNA (untrained)": RESULTS_CAUSAL / "ernierna_untrained_phases15.json",
+    "ERNIE-RNA (untrained)": RESULTS / "ernierna_untrained_phases15.json",
 }
 
-OUTPUT_PATH = RESULTS_CAUSAL / "bootstrap_cis.json"
+OUTPUT_PATH = RESULTS / "bootstrap_cis.json"
 N_BOOTSTRAP = 10_000
 SEED = 42
 
@@ -175,7 +181,7 @@ def compute_multiple_testing_stats(data: dict) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def main() -> None:
+def main(out_path: Path = OUTPUT_PATH) -> None:
     print(f"[{datetime.datetime.now():%Y-%m-%d %H:%M:%S}] Starting bootstrap CI computation")
     print(f"  N_BOOTSTRAP = {N_BOOTSTRAP}, SEED = {SEED}")
 
@@ -191,7 +197,7 @@ def main() -> None:
         with open(filepath) as f:
             data = json.load(f)
 
-        model_results = {"file": str(filepath)}
+        model_results = {"file": str(filepath.relative_to(REPO))}
 
         # --- Mutation sensitivity ---
         ratios, exceeds_nuc, exceeds_dinuc = extract_mutation_data(data)
@@ -252,10 +258,10 @@ def main() -> None:
         "models": results,
     }
 
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_PATH, "w") as f:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
-    print(f"\n[{datetime.datetime.now():%Y-%m-%d %H:%M:%S}] Results saved to {OUTPUT_PATH}")
+    print(f"\n[{datetime.datetime.now():%Y-%m-%d %H:%M:%S}] Results saved to {out_path}")
 
     # --- Print table ---
     print("\n" + "=" * 120)

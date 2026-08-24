@@ -17,8 +17,9 @@ import importlib.util
 import re
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[1]
-DEFAULT_PAPER = REPO / "paper" / "paper_v11.tex"
+from paper_versions import REPO, newest_paper
+
+DEFAULT_PAPER = newest_paper()
 
 _spec = importlib.util.spec_from_file_location(
     "generate_table5_registered", REPO / "scripts" / "generate_table5_registered.py")

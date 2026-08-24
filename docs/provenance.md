@@ -60,3 +60,106 @@ H2₆ fails either way).
 `scripts/check_freeze_order.py` confirms no run in this repository is dated before
 the preregistration governing it, across all five phases. The check reads timestamps
 from directory names, not file names, which is where they live.
+
+## 2026-08-24 — two scripts wrote `results/bootstrap_cis.json`, and the paper quoted both
+
+`scripts/compute_bootstrap_cis.py` and `paper/compute_cis.py` bootstrapped the same
+per-family ratios, drew from one seeded generator in different orders, and wrote the
+same output filename in incompatible schemas. Running the second overwrote the
+artifact the first produced with a flat list no other script could read. Both were in
+the tree and neither said which was authoritative.
+
+`scripts/audit_table12_sources.py` attributes each of the 42 interval bounds in
+Tables 1 and 2 to its producer, comparing at each literal's own printed precision and
+separately against a bound widened outward. The two bootstraps agree to about 0.001,
+so 36 bounds are consistent with either. The six that discriminate settle it:
+
+| bound | printed in v11 | `compute_bootstrap_cis` | `compute_cis` |
+|---|---|---|---|
+| RiNALMo, Rung 1 lower | 1.11 | 1.1045 | 1.1049 |
+| RNA-FM, Rung 1 lower | 1.55 | 1.5566 | **1.5500** |
+| RNA-FM, Rung 1 upper | 1.98 | 1.9714 | **1.9771** |
+| Evo, Rung 1 upper | 1.59 | 1.5824 | **1.5860** |
+| ERNIE-RNA untrained, Rung 1 lower | 1.63 | 1.6393 | **1.6336** |
+| DNABERT-2, Rung 2 upper | 0.57 | 0.7143 | **0.5714** |
+
+Five reproduce from `compute_cis.py` under round-to-nearest and from the committed
+artifact only if the bound is widened outward, which the other 36 bounds are not. So
+`paper/compute_cis.py` produced the printed tables. RiNALMo's lower bound reproduces
+from neither: both scripts put it at 1.104, and 1.11 rounds a lower bound up, which
+narrows the interval.
+
+DNABERT-2's is the one large disagreement and it is a property of the quantity.
+Bootstrapping 7 binary outcomes puts the 97.5th percentile on a seven-point lattice,
+so two draw orders land a whole family apart. The point estimate, 2 of 7, is the same
+either way.
+
+**Resolution.** `scripts/compute_bootstrap_cis.py` is the source of record and
+`results/bootstrap_cis.json` is its output. `paper/compute_cis.py` moved to
+`scripts/superseded/compute_cis.py`, its output path changed so it can no longer
+overwrite the artifact, its docstring stating why it is retired. `paper_v12.tex` is
+generated from v11 by `paper/patches/patch_v12_reproducible_intervals.py` and moves
+six bounds by at most 0.01, four of them by one unit in the last printed place. No
+point estimate, family count, or verdict changes; RiNALMo's interval still excludes
+1.0. `scripts/verify_paper_rung12_figures.py` re-derives all 22 rows from the
+artifact and passes.
+
+### The Benjamini-Hochberg counts came from nowhere
+
+v11's Limitations section reported "ERNIE-RNA: 31 → 28; RiNALMo: 18 → 15" under
+Benjamini-Hochberg at FDR 0.05. Neither script produces those numbers.
+`compute_bootstrap_cis.py` computes no p-values at all. `compute_cis.py` gives
+31 → 31 and 18 → 0, and its p-values are not measured but assigned from a lookup
+table keyed on effect size: 0.001 above 2× the null threshold, 0.005 above 1.5×,
+0.01 above 1.2×, 0.03 otherwise. Benjamini-Hochberg over those is arithmetic on
+invented inputs.
+
+The correction is not computable from what this repository stores. Each result file
+records a binary exceedance against each family's own 95th-percentile null and not
+the permutation distribution behind it, so no continuous per-family p-value exists to
+correct. v12 says so and rests the global control on the binomial test already
+reported in the same paragraph, which is computed from the exceedance counts and
+needs no p-value per family.
+
+### Path repair in the Rung 1–2 chain
+
+`scripts/compute_bootstrap_cis.py` and `paper/generate_figures.py` read from absolute
+paths inside `rna-structure-awareness` and `causal-rna`, the second of which no
+longer exists. Five inputs the bootstrap needs were outside the tree:
+`rnafm_expanded_20260716.json`, `nt_expanded_20260716.json`,
+`hyenadna_expanded_20260716.json`, `caduceus_expanded_20260716.json` and
+`evo_expanded_20260716.json`. Every file shared between the old and new trees was
+compared byte for byte before any copy. The five are now in
+`data/gpu_results/expanded_rfam/`, the paths are relative to the repository root, and
+re-running the script reproduces the committed artifact with zero numeric
+differences — `timestamp` and the recorded input paths are the only fields that move.
+
+### Two attention correlations have no stored run
+
+`scripts/audit_attention_rho.py` reads every file in the tree that parses as JSON,
+computes the mean of `attention_trained.per_rna[*].best_corr` over scored families
+the way `scripts/compute_bootstrap_cis.py` does, and attributes each value Table 1
+prints. Candidates are found by parsing rather than by globbing `*.json`: three
+result files under `data/gpu_results/expanded_rfam_rerun/` carry no extension, and
+they are 52-family reruns.
+
+Seven of the nine printed correlations resolve. DNABERT-2's 0.257 is
+`dnabert2_expanded_20260713_200727.json` over 52 families, matching its footnote.
+Two do not:
+
+- **NT v2, 0.322.** The footnote reports it as corrected from 0.230 under the SDPA
+  backend, recomputed with eager attention across 52 families. Both NT files here
+  give 0.2301 over 49 scored families and are identical to each other. No
+  aggregation of either reaches 0.322: mean over all entries, mean of absolute
+  values, median, max, sum over 52 and mean of the top half give 0.2301, 0.2301,
+  0.2033, 0.6547, 0.2168 and 0.2988.
+- **RNA-FM untrained, 0.061.** No file in the tree carries an attention block for
+  this model at all.
+
+Neither is in `rna-structure-awareness`, the tree this repository was rewritten
+from, which was searched the same way. The measurements are not recoverable, and
+0.230 is not restorable in place of 0.322 because the footnote reports it as a
+backend artifact. v12 narrows the Availability section to name both rather than
+leaving "All ... per-family result files" standing. `audit_attention_rho.py` holds
+the two in `KNOWN_UNRECORDED` and fails on any gap not listed there, or on either
+of these reproducing later.

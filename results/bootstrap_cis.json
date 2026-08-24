@@ -2,10 +2,10 @@
   "description": "Bootstrap 95% CIs for RNA structure awareness metrics",
   "n_bootstrap": 10000,
   "seed": 42,
-  "timestamp": "2026-07-17T06:24:56.143605",
+  "timestamp": "2026-08-24T00:25:31.438870",
   "models": {
     "ERNIE-RNA": {
-      "file": "/Users/elliottower/Documents/GitHub/causal-rna/results/ernierna_phases15_dinuc.json",
+      "file": "results/ernierna_phases15_dinuc.json",
       "mutation_sensitivity": {
         "point_estimate": 1.2417704284020825,
         "ci_lower": 1.187126900176616,
@@ -45,7 +45,7 @@
       }
     },
     "RiNALMo": {
-      "file": "/Users/elliottower/Documents/GitHub/causal-rna/results/rinalmo_phases_1_to_5.json",
+      "file": "results/rinalmo_phases_1_to_5.json",
       "mutation_sensitivity": {
         "point_estimate": 1.1280836980476423,
         "ci_lower": 1.1044994918617521,
@@ -85,7 +85,7 @@
       }
     },
     "RNA-FM": {
-      "file": "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/rnafm_expanded_20260716.json",
+      "file": "data/gpu_results/expanded_rfam/rnafm_expanded_20260716.json",
       "mutation_sensitivity": {
         "point_estimate": 1.7492191811994273,
         "ci_lower": 1.5566293023086772,
@@ -125,7 +125,7 @@
       }
     },
     "UTR-LM": {
-      "file": "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/utrlm_phases_1_to_5.json",
+      "file": "data/gpu_results/expanded_rfam/utrlm_phases_1_to_5.json",
       "mutation_sensitivity": {
         "point_estimate": 1.054497633384824,
         "ci_lower": 1.040054318527008,
@@ -165,7 +165,7 @@
       }
     },
     "SpliceBERT": {
-      "file": "/Users/elliottower/Documents/GitHub/causal-rna/results/splicebert_phases15_dinuc.json",
+      "file": "results/splicebert_phases15_dinuc.json",
       "mutation_sensitivity": {
         "point_estimate": 1.0395029355781917,
         "ci_lower": 1.0294819137611733,
@@ -205,7 +205,7 @@
       }
     },
     "NT v2": {
-      "file": "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/nt_expanded_20260716.json",
+      "file": "data/gpu_results/expanded_rfam/nt_expanded_20260716.json",
       "mutation_sensitivity": {
         "point_estimate": 1.1032154818500608,
         "ci_lower": 1.0789636525884965,
@@ -245,7 +245,7 @@
       }
     },
     "DNABERT-2": {
-      "file": "/Users/elliottower/Documents/GitHub/causal-rna/results/dnabert2_phases15_dinuc.json",
+      "file": "results/dnabert2_phases15_dinuc.json",
       "mutation_sensitivity": {
         "point_estimate": 0.9919748428710341,
         "ci_lower": 0.9557642606497891,
@@ -285,7 +285,7 @@
       }
     },
     "HyenaDNA": {
-      "file": "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/hyenadna_expanded_20260716.json",
+      "file": "data/gpu_results/expanded_rfam/hyenadna_expanded_20260716.json",
       "mutation_sensitivity": {
         "point_estimate": 1.1608177181944004,
         "ci_lower": 1.1267229144692557,
@@ -320,7 +320,7 @@
       }
     },
     "Caduceus": {
-      "file": "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/caduceus_expanded_20260716.json",
+      "file": "data/gpu_results/expanded_rfam/caduceus_expanded_20260716.json",
       "mutation_sensitivity": {
         "point_estimate": 1.2108000712568103,
         "ci_lower": 1.166177295961448,
@@ -355,7 +355,7 @@
       }
     },
     "Evo": {
-      "file": "/Users/elliottower/Documents/GitHub/rna-structure-awareness/data/expanded_rfam/evo_expanded_20260716.json",
+      "file": "data/gpu_results/expanded_rfam/evo_expanded_20260716.json",
       "mutation_sensitivity": {
         "point_estimate": 1.4076048390884228,
         "ci_lower": 1.2576217131417635,
@@ -390,7 +390,7 @@
       }
     },
     "ERNIE-RNA (untrained)": {
-      "file": "/Users/elliottower/Documents/GitHub/causal-rna/results/ernierna_untrained_phases15.json",
+      "file": "results/ernierna_untrained_phases15.json",
       "mutation_sensitivity": {
         "point_estimate": 1.8482750872579035,
         "ci_lower": 1.6392526870055923,
