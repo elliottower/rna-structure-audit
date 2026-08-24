@@ -51,7 +51,13 @@ def non_canonical_fraction(record: dict) -> tuple[float, int]:
 
 
 def rung3_membership() -> dict[str, str]:
-    """Which families carry a scored Rung 3 record, from the stored results."""
+    """Which families carry a scored Rung 3 record, from the stored results.
+
+    This reads the deposited file and nothing else. It reports whether a score is
+    present, never whether the family passes the registered eligibility criteria
+    -- for that see `scope_annotation_repair.py`, which applies the package's own
+    stem parser and pair filter. The two answers differ for every family here.
+    """
     body = json.loads((REPO / "results/rinalmo_phase6_ps.json")
                       .read_text())["results"]["per_rna"]
     out = {}
@@ -59,7 +65,7 @@ def rung3_membership() -> dict[str, str]:
         if not isinstance(record, dict):
             continue
         if record.get("skipped") or not isinstance(record.get("best_ps"), (int, float)):
-            out[name] = "eligible but not scored"
+            out[name] = "in the results file, carrying no score"
         else:
             out[name] = "IN the Rung 3 confirmatory set"
     return out
