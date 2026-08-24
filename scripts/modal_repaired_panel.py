@@ -360,18 +360,27 @@ def _run_model(model_name, commit, phase6_only):
         vol.commit()
         print(f"[{now()}] wrote {name}")
 
+    # Every stage in phases_1_to_5 dispatches on the key it is given -- which
+    # tokenizer the model has, whether it has attention at all, and NT's and
+    # DNABERT-2's token-to-nucleotide mapping. A `_untrained` suffix matches
+    # none of those sets, so a control passed its own name silently takes the
+    # character-tokenizer path, reports "no attention (SSM architecture)" for a
+    # transformer, and skips the 6-mer offset. `modal_phase6_untrained_all.py`
+    # avoids this by keying on the base name and suffixing only the output; the
+    # same split is kept here, with `model_name` for paths and the stamp.
+    key = base_model(model_name)
     if not phase6_only:
         print(f"[{now()}] {model_name}: mutation sensitivity")
-        mutation = run_mutation_sensitivity(adapter, model_name, families,
+        mutation = run_mutation_sensitivity(adapter, key, families,
                                             device=device,
                                             checkpoint=checkpoint("mutation"))
         print(f"[{now()}] {model_name}: attention-contact")
-        attention = run_attention_contact(adapter, model_name, families, device=device,
+        attention = run_attention_contact(adapter, key, families, device=device,
                                           checkpoint=checkpoint("attention"))
         # Probing pools every family's embeddings before it fits, so there is no
         # per-family unit to checkpoint; it is saved the moment it returns.
         print(f"[{now()}] {model_name}: structure probing")
-        probing = run_structure_probing(adapter, model_name, families, device=device)
+        probing = run_structure_probing(adapter, key, families, device=device)
         save(f"{model_name}_phases_1_to_5.json",
              {"experiment": "phases_1_to_5", "mutation_trained": mutation,
               "attention_trained": attention, "probing": probing})
@@ -383,13 +392,13 @@ def _run_model(model_name, commit, phase6_only):
 
     print(f"[{now()}] {model_name}: phase 6 perturbation specificity")
     phase6 = run_phase6(adapter, families, device=device, compute_null=True,
-                        offset=ADAPTER_OFFSETS.get(base_model(model_name), 0),
+                        offset=ADAPTER_OFFSETS.get(key, 0),
                         checkpoint=checkpoint("phase6"))
     save(f"{model_name}_phase6_ps.json",
          {"phase": 6, "metric": "perturbation_specificity",
           "preregistration": "PREREGISTRATION_PHASE6_V2.md",
-          "offset": ADAPTER_OFFSETS.get(base_model(model_name), 0),
-          "tokenizer_caveated": base_model(model_name) in NON_CHARACTER_TOKENIZERS,
+          "offset": ADAPTER_OFFSETS.get(key, 0),
+          "tokenizer_caveated": key in NON_CHARACTER_TOKENIZERS,
           "results": phase6})
     print(f"[{now()}] {model_name} COMPLETE. mean PS {phase6.get('mean_best_ps')}, "
           f"confirmatory {phase6.get('families_total')}, "
