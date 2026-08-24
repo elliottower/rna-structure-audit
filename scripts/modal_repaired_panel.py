@@ -533,9 +533,14 @@ def _smoke_route(model_name):
 def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
-    dirty = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
-                           capture_output=True, text=True, check=True).stdout.strip()
-    if dirty:
+    porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
+                               capture_output=True, text=True, check=True).stdout
+    # Outputs, not code. A fetched result directory says nothing about whether
+    # the commit in the stamp contains the code the containers are about to run,
+    # and leaving it in would mean no launch is possible once results land.
+    dirty = "\n".join(line for line in porcelain.splitlines()
+                       if not line[3:].startswith(("results/", "logs/")))
+    if dirty.strip():
         raise SystemExit(
             "Refusing to launch from a dirty tree: the stamp would name a commit "
             "that does not contain the code being run.\n" + dirty)
