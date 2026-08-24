@@ -41,6 +41,9 @@ def load_families():
             continue
         with open(FAM_DIR / f) as fh:
             d = json.load(fh)
+        # Withdrawn records stay on disk and out of the panel; see DEVIATIONS.md.
+        if "excluded" in d:
+            continue
         seq = d["sequence"].upper()
         db = d["dot_bracket"]
         stem_pos = [i for i, c in enumerate(db) if c in "()"]

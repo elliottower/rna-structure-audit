@@ -38,6 +38,9 @@ def per_family_gc() -> tuple[np.ndarray, np.ndarray, list[str]]:
     stems, loops, names = [], [], []
     for path in sorted(FAMILIES.glob("*.json")):
         record = json.loads(path.read_text())
+        # Withdrawn records stay on disk and out of the panel; see DEVIATIONS.md.
+        if "excluded" in record:
+            continue
         sequence = record["sequence"].upper()
         brackets = record["dot_bracket"]
         stem_positions = [i for i, c in enumerate(brackets) if c in "()"]

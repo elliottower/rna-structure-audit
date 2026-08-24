@@ -139,8 +139,12 @@ others were known. The eligibility rule was frozen, is mechanical, and is applie
 by committed code; this entry predates the entering families being scored; the
 gate change is shown not to affect H1(a) by an argument that does not depend on
 their values. None of that makes the sequence invisible, and it is stated rather
-than argued away. `5S_rRNA_ecoli` is left unrepaired and out of the panel, so the
-panel is smaller than the one registered for reasons this record carries.
+than argued away. `5S_rRNA_ecoli` is left unrepaired and out of the panel, and it
+was the panel's only rRNA family, so the analyzed panel now spans eight classes
+rather than nine and carries no ribosomal RNA. Ribosomal RNA is the structural
+class with the deepest experimental annotation, and no result here speaks to it.
+The panel composition is generated from the records by
+`scripts/generate_panel_description.py` rather than described by hand.
 
 ---
 

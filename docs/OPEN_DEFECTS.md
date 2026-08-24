@@ -81,6 +81,8 @@ This is the same failure as the stem/loop GC pair at `paper_v12.tex:77-81` and
 `PREREGISTRATION_STRUCTURE_METRICS.md:79-80` and was never updated. Both are
 pilot-era numbers surviving into a manuscript describing a 52-family panel.
 
+**Fix.** `scripts/generate_panel_description.py` writes every one of these figures to `paper/generated/panel_description.tex` as macros, computed from the records `load_rfam_families` loads. The manuscript takes them by `\input` from v13 on, so a hand-carried number cannot survive the next correction to the panel. The current panel is 47 analyzed families of 52 curated: 30--387 nt, median 106, IQR 77.5--166; stem GC 59.1%, loop GC 43.0%, stem above loop in 40 of 47. The defect stays open until v13 is built.
+
 ---
 
 ## D4. Stored results were computed against superseded annotations
@@ -153,6 +155,8 @@ not as a matter of classification judgment — the filenames fix the membership:
 The errors cancel and the list still sums to 52, which is how it survived
 proofreading. Same failure as D3: a description of the pilot panel carried into a
 manuscript about the expanded one.
+
+**Fix.** Generated with D3, from the same script. The analyzed panel is riboswitches (14), cis-regulatory elements (8), other ncRNAs (8), ribozymes (6), miRNA precursors (4), snRNAs (4), tRNAs (2), and CRISPR repeats (1). Eight classes, not nine: `5S_rRNA_ecoli` was the only rRNA family and is withdrawn, so the panel carries no ribosomal RNA. `paper/generated/panel_table.tex` lists all 52 records with class, Rfam accession, seed member, length and disposition.
 
 ---
 
