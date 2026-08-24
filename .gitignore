@@ -20,3 +20,6 @@ submissions/README.md
 
 # superseded volume pulls: kept for comparison, never deposited
 results/superseded_volume/
+
+# Dry-run output from paper/patches/*.py --diff
+paper/patches/*.diff
