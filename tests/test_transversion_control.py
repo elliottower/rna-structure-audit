@@ -8,7 +8,7 @@ second copy of the experiment it is controlling.
 """
 
 import phases_1_to_5 as phases
-from modal_repaired_panel import TRANSVERSION_COMPLEMENT
+from modal_repaired_panel import TRANSVERSION_COMPLEMENT, result_dir
 
 WATSON_CRICK = phases.COMPLEMENT
 
@@ -35,3 +35,20 @@ def test_the_alphabet_covers_what_the_panel_contains():
 def test_the_control_differs_from_the_experiment_at_every_nucleotide():
     for nucleotide in WATSON_CRICK:
         assert TRANSVERSION_COMPLEMENT[nucleotide] != WATSON_CRICK[nucleotide]
+
+
+def test_the_control_does_not_write_where_the_run_it_controls_wrote():
+    # _run_model empties a directory whose stored stamp differs from the one it
+    # is about to write, and the control's stamp differs on the commit. Sharing
+    # the directory would delete the Watson-Crick result the control exists to
+    # be compared against -- an A100 run, on models no cheap stack loads.
+    for model in ("rnafm", "evo", "nt_untrained"):
+        assert result_dir(model, transversion=True) != result_dir(model, transversion=False)
+
+
+def test_an_ordinary_run_still_writes_under_its_own_name():
+    # generate_results_tables.load() reads results/repaired_panel/<key>/ by name
+    # rather than by globbing, so a renamed directory is not a missing file, it
+    # is a model that silently drops out of every table.
+    for model in ("rnafm", "evo", "nt_untrained"):
+        assert result_dir(model, transversion=False) == model

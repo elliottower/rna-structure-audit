@@ -197,6 +197,19 @@ def base_model(model_name):
     return model_name[:-len("_untrained")] if model_name.endswith("_untrained") else model_name
 
 
+def result_dir(model_name, transversion):
+    """Where a run writes, on the volume.
+
+    The transversion control gets its own directory. `_run_model` empties a
+    directory whose stored stamp disagrees with the one it is about to write,
+    and the control's stamp disagrees on the commit -- it is launched from a
+    later one than the Watson-Crick runs, which no stack can re-run cheaply --
+    so writing the two into one directory would have the control delete the run
+    it exists to be compared against.
+    """
+    return f"{model_name}_transversion" if transversion else model_name
+
+
 def panel_stamp(families):
     """A hash over the records actually loaded, plus what was left out.
 
@@ -343,7 +356,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
           f"{stamp['panel_sha256'][:12]}, withdrawn {withdrawn}")
     print(f"[{now()}] {model_name} loaded on {device}")
 
-    out_dir = Path("/results") / model_name
+    out_dir = Path("/results") / result_dir(model_name, transversion)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # The directory is emptied when its stamp changes, so it never holds two
@@ -382,10 +395,9 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
     # same split is kept here, with `model_name` for paths and the stamp.
     key = base_model(model_name)
     if transversion:
-        # The same stamp as the Watson-Crick run: the panel, the seeding and the
-        # commit are shared, and the alphabet is recorded in the payload. A
-        # different stamp would empty the directory of the run this one is meant
-        # to be compared against.
+        # The alphabet is recorded in the payload as well as in the directory
+        # name, so a file read on its own still says which substitution produced
+        # it.
         mutation = run_mutation_sensitivity(adapter, key, families, device=device,
                                             checkpoint=checkpoint("transversion"))
         save(f"{model_name}_transversion.json",
