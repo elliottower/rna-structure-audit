@@ -103,7 +103,17 @@ def render_ps(value: float) -> str:
 
 def summarize(rel: str) -> dict:
     """Every Table 5 quantity for one model, with the quarantine applied."""
-    entries = scored(rel)
+    return summarize_entries(scored(rel))
+
+
+def summarize_entries(entries: dict) -> dict:
+    """The registered Table 5 aggregation, over already-loaded per-family entries.
+
+    Split out so generate_results_tables.py computes the repaired-panel table
+    through the same code audit_table5_aggregation.py checked against the
+    manuscript, rather than through a second implementation that agrees with it
+    until one of them is edited.
+    """
     nonq = {name: body for name, body in entries.items() if name not in QUARANTINE}
     passing = [body for body in nonq.values() if gate_pass(body)]
     fractions = [body["h3_precision"]["fraction"] for body in passing

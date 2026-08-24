@@ -87,7 +87,8 @@ def panel_table(analyzed: list[dict], withdrawn: list[dict]) -> str:
         r"\caption{The curated panel. Families above the rule are analyzed; those "
         r"below carry an annotation that could not be repaired against the Rfam "
         r"seed alignment and are withdrawn. Accession names the seed member a "
-        r"record's sequence and structure come from.}\\",
+        r"record's sequence and structure come from.}"
+        r"\label{tab:panel}\\",
         r"\toprule",
         r"\textbf{Family} & \textbf{Class} & \textbf{Rfam} & "
         r"\textbf{Accession} & \textbf{nt} & \textbf{Note} \\",
