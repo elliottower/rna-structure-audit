@@ -9,6 +9,14 @@ to it digit for digit. The panel itself also changed -- four annotations
 repaired against Rfam seed alignments, five records withdrawn -- so this run
 replaces the table rather than patching it. See DEVIATIONS.md, 2026-08-24.
 
+Three images, because no single transformers version loads all ten models:
+DNABERT-2's remote code predates the 4.29 attention refactor and needs its
+flash-attn import patched out, and Caduceus dispatches to a mamba-ssm CUDA
+kernel that has to be compiled with nvcc. The packages that *compute* the
+statistics -- numpy, scipy, scikit-learn -- are pinned identically across all
+three, so the split is in model loading only, and each cell records the stack it
+was produced under.
+
 Every output carries the commit it was produced at, the number of families
 loaded, the names withdrawn, and a hash over the panel records themselves, so a
 reader can tell which panel a number came from without trusting a filename.
@@ -18,9 +26,9 @@ directory means a restarted container resumes nothing, having written its
 shards where the new container will not look.
 
 Usage:
+    modal run scripts/modal_repaired_panel.py --smoke-only
     modal run --detach scripts/modal_repaired_panel.py
     modal run --detach scripts/modal_repaired_panel.py --models rinalmo,ernierna
-    modal run --detach scripts/modal_repaired_panel.py --models rnafm --force
 """
 
 import hashlib
@@ -34,39 +42,86 @@ app = modal.App("rna-repaired-panel")
 
 REPO = Path(__file__).resolve().parent.parent
 
-base_image = (
-    modal.Image.debian_slim(python_version="3.11")
+# Identical in all three images: these compute the statistics, and a table whose
+# cells were produced under different numerics is not one table.
+ANALYSIS_PACKAGES = (
+    "numpy==1.26.4",
+    "scipy==1.14.1",
+    "scikit-learn==1.5.2",
+    "matplotlib==3.9.2",
+    "tqdm==4.66.5",
+    "einops==0.8.0",
+)
+
+# huggingface-hub is deliberately unpinned: transformers 5.x and transformers
+# 4.28 require incompatible ranges, and guessing a version is what cost the
+# first launch of this script. The resolved version is recorded in every stamp.
+
+
+def with_project(image):
+    """Mount the repo and put it on the path.
+
+    PYTHONPATH rather than a sys.path insert inside the container function, and
+    no local checkpoint: RNA-FM falls back to a pinned HF revision when
+    `pretrained/pytorch_model.bin` is absent, and it is absent from this repo.
+    Local mounts are the last build step Modal permits, so this runs last.
+    """
+    return (
+        image
+        .env({"PYTHONPATH": "/root/project:/root/project/scripts"})
+        .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
+        .add_local_dir("scripts", "/root/project/scripts")
+        .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
+    )
+
+
+# multimolecule is installed here but used by only four of the eight; it is
+# harmless to the rest and keeps them on one image instead of two that differ by
+# a single package.
+main_image = with_project(
+    modal.Image.debian_slim(python_version="3.11").pip_install(
+        "torch==2.6.0",
+        "transformers==5.14.1",
+        "multimolecule==0.2.0",
+        # multimolecule 0.2.0 imports torchmetrics through danling without
+        # depending on it, so the container dies at adapter load without this.
+        "torchmetrics==1.4.1",
+        *ANALYSIS_PACKAGES,
+    )
+)
+
+dnabert2_image = with_project(
+    modal.Image.debian_slim(python_version="3.10")
+    .pip_install("torch==2.4.0", "transformers==4.28.0", *ANALYSIS_PACKAGES)
+    .add_local_file("scripts/patch_dnabert2_flash_attn.py",
+                    "/root/patch_dnabert2_flash_attn.py", copy=True)
+    .run_commands("python /root/patch_dnabert2_flash_attn.py")
+)
+
+caduceus_image = with_project(
+    modal.Image.from_registry("nvidia/cuda:12.1.0-devel-ubuntu22.04", add_python="3.11")
+    .apt_install("git")
     .pip_install(
         "torch==2.4.1",
-        "numpy==1.26.4",
-        "scipy==1.14.1",
-        "tqdm==4.66.5",
         "transformers==4.44.2",
-        # 0.0.5 pulls a danling that imports torchmetrics without depending on
-        # it, so the container dies at adapter load. 0.2.0 is the version the
-        # Caduceus image has been building against.
-        "multimolecule==0.2.0",
-        "torchmetrics==1.4.1",
-        "matplotlib==3.9.2",
-        "scikit-learn==1.5.2",
-        "einops==0.8.0",
-        "huggingface-hub==0.24.7",
+        *ANALYSIS_PACKAGES,
+        "packaging==24.1", "ninja==1.11.1.1", "wheel==0.44.0", "setuptools==75.1.0",
     )
-    # PYTHONPATH rather than a sys.path insert inside the container function, and
-    # no local checkpoint: RNA-FM falls back to a pinned HF revision when
-    # `pretrained/pytorch_model.bin` is absent, and it is absent from this repo.
-    .env({"PYTHONPATH": "/root/project:/root/project/scripts"})
-    .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
-    .add_local_dir("scripts", "/root/project/scripts")
-    .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
+    # Both wheels compile against the installed torch, so they are built with a
+    # GPU attached and without build isolation.
+    .run_commands("pip install --no-build-isolation causal-conv1d==1.4.0", gpu="A10G")
+    .run_commands("pip install --no-build-isolation mamba-ssm==2.2.4", gpu="A10G")
 )
 
 vol = modal.Volume.from_name("rna-repaired-panel-results", create_if_missing=True)
 
-AVAILABLE_MODELS = [
-    "rnafm", "rinalmo", "utrlm", "ernierna", "splicebert",
-    "nt", "hyenadna", "evo", "dnabert2",
-]
+# Which image each model loads under, from the partition the existing scripts
+# established: multimolecule for the four RNA language models, plain
+# transformers for the four that load through trust_remote_code, and one image
+# each for the two that need a build.
+MAIN_MODELS = ["rnafm", "rinalmo", "utrlm", "ernierna",
+               "splicebert", "nt", "hyenadna", "evo"]
+AVAILABLE_MODELS = MAIN_MODELS + ["dnabert2", "caduceus"]
 A100_MODELS = {"evo", "rinalmo"}
 
 
@@ -83,14 +138,27 @@ def panel_stamp(families):
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _library_versions():
+    """Every package that could move a number, as resolved in this container."""
+    from importlib.metadata import PackageNotFoundError, version
+
+    names = ["torch", "numpy", "scipy", "scikit-learn", "transformers",
+             "multimolecule", "huggingface-hub", "mamba-ssm"]
+    out = {}
+    for name in names:
+        try:
+            out[name] = version(name)
+        except PackageNotFoundError:
+            out[name] = None
+    return out
+
+
 def _run_model(model_name, commit, phase6_only):
     import os
     os.chdir("/root/project")
 
     from datetime import datetime, timezone
-    from importlib.metadata import version
 
-    import numpy as np
     import torch
 
     def now():
@@ -124,10 +192,7 @@ def _run_model(model_name, commit, phase6_only):
         "withdrawn": withdrawn,
         "seeding": "family_seed.family_rng, derived from the family name",
         "deviation": "DEVIATIONS.md, 2026-08-24",
-        "torch_version": torch.__version__,
-        "numpy_version": np.__version__,
-        "transformers_version": version("transformers"),
-        "multimolecule_version": version("multimolecule"),
+        "libraries": _library_versions(),
         "device": device,
     }
     print(f"[{now()}] {model_name}: {len(families)} families, panel "
@@ -192,11 +257,10 @@ def _run_model(model_name, commit, phase6_only):
             "panel_sha256": stamp["panel_sha256"]}
 
 
-@app.function(image=base_image, timeout=3600)
-def smoke(model_name: str):
-    """Import, load the panel, load the model, score one family -- on CPU.
+def _smoke(model_name):
+    """Import, load the panel, load the model, score the six shortest families.
 
-    Nine GPU containers that all die on the same missing package cost far more
+    Ten GPU containers that all die on the same missing package cost far more
     than one CPU container that finds it. This runs the same import path and the
     same adapter load as the real thing.
     """
@@ -212,19 +276,57 @@ def smoke(model_name: str):
     scored = run_phase6(adapter, shortest, device="cpu", compute_null=False)
     ok = [n for n, r in scored["per_rna"].items() if not r.get("skipped")]
     print(f"{model_name}: {len(families)} families, adapter loaded, scored {ok}")
+    print(f"  libraries: {_library_versions()}")
     if not ok:
         raise RuntimeError(f"{model_name} scored no family among the six shortest")
     return model_name
 
 
-@app.function(image=base_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
-def run_a10g(model_name: str, commit: str, phase6_only: bool = False):
+@app.function(image=main_image, timeout=3600)
+def smoke_main(model_name: str):
+    return _smoke(model_name)
+
+
+@app.function(image=dnabert2_image, timeout=3600)
+def smoke_dnabert2(model_name: str = "dnabert2"):
+    return _smoke(model_name)
+
+
+@app.function(image=caduceus_image, gpu="A10G", timeout=3600)
+def smoke_caduceus(model_name: str = "caduceus"):
+    """On a GPU, because mamba-ssm has no CPU kernel to fall back to."""
+    return _smoke(model_name)
+
+
+@app.function(image=main_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
+def run_main_a10g(model_name: str, commit: str, phase6_only: bool = False):
     return _run_model(model_name, commit, phase6_only)
 
 
-@app.function(image=base_image, gpu="A100", timeout=86400, volumes={"/results": vol})
-def run_a100(model_name: str, commit: str, phase6_only: bool = False):
+@app.function(image=main_image, gpu="A100", timeout=86400, volumes={"/results": vol})
+def run_main_a100(model_name: str, commit: str, phase6_only: bool = False):
     return _run_model(model_name, commit, phase6_only)
+
+
+@app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
+def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False):
+    return _run_model(model_name, commit, phase6_only)
+
+
+@app.function(image=caduceus_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
+def run_caduceus(model_name: str, commit: str, phase6_only: bool = False):
+    return _run_model(model_name, commit, phase6_only)
+
+
+def _route(model_name):
+    """The (function, label) each model runs under."""
+    if model_name == "caduceus":
+        return run_caduceus, "caduceus/A10G"
+    if model_name == "dnabert2":
+        return run_dnabert2, "dnabert2/A10G"
+    if model_name in A100_MODELS:
+        return run_main_a100, "main/A100"
+    return run_main_a10g, "main/A10G"
 
 
 @app.local_entrypoint()
@@ -244,14 +346,20 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
         raise SystemExit(f"Unknown models: {unknown}")
 
     if smoke_only:
-        print(f"CPU smoke check, {len(requested)} models: {requested}")
-        for name in smoke.map(requested, order_outputs=False):
-            print(f"  ok: {name}")
+        print(f"Smoke check, {len(requested)} models: {requested}")
+        on_main = [m for m in requested if m in MAIN_MODELS]
+        if on_main:
+            for name in smoke_main.map(on_main, order_outputs=False):
+                print(f"  ok: {name}")
+        if "dnabert2" in requested:
+            print(f"  ok: {smoke_dnabert2.remote('dnabert2')}")
+        if "caduceus" in requested:
+            print(f"  ok: {smoke_caduceus.remote('caduceus')} (GPU)")
         return
 
     print(f"Repaired-panel re-run at {commit[:12]}, {len(requested)} models: {requested}")
     for model_name in requested:
-        fn = run_a100 if model_name in A100_MODELS else run_a10g
+        fn, label = _route(model_name)
         handle = fn.spawn(model_name=model_name, commit=commit, phase6_only=phase6_only)
-        print(f"  {model_name:12s} {'A100' if model_name in A100_MODELS else 'A10G':5s} {handle.object_id}")
+        print(f"  {model_name:12s} {label:14s} {handle.object_id}")
     print("\nmodal app logs rna-repaired-panel")
