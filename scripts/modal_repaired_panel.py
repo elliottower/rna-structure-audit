@@ -175,6 +175,13 @@ UNTRAINED_MODELS = ["ernierna_untrained", "rnafm_untrained", "nt_untrained",
                     "dnabert2_untrained", "utrlm_untrained"]
 RANDOM_INIT_SEED = 42
 
+# Verbatim from `modal_transversion_control.py`, which produced the deposited
+# transversion numbers. A Watson-Crick swap at a stem position leaves a valid
+# pair (A-U becomes U-A), so the control substitutes a purine for a pyrimidine
+# and back, which cannot pair with the original partner. `phases_1_to_5` reads
+# COMPLEMENT as a module global, so replacing the dict is the whole change.
+TRANSVERSION_COMPLEMENT = {"A": "C", "U": "C", "C": "A", "G": "U", "T": "C"}
+
 AVAILABLE_MODELS = TRAINED_MODELS + UNTRAINED_MODELS
 
 A100_MODELS = {"evo", "rinalmo"}
@@ -285,7 +292,7 @@ def _load_on_device(model_name):
     return adapter, device
 
 
-def _run_model(model_name, commit, phase6_only):
+def _run_model(model_name, commit, phase6_only, transversion=False):
     import os
     os.chdir("/root/project")
 
@@ -301,11 +308,16 @@ def _run_model(model_name, commit, phase6_only):
         load_rfam_families,
         run_phase6,
     )
+    import phases_1_to_5
     from phases_1_to_5 import (
         run_attention_contact,
         run_mutation_sensitivity,
         run_structure_probing,
     )
+
+    if transversion:
+        phases_1_to_5.COMPLEMENT = TRANSVERSION_COMPLEMENT
+        print(f"  COMPLEMENT -> {TRANSVERSION_COMPLEMENT}")
 
     families = load_rfam_families()
     withdrawn = sorted(
@@ -369,6 +381,22 @@ def _run_model(model_name, commit, phase6_only):
     # avoids this by keying on the base name and suffixing only the output; the
     # same split is kept here, with `model_name` for paths and the stamp.
     key = base_model(model_name)
+    if transversion:
+        # The same stamp as the Watson-Crick run: the panel, the seeding and the
+        # commit are shared, and the alphabet is recorded in the payload. A
+        # different stamp would empty the directory of the run this one is meant
+        # to be compared against.
+        mutation = run_mutation_sensitivity(adapter, key, families, device=device,
+                                            checkpoint=checkpoint("transversion"))
+        save(f"{model_name}_transversion.json",
+             {"experiment": "transversion_control",
+              "complement": TRANSVERSION_COMPLEMENT,
+              "mutation_trained": mutation})
+        print(f"[{now()}] {model_name} TRANSVERSION COMPLETE. mean ratio "
+              f"{mutation.get('mean_best_ratio')}")
+        return {"model": model_name, "mean_ratio": mutation.get("mean_best_ratio"),
+                "panel_sha256": stamp["panel_sha256"]}
+
     if not phase6_only:
         print(f"[{now()}] {model_name}: mutation sensitivity")
         mutation = run_mutation_sensitivity(adapter, key, families,
@@ -470,33 +498,39 @@ def smoke_caduceus(model_name: str = "caduceus"):
 
 
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
-def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False):
-    return _run_model(model_name, commit, phase6_only)
+def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False,
+                     transversion: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion)
 
 
 @app.function(image=multimol_image, gpu="A100", timeout=86400, volumes={"/results": vol})
-def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False):
-    return _run_model(model_name, commit, phase6_only)
+def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False,
+                     transversion: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
-def run_legacy(model_name: str, commit: str, phase6_only: bool = False):
-    return _run_model(model_name, commit, phase6_only)
+def run_legacy(model_name: str, commit: str, phase6_only: bool = False,
+              transversion: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion)
 
 
 @app.function(image=evo_image, gpu="A100", timeout=86400, volumes={"/results": vol})
-def run_evo(model_name: str, commit: str, phase6_only: bool = False):
-    return _run_model(model_name, commit, phase6_only)
+def run_evo(model_name: str, commit: str, phase6_only: bool = False,
+           transversion: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
-def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False):
-    return _run_model(model_name, commit, phase6_only)
+def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False,
+                transversion: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
-def run_caduceus(model_name: str, commit: str, phase6_only: bool = False):
-    return _run_model(model_name, commit, phase6_only)
+def run_caduceus(model_name: str, commit: str, phase6_only: bool = False,
+                transversion: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion)
 
 
 def _route(model_name):
@@ -530,7 +564,8 @@ def _smoke_route(model_name):
 
 
 @app.local_entrypoint()
-def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
+def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
+         transversion: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -581,9 +616,16 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
         print(f"\nAll {len(requested)} models load and score.")
         return
 
-    print(f"Repaired-panel re-run at {commit[:12]}, {len(requested)} models: {requested}")
+    if transversion and phase6_only:
+        raise SystemExit("--transversion runs the mutation stage; "
+                         "--phase6-only skips it")
+
+    stage = "transversion control" if transversion else "re-run"
+    print(f"Repaired-panel {stage} at {commit[:12]}, "
+          f"{len(requested)} models: {requested}")
     for model_name in requested:
         fn, label = _route(model_name)
-        handle = fn.spawn(model_name=model_name, commit=commit, phase6_only=phase6_only)
+        handle = fn.spawn(model_name=model_name, commit=commit,
+                          phase6_only=phase6_only, transversion=transversion)
         print(f"  {model_name:12s} {label:14s} {handle.object_id}")
     print("\nmodal app logs rna-repaired-panel")
