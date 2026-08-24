@@ -42,7 +42,11 @@ base_image = (
         "scipy==1.14.1",
         "tqdm==4.66.5",
         "transformers==4.44.2",
-        "multimolecule==0.0.5",
+        # 0.0.5 pulls a danling that imports torchmetrics without depending on
+        # it, so the container dies at adapter load. 0.2.0 is the version the
+        # Caduceus image has been building against.
+        "multimolecule==0.2.0",
+        "torchmetrics==1.4.1",
         "matplotlib==3.9.2",
         "scikit-learn==1.5.2",
         "einops==0.8.0",
@@ -84,6 +88,7 @@ def _run_model(model_name, commit, phase6_only):
     os.chdir("/root/project")
 
     from datetime import datetime, timezone
+    from importlib.metadata import version
 
     import numpy as np
     import torch
@@ -121,6 +126,8 @@ def _run_model(model_name, commit, phase6_only):
         "deviation": "DEVIATIONS.md, 2026-08-24",
         "torch_version": torch.__version__,
         "numpy_version": np.__version__,
+        "transformers_version": version("transformers"),
+        "multimolecule_version": version("multimolecule"),
         "device": device,
     }
     print(f"[{now()}] {model_name}: {len(families)} families, panel "
@@ -185,6 +192,31 @@ def _run_model(model_name, commit, phase6_only):
             "panel_sha256": stamp["panel_sha256"]}
 
 
+@app.function(image=base_image, timeout=3600)
+def smoke(model_name: str):
+    """Import, load the panel, load the model, score one family -- on CPU.
+
+    Nine GPU containers that all die on the same missing package cost far more
+    than one CPU container that finds it. This runs the same import path and the
+    same adapter load as the real thing.
+    """
+    import os
+    os.chdir("/root/project")
+
+    from phase6_compensatory_mutation import load_adapter, load_rfam_families, run_phase6
+
+    families = load_rfam_families()
+    adapter = load_adapter(model_name)
+    adapter.load()
+    shortest = sorted(families, key=lambda f: len(f["sequence"]))[:6]
+    scored = run_phase6(adapter, shortest, device="cpu", compute_null=False)
+    ok = [n for n, r in scored["per_rna"].items() if not r.get("skipped")]
+    print(f"{model_name}: {len(families)} families, adapter loaded, scored {ok}")
+    if not ok:
+        raise RuntimeError(f"{model_name} scored no family among the six shortest")
+    return model_name
+
+
 @app.function(image=base_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_a10g(model_name: str, commit: str, phase6_only: bool = False):
     return _run_model(model_name, commit, phase6_only)
@@ -196,7 +228,7 @@ def run_a100(model_name: str, commit: str, phase6_only: bool = False):
 
 
 @app.local_entrypoint()
-def main(models: str = "", phase6_only: bool = False):
+def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     dirty = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -210,6 +242,12 @@ def main(models: str = "", phase6_only: bool = False):
     unknown = [m for m in requested if m not in AVAILABLE_MODELS]
     if unknown:
         raise SystemExit(f"Unknown models: {unknown}")
+
+    if smoke_only:
+        print(f"CPU smoke check, {len(requested)} models: {requested}")
+        for name in smoke.map(requested, order_outputs=False):
+            print(f"  ok: {name}")
+        return
 
     print(f"Repaired-panel re-run at {commit[:12]}, {len(requested)} models: {requested}")
     for model_name in requested:
