@@ -324,7 +324,20 @@ def _run_model(model_name, commit, phase6_only):
 
     out_dir = Path("/results") / model_name
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "stamp.json").write_text(json.dumps(stamp, indent=2) + "\n")
+
+    # The directory is emptied when its stamp changes, so it never holds two
+    # runs at once. FamilyCheckpoint already refuses a stale shard, which is
+    # enough for a run that finishes; a run that dies partway leaves its result
+    # files behind, and the next run would write a new stamp.json beside them.
+    # A reader who trusts the stamp then reads last month's numbers.
+    previous = out_dir / "stamp.json"
+    if previous.exists() and json.loads(previous.read_text()) != stamp:
+        stale = sorted(p for p in out_dir.iterdir() if p.is_file())
+        print(f"[{now()}] {model_name}: clearing {len(stale)} file(s) from a "
+              f"different run: {[p.name for p in stale]}")
+        for path in stale:
+            path.unlink()
+    previous.write_text(json.dumps(stamp, indent=2) + "\n")
     vol.commit()
 
     def checkpoint(stage):
