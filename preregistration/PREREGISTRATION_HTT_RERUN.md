@@ -76,6 +76,15 @@ are ViennaRNA MFE predictions, as before. The deposited artifacts record repeat
 counts, sequence lengths and MFE values but not the sequences or dot-brackets,
 so both are regenerated.
 
+**The structures are not the deposited ones.** Rebuilding the fragments
+reproduces all five deposited lengths exactly, so the construction is recovered,
+but folding them with ViennaRNA 2.7.0 gives minimum free energies 5 to 6
+kcal/mol above those recorded on 2026-07-13 -- $-96.3$ against $-102.3$ for
+CAG17. The deposited run did not record its ViennaRNA version. The re-run
+therefore uses structures that differ somewhat from the ones the deposited
+numbers were computed on, which is a second reason its values may move and is
+recorded here before it runs.
+
 **Sample size.** Five sequences. No interval computed on five fragments
 separates models, and none is registered. The section's claim is a mechanism
 illustration and remains one whatever the numbers.

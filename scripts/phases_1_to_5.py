@@ -220,6 +220,20 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
         tokens = adapter.tokenize(_tokenizer_sequence(model_key, seq[:n_pos])).to(device)
         wt_embs = adapter.get_all_layer_embeddings(tokens)
         n_layers = len(wt_embs)
+
+        # The same sequence through the same model a second time. Nothing is
+        # mutated, so every distance below is zero in exact arithmetic and what
+        # comes back is the floor this statistic resolves. Measured here as well
+        # as at Rung 3, because a model whose floor exceeds its own signal at one
+        # rung says nothing about the other, and D18 left that unmeasured.
+        noop_embs = adapter.get_all_layer_embeddings(
+            adapter.tokenize(seq[:n_pos]).to(device))
+        noop_floor = max(
+            float(cosine(wt_embs[layer][row].cpu().numpy().astype(np.float64),
+                         noop_embs[layer][row].cpu().numpy().astype(np.float64)))
+            for layer in range(n_layers)
+            for row in range(min(wt_embs[layer].shape[0], noop_embs[layer].shape[0]))
+        )
         wt_spans = _family_spans(adapter, model_key, seq[:n_pos])
         wt_rows = (nucleotide_rows(wt_spans, n_pos) if wt_spans is not None
                    else np.arange(n_pos))
@@ -325,6 +339,7 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
 
         rna_result = {
             "best_ratio": best_ratio, "best_layer": int(best_layer_idx),
+            "noop_floor": noop_floor,
             "nuc_null_95th": nuc_null_95th, "exceeds_nuc_null": exceeds_nuc,
             "n_stem": real_ratios_per_layer[best_layer_idx]["n_stem"],
             "n_loop": real_ratios_per_layer[best_layer_idx]["n_loop"],

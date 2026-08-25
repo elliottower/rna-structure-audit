@@ -78,6 +78,9 @@ def with_project(image):
         .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
         # 2.9 MB of Stockholm alignments, for the multi-sequence replication.
         .add_local_dir("data/rfam_seeds", "/root/project/data/rfam_seeds")
+        # Five folded CAG-repeat fragments, in the same record format as the
+        # Rfam families, so the case study runs through the panel's own stages.
+        .add_local_dir("data/htt_fragments", "/root/project/data/htt_fragments")
     )
 
 
@@ -246,8 +249,42 @@ def _ablate_pairwise_bias(model):
     return zeroed
 
 
+def _reseed_buffers(model, seed):
+    """Redraw every non-persistent buffer, so a control keeps no fixed table.
+
+    `_randomize` iterates `named_parameters()`, which is what a random-init
+    control is conventionally built from, and a buffer is not a parameter. That
+    left ERNIE-RNA's Watson-Crick table intact (D20). Two other controls sit
+    above their own chance rates with no buffer identified -- RiNALMo by 0.095
+    and RNA-FM by 0.084 -- and RiNALMo holds 34 non-persistent buffers, mostly
+    rotary inverse frequencies.
+
+    Replacing every such buffer with noise of the same shape tests whether those
+    buffers carry the excess. A control that still exceeds its chance rate after
+    this holds nothing outside its parameters that the probe reads.
+    """
+    import torch
+
+    generator = torch.Generator(device="cpu").manual_seed(seed)
+    persistent = set(model.state_dict())
+    touched = 0
+    with torch.no_grad():
+        for name, tensor in model.named_buffers():
+            if name in persistent or tensor is None or tensor.numel() == 0:
+                continue
+            if not tensor.is_floating_point():
+                continue
+            noise = torch.randn(tensor.shape, generator=generator,
+                                dtype=tensor.dtype).to(tensor.device)
+            tensor.copy_(noise * float(tensor.std()) if tensor.numel() > 1
+                         else noise)
+            touched += 1
+    print(f"  reseeded {touched} non-persistent float buffer(s) at seed {seed}")
+    return touched
+
+
 def result_dir(model_name, transversion, ablate_bias=False, synthetic=False,
-               multi_seq=False):
+               multi_seq=False, htt=False, reseed_buffers=False):
     """Where a run writes, on the volume.
 
     The transversion control gets its own directory. `_run_model` empties a
@@ -262,6 +299,10 @@ def result_dir(model_name, transversion, ablate_bias=False, synthetic=False,
         suffix += "_synthetic"
     if multi_seq:
         suffix += "_multiseq"
+    if htt:
+        suffix += "_htt"
+    if reseed_buffers:
+        suffix += "_reseeded"
     # The ablation is a different model, not a different metric, so it cannot
     # share a directory with the intact run it is compared against.
     if ablate_bias:
@@ -351,9 +392,21 @@ def _pin_numerics():
     # on different runs, which is a candidate for the one model whose results
     # move across otherwise identical runs.
     torch.backends.cudnn.benchmark = False
-    torch.use_deterministic_algorithms(True, warn_only=True)
+    # `warn_only` was the reason D18's cause stayed a guess: a kernel with no
+    # deterministic implementation warned and carried on, so nothing named it.
+    # Forcing it either raises on that kernel, which identifies it, or succeeds,
+    # which rules determinism out as the explanation. The failure is caught and
+    # recorded rather than killing the run, because the point is the diagnosis.
+    determinism = "forced"
+    try:
+        torch.use_deterministic_algorithms(True)
+    except Exception as exc:  # noqa: BLE001 -- recorded, not swallowed
+        determinism = f"refused: {type(exc).__name__}: {exc}"
+        torch.use_deterministic_algorithms(True, warn_only=True)
+        print(f"  determinism {determinism}")
     print(f"  numerics: defaults were {before}, now pinned to full float32")
     return {"defaults_observed": before,
+            "determinism": determinism,
             "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"}
 
 
@@ -416,7 +469,7 @@ def _randomize(model, seed):
     return after
 
 
-def _load_on_device(model_name, ablate_bias=False):
+def _load_on_device(model_name, ablate_bias=False, reseed_buffers=False):
     """Adapter, loaded and moved, with the device it landed on.
 
     A `_untrained` suffix loads the trained adapter and then re-initializes it,
@@ -433,6 +486,8 @@ def _load_on_device(model_name, ablate_bias=False):
     adapter.load()
     if model_name.endswith("_untrained"):
         n = _randomize(adapter.model, RANDOM_INIT_SEED)
+        if reseed_buffers:
+            _reseed_buffers(adapter.model, RANDOM_INIT_SEED)
         print(f"  randomized {n:,} parameters at seed {RANDOM_INIT_SEED}")
     if ablate_bias:
         _ablate_pairwise_bias(adapter.model)
@@ -442,7 +497,8 @@ def _load_on_device(model_name, ablate_bias=False):
 
 
 def _run_model(model_name, commit, phase6_only, transversion=False,
-               ablate_bias=False, synthetic=False, multi_seq=False):
+               ablate_bias=False, synthetic=False, multi_seq=False, htt=False,
+               reseed_buffers=False):
     import os
     os.chdir("/root/project")
 
@@ -470,6 +526,16 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         print(f"  COMPLEMENT -> {TRANSVERSION_COMPLEMENT}")
 
     families = load_rfam_families()
+    if htt:
+        # The case study asks whether probing accuracy tracks structure or the
+        # composition a CAG repeat forces, so it runs the panel's own stages on
+        # fragments whose structures are folded and versioned rather than
+        # predicted inside the container.
+        htt_dir = Path("data/htt_fragments")
+        families = [json.loads(p.read_text())
+                    for p in sorted(htt_dir.glob("*.json"))]
+        print(f"  HTT: {len(families)} CAG-repeat fragments, "
+              f"{[f['n_cag'] for f in families]} repeats")
     if synthetic:
         import numpy as _np
         n_before = len(families)
@@ -483,7 +549,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         if "excluded" in json.loads(p.read_text())
     )
     numerics = _pin_numerics()
-    adapter, device = _load_on_device(model_name, ablate_bias)
+    adapter, device = _load_on_device(model_name, ablate_bias, reseed_buffers)
     stamp = {
         "commit": commit,
         "panel_sha256": panel_stamp(families),
@@ -507,7 +573,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
     print(f"[{now()}] {model_name} loaded on {device}")
 
     out_dir = Path("/results") / result_dir(model_name, transversion, ablate_bias,
-                                            synthetic, multi_seq)
+                                            synthetic, multi_seq, htt,
+                                            reseed_buffers)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # The directory is emptied when its stamp changes, so it never holds two
@@ -682,7 +749,8 @@ def _inspect_buffers(adapter, model_name, device="cpu"):
               f"nonzero={entry['nonzero']}/{entry['numel']}")
 
 
-def _smoke(model_name, ablate_bias=False, buffers_only=False):
+def _smoke(model_name, ablate_bias=False, buffers_only=False,
+           reseed_buffers=False):
     """Import, load the panel, load the model, score six families.
 
     Ten GPU containers that all die on the same missing package cost far more
@@ -705,7 +773,7 @@ def _smoke(model_name, ablate_bias=False, buffers_only=False):
     # one piece of startup code that could kill all 27 containers untested.
     numerics = _pin_numerics()
     families = sorted(load_rfam_families(), key=lambda f: len(f["sequence"]))
-    adapter, device = _load_on_device(model_name, ablate_bias)
+    adapter, device = _load_on_device(model_name, ablate_bias, reseed_buffers)
     if buffers_only:
         _inspect_buffers(adapter, model_name, device)
         return model_name
@@ -761,49 +829,61 @@ def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False, buff
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False,
                      transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False, multi_seq: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False,
+                     htt: bool = False,
+                     reseed_buffers: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic, multi_seq)
+                      ablate_bias, synthetic, multi_seq, htt, reseed_buffers)
 
 
 @app.function(image=multimol_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False,
                      transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False, multi_seq: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False,
+                     htt: bool = False,
+                     reseed_buffers: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic, multi_seq)
+                      ablate_bias, synthetic, multi_seq, htt, reseed_buffers)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_legacy(model_name: str, commit: str, phase6_only: bool = False,
               transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False, multi_seq: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False,
+                     htt: bool = False,
+                     reseed_buffers: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic, multi_seq)
+                      ablate_bias, synthetic, multi_seq, htt, reseed_buffers)
 
 
 @app.function(image=evo_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_evo(model_name: str, commit: str, phase6_only: bool = False,
            transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False, multi_seq: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False,
+                     htt: bool = False,
+                     reseed_buffers: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic, multi_seq)
+                      ablate_bias, synthetic, multi_seq, htt, reseed_buffers)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False,
                 transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False, multi_seq: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False,
+                     htt: bool = False,
+                     reseed_buffers: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic, multi_seq)
+                      ablate_bias, synthetic, multi_seq, htt, reseed_buffers)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_caduceus(model_name: str, commit: str, phase6_only: bool = False,
                 transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False, multi_seq: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False,
+                     htt: bool = False,
+                     reseed_buffers: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic, multi_seq)
+                      ablate_bias, synthetic, multi_seq, htt, reseed_buffers)
 
 
 def _route(model_name):
@@ -841,7 +921,8 @@ def _smoke_route(model_name):
 def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
          transversion: bool = False, ablate_bias: bool = False,
          buffers_only: bool = False, synthetic: bool = False,
-         multi_seq: bool = False):
+         multi_seq: bool = False, htt: bool = False,
+         reseed_buffers: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -920,6 +1001,7 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         handle = fn.spawn(model_name=model_name, commit=commit,
                           phase6_only=phase6_only, transversion=transversion,
                           ablate_bias=ablate_bias, synthetic=synthetic,
-                          multi_seq=multi_seq)
+                          multi_seq=multi_seq, htt=htt,
+                          reseed_buffers=reseed_buffers)
         print(f"  {model_name:12s} {label:14s} {handle.object_id}")
     print("\nmodal app logs rna-repaired-panel")
