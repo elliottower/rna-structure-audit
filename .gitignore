@@ -29,3 +29,6 @@ reviews/
 
 # Scratch run output
 logs/
+
+# results-cli ledger: kept locally, never committed
+.results/
