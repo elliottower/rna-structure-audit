@@ -971,11 +971,16 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         smoke_only = True
     if smoke_only:
         # A control loads the same adapter on the same image as its trained
-        # counterpart, so smoking both twice buys nothing.
-        requested = sorted({base_model(m) for m in requested},
-                           key=lambda m: AVAILABLE_MODELS.index(m))
+        # counterpart, so smoking both twice buys nothing -- unless the thing
+        # being checked only happens to a control. Collapsing the suffix then
+        # removes the intervention from the check, which is how a reseeding run
+        # reached the volume having reseeded nothing.
+        if not reseed_buffers:
+            requested = sorted({base_model(m) for m in requested},
+                               key=lambda m: AVAILABLE_MODELS.index(m))
         print(f"Smoke check, {len(requested)} adapters: {requested}"
-              + (", pairwise bias ablated" if ablate_bias else ""))
+              + (", pairwise bias ablated" if ablate_bias else "")
+              + (", buffers reseeded" if reseed_buffers else ""))
         # Spawned rather than called, so one broken adapter reports itself
         # alongside the nine that work instead of hiding them behind its own
         # traceback, and so the four images build concurrently.
