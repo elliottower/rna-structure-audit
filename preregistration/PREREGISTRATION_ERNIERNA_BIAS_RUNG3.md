@@ -4,9 +4,12 @@ Status: DRAFT, not frozen. Commit SHA: (to be pinned at freeze)
 
 ## Description
 
-ERNIE-RNA scores the highest per-pair precision in the panel, 0.864. Its randomly
-initialized control scores 0.476 against a derangement chance rate of 0.241. A
-control whose weights are random should carry no learned partner information.
+ERNIE-RNA scores the highest per-pair precision in the panel. On the 35 families
+that carry a derangement chance rate, which is the analysis set here, it scores
+0.888 against a chance rate of 0.124, an excess of 0.764. Its randomly
+initialized control scores 0.490 against a chance rate of 0.241, an excess of
+0.249. A control whose weights are random should carry no learned partner
+information.
 
 `multimolecule.ErnieRnaModel` holds `pairwise_bias_map`, a vocabulary-square
 buffer registered `persistent=False`. After one forward pass it contains exactly
@@ -31,9 +34,10 @@ model, because the trained model has learned weights to fall back on.
 post-ablation derangement chance rate, so ERNIE-RNA's partner specificity does
 not rest entirely on the table.
 
-H1 carries the design. Without it the untrained control's 0.476 has no attributed
-cause and the trained-versus-untrained comparison for ERNIE-RNA is
-uninterpretable in either direction.
+H1 is the primary question: without it the untrained control's excess of 0.249
+has no attributed cause and the trained-versus-untrained comparison for ERNIE-RNA
+is uninterpretable in either direction. H2 and H3 do not depend on it -- see the
+manipulation check below, which replaces gating them on H1.
 
 Each hypothesis compares a model against **its own** derangement chance rate,
 computed in the same run on the same weights. A chance rate is a property of the
@@ -69,23 +73,24 @@ evaluated. This replaces gating H2 and H3 on H1: the buffer explaining part but
 not all of the advantage would fail H1 while leaving H2 and H3 both answerable,
 and that is a likely outcome rather than a degenerate one.
 
-**All hypotheses are void if either ablated arm scores fewer than 34 of the 36
-non-quarantined qualifying families**, which would mean the ablation broke the
-forward pass. Both intact arms score 36 of 36, with 35 carrying a derangement
-null.
+**All hypotheses are void if either ablated arm carries a chance rate for fewer
+than 33 of the 35 families in the analysis set**, which would mean the ablation
+broke the forward pass rather than removed a prior. Both intact arms score 36 of
+36 families, 35 of which carry a derangement null.
 
 ## An outcome that strengthens the model under examination
 
 If H1 fails and H3 holds, ERNIE-RNA's partner specificity is neither the table
-nor an artifact: it is learned, the untrained control's 0.476 comes from
-something else, and ERNIE-RNA's result is stronger than the trained-minus-
-untrained gap of 0.388 suggests. That outcome is reported whichever way it lands.
+nor an artifact: it is learned, the untrained control's excess of 0.249 comes
+from something else, and ERNIE-RNA's result is stronger than the difference of
+excesses, 0.515, suggests. That outcome is reported whichever way it lands.
 
 ## Sampling plan
 
 **Existing data.** Two of four cells are computed and will not be re-run: trained
-intact (precision 0.864, chance 0.124) and untrained intact (0.476, 0.241), both
-`results/repaired_panel_v3`, commit `1350db1`.
+intact (precision 0.888, chance 0.124, excess 0.764) and untrained intact (0.490,
+0.241, excess 0.249), both `results/repaired_panel_v3`, commit `1350db1`, over
+the 35-family analysis set.
 
 **Data collection procedure.** Two new cells on the multimolecule image, one
 container each: trained with the bias ablated, and randomly initialized with the
@@ -106,15 +111,17 @@ this panel.
 **Sample size.** 47 analyzed families, 38 passing the registered Rung 3 filters,
 36 outside the quarantine, 35 carrying a derangement null and therefore a chance
 rate. The 35 are the analysis set, since every hypothesis here reads a chance
-rate. It resolves a difference of excesses of about 0.13 and cannot resolve one
-of 0.05.
+rate. It resolves a difference of excesses of 0.126 and cannot resolve one of
+0.05.
 
 ## Foreknowledge of data or evidence
 
 Substantial, and stated because it constrains what this registration can claim.
 
-Known before writing: trained precision 0.864 and untrained 0.476, with
-derangement chance rates 0.124 and 0.241. The buffer is non-persistent, is
+Known before writing: over the analysis set, trained precision 0.888 and
+untrained 0.490, with derangement chance rates 0.124 and 0.241, giving excesses
+of 0.764 and 0.249 whose difference is 0.515. Over all 36 non-quarantined scored
+families the precisions are 0.864 and 0.476. The buffer is non-persistent, is
 rebuilt on first forward, holds the six canonical pairs, and is identical across
 model instantiations once built. Before that first forward pass it holds
 uninitialized memory, which is what made an earlier inspection read NaNs and
