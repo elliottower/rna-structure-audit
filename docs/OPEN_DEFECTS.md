@@ -558,6 +558,88 @@ unexpected key at all, now raises.
 
 ---
 
+## D18. DNABERT-2 disagrees with itself by more than its own signal
+
+**Detector:** `scripts/report_resolution_and_chance.py`
+
+`noop_floor` runs one unmutated sequence through a model twice and computes the
+same statistic as `best_ps`, whose true value is then exactly zero. Whatever
+comes back is the floor the measurement resolves.
+
+| model | floor, median | floor, max | mean PS |
+|---|---|---|---|
+| DNABERT-2 | 1.39e-02 | 6.21e-02 | -0.0204 |
+| DNABERT-2 untrained | 3.92e-06 | 3.70e-03 | |
+| every other model | ~2e-17 | ~7e-17 | |
+
+The floor is larger than the quantity being measured. Every other model in the
+panel, trained and untrained, floors at the cosine's own float64 rounding, so
+this is DNABERT-2 rather than the pipeline. Its Triton flash attention is the
+candidate; `torch.use_deterministic_algorithms` is called with `warn_only=True`,
+which warns rather than forces, so nothing stopped it.
+
+`best_ps` is a maximum over layers. When the floor swamps the signal at every
+layer, that selection returns the largest noise draw rather than the largest
+effect, so the statistic is biased upward by an amount nobody can bound.
+
+**Consequence for the reported result.** No DNABERT-2 Rung 3 number is a
+measurement. H2 reads its mean PS as one of five DNA-pretrained values and H20 is
+a DNABERT-2 attention contrast. Whether Rungs 1 and 2 are affected is not known:
+the floor was measured on the Rung 3 statistic, and the same control has not been
+run on the ratio.
+
+**Fix.** Force `torch.use_deterministic_algorithms(True)` rather than warn. If it
+raises on the flash-attention kernel, that is the finding -- the model cannot be
+run deterministically in this configuration -- and it is reported rather than
+routed around.
+
+---
+
+## D19. An intervention applied before the first forward pass is silently discarded
+
+**Detector:** `scripts/modal_inspect_multimol_buffers.py`
+
+`transformers` v5 leaves a non-persistent buffer on the meta device after
+`from_pretrained`, so it materializes as whatever memory held. Every
+multimolecule model in this panel repairs its own buffers on first use, and none
+of them is left damaged:
+
+| model | non-persistent buffers | garbage before a forward | still garbage after |
+|---|---|---|---|
+| RiNALMo | 34 | 33 | 0 |
+| UTR-LM | 7 | 4 | 0 |
+| SpliceBERT | 1 | 0 | 0 |
+| ERNIE-RNA | 3 | 2 | 0 |
+
+No deposited result is contaminated by this. What it does break is any
+intervention written between the load and the first forward pass, because the
+repair overwrites it.
+
+`scripts/modal_ernierna_ablation.py` is that case. It zeros `pairwise_bias_map`
+and then calls `run_mutation_sensitivity`, whose first forward pass reaches
+`if not self._inited:` in `ErnieRnaEmbeddings` and rebuilds the buffer with the
+six canonical pairing values. The deposited run at
+`results/ernierna_ablation/ernierna_no_attn_bias_20260717_104015` therefore
+ablated nothing, and its numbers measure the unmodified model.
+
+**Consequence for the reported result.** Nothing in the manuscript reads that
+run. It was cited during this audit as evidence that the pairing bias barely
+affects Rungs 1 and 2, and that reading is withdrawn: the comparison was between
+one model and itself.
+
+There is an accidental measurement in it. The intact model at 47 families under
+the current code gives a mean best ratio of 1.2758; the same model at 52 families
+under July's code and float32 metric gives 1.2348. The 0.041 gap is what the
+panel change, the token-span repair and the arithmetic move a Rung 1 number when
+the model is held fixed.
+
+**Fix.** An ablation on a multimolecule model sets `model._inited = True` after
+mutating, or patches the builder. `scripts/modal_ernierna_ablation.py` is left as
+deposited, since its output is on record; the registered replacement carries the
+flag.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing
