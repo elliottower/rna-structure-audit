@@ -256,7 +256,7 @@ def _ablate_pairwise_bias(model):
     return zeroed
 
 
-def _reseed_buffers(model, seed):
+def _reseed_buffers(adapter, seed, device="cpu"):
     """Redraw every non-persistent buffer, so a control keeps no fixed table.
 
     `_randomize` iterates `named_parameters()`, which is what a random-init
@@ -271,6 +271,21 @@ def _reseed_buffers(model, seed):
     this holds nothing outside its parameters that the probe reads.
     """
     import torch
+
+    # A non-persistent buffer materializes from the meta device and every model
+    # here repairs its own on the first forward pass (D19). Reseeding before that
+    # pass is silently undone, which is what voided the July ablation and what an
+    # earlier version of this function did: all three controls came back with
+    # numbers identical to their unreseeded runs, including the one whose buffer
+    # is known to carry the effect. One forward pass first, so the values being
+    # replaced are the ones the model actually computes with.
+    model = adapter.model
+    with torch.no_grad():
+        adapter.get_all_layer_embeddings(
+            adapter.tokenize("ACGUACGUACGUACGUACGU").to(device))
+    for module in model.modules():
+        if hasattr(module, "_inited"):
+            module._inited = True
 
     generator = torch.Generator(device="cpu").manual_seed(seed)
     persistent = set(model.state_dict())
@@ -493,13 +508,16 @@ def _load_on_device(model_name, ablate_bias=False, reseed_buffers=False):
     adapter.load()
     if model_name.endswith("_untrained"):
         n = _randomize(adapter.model, RANDOM_INIT_SEED)
-        if reseed_buffers:
-            _reseed_buffers(adapter.model, RANDOM_INIT_SEED)
         print(f"  randomized {n:,} parameters at seed {RANDOM_INIT_SEED}")
     if ablate_bias:
         _ablate_pairwise_bias(adapter.model)
     if getattr(adapter, "model", None) is not None and device == "cuda":
         adapter.model = adapter.model.to(device)
+    # After the move, because reseeding runs a forward pass and a probe built on
+    # the CPU against a model on the GPU is the same mismatch that has already
+    # cost three runs in this file.
+    if reseed_buffers and model_name.endswith("_untrained"):
+        _reseed_buffers(adapter, RANDOM_INIT_SEED, device)
     return adapter, device
 
 
