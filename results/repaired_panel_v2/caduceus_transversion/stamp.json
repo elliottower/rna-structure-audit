@@ -1,0 +1,28 @@
+{
+  "commit": "a5f14c66f39e7219e93de2271a25631ffb362778",
+  "panel_sha256": "5c4d6f6d4c32b47a8b0f8802efd26af98708d3c3b5f848b298ddfaddea6e6fb3",
+  "n_families": 47,
+  "withdrawn": [
+    "5S_rRNA_ecoli",
+    "IRES_HCV_domainII",
+    "RNaseP_specificity",
+    "SRP_RNA_helix8",
+    "U2_snRNA_stem"
+  ],
+  "seeding": "family_seed.family_rng, derived from the family name",
+  "deviation": "DEVIATIONS.md, 2026-08-24",
+  "libraries": {
+    "torch": "2.4.1",
+    "triton": "3.0.0",
+    "numpy": "1.26.4",
+    "scipy": "1.14.1",
+    "scikit-learn": "1.5.2",
+    "transformers": "4.44.2",
+    "multimolecule": "0.2.0",
+    "huggingface-hub": "0.36.2",
+    "flash-attn": null,
+    "mamba-ssm": "2.2.4"
+  },
+  "device": "cuda",
+  "weights": "pretrained"
+}

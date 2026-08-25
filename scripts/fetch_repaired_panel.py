@@ -19,6 +19,8 @@ volume is gone.
 from __future__ import annotations
 
 import argparse
+import gzip
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -49,23 +51,46 @@ def expected_files(directory: str) -> list[str]:
     return [name.replace("<key>", directory) for name in EXPECTED[kind]]
 
 
-def fetch(directory: str, name: str, force: bool) -> bool:
+def fetch(directory: str, name: str, force: bool, destination: Path) -> bool:
     """One file. Returns whether it was fetched rather than already present."""
-    local = DESTINATION / directory / name
-    if local.exists() and not force:
+    local = destination / directory / name
+    stored = compressed(local)
+    if stored.exists() and not force:
         return False
     local.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run(["modal", "volume", "get", "--force", VOLUME,
                     f"{directory}/{name}", str(local)],
                    check=True, capture_output=True, text=True)
+    if stored != local:
+        with local.open("rb") as raw, gzip.open(stored, "wb") as out:
+            shutil.copyfileobj(raw, out)
+        local.unlink()
     return True
+
+
+def compressed(local: Path) -> Path:
+    """Where a fetched file is kept.
+
+    The per-position sidecars are the bulk of a run -- 47 MB of the 48 -- and
+    they are arrays of rounded floats, which gzip to about a sixth. They are
+    stored compressed so a repository that may go public does not carry the
+    uncompressed form in its history forever. Everything else is small enough
+    that compressing it would only make it harder to read.
+    """
+    return (local.with_suffix(local.suffix + ".gz")
+            if local.name.endswith("_positions.json") else local)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--force", action="store_true",
                         help="re-fetch files already on disk")
+    # A re-run is a new set of numbers, and writing it over the directory the
+    # deposited results live in destroys the only copy of what was reported.
+    parser.add_argument("--dest", type=Path, default=DESTINATION,
+                        help="directory to write into (default: the deposited one)")
     args = parser.parse_args()
+    destination = args.dest if args.dest.is_absolute() else REPO / args.dest
 
     fetched = skipped = 0
     incomplete: list[tuple[str, list[str]]] = []
@@ -77,14 +102,14 @@ def main() -> int:
             incomplete.append((directory, missing))
             continue
         for name in wanted:
-            if fetch(directory, name, args.force):
+            if fetch(directory, name, args.force, destination):
                 fetched += 1
                 print(f"  {directory}/{name}")
             else:
                 skipped += 1
 
     print(f"\n{fetched} fetched, {skipped} already on disk, "
-          f"into {DESTINATION.relative_to(REPO)}")
+          f"into {destination.relative_to(REPO)}")
     for directory, missing in incomplete:
         print(f"INCOMPLETE {directory}: missing {', '.join(missing)}")
     return 1 if incomplete else 0
