@@ -189,10 +189,11 @@ A100_MODELS = {"evo", "rinalmo"}
 # a CPU, mamba-ssm has no CPU kernel, and DNABERT-2's Triton attention asserts
 # `q.is_cuda`. They smoke on a GPU; the rest smoke on a CPU for a tenth of the
 # cost.
-# RNA-FM is here for a different reason than the other three: its adapter
-# attaches a layer norm to the model by hand, and a module that does not travel
-# with `.to(device)` fails only on a GPU. A CPU smoke cannot see it, because
-# there is one device there and everything agrees.
+# Read by `_smoke_route`. Evo, DNABERT-2 and Caduceus are here because they have
+# no CPU path at all. RNA-FM is here for a different reason: its adapter attaches
+# a layer norm to the model by hand, and a module that does not travel with
+# `.to(device)` fails only where there is more than one device. A CPU smoke
+# cannot see that, because everything agrees on one device.
 GPU_SMOKE_MODELS = {"evo", "dnabert2", "caduceus", "rnafm"}
 
 
@@ -548,6 +549,12 @@ def smoke_legacy(model_name: str):
     return _smoke(model_name)
 
 
+@app.function(image=legacy_image, gpu="A10G", timeout=3600)
+def smoke_legacy_gpu(model_name: str):
+    """The legacy image with a GPU, for a model whose failure needs two devices."""
+    return _smoke(model_name)
+
+
 @app.function(image=evo_image, gpu="A10G", timeout=3600)
 def smoke_evo(model_name: str = "evo"):
     """On a GPU, because the Evo adapter refuses to place 7B parameters on a CPU."""
@@ -628,7 +635,8 @@ def _smoke_route(model_name):
     if model_name == "caduceus":
         return smoke_caduceus
     if model_name in LEGACY_MODELS:
-        return smoke_legacy
+        return (smoke_legacy_gpu if model_name in GPU_SMOKE_MODELS
+                else smoke_legacy)
     return smoke_multimol
 
 
