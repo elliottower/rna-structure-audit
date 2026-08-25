@@ -751,7 +751,8 @@ def _smoke_route(model_name):
 
 @app.local_entrypoint()
 def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
-         transversion: bool = False, ablate_bias: bool = False):
+         transversion: bool = False, ablate_bias: bool = False,
+         buffers_only: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -771,6 +772,8 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
     if unknown:
         raise SystemExit(f"Unknown models: {unknown}")
 
+    if buffers_only:
+        smoke_only = True
     if smoke_only:
         # A control loads the same adapter on the same image as its trained
         # counterpart, so smoking both twice buys nothing.
@@ -781,7 +784,8 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         # Spawned rather than called, so one broken adapter reports itself
         # alongside the nine that work instead of hiding them behind its own
         # traceback, and so the four images build concurrently.
-        handles = {m: _smoke_route(m).spawn(m, ablate_bias=ablate_bias)
+        handles = {m: _smoke_route(m).spawn(m, ablate_bias=ablate_bias,
+                                           buffers_only=buffers_only)
                    for m in requested}
         outcomes = {}
         for model_name, handle in handles.items():
