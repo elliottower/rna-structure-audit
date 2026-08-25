@@ -1,6 +1,10 @@
 # Does ERNIE-RNA's partner specificity come from its pairwise bias buffer or from its learned weights?
 
-Status: DRAFT, not frozen. Commit SHA: (to be pinned at freeze)
+Status: FROZEN. Commit SHA: `d095d091895eed118d0cdeeffad7cc088e6b0e50`
+
+Frozen before either ablated cell was computed. The two intact cells it
+compares against were computed before this registration was written, and
+their values are stated in Foreknowledge.
 
 ## Description
 

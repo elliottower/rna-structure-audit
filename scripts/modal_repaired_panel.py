@@ -202,7 +202,49 @@ def base_model(model_name):
     return model_name[:-len("_untrained")] if model_name.endswith("_untrained") else model_name
 
 
-def result_dir(model_name, transversion):
+def _ablate_pairwise_bias(model):
+    """Remove ERNIE-RNA's hardcoded pairing prior, and make the removal stick.
+
+    `pairwise_bias_map` is a non-persistent buffer holding a Watson-Crick and
+    wobble table -- A-U 2.0, C-G 3.0, G-U 0.8 -- so `_randomize` never reaches it
+    and an untrained control keeps it (D20). Zeroing it and the projection above
+    it is the ablation registered in
+    `preregistration/PREREGISTRATION_ERNIERNA_BIAS_RUNG3.md`.
+
+    `_inited` is the part that matters. `ErnieRnaEmbeddings` rebuilds the buffer
+    on the first forward pass while that flag is false, as a workaround for
+    transformers v5 leaving non-persistent buffers on the meta device. An
+    ablation that does not set it is silently undone by the first sequence, which
+    is what `modal_ernierna_ablation.py` did in July (D19).
+    """
+    import torch
+
+    target = None
+    for module in model.modules():
+        if hasattr(module, "pairwise_bias_map"):
+            target = module
+            break
+    if target is None:
+        raise RuntimeError("no module holds pairwise_bias_map; nothing to ablate")
+
+    with torch.no_grad():
+        target.pairwise_bias_map.zero_()
+        zeroed = int(target.pairwise_bias_map.numel())
+        for name, param in model.named_parameters():
+            if "pairwise_bias_proj" in name:
+                param.zero_()
+                zeroed += param.numel()
+    if not hasattr(target, "_inited"):
+        raise RuntimeError(
+            "the module holding pairwise_bias_map has no _inited flag, so the "
+            "rebuild guard this ablation depends on is not the one documented")
+    target._inited = True
+    print(f"  ablated the pairwise bias: {zeroed:,} values zeroed, "
+          f"_inited set so the first forward cannot rebuild it")
+    return zeroed
+
+
+def result_dir(model_name, transversion, ablate_bias=False):
     """Where a run writes, on the volume.
 
     The transversion control gets its own directory. `_run_model` empties a
@@ -212,7 +254,12 @@ def result_dir(model_name, transversion):
     so writing the two into one directory would have the control delete the run
     it exists to be compared against.
     """
-    return f"{model_name}_transversion" if transversion else model_name
+    suffix = "_transversion" if transversion else ""
+    # The ablation is a different model, not a different metric, so it cannot
+    # share a directory with the intact run it is compared against.
+    if ablate_bias:
+        suffix += "_noattnbias"
+    return f"{model_name}{suffix}"
 
 
 def panel_stamp(families):
@@ -319,7 +366,7 @@ def _randomize(model, seed):
     return after
 
 
-def _load_on_device(model_name):
+def _load_on_device(model_name, ablate_bias=False):
     """Adapter, loaded and moved, with the device it landed on.
 
     A `_untrained` suffix loads the trained adapter and then re-initializes it,
@@ -337,12 +384,15 @@ def _load_on_device(model_name):
     if model_name.endswith("_untrained"):
         n = _randomize(adapter.model, RANDOM_INIT_SEED)
         print(f"  randomized {n:,} parameters at seed {RANDOM_INIT_SEED}")
+    if ablate_bias:
+        _ablate_pairwise_bias(adapter.model)
     if getattr(adapter, "model", None) is not None and device == "cuda":
         adapter.model = adapter.model.to(device)
     return adapter, device
 
 
-def _run_model(model_name, commit, phase6_only, transversion=False):
+def _run_model(model_name, commit, phase6_only, transversion=False,
+               ablate_bias=False):
     import os
     os.chdir("/root/project")
 
@@ -376,7 +426,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         if "excluded" in json.loads(p.read_text())
     )
     numerics = _pin_numerics()
-    adapter, device = _load_on_device(model_name)
+    adapter, device = _load_on_device(model_name, ablate_bias)
     stamp = {
         "commit": commit,
         "panel_sha256": panel_stamp(families),
@@ -387,6 +437,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         "libraries": _library_versions(),
         "numerics": numerics,
         "device": device,
+        "ablation": ("pairwise_bias_map and pairwise_bias_proj zeroed, _inited set"
+                     if ablate_bias else None),
         "weights": ("randomized, xavier_normal_ on matrices and normal_(0, 0.02) "
                     f"on vectors, seed {RANDOM_INIT_SEED}"
                     if model_name.endswith("_untrained") else "pretrained"),
@@ -395,7 +447,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
           f"{stamp['panel_sha256'][:12]}, withdrawn {withdrawn}")
     print(f"[{now()}] {model_name} loaded on {device}")
 
-    out_dir = Path("/results") / result_dir(model_name, transversion)
+    out_dir = Path("/results") / result_dir(model_name, transversion, ablate_bias)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # The directory is emptied when its stamp changes, so it never holds two
@@ -575,38 +627,44 @@ def smoke_caduceus(model_name: str = "caduceus"):
 
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False,
-                     transversion: bool = False):
-    return _run_model(model_name, commit, phase6_only, transversion)
+                     transversion: bool = False, ablate_bias: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion,
+                      ablate_bias)
 
 
 @app.function(image=multimol_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False,
-                     transversion: bool = False):
-    return _run_model(model_name, commit, phase6_only, transversion)
+                     transversion: bool = False, ablate_bias: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion,
+                      ablate_bias)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_legacy(model_name: str, commit: str, phase6_only: bool = False,
-              transversion: bool = False):
-    return _run_model(model_name, commit, phase6_only, transversion)
+              transversion: bool = False, ablate_bias: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion,
+                      ablate_bias)
 
 
 @app.function(image=evo_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_evo(model_name: str, commit: str, phase6_only: bool = False,
-           transversion: bool = False):
-    return _run_model(model_name, commit, phase6_only, transversion)
+           transversion: bool = False, ablate_bias: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion,
+                      ablate_bias)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False,
-                transversion: bool = False):
-    return _run_model(model_name, commit, phase6_only, transversion)
+                transversion: bool = False, ablate_bias: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion,
+                      ablate_bias)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_caduceus(model_name: str, commit: str, phase6_only: bool = False,
-                transversion: bool = False):
-    return _run_model(model_name, commit, phase6_only, transversion)
+                transversion: bool = False, ablate_bias: bool = False):
+    return _run_model(model_name, commit, phase6_only, transversion,
+                      ablate_bias)
 
 
 def _route(model_name):
@@ -642,7 +700,7 @@ def _smoke_route(model_name):
 
 @app.local_entrypoint()
 def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
-         transversion: bool = False):
+         transversion: bool = False, ablate_bias: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -697,12 +755,20 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         raise SystemExit("--transversion runs the mutation stage; "
                          "--phase6-only skips it")
 
+    if ablate_bias and any(base_model(m) != "ernierna" for m in requested):
+        raise SystemExit(
+            "--ablate-bias zeroes ERNIE-RNA's pairwise bias buffer and no other "
+            f"model has one: {[m for m in requested if base_model(m) != 'ernierna']}")
+
     stage = "transversion control" if transversion else "re-run"
+    if ablate_bias:
+        stage += ", pairwise bias ablated"
     print(f"Repaired-panel {stage} at {commit[:12]}, "
           f"{len(requested)} models: {requested}")
     for model_name in requested:
         fn, label = _route(model_name)
         handle = fn.spawn(model_name=model_name, commit=commit,
-                          phase6_only=phase6_only, transversion=transversion)
+                          phase6_only=phase6_only, transversion=transversion,
+                          ablate_bias=ablate_bias)
         print(f"  {model_name:12s} {label:14s} {handle.object_id}")
     print("\nmodal app logs rna-repaired-panel")
