@@ -489,7 +489,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
           "results": phase6})
     print(f"[{now()}] {model_name} COMPLETE. mean PS {phase6.get('mean_best_ps')}, "
           f"confirmatory {phase6.get('families_total')}, "
-          f"exceeding null {phase6.get('families_exceeding_null_primary')}")
+          f"exceeding null {phase6.get('families_exceeding_null_conservative')} "
+          f"(primary null: {phase6.get('families_exceeding_null_primary')})")
     return {"model": model_name, "mean_ps": phase6.get("mean_best_ps"),
             "panel_sha256": stamp["panel_sha256"]}
 

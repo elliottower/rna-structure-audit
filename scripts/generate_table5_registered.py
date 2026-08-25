@@ -125,7 +125,14 @@ def summarize_entries(entries: dict) -> dict:
         mean_ps_gated=mean([body["best_ps"] for body in passing]),
         eligible=len(nonq),
         gate=len(passing),
-        exceed=sum(1 for body in passing if body.get("exceeds_null_primary")),
+        # The conservative variant maxes over layers on the null side as well,
+        # matching the observed statistic. The primary variant compares a
+        # maximum over L layers against a single-layer threshold, and its size
+        # measures 0.49 to 0.60 on randomly initialized weights (D15). Both are
+        # carried because the registration requires both wherever they disagree.
+        exceed=sum(1 for body in passing if body.get("exceeds_null_conservative")),
+        exceed_primary=sum(1 for body in passing
+                           if body.get("exceeds_null_primary")),
         h3=mean(fractions),
     )
 
@@ -221,11 +228,13 @@ def main() -> int:
     for key, rel in [("RiNALMo", ROWS[0][2]), ("ERNIE-RNA", ROWS[1][2])]:
         entries = scored(rel)
         passing = [b for b in entries.values() if gate_pass(b)]
-        exceed = sum(1 for b in passing if b.get("exceeds_null_primary"))
+        exceed = sum(1 for b in passing if b.get("exceeds_null_conservative"))
+        exceed_primary = sum(1 for b in passing if b.get("exceeds_null_primary"))
         fractions = [b["h3_precision"]["fraction"] for b in passing
                      if isinstance(b.get("h3_precision"), dict)]
         print(f"  {key:<10} N=34: {exceed}/{len(passing)} exceed null "
-              f"(criterion >= 7), H3 = {mean(fractions):.3f} (criterion > 1/3)")
+              f"(criterion >= 7), {exceed_primary}/{len(passing)} on the "
+              f"primary null, H3 = {mean(fractions):.3f} (criterion > 1/3)")
     rna34, dna34 = [], []
     for label, _domain, rel, _bold in ROWS:
         key = label.replace(r"\textbf{", "").replace("}", "").split(" (")[0]

@@ -170,7 +170,7 @@ def table_s3():
             if fname in pr and not pr[fname].get("skipped", False):
                 ps = pr[fname].get("best_ps", 0)
                 layer = pr[fname].get("best_layer", "---")
-                exceeds = pr[fname].get("exceeds_null_primary", False)
+                exceeds = pr[fname].get("exceeds_null_conservative", False)
                 mark = r"\checkmark" if exceeds else "---"
                 row += f" & {ps:.4f} & {layer} & {mark}"
             else:
