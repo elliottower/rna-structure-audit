@@ -552,7 +552,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
             "panel_sha256": stamp["panel_sha256"]}
 
 
-def _inspect_buffers(adapter, model_name):
+def _inspect_buffers(adapter, model_name, device="cpu"):
     """What each model holds outside `named_parameters()`, and whether it survives.
 
     `_randomize` builds the random-init control by iterating `named_parameters()`.
@@ -578,7 +578,7 @@ def _inspect_buffers(adapter, model_name):
     # checkpoint, so they are only meaningful once a forward pass has run.
     with torch.no_grad():
         adapter.get_all_layer_embeddings(
-            adapter.tokenize("ACGUACGUACGUACGUACGU"))
+            adapter.tokenize("ACGUACGUACGUACGUACGU").to(device))
 
     after = dict(model.named_buffers())
     total = sum(int(t.numel()) for _, t in rows)
@@ -625,7 +625,7 @@ def _smoke(model_name, ablate_bias=False, buffers_only=False):
     families = sorted(load_rfam_families(), key=lambda f: len(f["sequence"]))
     adapter, device = _load_on_device(model_name, ablate_bias)
     if buffers_only:
-        _inspect_buffers(adapter, model_name)
+        _inspect_buffers(adapter, model_name, device)
         return model_name
     ok = []
     for family in families:
