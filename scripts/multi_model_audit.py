@@ -84,6 +84,7 @@ class RNAFMAdapter(ModelAdapter):
 
     def __init__(self):
         self.model = None
+        self.final_layer_norm = None
 
     # Fetched at load time so the analysis runs anywhere without a local
     # checkpoint. Pinned so the weights cannot change under the results.
@@ -137,23 +138,51 @@ class RNAFMAdapter(ModelAdapter):
                 nk = nk.replace("embeddings.layer_norm", "embeddings.LayerNorm")
             clean_state[nk] = v
 
+        # RNA-FM is ESM-architecture and carries a layer norm after the last
+        # encoder block. `BertModel` has no slot for it, so the key fell through
+        # the remapping unrenamed and the normalization was dropped. Held here
+        # and applied to the final hidden state, which is where ESM applies it.
+        # The checkpoint carries the weights but not the epsilon, so it takes the
+        # one the rest of this port uses.
+        norm_weight = clean_state.pop("encoder.layer_norm.weight", None)
+        norm_bias = clean_state.pop("encoder.layer_norm.bias", None)
+        if norm_weight is None or norm_bias is None:
+            raise KeyError(
+                f"RNA-FM checkpoint at {weight_path} carries no "
+                "encoder.layer_norm; the final normalization would be dropped.")
+        self.final_layer_norm = torch.nn.LayerNorm(
+            config.hidden_size, eps=config.layer_norm_eps)
+        self.final_layer_norm.load_state_dict(
+            {"weight": norm_weight, "bias": norm_bias})
+        self.final_layer_norm.eval()
+
         report = self.model.load_state_dict(clean_state, strict=False)
         expected = len(self.model.state_dict())
         loaded = expected - len(report.missing_keys)
-        # A missing key keeps whatever `BertModel(config)` put there, which is a
-        # fresh random draw and is not seeded. The 0.9 threshold below was set to
-        # catch a remapping that failed wholesale; it does not catch a handful of
-        # tensors staying random, and a handful is enough to make the model
-        # return different numbers on every container. Trained RNA-FM drifts
-        # 2.26e-04 between runs while its untrained control, which re-seeds every
-        # parameter, is bit-identical -- see scripts/audit_run_to_run_drift.py.
-        if report.missing_keys:
-            print(f"  RNA-FM: {len(report.missing_keys)} of {expected} tensors "
-                  f"were not in the checkpoint and keep an unseeded random "
-                  f"initialization: {sorted(report.missing_keys)}")
-        if report.unexpected_keys:
-            print(f"  RNA-FM: {len(report.unexpected_keys)} checkpoint tensors "
-                  f"matched nothing: {sorted(report.unexpected_keys)[:10]}")
+        # A missing key keeps whatever `BertModel(config)` drew for it, unseeded,
+        # so every container gets different weights and the model is not
+        # reproducible. Trained RNA-FM drifted 2.26e-04 between two runs while
+        # its untrained control, which re-seeds every parameter, was
+        # bit-identical -- `scripts/audit_run_to_run_drift.py`. The 0.9 threshold
+        # below catches a remapping that failed wholesale and never fired on
+        # three tensors out of 199.
+        #
+        # `token_type_embeddings` is the one that mattered: RNA-FM has no token
+        # types, the forward pass supplies no `token_type_ids`, so BertModel
+        # defaulted them to zero and added row 0 -- a random vector of norm about
+        # 0.5 -- to every position of every sequence. Zeroed, which is what
+        # having no token types means.
+        self.model.embeddings.token_type_embeddings.weight.data.zero_()
+
+        harmless = {"embeddings.token_type_embeddings.weight",
+                    "pooler.dense.weight", "pooler.dense.bias"}
+        consequential = sorted(set(report.missing_keys) - harmless)
+        if consequential or report.unexpected_keys:
+            raise RuntimeError(
+                f"RNA-FM: {consequential} were not in the checkpoint and would "
+                f"keep an unseeded random initialization; "
+                f"{sorted(report.unexpected_keys)} matched nothing in the model. "
+                "Both silently change what the model computes.")
         if loaded < 0.9 * expected:
             raise RuntimeError(
                 f"RNA-FM: only {loaded} of {expected} parameters were loaded from "
@@ -168,9 +197,14 @@ class RNAFMAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
+        hidden = list(out.hidden_states)
+        # ESM normalizes after the last block, so only the final representation
+        # takes it; the intermediate states are the unnormalized block outputs in
+        # the source model too.
+        hidden[-1] = self.final_layer_norm(hidden[-1])
         # `tokenize` above builds the ids as [2] + nucleotides + [3], so the
         # brackets are this file's own and the slice cannot drift.
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        return [hs[0, 1:-1, :] for hs in hidden]
 
 
 # ── Nucleotide Transformer v2 adapter ────────────────────────────────────────
