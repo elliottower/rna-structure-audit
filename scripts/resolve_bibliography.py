@@ -46,8 +46,17 @@ ENTRIES = [
     ("zhou2024dnabert2", "DNABERT-2: efficient foundation model and benchmark for multi-species genome", 2024, "Zhou"),
 ]
 
-# Not a scholarly work, so OpenAlex has nothing to match. Written out verbatim.
-SOFTWARE = '''@misc{anthropic2025claude,
+# Not scholarly works, so OpenAlex has nothing to match. Written out here rather
+# than added to the .bib by hand, which regeneration would silently drop.
+SOFTWARE = '''@software{tower2026reproducible,
+  author = {Tower, Elliot},
+  title = {reproducible-science: prereg, results and citations},
+  year = {2026},
+  doi = {10.5281/zenodo.22100272},
+  url = {https://github.com/elliottower/reproducible-science}
+}
+
+@misc{anthropic2025claude,
   author = {{Anthropic}},
   title = {Claude Code},
   year = {2025},
@@ -70,7 +79,9 @@ def authors(work):
         if not name:
             continue
         parts = name.split()
-        names.append(f"{parts[-1]}, {' '.join(parts[:-1])}" if len(parts) > 1 else name)
+        surname_first = (f"{parts[-1]}, {' '.join(parts[:-1])}"
+                         if len(parts) > 1 else name)
+        names.append(NAME_OVERRIDES.get(surname_first, surname_first))
     return names
 
 
@@ -85,6 +96,39 @@ def comparable(surname):
     folded = unicodedata.normalize("NFKD", surname)
     folded = "".join(c for c in folded if not unicodedata.combining(c))
     return folded.lower().replace("-", "").replace(" ", "")
+
+
+# OpenAlex holds one author of the 2011 Nucleic Acids Research paper under a
+# Cyrillic transliteration of a Polish name. The manuscript's own bibliography
+# has it in Latin script, which is how the paper prints it. Overrides are listed
+# by key and reason rather than applied silently, because an index returning the
+# wrong script for one author is a reason to check the others, not to patch and
+# move on.
+NAME_OVERRIDES = {
+    "\u041d\u0430\u043f\u0438\u0435\u0440\u0430\u043b\u0430, \u041c\u0430\u0440\u0435\u043a": "Napierala, Marek",
+}
+
+# pdflatex has no default mapping for a prime or a Polish crossed l, and a
+# journal will not run xelatex. Names and titles are written as LaTeX escapes so
+# the .bib compiles anywhere.
+LATEX_ESCAPES = {
+    "\u2032": "$'$", "\u2010": "-", "\u2013": "--", "\u2014": "---",
+    "\u00e1": r"\'a", "\u00e9": r"\'e", "\u00f3": r"\'o", "\u00c9": r"\'E",
+    "\u0107": r"\'c", "\u00f6": r'\"o', "\u0142": r"{\l}", "\u017c": r"\.z",
+    "\u0160": r"\v{S}", "\u0161": r"\v{s}",
+}
+
+
+def to_latex(text):
+    """Every non-ASCII character as a LaTeX escape, or an error naming it."""
+    for character, escape in LATEX_ESCAPES.items():
+        text = text.replace(character, escape)
+    unmapped = sorted({c for c in text if ord(c) > 127})
+    if unmapped:
+        raise ValueError(
+            f"no LaTeX escape for {[(c, hex(ord(c))) for c in unmapped]} in {text!r}; "
+            "add it to LATEX_ESCAPES rather than dropping the character")
+    return text
 
 
 def brace_acronyms(title):
@@ -105,7 +149,7 @@ def entry(key, work):
                                         biblio.get("last_page")) if p)),
         ("doi", (work.get("doi") or "").replace("https://doi.org/", "")),
     ]
-    body = ",\n".join(f"  {name} = {{{value}}}"
+    body = ",\n".join(f"  {name} = {{{to_latex(value)}}}"
                       for name, value in fields if value)
     return f"@article{{{key},\n{body}\n}}"
 
