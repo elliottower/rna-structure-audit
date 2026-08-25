@@ -46,9 +46,22 @@ def volume_ls(path: str = "") -> list[str]:
     return [line.split("/")[-1] for line in listed.stdout.split("\n") if line.strip()]
 
 
+ABLATION_SUFFIX = "_noattnbias"
+
+
 def expected_files(directory: str) -> list[str]:
+    """The files a finished directory holds, by the kind of run it is.
+
+    An ablated run writes into its own directory but names its files after the
+    model rather than the directory, because `result_dir` carries the suffix and
+    the file writer does not. The transversion path does carry it, so the two
+    layouts differ. This reads what is on the volume rather than what would have
+    been tidier; renaming would orphan files already written and cost a re-run.
+    """
     kind = "transversion" if directory.endswith("_transversion") else "run"
-    return [name.replace("<key>", directory) for name in EXPECTED[kind]]
+    key = (directory[:-len(ABLATION_SUFFIX)]
+           if directory.endswith(ABLATION_SUFFIX) else directory)
+    return [name.replace("<key>", key) for name in EXPECTED[kind]]
 
 
 def fetch(directory: str, name: str, force: bool, destination: Path) -> bool:
