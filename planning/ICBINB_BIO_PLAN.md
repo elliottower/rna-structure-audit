@@ -1,3 +1,5 @@
+> SUPERSEDED 2026-08-25. See XAI4SCIENCE_PLAN.md, itself superseded.
+
 # ICBINB-BIO submission plan
 
 8 pages excluding references and appendices. Double-blind. Non-archival, so the

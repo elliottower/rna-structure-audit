@@ -1,3 +1,11 @@
+> SUPERSEDED 2026-08-25. The RNA paper goes to the RNA journal only. XAI4Science
+> was the closest fit of the NeurIPS workshops -- its scope names spurious
+> correlation and probe faithfulness -- but the NeurIPS effort this year goes to
+> Interpretability as a Science and TAI-Eval, both Sydney, both due 29 August, and
+> both carrying different papers. The journal submission has no clock: it was never
+> approved out of the proof queue. Kept for the venue survey and the framing notes,
+> which still apply to the journal version.
+
 # XAI4Science submission plan
 
 Supersedes `ICBINB_BIO_PLAN.md`. The sections, numbers and displays carry over;
