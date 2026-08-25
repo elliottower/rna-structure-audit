@@ -76,6 +76,8 @@ def with_project(image):
         .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
         .add_local_dir("scripts", "/root/project/scripts")
         .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
+        # 2.9 MB of Stockholm alignments, for the multi-sequence replication.
+        .add_local_dir("data/rfam_seeds", "/root/project/data/rfam_seeds")
     )
 
 
@@ -244,7 +246,8 @@ def _ablate_pairwise_bias(model):
     return zeroed
 
 
-def result_dir(model_name, transversion, ablate_bias=False, synthetic=False):
+def result_dir(model_name, transversion, ablate_bias=False, synthetic=False,
+               multi_seq=False):
     """Where a run writes, on the volume.
 
     The transversion control gets its own directory. `_run_model` empties a
@@ -257,6 +260,8 @@ def result_dir(model_name, transversion, ablate_bias=False, synthetic=False):
     suffix = "_transversion" if transversion else ""
     if synthetic:
         suffix += "_synthetic"
+    if multi_seq:
+        suffix += "_multiseq"
     # The ablation is a different model, not a different metric, so it cannot
     # share a directory with the intact run it is compared against.
     if ablate_bias:
@@ -437,7 +442,7 @@ def _load_on_device(model_name, ablate_bias=False):
 
 
 def _run_model(model_name, commit, phase6_only, transversion=False,
-               ablate_bias=False, synthetic=False):
+               ablate_bias=False, synthetic=False, multi_seq=False):
     import os
     os.chdir("/root/project")
 
@@ -502,7 +507,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
     print(f"[{now()}] {model_name} loaded on {device}")
 
     out_dir = Path("/results") / result_dir(model_name, transversion, ablate_bias,
-                                            synthetic)
+                                            synthetic, multi_seq)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # The directory is emptied when its stamp changes, so it never holds two
@@ -541,6 +546,28 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         (out_dir / name).write_text(json.dumps(payload, indent=2, default=str))
         vol.commit()
         print(f"[{now()}] wrote {name}")
+
+    if multi_seq:
+        # Replication across the Rfam seed alignments: every sequence in a
+        # family rather than the one curated representative, so within-family
+        # variance is measurable. `multi_seq_ps` imports the same
+        # `compute_delta_profiles` and `derangement_null` this runner uses, so
+        # it picks up the token-span repair and the float64 metric without
+        # changes; what it did not have was a pinned image, a stamp or a
+        # checkpoint, which is why it runs here rather than from its own script.
+        from multi_seq_ps import run_multi_seq_ps
+
+        print(f"[{now()}] {model_name}: multi-sequence replication over "
+              f"data/rfam_seeds")
+        results = run_multi_seq_ps(
+            adapter, seed_dir="/root/project/data/rfam_seeds", device=device,
+            offset=ADAPTER_OFFSETS.get(base_model(model_name), 0),
+            compute_null=True,
+        )
+        save(f"{model_name}_multiseq_ps.json", {"metric": "multi_sequence_ps",
+                                                "results": results})
+        print(f"[{now()}] {model_name} MULTI-SEQ COMPLETE")
+        return model_name
 
     # Every stage in phases_1_to_5 dispatches on the key it is given -- which
     # tokenizer the model has, whether it has attention at all, and NT's and
@@ -734,49 +761,49 @@ def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False, buff
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False,
                      transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic)
+                      ablate_bias, synthetic, multi_seq)
 
 
 @app.function(image=multimol_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False,
                      transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic)
+                      ablate_bias, synthetic, multi_seq)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_legacy(model_name: str, commit: str, phase6_only: bool = False,
               transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic)
+                      ablate_bias, synthetic, multi_seq)
 
 
 @app.function(image=evo_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_evo(model_name: str, commit: str, phase6_only: bool = False,
            transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic)
+                      ablate_bias, synthetic, multi_seq)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False,
                 transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic)
+                      ablate_bias, synthetic, multi_seq)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_caduceus(model_name: str, commit: str, phase6_only: bool = False,
                 transversion: bool = False, ablate_bias: bool = False,
-                     synthetic: bool = False):
+                     synthetic: bool = False, multi_seq: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias, synthetic)
+                      ablate_bias, synthetic, multi_seq)
 
 
 def _route(model_name):
@@ -813,7 +840,8 @@ def _smoke_route(model_name):
 @app.local_entrypoint()
 def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
          transversion: bool = False, ablate_bias: bool = False,
-         buffers_only: bool = False, synthetic: bool = False):
+         buffers_only: bool = False, synthetic: bool = False,
+         multi_seq: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -881,6 +909,8 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
     stage = "transversion control" if transversion else "re-run"
     if synthetic:
         stage += ", synthetic sequences"
+    if multi_seq:
+        stage += ", multi-sequence replication"
     if ablate_bias:
         stage += ", pairwise bias ablated"
     print(f"Repaired-panel {stage} at {commit[:12]}, "
@@ -889,6 +919,7 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         fn, label = _route(model_name)
         handle = fn.spawn(model_name=model_name, commit=commit,
                           phase6_only=phase6_only, transversion=transversion,
-                          ablate_bias=ablate_bias, synthetic=synthetic)
+                          ablate_bias=ablate_bias, synthetic=synthetic,
+                          multi_seq=multi_seq)
         print(f"  {model_name:12s} {label:14s} {handle.object_id}")
     print("\nmodal app logs rna-repaired-panel")
