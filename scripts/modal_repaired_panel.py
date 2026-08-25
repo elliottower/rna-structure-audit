@@ -189,7 +189,11 @@ A100_MODELS = {"evo", "rinalmo"}
 # a CPU, mamba-ssm has no CPU kernel, and DNABERT-2's Triton attention asserts
 # `q.is_cuda`. They smoke on a GPU; the rest smoke on a CPU for a tenth of the
 # cost.
-GPU_SMOKE_MODELS = {"evo", "dnabert2", "caduceus"}
+# RNA-FM is here for a different reason than the other three: its adapter
+# attaches a layer norm to the model by hand, and a module that does not travel
+# with `.to(device)` fails only on a GPU. A CPU smoke cannot see it, because
+# there is one device there and everything agrees.
+GPU_SMOKE_MODELS = {"evo", "dnabert2", "caduceus", "rnafm"}
 
 
 def base_model(model_name):

@@ -150,11 +150,11 @@ class RNAFMAdapter(ModelAdapter):
             raise KeyError(
                 f"RNA-FM checkpoint at {weight_path} carries no "
                 "encoder.layer_norm; the final normalization would be dropped.")
-        self.final_layer_norm = torch.nn.LayerNorm(
+        final_layer_norm = torch.nn.LayerNorm(
             config.hidden_size, eps=config.layer_norm_eps)
-        self.final_layer_norm.load_state_dict(
+        final_layer_norm.load_state_dict(
             {"weight": norm_weight, "bias": norm_bias})
-        self.final_layer_norm.eval()
+        self.final_layer_norm = final_layer_norm
 
         report = self.model.load_state_dict(clean_state, strict=False)
         expected = len(self.model.state_dict())
@@ -183,6 +183,15 @@ class RNAFMAdapter(ModelAdapter):
                 f"keep an unseeded random initialization; "
                 f"{sorted(report.unexpected_keys)} matched nothing in the model. "
                 "Both silently change what the model computes.")
+
+        # Attached after the load and after the check above. Attaching it before
+        # would put its two tensors into the model's state_dict, where they would
+        # be absent from `clean_state` and count as missing keys. It is a child of
+        # the model rather than held beside it so that every `.to(device)` and
+        # `.eval()` reaches it; held separately it stayed on the CPU while the
+        # hidden states went to the GPU, and the CPU-only smoke could not see the
+        # mismatch because there is only one device there.
+        self.model.final_layer_norm = self.final_layer_norm
         if loaded < 0.9 * expected:
             raise RuntimeError(
                 f"RNA-FM: only {loaded} of {expected} parameters were loaded from "
