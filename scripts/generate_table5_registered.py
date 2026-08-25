@@ -32,31 +32,31 @@ from registered_quarantine import QUARANTINE
 
 REPO = Path(__file__).resolve().parents[1]
 
+# The panel every row reads. `repaired_panel_v3` is the pass carrying the Rung 3
+# token-alignment repair, the float64 metric and the measured resolution floor,
+# at one commit per cell. Before this, each row named a separate July run
+# directory at an unrecorded commit, so the table mixed pipelines.
+PANEL = REPO / "results" / "repaired_panel_v3"
+
+
+def cell(key: str) -> str:
+    """The phase 6 file for one model, relative to the repository."""
+    return str((PANEL / key / f"{key}_phase6_ps.json").relative_to(REPO))
+
+
 # (display label, domain, results file, bold in the table).
 ROWS = [
-    (r"\textbf{RiNALMo} (650M)", "RNA",
-     "results/rinalmo_phase6_ps.json", True),
-    (r"\textbf{ERNIE-RNA} (86M)", "RNA",
-     "results/audit/phase6_ernierna_20260714_060520/ernierna_phase6_ps.json", True),
-    ("ERNIE-RNA untrained", "RNA",
-     "results/audit/phase6_ernierna_untrained_20260714_172412/"
-     "ernierna_untrained_phase6_ps.json", False),
-    ("Caduceus (14M)", "DNA",
-     "data/gpu_results/expanded_rfam/caduceus_phase6_ps.json", False),
-    ("Evo (7B)", "DNA",
-     "results/audit/phase6_evo_20260715_073218/evo_phase6_ps.json", False),
-    ("SpliceBERT (19M)", "RNA",
-     "results/audit/phase6_splicebert_20260714_060520/splicebert_phase6_ps.json", False),
-    ("HyenaDNA (5.4M)", "DNA",
-     "results/audit/phase6_hyenadna_20260714_060542/hyenadna_phase6_ps.json", False),
-    ("RNA-FM (99M)", "RNA",
-     "results/audit/phase6_rnafm_20260714_065238/rnafm_phase6_ps.json", False),
-    (r"UTR-LM ($\sim$2M)", "RNA",
-     "results/audit/phase6_utrlm_20260714_060516/utrlm_phase6_ps.json", False),
-    ("NT~v2 (56M)", "DNA",
-     "results/audit/phase6_nt_20260714_082334/nt_phase6_ps.json", False),
-    ("DNABERT-2 (117M)", "DNA",
-     "results/phase6_dnabert2_natural.json", False),
+    (r"\textbf{RiNALMo} (650M)", "RNA", cell("rinalmo"), True),
+    (r"\textbf{ERNIE-RNA} (86M)", "RNA", cell("ernierna"), True),
+    ("ERNIE-RNA random-init", "RNA", cell("ernierna_untrained"), False),
+    ("Caduceus (14M)", "DNA", cell("caduceus"), False),
+    ("Evo (7B)", "DNA", cell("evo"), False),
+    ("SpliceBERT (19M)", "RNA", cell("splicebert"), False),
+    ("HyenaDNA (5.4M)", "DNA", cell("hyenadna"), False),
+    ("RNA-FM (99M)", "RNA", cell("rnafm"), False),
+    (r"UTR-LM ($\sim$2M)", "RNA", cell("utrlm"), False),
+    ("NT~v2 (56M)", "DNA", cell("nt"), False),
+    ("DNABERT-2 (117M)", "DNA", cell("dnabert2"), False),
 ]
 
 # H2 groups as registered.
@@ -183,7 +183,7 @@ def main() -> int:
     rinalmo, ernie = stats["RiNALMo"], stats["ERNIE-RNA"]
     caduceus, evo = stats["Caduceus"], stats["Evo"]
     splice, hyena = stats["SpliceBERT"], stats["HyenaDNA"]
-    untrained = stats["ERNIE-RNA untrained"]
+    untrained = stats["ERNIE-RNA random-init"]
 
     print("\n--- separation from the leaders (lower leader = ERNIE-RNA) ---")
     for name in ["Caduceus", "Evo", "SpliceBERT", "HyenaDNA", "RNA-FM",
@@ -218,7 +218,7 @@ def main() -> int:
         n32 = mean([b["best_ps"] for n, b in entries.items()
                     if n not in QUARANTINE])
         n34 = mean([b["best_ps"] for b in entries.values()])
-        if key == "ERNIE-RNA untrained":
+        if key == "ERNIE-RNA random-init":
             continue
         print(f"{key.replace('~', ' '):<26} & {render_ps(held['tRNA_Phe_yeast'])} & "
               f"{render_ps(held['tRNA_Ala_human'])} & {render_ps(n32)} & "

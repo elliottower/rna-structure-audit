@@ -7,30 +7,32 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FAM_DIR = ROOT / "data/rfam_families"
 
+# The panel every table reads. `repaired_panel_v3` carries the Rung 3
+# token-alignment repair, the float64 metric and the measured resolution floor,
+# at one commit per cell. Before this, each entry below named a separate July run
+# directory at an unrecorded commit, so the supplement and the main tables could
+# disagree about the same model.
+PANEL = ROOT / "results" / "repaired_panel_v3"
+
+KEYS = {
+    "RNA-FM": "rnafm",
+    "RiNALMo": "rinalmo",
+    "ERNIE-RNA": "ernierna",
+    "SpliceBERT": "splicebert",
+    "UTR-LM": "utrlm",
+    "NT v2": "nt",
+    "DNABERT-2": "dnabert2",
+    "Caduceus": "caduceus",
+    "HyenaDNA": "hyenadna",
+    "Evo": "evo",
+}
+
 MODEL_FILES_PHASES = {
-    "RNA-FM": ROOT / "data/gpu_results/expanded_rfam_rerun/rnafm_phases15_20260716_175429",
-    "RiNALMo": ROOT / "results/rinalmo_phases_1_to_5.json",
-    "ERNIE-RNA": ROOT / "results/ernierna_phases15_dinuc.json",
-    "SpliceBERT": ROOT / "results/splicebert_phases15_dinuc.json",
-    "UTR-LM": ROOT / "data/gpu_results/expanded_rfam/utrlm_phases_1_to_5.json",
-    "NT v2": ROOT / "data/gpu_results/expanded_rfam_rerun/nt_phases15_20260716_175433",
-    "DNABERT-2": ROOT / "results/dnabert2_phases15_dinuc.json",
-    "Caduceus": ROOT / "data/gpu_results/expanded_rfam/caduceus_phases_1_to_5.json",
-    "HyenaDNA": ROOT / "data/gpu_results/expanded_rfam_rerun/hyenadna_phases15_20260716_180202",
-    "Evo": ROOT / "data/gpu_results/expanded_rfam/evo_phases_1_to_5.json",
+    label: PANEL / key / f"{key}_phases_1_to_5.json" for label, key in KEYS.items()
 }
 
 MODEL_FILES_PS = {
-    "RiNALMo": ROOT / "results/rinalmo_phase6_ps.json",
-    "ERNIE-RNA": ROOT / "results/audit/phase6_ernierna_20260714_060520/ernierna_phase6_ps.json",
-    "Evo": ROOT / "results/audit/phase6_evo_20260715_073218/evo_phase6_ps.json",
-    "SpliceBERT": ROOT / "results/audit/phase6_splicebert_20260714_060520/splicebert_phase6_ps.json",
-    "UTR-LM": ROOT / "results/audit/phase6_utrlm_20260714_060516/utrlm_phase6_ps.json",
-    "HyenaDNA": ROOT / "results/audit/phase6_hyenadna_20260714_060542/hyenadna_phase6_ps.json",
-    "RNA-FM": ROOT / "results/audit/phase6_rnafm_20260714_065238/rnafm_phase6_ps.json",
-    "NT v2": ROOT / "results/audit/phase6_nt_20260714_082334/nt_phase6_ps.json",
-    "Caduceus": ROOT / "data/gpu_results/expanded_rfam/caduceus_phase6_ps.json",
-    "DNABERT-2": ROOT / "results/phase6_dnabert2_natural.json",
+    label: PANEL / key / f"{key}_phase6_ps.json" for label, key in KEYS.items()
 }
 
 
