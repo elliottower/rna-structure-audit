@@ -50,6 +50,76 @@ than the rest of the panel and are stamped with it.
 
 ---
 
+## 2026-08-25 — H3 is decided against each model's own derangement rate, and the untrained arm is reframed rather than discarded
+
+**Registrations:** `PREREGISTRATION_PHASE6_V2.md` H3 (line 110);
+`docs/PREREGISTRATION_EXPANDED_RFAM.md` H10, H14, H17, H19.
+
+**Written after the registered verdicts were computed and seen.** That ordering is
+stated because it is the objection a reader should raise: a baseline was replaced
+after the results under the original one were known. What follows reports both.
+
+**The registered baseline is a constant that no model's data supports.** H3 tests
+the partner-is-max fraction against 1/3, on the reasoning that the partner and
+its two stem neighbours are exchangeable. Measured on each model's own
+derangement, where the pairing is false by construction, the chance rate runs
+0.000 to 0.316. The clearest single demonstration is that a randomly initialized
+model passes the registered test: untrained ERNIE-RNA scores 0.490, pooled
+binomial p = 2.4e-4 against 1/3, and by the criterion as frozen it "resolves
+partners at single-nucleotide precision".
+
+**Both verdicts, per model.** Registered is the pooled binomial against 1/3 at
+alpha = 0.0167. Corrected is the family-clustered 95 percent interval on
+precision minus that model's own chance rate, excluding zero.
+`scripts/report_registered_vs_corrected.py` produces the full table.
+
+| model | precision | chance | registered | corrected |
+|---|---|---|---|---|
+| RiNALMo | 0.872 | 0.102 | PASS | PASS |
+| ERNIE-RNA | 0.888 | 0.124 | PASS | PASS |
+| ERNIE-RNA untrained | 0.490 | 0.241 | PASS | PASS |
+| Caduceus | 0.340 | 0.218 | fail | **PASS** |
+| RiNALMo untrained | 0.337 | 0.232 | fail | **PASS** |
+| RNA-FM | 0.370 | 0.261 | fail | **PASS** |
+| Evo | 0.356 | 0.316 | fail | fail |
+| SpliceBERT | 0.247 | 0.238 | fail | fail |
+| UTR-LM | 0.246 | 0.230 | fail | fail |
+| HyenaDNA | 0.138 | 0.148 | fail | fail |
+| NT v2 | 0.007 | 0.007 | fail | fail |
+| DNABERT-2 | 0.000 | 0.000 | fail | fail |
+
+**Which way the changes run.** Three verdicts move. A DNA-pretrained model now
+passes, which counts against the RNA-versus-DNA contrast. A randomly initialized
+control now passes, which counts against reading the trained-untrained gap as
+learning. One RNA-pretrained model now passes, which counts for the panel. The
+correction is not in the direction of the reported conclusions, and the two
+models the conclusions rest on pass under either baseline by margins no choice of
+null affects: excess +0.770 and +0.764, with intervals far from zero.
+
+**What the trained-versus-untrained hypotheses measure.** H10, H14, H17 and H19
+are frozen as sign tests on a trained-minus-untrained difference and are reported
+as registered. Their untrained arm is not a floor: `_randomize` reaches only
+`named_parameters()`, and a non-persistent buffer survives it, so ERNIE-RNA's
+control keeps a hardcoded Watson-Crick and wobble table (D20). The difference
+those four hypotheses measure is therefore learning **given** the architectural
+prior a model ships with, not learning against nothing. That is a real quantity
+and the four results stand; only the description of what they measure changes.
+
+**An open question this rests on.** The derangement null is computed from the
+same per-position distances as the observed statistic. Permuting partner
+assignments within a stem destroys the pairing while preserving the magnitudes,
+which is the intent, but whether the resulting draws are exchangeable with the
+observed statistic has not been established analytically. Every corrected verdict
+above depends on it. It is recorded here rather than deferred, and it does not
+affect RiNALMo or ERNIE-RNA, whose excesses are an order of magnitude above any
+plausible mis-calibration.
+
+**Cost.** None. `h3_chance_fraction` is stored for all 17 cells, at commit
+`1350db1` or `3de3ba0`, both carrying the float64 metric, on the same 35-family
+analysis set verified by digest (`scripts/check_chance_rate_provenance.py`).
+
+---
+
 ## 2026-08-24 — Two null calibrations: the Rung 3 exceedance test has size 0.5, and H3's chance rate is not 1/3
 
 **Registrations:** `PREREGISTRATION_PHASE6_V2.md`, H1(a) at line 96, H3 at line
