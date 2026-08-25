@@ -244,7 +244,7 @@ def _ablate_pairwise_bias(model):
     return zeroed
 
 
-def result_dir(model_name, transversion, ablate_bias=False):
+def result_dir(model_name, transversion, ablate_bias=False, synthetic=False):
     """Where a run writes, on the volume.
 
     The transversion control gets its own directory. `_run_model` empties a
@@ -255,6 +255,8 @@ def result_dir(model_name, transversion, ablate_bias=False):
     it exists to be compared against.
     """
     suffix = "_transversion" if transversion else ""
+    if synthetic:
+        suffix += "_synthetic"
     # The ablation is a different model, not a different metric, so it cannot
     # share a directory with the intact run it is compared against.
     if ablate_bias:
@@ -273,6 +275,49 @@ def panel_stamp(families):
         sort_keys=True,
     )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+# Verbatim from `modal_phase6_synthetic_covariation.py`, which produced the
+# deposited synthetic numbers. Structure is held and nucleotides are reassigned:
+# a uniform Watson-Crick pair at every paired position, a uniform nucleotide at
+# every unpaired one. Evolutionary covariation is destroyed and the geometry is
+# not, so a model scoring on covariation loses its score and one scoring on
+# pairing geometry keeps it.
+WC_PAIRS = [("A", "U"), ("U", "A"), ("G", "C"), ("C", "G")]
+SYNTHETIC_NUCLEOTIDES = ["A", "U", "G", "C"]
+# Five per family, as in the run that produced the deposited synthetic numbers.
+SYNTHETIC_PER_FAMILY = 5
+
+
+def synthetic_families(families, n_synthetic, rng):
+    """`n_synthetic` sequences per family, each keeping that family's structure."""
+    out = []
+    for family in families:
+        structure = family.get("dot_bracket", "")
+        if not structure:
+            continue
+        for index in range(n_synthetic):
+            sequence = ["N"] * len(structure)
+            stack = []
+            for i, char in enumerate(structure):
+                if char == "(":
+                    stack.append(i)
+                elif char == ")":
+                    j = stack.pop()
+                    left, right = WC_PAIRS[rng.integers(len(WC_PAIRS))]
+                    sequence[j] = left
+                    sequence[i] = right
+                else:
+                    sequence[i] = SYNTHETIC_NUCLEOTIDES[
+                        rng.integers(len(SYNTHETIC_NUCLEOTIDES))]
+            out.append({
+                "name": f"{family['name']}_syn{index}",
+                "sequence": "".join(sequence),
+                "dot_bracket": structure,
+                "original_family": family["name"],
+                "synthetic_index": index,
+            })
+    return out
 
 
 def _pin_numerics():
@@ -392,7 +437,7 @@ def _load_on_device(model_name, ablate_bias=False):
 
 
 def _run_model(model_name, commit, phase6_only, transversion=False,
-               ablate_bias=False):
+               ablate_bias=False, synthetic=False):
     import os
     os.chdir("/root/project")
 
@@ -420,6 +465,13 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         print(f"  COMPLEMENT -> {TRANSVERSION_COMPLEMENT}")
 
     families = load_rfam_families()
+    if synthetic:
+        import numpy as _np
+        n_before = len(families)
+        families = synthetic_families(families, SYNTHETIC_PER_FAMILY,
+                                      _np.random.default_rng(RANDOM_INIT_SEED))
+        print(f"  synthetic: {n_before} families -> {len(families)} sequences, "
+              f"{SYNTHETIC_PER_FAMILY} per family at seed {RANDOM_INIT_SEED}")
     withdrawn = sorted(
         json.loads(p.read_text())["name"]
         for p in Path("data/rfam_families").glob("*.json")
@@ -439,6 +491,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         "device": device,
         "ablation": ("pairwise_bias_map and pairwise_bias_proj zeroed, _inited set"
                      if ablate_bias else None),
+        "sequences": ("synthetic, structure preserved and nucleotides reassigned"
+                      if synthetic else "natural"),
         "weights": ("randomized, xavier_normal_ on matrices and normal_(0, 0.02) "
                     f"on vectors, seed {RANDOM_INIT_SEED}"
                     if model_name.endswith("_untrained") else "pretrained"),
@@ -447,7 +501,8 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
           f"{stamp['panel_sha256'][:12]}, withdrawn {withdrawn}")
     print(f"[{now()}] {model_name} loaded on {device}")
 
-    out_dir = Path("/results") / result_dir(model_name, transversion, ablate_bias)
+    out_dir = Path("/results") / result_dir(model_name, transversion, ablate_bias,
+                                            synthetic)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # The directory is emptied when its stamp changes, so it never holds two
@@ -678,44 +733,50 @@ def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False, buff
 
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_multimol_a10g(model_name: str, commit: str, phase6_only: bool = False,
-                     transversion: bool = False, ablate_bias: bool = False):
+                     transversion: bool = False, ablate_bias: bool = False,
+                     synthetic: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias)
+                      ablate_bias, synthetic)
 
 
 @app.function(image=multimol_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_multimol_a100(model_name: str, commit: str, phase6_only: bool = False,
-                     transversion: bool = False, ablate_bias: bool = False):
+                     transversion: bool = False, ablate_bias: bool = False,
+                     synthetic: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias)
+                      ablate_bias, synthetic)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_legacy(model_name: str, commit: str, phase6_only: bool = False,
-              transversion: bool = False, ablate_bias: bool = False):
+              transversion: bool = False, ablate_bias: bool = False,
+                     synthetic: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias)
+                      ablate_bias, synthetic)
 
 
 @app.function(image=evo_image, gpu="A100", timeout=86400, volumes={"/results": vol})
 def run_evo(model_name: str, commit: str, phase6_only: bool = False,
-           transversion: bool = False, ablate_bias: bool = False):
+           transversion: bool = False, ablate_bias: bool = False,
+                     synthetic: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias)
+                      ablate_bias, synthetic)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_dnabert2(model_name: str, commit: str, phase6_only: bool = False,
-                transversion: bool = False, ablate_bias: bool = False):
+                transversion: bool = False, ablate_bias: bool = False,
+                     synthetic: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias)
+                      ablate_bias, synthetic)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
 def run_caduceus(model_name: str, commit: str, phase6_only: bool = False,
-                transversion: bool = False, ablate_bias: bool = False):
+                transversion: bool = False, ablate_bias: bool = False,
+                     synthetic: bool = False):
     return _run_model(model_name, commit, phase6_only, transversion,
-                      ablate_bias)
+                      ablate_bias, synthetic)
 
 
 def _route(model_name):
@@ -752,7 +813,7 @@ def _smoke_route(model_name):
 @app.local_entrypoint()
 def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
          transversion: bool = False, ablate_bias: bool = False,
-         buffers_only: bool = False):
+         buffers_only: bool = False, synthetic: bool = False):
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"],
                             capture_output=True, text=True, check=True).stdout.strip()
     porcelain = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain"],
@@ -818,6 +879,8 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
             f"model has one: {[m for m in requested if base_model(m) != 'ernierna']}")
 
     stage = "transversion control" if transversion else "re-run"
+    if synthetic:
+        stage += ", synthetic sequences"
     if ablate_bias:
         stage += ", pairwise bias ablated"
     print(f"Repaired-panel {stage} at {commit[:12]}, "
@@ -826,6 +889,6 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         fn, label = _route(model_name)
         handle = fn.spawn(model_name=model_name, commit=commit,
                           phase6_only=phase6_only, transversion=transversion,
-                          ablate_bias=ablate_bias)
+                          ablate_bias=ablate_bias, synthetic=synthetic)
         print(f"  {model_name:12s} {label:14s} {handle.object_id}")
     print("\nmodal app logs rna-repaired-panel")
