@@ -450,6 +450,33 @@ def positive_control(eligible_pairs, delta_profiles, best_layer, stem_positions,
     }
 
 
+def precision_at_every_layer(eligible_pairs, delta_profiles, n_layers):
+    """Per-pair precision at each layer, not only at the one argmax selected.
+
+    Precision is reported at the layer that maximizes mean PS, so a model with
+    more layers has more draws to select from. That is the asymmetry D15
+    identified in the exceedance count, appearing in the precision statistic:
+    among randomly initialized character-level controls, excess over chance runs
+    +0.105, +0.093, +0.016, +0.011 for models with 34, 13, 7 and 7 layers.
+
+    Reading precision at every layer allows a comparison that no selection
+    touches. If the excess is selection, the mean across layers is at chance.
+    """
+    out = []
+    for layer in range(n_layers):
+        hits = total = 0
+        for idx, pair in enumerate(eligible_pairs):
+            if pair["pos_in_stem"] < 2 or pair["pos_in_stem"] > pair["stem_length"] - 3:
+                continue
+            deltas = delta_profiles[idx].get(layer, {})
+            if not all(k in deltas for k in (pair["j"], pair["j_prev"], pair["j_next"])):
+                continue
+            total += 1
+            hits += deltas[pair["j"]] > max(deltas[pair["j_prev"]], deltas[pair["j_next"]])
+        out.append(hits / total if total else None)
+    return out
+
+
 def h3_precision_test(pair_details, eligible_pairs):
     """Fraction of deep-interior pairs where partner is max among {j, j-1, j+1}.
 
@@ -637,6 +664,8 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0,
             "n_wc_pairs_total": sum(len(s) for s in stems),
             "positive_control": pc,
             "h3_precision": h3,
+            "precision_per_layer": precision_at_every_layer(
+                eligible, delta_profiles, n_layers),
             "ps_gc_pairs": float(np.mean(gc_ps)) if gc_ps else None,
             "ps_au_pairs": float(np.mean(au_ps)) if au_ps else None,
             "nearer_neighbor_larger": ps_result["nearer_neighbor_larger"],
