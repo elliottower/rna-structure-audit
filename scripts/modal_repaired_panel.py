@@ -223,6 +223,38 @@ def panel_stamp(families):
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _pin_numerics():
+    """Turn off reduced-precision matmul and record what the flags actually were.
+
+    `torch.backends.cuda.matmul.allow_tf32` has defaulted to False since torch
+    1.12, but `torch.backends.cudnn.allow_tf32` has always defaulted to True, so
+    a repository that sets neither is not thereby in full float32. TF32 carries a
+    10-bit mantissa, which would put the noise floor near 1e-3 rather than near
+    1e-6 and would make most of the Rung 3 panel uninterpretable rather than
+    merely imprecise.
+
+    The values are read before they are set, so the returned dict says what the
+    previous runs were computed under and not merely what this one asks for.
+    """
+    import torch
+
+    before = {
+        "cuda_matmul_allow_tf32": bool(torch.backends.cuda.matmul.allow_tf32),
+        "cudnn_allow_tf32": bool(torch.backends.cudnn.allow_tf32),
+        "cudnn_benchmark": bool(torch.backends.cudnn.benchmark),
+    }
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    # Kernel selection by timing makes the same input take different code paths
+    # on different runs, which is a candidate for the one model whose results
+    # move across otherwise identical runs.
+    torch.backends.cudnn.benchmark = False
+    torch.use_deterministic_algorithms(True, warn_only=True)
+    print(f"  numerics: defaults were {before}, now pinned to full float32")
+    return {"defaults_observed": before,
+            "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"}
+
+
 def _allow_torch_load():
     """Let transformers 4.49 load a checkpoint under torch 2.1.2.
 
@@ -338,6 +370,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         for p in Path("data/rfam_families").glob("*.json")
         if "excluded" in json.loads(p.read_text())
     )
+    numerics = _pin_numerics()
     adapter, device = _load_on_device(model_name)
     stamp = {
         "commit": commit,
@@ -347,6 +380,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False):
         "seeding": "family_seed.family_rng, derived from the family name",
         "deviation": "DEVIATIONS.md, 2026-08-24",
         "libraries": _library_versions(),
+        "numerics": numerics,
         "device": device,
         "weights": ("randomized, xavier_normal_ on matrices and normal_(0, 0.02) "
                     f"on vectors, seed {RANDOM_INIT_SEED}"

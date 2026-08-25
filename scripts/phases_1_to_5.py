@@ -258,7 +258,11 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
                 mut_layer = mut_embs[layer_idx].cpu().numpy()
                 if wt_row >= wt_layer.shape[0] or mut_row >= mut_layer.shape[0]:
                     continue
-                dist = cosine(wt_layer[wt_row], mut_layer[mut_row])
+                # float64 for the same reason as `phase6.cosine_distance`: the
+                # embeddings are float32 and `1 - cos_sim` on two rows that
+                # barely differ loses its significant digits to cancellation.
+                dist = cosine(wt_layer[wt_row].astype(np.float64),
+                              mut_layer[mut_row].astype(np.float64))
                 per_layer_dists[layer_idx][pos] = float(dist)
                 per_layer_valid[layer_idx][pos] = True
 

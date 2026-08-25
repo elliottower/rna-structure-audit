@@ -146,8 +146,52 @@ def complement_swap(sequence, position):
 
 
 def cosine_distance(a, b):
-    sim = torch.nn.functional.cosine_similarity(a.unsqueeze(0), b.unsqueeze(0))
+    """Cosine distance, with the subtraction done in float64.
+
+    PS is a difference of two of these, and on a model whose representation
+    barely moves the two agree to within a few float32 ulps: the deposited
+    values land on integer multiples of 2^-28, which is the spacing of float32
+    on [2^-5, 2^-4), so the operands were 0.03 to 0.06 and their difference kept
+    a handful of significant bits. Computing in float64 does not recover
+    precision the float32 forward pass never had -- see `noop_floor`, which
+    measures what it did have -- but it stops the metric from adding to the
+    loss.
+    """
+    a64, b64 = a.double(), b.double()
+    sim = torch.nn.functional.cosine_similarity(a64.unsqueeze(0), b64.unsqueeze(0))
     return (1.0 - sim).item()
+
+
+def noop_floor(adapter, sequence, eligible_pairs, device="cpu"):
+    """The same statistic as `best_ps`, between two forward passes of one sequence.
+
+    Nothing is mutated in either pass, so the true PS is exactly zero and
+    whatever comes back is the floor the measurement can resolve: run-to-run
+    nondeterminism in the forward pass, plus the arithmetic. Reporting it per
+    model makes the resolution limit a measured quantity rather than a chosen
+    multiple of machine epsilon, and it localizes nondeterminism without needing
+    to explain it -- a model that returns exactly zero here is deterministic.
+    """
+    rows = _row_map(adapter, sequence)
+    first = adapter.get_all_layer_embeddings(adapter.tokenize(sequence).to(device))
+    second = adapter.get_all_layer_embeddings(adapter.tokenize(sequence).to(device))
+
+    per_layer = []
+    for layer_idx in range(len(first)):
+        a, b = first[layer_idx], second[layer_idx]
+        ps_values = []
+        for pair in eligible_pairs:
+            mapped = [k if rows is None else int(rows[k])
+                      for k in (pair["j"], pair["j_prev"], pair["j_next"])]
+            if any(m >= a.shape[0] or m >= b.shape[0] for m in mapped):
+                continue
+            d = [cosine_distance(a[m], b[m]) for m in mapped]
+            ps_values.append(d[0] - max(d[1], d[2]))
+        per_layer.append(float(np.mean(ps_values)) if ps_values else float("nan"))
+
+    valid = [v for v in per_layer if not np.isnan(v)]
+    return {"best_ps_noop": max(valid) if valid else None,
+            "per_layer_ps_noop": per_layer}
 
 
 def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device="cpu", offset=0):
@@ -244,6 +288,7 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
     best_ps = per_layer_ps[best_layer]
 
     pair_details_at_best = []
+    nearer_larger = []
     for idx, p in enumerate(eligible_pairs):
         deltas = delta_profiles[idx].get(best_layer, {})
         if p["j"] not in deltas or p["j_prev"] not in deltas or p["j_next"] not in deltas:
@@ -252,6 +297,15 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
         d_prev = deltas[p["j_prev"]]
         d_next = deltas[p["j_next"]]
         d_adj = max(d_prev, d_next)
+        # `j_prev` is `j - 1` and `j_next` is `j + 1`, so on a pair with i < j
+        # the neighbour nearer the mutated position is `j_prev`, and on i > j it
+        # is `j_next`. If perturbation decays with sequence distance the nearer
+        # neighbour carries the larger delta, which is the candidate explanation
+        # for H3's chance rate sitting below 1/3 (D16). Only the maximum of the
+        # two survived to disk before, so the prediction was untestable.
+        nearer, farther = ((d_prev, d_next) if p["i"] < p["j"]
+                           else (d_next, d_prev))
+        nearer_larger.append(nearer > farther)
         pair_details_at_best.append({
             "i": p["i"], "j": p["j"],
             "pair_type": p["pair_type"],
@@ -267,6 +321,8 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
         "best_ps": float(best_ps),
         "best_layer": best_layer,
         "pair_details": pair_details_at_best,
+        "nearer_neighbor_larger": (float(np.mean(nearer_larger))
+                                   if nearer_larger else None),
     }
 
 
@@ -311,6 +367,7 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, rng,
     null_ps_primary = []
     null_ps_conservative = []
 
+    chance_hits = [0, 0]
     for _ in range(n_derangements):
         deranged_ps_at_best = []
         deranged_ps_per_layer = [[] for _ in range(n_layers)]
@@ -340,6 +397,13 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, rng,
                     deranged_ps_per_layer[layer_idx].append(ps)
                     if layer_idx == best_layer:
                         deranged_ps_at_best.append(ps)
+                        # The deranged pairing is false by construction, so how
+                        # often the assigned partner still beats both its
+                        # neighbours is H3's chance rate for this model on this
+                        # family -- matched to the same weights, sequence and
+                        # layer, which the untrained control is not (D16).
+                        chance_hits[0] += ps > 0
+                        chance_hits[1] += 1
 
         if deranged_ps_at_best:
             null_ps_primary.append(float(np.mean(deranged_ps_at_best)))
@@ -353,6 +417,8 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, rng,
         "null_mean_primary": float(np.mean(null_ps_primary)) if null_ps_primary else 0.0,
         "n_derangements": n_derangements,
         "n_stems_in_null": len(derangeable),
+        "h3_chance_fraction": (chance_hits[0] / chance_hits[1]
+                               if chance_hits[1] else None),
         "null_available": True,
     }
 
@@ -573,12 +639,15 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0,
             "h3_precision": h3,
             "ps_gc_pairs": float(np.mean(gc_ps)) if gc_ps else None,
             "ps_au_pairs": float(np.mean(au_ps)) if au_ps else None,
+            "nearer_neighbor_larger": ps_result["nearer_neighbor_larger"],
+            "noop_floor": noop_floor(adapter, seq, eligible, device),
             "quarantined": quarantined,
         }
 
         if null_result:
             entry["null_95th_primary"] = null_result["null_95th_primary"]
             entry["null_95th_conservative"] = null_result["null_95th_conservative"]
+            entry["h3_chance_fraction"] = null_result.get("h3_chance_fraction")
             entry["null_available"] = null_result.get("null_available", True)
             if null_result["null_95th_primary"] is not None:
                 entry["exceeds_null_primary"] = ps_result["best_ps"] > null_result["null_95th_primary"]
