@@ -301,7 +301,29 @@ def _reseed_buffers(adapter, seed, device="cpu"):
             tensor.copy_(noise * float(tensor.std()) if tensor.numel() > 1
                          else noise)
             touched += 1
-    print(f"  reseeded {touched} non-persistent float buffer(s) at seed {seed}")
+    # Whether the redraw survives is the whole question. ERNIE-RNA rebuilds its
+    # buffer behind an `_inited` flag, which the loop above sets; RiNALMo's 33
+    # rotary tables are repaired by some other mechanism and no flag here
+    # reaches it. A reseed that a later forward pass overwrites produces numbers
+    # identical to the unreseeded run, which is indistinguishable from the
+    # buffers not mattering -- the false negative this exists to avoid.
+    written = {name: tensor.detach().clone()
+               for name, tensor in model.named_buffers()
+               if name not in persistent and tensor is not None
+               and tensor.numel() and tensor.is_floating_point()}
+    with torch.no_grad():
+        adapter.get_all_layer_embeddings(
+            adapter.tokenize("ACGUACGUACGUACGUACGUACGUACGU").to(device))
+    after = dict(model.named_buffers())
+    reverted = sorted(name for name, value in written.items()
+                      if not torch.equal(after[name], value))
+    if reverted:
+        raise RuntimeError(
+            f"{len(reverted)} of {len(written)} reseeded buffer(s) were restored "
+            f"by a later forward pass, so the intervention did not take: "
+            f"{reverted[:4]}. Reseeding cannot be verified for this model.")
+    print(f"  reseeded {touched} non-persistent float buffer(s) at seed {seed}, "
+          f"{len(written)} verified to survive a further forward pass")
     return touched
 
 
