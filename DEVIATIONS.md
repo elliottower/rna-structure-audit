@@ -15,6 +15,41 @@ Preregistrations governing this work, with sha256 of each frozen document:
 
 ---
 
+## 2026-08-24 — RNA-FM's port added a random vector to every embedding and dropped its final layer norm
+
+**Registrations:** `docs/PREREGISTRATION_EXPANDED_RFAM.md` H10, the RNA-FM
+trained-versus-untrained sign test. RNA-FM also carries a row in H2 and H3
+(`PREREGISTRATION_PHASE6_V2.md`).
+
+**Written before RNA-FM was recomputed.**
+
+Three of 199 tensors were absent from the checkpoint and kept an unseeded random
+initialization. One of them, `token_type_embeddings`, is read at every position
+of every sequence, because RNA-FM has no token types and the forward pass
+supplies none, so `BertModel` defaulted them to zero and added row 0 -- a vector
+of norm about 0.5 -- to every embedding. It was redrawn in every container.
+Separately, the checkpoint's `encoder.layer_norm` matched nothing in the model
+and RNA-FM's final normalization was dropped. Details and the detector are in
+`docs/OPEN_DEFECTS.md`, D17.
+
+**Which registered decisions move.** Every RNA-FM number in every rung. H10 reads
+both arms of a trained-versus-untrained comparison and the trained arm was not
+reproducible. RNA-FM's rows in the H2 ranking and the H3 table move with it.
+
+**The direction of this correction.** It runs against what the work reports.
+RNA-FM is reported as not resolving partners, and a model with a random
+embedding offset and no final layer norm is a confound for that negative rather
+than evidence for it. Every other defect registered today ran toward the
+reported conclusions; this one does not, and it is the reason the asymmetry noted
+in the entry above is a property of where the errors were rather than of how
+they were looked for.
+
+**Cost.** RNA-FM's three cells -- trained, untrained control, transversion
+control -- are recomputed against the repaired port. They carry a later commit
+than the rest of the panel and are stamped with it.
+
+---
+
 ## 2026-08-24 — Two null calibrations: the Rung 3 exceedance test has size 0.5, and H3's chance rate is not 1/3
 
 **Registrations:** `PREREGISTRATION_PHASE6_V2.md`, H1(a) at line 96, H3 at line

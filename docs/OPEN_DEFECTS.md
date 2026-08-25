@@ -503,6 +503,61 @@ pass.
 
 ---
 
+## D17. RNA-FM ran with a random vector added to every embedding, and without its final layer norm
+
+**Detector:** `scripts/audit_run_to_run_drift.py`, and the loader's own report.
+
+RNA-FM is the only adapter that builds a bare `BertModel` and fills it with
+`load_state_dict(strict=False)`. Every other model comes from
+`from_pretrained`, which refuses a checkpoint it cannot match. Three of 199
+tensors were absent from the checkpoint and kept whatever `BertModel(config)`
+drew for them, which is not seeded:
+
+| tensor | read by the forward pass |
+|---|---|
+| `embeddings.token_type_embeddings.weight` | yes, at every position of every sequence |
+| `pooler.dense.weight`, `pooler.dense.bias` | no |
+
+RNA-FM has no token types and `get_all_layer_embeddings` passes no
+`token_type_ids`, so `BertModel` defaulted them to zero and added row 0 of that
+random matrix to every position. Initialized `normal_(0, 0.02)` at
+`hidden_size = 640`, its norm is about 0.5. It was redrawn in every container.
+
+Two further tensors, `encoder.layer_norm.weight` and `.bias`, were in the
+checkpoint and matched nothing in the model. RNA-FM is ESM-architecture and
+normalizes after the last encoder block. The remap rule requires
+`"encoder.layer."` with the trailing dot, so `encoder.layer_norm` fell through
+unrenamed, and `BertModel` has no slot for it. The normalization was dropped.
+
+**How it surfaced.** Comparing stored per-layer PS profiles across two runs, every
+model moved by exactly zero except the two whose code had changed -- and trained
+RNA-FM, which moved 2.26e-04 and switched `best_layer` in 15 of 36 families. Its
+untrained control moved by exactly zero. The control re-initializes every
+parameter under `RANDOM_INIT_SEED`, which overwrites the unseeded draw; the
+trained model does not. That asymmetry is what named the mechanism.
+
+**Consequence for the reported result.** Every RNA-FM number this project has
+deposited, in every rung, was computed with a random per-container offset on all
+embeddings and without the model's final normalization. The numbers are not
+reproducible and are not attributable to RNA-FM. H10 is a trained-versus-
+untrained sign test on RNA-FM and reads both arms; RNA-FM also contributes a row
+to H2's five RNA-pretrained models and to the H3 table.
+
+**This defect runs against the reported conclusion.** The manuscript reports
+RNA-FM as not resolving partners. A model carrying a random embedding offset and
+missing a layer norm is a confound for that negative, not evidence for it. Every
+other defect registered on 2026-08-24 ran the other way.
+
+**Fix.** `token_type_embeddings` zeroed, which is what having no token types
+means. `encoder.layer_norm` held separately and applied to the final hidden
+state, where ESM applies it; the checkpoint carries its weights but not its
+epsilon, so it takes the one the rest of this port uses. The `0.9` loaded
+threshold was written to catch a remapping that failed wholesale and never fired
+on three tensors out of 199; any missing key outside the pooler, and any
+unexpected key at all, now raises.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing
