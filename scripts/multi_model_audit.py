@@ -140,6 +140,20 @@ class RNAFMAdapter(ModelAdapter):
         report = self.model.load_state_dict(clean_state, strict=False)
         expected = len(self.model.state_dict())
         loaded = expected - len(report.missing_keys)
+        # A missing key keeps whatever `BertModel(config)` put there, which is a
+        # fresh random draw and is not seeded. The 0.9 threshold below was set to
+        # catch a remapping that failed wholesale; it does not catch a handful of
+        # tensors staying random, and a handful is enough to make the model
+        # return different numbers on every container. Trained RNA-FM drifts
+        # 2.26e-04 between runs while its untrained control, which re-seeds every
+        # parameter, is bit-identical -- see scripts/audit_run_to_run_drift.py.
+        if report.missing_keys:
+            print(f"  RNA-FM: {len(report.missing_keys)} of {expected} tensors "
+                  f"were not in the checkpoint and keep an unseeded random "
+                  f"initialization: {sorted(report.missing_keys)}")
+        if report.unexpected_keys:
+            print(f"  RNA-FM: {len(report.unexpected_keys)} checkpoint tensors "
+                  f"matched nothing: {sorted(report.unexpected_keys)[:10]}")
         if loaded < 0.9 * expected:
             raise RuntimeError(
                 f"RNA-FM: only {loaded} of {expected} parameters were loaded from "
