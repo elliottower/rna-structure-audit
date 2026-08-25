@@ -384,6 +384,117 @@ measurement, not a regression.
 
 ---
 
+## D15. The Rung 3 exceedance test has size 1 - 0.95^L, not 0.05
+
+**Detector:** `scripts/audit_null_selection_bias.py`
+
+`best_ps` is the maximum of mean PS over layers
+(`phase6_compensatory_mutation.py:243`). `null_95th_primary` is the 95th
+percentile of the derangement null evaluated at the one layer that maximum
+selected (lines 341, 351). The observed statistic maximizes over L layers; the
+threshold it is compared against is calibrated for one.
+
+Were the layers independent that comparison would reject, under the null, with
+probability 1 - 0.95^L. Adjacent transformer layers are strongly correlated, so
+the formula is an upper bound and the effective number of independent tests is
+below L. The gap grows with L, which is why RiNALMo at L = 34 is 23 points under
+its bound while the L = 13 models sit within 2 points of theirs:
+
+| control | L | 1 - 0.95^L | primary | conservative |
+|---|---|---|---|---|
+| SpliceBERT | 7 | 0.30 | 17/35 = 0.49 | 4/35 = 0.11 |
+| UTR-LM | 7 | 0.30 | 10/35 = 0.29 | 7/35 = 0.20 |
+| ERNIE-RNA | 13 | 0.49 | 18/35 = 0.51 | 2/35 = 0.06 |
+| RNA-FM | 13 | 0.49 | 18/35 = 0.51 | 1/35 = 0.03 |
+| RiNALMo | 34 | 0.83 | 21/35 = 0.60 | 0/35 = 0.00 |
+
+Of 47 analyzed families, 38 pass the registered Rung 3 filters, 36 of those are
+outside the quarantine, and 35 of those contain a stem with at least three
+eligible pairs and so have a derangement null at all. The confirmatory N is 36
+and the denominator above is 35.
+
+Randomly initialized weights carry no partner specificity, so the primary column
+measures the test's size rather than estimating it. The conservative variant
+takes the maximum over layers on the null side too (line 348) and needs no
+assumption about layer independence. It sits at or below nominal: RiNALMo
+untrained at 0 of 35 is below 0.05 rather than at it, because a maximum over
+correlated layers has a heavier upper tail than the statistic it is calibrating.
+
+**The registration specifies the primary variant.**
+`PREREGISTRATION_PHASE6_V2.md:79` holds the null at the selected layer "to avoid
+inflating the null". Holding the null at one layer while the observed statistic
+maximizes over L deflates the null relative to the statistic. The same paragraph
+requires both counts to be reported when the two nulls disagree on which
+families exceed threshold, and they disagree in every model.
+
+**Consequence for the reported result.** H1(a) counts families exceeding the
+primary null against a gate of `ceil(4 * 0.05 * 36) = 8`. Against a test whose
+measured size is 0.49 to 0.60, a gate of 8 of 36 is 22% and below the noise
+rate, so the criterion as registered separates nothing. RiNALMo reaches 31 of 35
+under the conservative test and ERNIE-RNA 33 of 35, so H1 passes on a calibrated
+test; it did not pass on a calibrated test before.
+
+**Fix.** Report both counts, which the registration already requires, and
+designate the conservative count as the one the hypothesis is decided on.
+`exceeds_null_conservative` is stored for every family in every deposited run,
+so no GPU pass is needed. The designation is an emphasis chosen after seeing
+which way the two counts cut, and it is registered as such in `DEVIATIONS.md`
+with its reason: the primary variant's size is measured at 0.49 to 0.60 on
+models that cannot have learned anything, so it is not a test.
+
+Same defect class as D10. Both are nulls rejecting above nominal, by different
+mechanisms -- D10 through run structure the permutation destroys, D15 through a
+maximum tested against a single-layer threshold.
+
+---
+
+## D16. The chance rate for H3's three-way comparison is not 1/3
+
+**Detector:** `scripts/audit_null_selection_bias.py`
+
+H3 counts pairs where `d_partner` exceeds `max(d_prev, d_next)` and tests the
+fraction against 1/3, "partner is max among three adjacent positions by chance"
+(`PREREGISTRATION_PHASE6_V2.md:109`). Randomly initialized weights have no
+partner specificity, so their fraction measures that chance rate:
+
+| control | per-pair precision |
+|---|---|
+| UTR-LM | 0.113 |
+| ERNIE-RNA | 0.161 |
+| RiNALMo | 0.175 |
+| RNA-FM | 0.232 |
+| SpliceBERT | 0.275 |
+
+All five sit below 1/3, and they span 0.113 to 0.275. No single constant could
+have been correct in the registration; the rate is a property of each model.
+
+The three positions are not exchangeable. The partner `j` lies between `j_prev`
+and `j_next`, so whichever neighbor is nearer the mutated position carries
+whatever perturbation reaches that far along the sequence, and a maximum of two
+neighbors is taken against one partner. That the deficit is systematic is
+measured. That sequence distance produces it is not: line 252 computes `d_prev`
+and `d_next` separately, but only their maximum enters `pair_details`, and
+`pair_details` is dropped before the result is written, so neither reaches disk.
+
+**Consequence for the reported result.** A null of 1/3 against a chance rate
+near 0.15 makes H3 conservative. RiNALMo at 0.838 and ERNIE-RNA at 0.873 pass
+with room. What changes is the middle of the table: RNA-FM at 0.238 and
+SpliceBERT at 0.243 are at or below their own controls, at 0.232 and 0.275, and
+SpliceBERT's trained model scores below its untrained one.
+
+**Fix.** The derangement null already computes the quantity. For each deranged
+partner it evaluates `d_partner - max(d_prev, d_next)` on a pairing that is
+false by construction, so the fraction of deranged pairs where that is positive
+is H3's chance rate -- per model, matched to the same weights, sequences and
+layer, and available for all ten models rather than the seven with untrained
+counterparts. `derangement_null` returns percentiles only and discards the 1000
+per-derangement values, so this is not recoverable from the deposit. Storing
+that fraction is one float per family; storing `d_prev` and `d_next` alongside
+`d_adj` is one float per pair and settles the mechanism. Both go in the next
+pass.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

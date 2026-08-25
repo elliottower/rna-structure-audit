@@ -41,6 +41,20 @@ def layer_count(families):
     return int(median(lengths)) if lengths else 0
 
 
+def precision(families):
+    """Mean per-pair precision, which is 1/3 under no partner specificity.
+
+    H3 compares the partner's delta against its two stem neighbors, so a model
+    with no specificity picks the partner one time in three. A control whose
+    precision sits at 1/3 confirms the comparison itself is unbiased; a
+    systematic deviation is a bias in the three-way comparison rather than a
+    property of the model.
+    """
+    values = [e["h3_precision"]["fraction"] for e in families.values()
+              if e.get("h3_precision")]
+    return sum(values) / len(values) if values else None
+
+
 def rate(families, field):
     decided = [e for e in families.values() if e.get(field) is not None]
     if not decided:
@@ -58,7 +72,7 @@ def main():
     print("A maximum over L layers, tested against a threshold calibrated for one\n"
           "layer, fires under the null with probability 1 - 0.95^L.\n")
     print(f"  {'model':22s} {'L':>3s} {'predicted':>10s} {'primary':>14s} "
-          f"{'conservative':>14s}")
+          f"{'conservative':>14s} {'precision':>10s}")
     for directory in sorted(root.iterdir()):
         path = directory / f"{directory.name}_phase6_ps.json"
         if not path.exists():
@@ -72,10 +86,14 @@ def main():
         cons, c_hits, c_n = rate(families, "exceeds_null_conservative")
         primary_s = "--" if primary is None else f"{p_hits}/{p_n} = {primary:.2f}"
         cons_s = "--" if cons is None else f"{c_hits}/{c_n} = {cons:.2f}"
+        prec = precision(families)
+        prec_s = "--" if prec is None else f"{prec:.3f}"
         print(f"  {directory.name:22s} {n_layers:3d} {predicted:10.2f} "
-              f"{primary_s:>14s} {cons_s:>14s}")
+              f"{primary_s:>14s} {cons_s:>14s} {prec_s:>10s}")
     print("\nThe randomly initialized controls have no signal, so every exceedance\n"
-          "there is a false positive and the observed rate is the test's true size.")
+          "there is a false positive and the observed rate is the test's true size.\n"
+          "Their per-pair precision should sit at 0.333, the chance rate for a\n"
+          "three-way comparison.")
 
 
 if __name__ == "__main__":

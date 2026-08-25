@@ -15,6 +15,60 @@ Preregistrations governing this work, with sha256 of each frozen document:
 
 ---
 
+## 2026-08-24 — Two null calibrations: the Rung 3 exceedance test has size 0.5, and H3's chance rate is not 1/3
+
+**Registrations:** `PREREGISTRATION_PHASE6_V2.md`, H1(a) at line 96, H3 at line
+110, and the null construction at line 79.
+
+**Written before the affected numbers were recomputed.**
+
+**D15.** `best_ps` is a maximum of mean PS over L layers.
+`null_95th_primary` is the 95th percentile of the derangement null evaluated at
+the single layer that maximum selected. The registration specifies this at line
+79, reasoning that holding the null at the selected layer avoids inflating it;
+the reasoning is inverted, because deflating the null relative to the statistic
+inflates the rejection rate. Measured on randomly initialized weights, which
+carry no partner specificity, the test's size is 0.49 to 0.60 rather than 0.05.
+The conservative variant, which takes the maximum over layers on the null side
+as well, sits at or below nominal on the same controls: 0.06, 0.03, 0.11, 0.20
+and 0.00.
+
+**D16.** H3 tests the fraction of pairs where the partner's perturbation exceeds
+the larger of its two stem neighbors' against 1/3. On the same controls that
+fraction is 0.113 to 0.275, never 1/3, and the spread means no single constant
+could have been the right null. The partner sits between the two neighbors, so a
+maximum of two is taken against one and the comparison is not exchangeable.
+
+**Which registered decisions move.** H1(a) is decided on the conservative count,
+which the registration already requires to be reported wherever the two nulls
+disagree; they disagree in every model. The gate stands at
+`ceil(4 * 0.05 * 36) = 8`. H3 is reported against each model's own randomly
+initialized control where one exists, alongside the registered test against 1/3.
+Designating the conservative count as the deciding one is an emphasis chosen
+after both counts were seen, and is recorded here for that reason: the primary
+variant's size is measured at 0.49 to 0.60 on models that cannot have learned
+anything, so it is not a test.
+
+**Cost.** `exceeds_null_conservative` is stored for every family in every
+deposited run, so H1(a) needs no recomputation. H3's per-model chance rate is
+computable from the derangement null, which already evaluates the same statistic
+on pairings false by construction, but `derangement_null` returns percentiles
+and discards the per-derangement values. That fraction, and `d_prev` and
+`d_next` separately from their maximum, are added to the next pass.
+
+**The direction of these corrections.** Every defect registered today runs
+toward the conclusions this work reports: D13 restored pairs that could only
+raise the DNA-pretrained side of H2, D15 removes a criterion that admitted noise
+at half the families, and D16 shows the H3 threshold was too demanding rather
+than too lax. That asymmetry is what one expects when the errors are in the
+tests rather than in the data — a mis-sized test is found by running it on
+controls that cannot have the effect, and controls only ever fail in one
+direction. The order of operations is the only guarantee offered against
+motivated correction: every defect above was registered here before the affected
+numbers were recomputed, and the commits carry the sequence.
+
+---
+
 ## 2026-08-24 — Two further defects: Rung 3 scored 2.7% of NT v2's pairs, and NT v2 lost an embedding row in every family
 
 **Registrations:** `PREREGISTRATION_PHASE6_V2.md` (H1, H2, H3),
