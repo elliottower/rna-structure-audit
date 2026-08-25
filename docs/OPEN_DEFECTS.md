@@ -640,6 +640,63 @@ flag.
 
 ---
 
+## D20. A randomly initialized control is not a null model
+
+**Detector:** `scripts/audit_null_selection_bias.py`,
+`scripts/modal_inspect_multimol_buffers.py`
+
+`_randomize` destroys every learned weight and keeps the architecture, which is
+what makes the control a control. It iterates `named_parameters()`. A buffer is
+not a parameter, so anything a model holds in one survives untouched, and the
+"untrained" model keeps whatever that buffer encodes.
+
+Measured against each model's own derangement chance rate, the controls are not
+at chance:
+
+| randomly initialized control | chance | observed | excess |
+|---|---|---|---|
+| ERNIE-RNA | 0.241 | 0.476 | +0.236 |
+| RiNALMo | 0.232 | 0.327 | +0.095 |
+| RNA-FM | 0.230 | 0.314 | +0.084 |
+| SpliceBERT | 0.194 | 0.204 | +0.010 |
+| UTR-LM | 0.127 | 0.135 | +0.008 |
+| NT v2 | 0.000 | 0.000 | 0.000 |
+| DNABERT-2 | 0.000 | 0.000 | 0.000 |
+
+ERNIE-RNA's cause is identified: `pairwise_bias_map` is a non-persistent buffer
+holding a Watson-Crick and wobble table -- A-U 2.0, C-G 3.0, G-U 0.8 -- which
+randomization cannot reach. A model told which bases pair, with random weights on
+top, is not a model that knows nothing about pairing.
+
+The other excesses are unattributed. RiNALMo carries 34 non-persistent buffers,
+mostly per-layer rotary `inv_freq`, and rotary embeddings are a position prior
+rather than a pairing prior; whether a position prior can produce +0.095 on this
+statistic has not been tested. Nobody has looked at what those buffers hold.
+
+**Consequence for the reported result.** Every trained-versus-untrained
+comparison reads the untrained arm as a floor. H10, H14, H17 and H19 are sign
+tests defined that way, and H11 and H20 are attention contrasts. Where the
+untrained arm carries an architectural prior, the comparison measures learning
+plus prior against prior, not learning against nothing, and the gap understates
+or overstates depending on which side the prior helps.
+
+It also removes the baseline D15 used. That entry measured the primary
+exceedance test's size as 0.49 to 0.60 by treating the untrained controls as
+null. The selection asymmetry D15 identified -- a maximum over L layers tested
+against a single-layer threshold -- is a fact about the code and stands
+independently. The number attached to it does not.
+
+**Fix.** Not settled. `scripts/modal_inspect_multimol_buffers.py` lists what each
+model holds outside its parameters, which is the first step. An
+architecture-neutral null would have to remove the prior as well as the weights,
+which is what the ERNIE-RNA ablation registered in
+`preregistration/PREREGISTRATION_ERNIERNA_BIAS_RUNG3.md` tests for one model. For
+the rest, the derangement null is the only baseline in this project that is
+matched to a model's own weights, sequences and layer, and it should be preferred
+wherever a chance rate is needed.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing
