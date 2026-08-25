@@ -102,6 +102,28 @@ def inspect():
     import hashlib
     import inspect as inspect_mod
 
+    print("\n  --- all non-persistent buffers, full names ---")
+    persistent_names = set(model.state_dict())
+    for name, tensor in model.named_buffers():
+        if name in persistent_names:
+            continue
+        print(f"    {name:52s} shape={list(tensor.shape)} "
+              f"nonzero={int((tensor != 0).sum())}/{tensor.numel()}")
+
+    # A non-persistent buffer is never saved to or loaded from a checkpoint, so
+    # whatever it holds was computed in `__init__` rather than trained. A table
+    # of sines lies in [-1, 1] and has a mean near zero; a learned embedding
+    # table would not be confined that way.
+    for name, tensor in list(model.named_buffers()):
+        if name in persistent_names or tensor.dim() != 2 or tensor.shape[0] < 100:
+            continue
+        print(f"\n    {name}: row 5, first 8 values")
+        print(f"      {[round(float(v), 4) for v in tensor[5].detach().cpu()[:8]]}")
+        print(f"      min={float(tensor.min()):.4f} max={float(tensor.max()):.4f} "
+              f"mean={float(tensor.mean()):.4f} std={float(tensor.std()):.4f}")
+        print(f"      inside [-1, 1]: "
+              f"{int(((tensor >= -1) & (tensor <= 1)).sum())}/{tensor.numel()}")
+
     print("\n  --- provenance of the buffer ---")
     in_state = "pairwise_bias_map" in model.state_dict()
     print(f"  in model.state_dict() (i.e. registered persistent): {in_state}")
