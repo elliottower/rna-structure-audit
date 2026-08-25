@@ -980,6 +980,23 @@ def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
 
     eligible = rung3["ernierna"]["eligible"]
     macro("confirmatoryN", str(eligible))
+
+    # The panel narrows three times and every count has a reason, so each is
+    # generated rather than typed: 52 curated records, 5 withdrawn for
+    # annotations that did not match their sequences, 47 analyzed. Of those, the
+    # families passing the registered Rung 3 filters, then the non-quarantined
+    # ones, then the ones whose stems admit a derangement null and therefore a
+    # chance rate. Prose that types any of these drifts from the tables.
+    per_rna = json.loads(
+        (RESULTS / "ernierna" / "ernierna_phase6_ps.json").read_text()
+    )["results"]["per_rna"]
+    scored = [name for name, e in per_rna.items() if e.get("best_ps") is not None]
+    non_quarantined = [n for n in scored if n not in QUARANTINE]
+    with_chance = [n for n in non_quarantined
+                   if per_rna[n].get("h3_chance_fraction") is not None]
+    macro("rungThreeQualifying", str(len(scored)))
+    macro("rungThreeQuarantined", str(len(scored) - len(non_quarantined)))
+    macro("chanceRateN", str(len(with_chance)))
     macro("gateThreshold", str(gate_threshold(eligible)))
     macro("gateRegistered", "7")
     macro("bootstrapB", f"{N_BOOTSTRAP:,}".replace(",", "{,}"))
