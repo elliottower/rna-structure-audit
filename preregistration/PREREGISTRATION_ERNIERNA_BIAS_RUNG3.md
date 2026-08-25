@@ -60,7 +60,12 @@ estimate is reported beside every interval.
 
 **What the design resolves, stated as power rather than as a threshold.** The
 same bootstrap over the two intact arms gives a half-width of 0.126 on the
-difference of excesses (`scripts/estimate_precision_resolution.py`). A true
+difference of excesses (`scripts/estimate_precision_resolution.py`). That is an
+estimate from the closest paired comparison available before the run -- trained
+against untrained -- and not from the arms the hypotheses are defined over, which
+do not exist yet. Those two arms differ from each other far more than intact will
+differ from ablated, so their family-level correlation need not be the same and
+0.126 is a guide rather than a measurement of this design. A true
 effect below that is not distinguishable from zero here, so an interval covering
 zero is reported as "smaller than this design resolves" and never as evidence of
 no effect. No pass/fail margin is registered: a threshold set at the detection
@@ -77,6 +82,21 @@ and that is a likely outcome rather than a degenerate one.
 than 33 of the 35 families in the analysis set**, which would mean the ablation
 broke the forward pass rather than removed a prior. Both intact arms score 36 of
 36 families, 35 of which carry a derangement null.
+
+**The analysis set is the 35 families for which the derangement null is defined.**
+The registered null uses only stems with at least three eligible pairs
+(`PREREGISTRATION_PHASE6_V2.md`, step 5), and a family where no stem reaches
+three has no null and therefore no chance rate. Exactly one non-quarantined
+scored family is excluded on that rule: `c_di_GMP_riboswitch`, which the pipeline
+records as `null_available: false` with 8 eligible pairs spread across its stems.
+The set is pinned by the sha256 of its sorted family names,
+`10bc3b36b3fe0d08`, so it can be checked rather than reconstructed.
+
+**If an ablated arm's set differs from the intact 35, the comparison is taken on
+the intersection**, and the size of the intersection is reported. The bootstrap
+draws one family index per replicate and applies it to both arms, so a comparison
+across arms with different sets would not be paired and the interval would not
+mean what it says.
 
 ## An outcome that strengthens the model under examination
 
