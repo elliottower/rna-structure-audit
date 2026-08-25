@@ -552,7 +552,55 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
             "panel_sha256": stamp["panel_sha256"]}
 
 
-def _smoke(model_name, ablate_bias=False):
+def _inspect_buffers(adapter, model_name):
+    """What each model holds outside `named_parameters()`, and whether it survives.
+
+    `_randomize` builds the random-init control by iterating `named_parameters()`.
+    A buffer is not a parameter, so anything held in one survives untouched, and
+    the control keeps whatever that buffer encodes. For ERNIE-RNA that is a
+    Watson-Crick table and the control climbs all three rungs of the ladder (D20).
+
+    This asks the same question of every model in the panel: what is outside the
+    parameters, does it hold real values once a forward pass has run, and is any
+    of it plausibly about the task rather than about position or dtype.
+    """
+    import torch
+
+    model = getattr(adapter, "model", None)
+    if model is None:
+        print(f"{model_name}: adapter exposes no model")
+        return
+    persistent = set(model.state_dict())
+    rows = [(name, tensor) for name, tensor in model.named_buffers()
+            if name not in persistent]
+
+    # Buffers materialize from the meta device after transformers v5 loads a
+    # checkpoint, so they are only meaningful once a forward pass has run.
+    with torch.no_grad():
+        adapter.get_all_layer_embeddings(
+            adapter.tokenize("ACGUACGUACGUACGUACGU"))
+
+    after = dict(model.named_buffers())
+    total = sum(int(t.numel()) for _, t in rows)
+    print(f"{model_name}: {len(rows)} non-persistent buffer(s), "
+          f"{total:,} values, {len(persistent)} persistent tensors")
+    shapes = {}
+    for name, _ in rows:
+        tensor = after.get(name)
+        if tensor is None:
+            continue
+        stem = name.split(".")[-1]
+        entry = shapes.setdefault(stem, {"count": 0, "numel": 0, "nonzero": 0,
+                                         "shape": list(tensor.shape)})
+        entry["count"] += 1
+        entry["numel"] += int(tensor.numel())
+        entry["nonzero"] += int((tensor != 0).sum())
+    for stem, entry in sorted(shapes.items(), key=lambda kv: -kv[1]["numel"]):
+        print(f"    {stem:34s} x{entry['count']:<3d} shape={entry['shape']} "
+              f"nonzero={entry['nonzero']}/{entry['numel']}")
+
+
+def _smoke(model_name, ablate_bias=False, buffers_only=False):
     """Import, load the panel, load the model, score six families.
 
     Ten GPU containers that all die on the same missing package cost far more
@@ -576,6 +624,9 @@ def _smoke(model_name, ablate_bias=False):
     numerics = _pin_numerics()
     families = sorted(load_rfam_families(), key=lambda f: len(f["sequence"]))
     adapter, device = _load_on_device(model_name, ablate_bias)
+    if buffers_only:
+        _inspect_buffers(adapter, model_name)
+        return model_name
     ok = []
     for family in families:
         scored = run_phase6(adapter, [family], device=device, compute_null=False)
@@ -592,37 +643,37 @@ def _smoke(model_name, ablate_bias=False):
 
 
 @app.function(image=multimol_image, timeout=3600)
-def smoke_multimol(model_name: str, ablate_bias: bool = False):
-    return _smoke(model_name, ablate_bias)
+def smoke_multimol(model_name: str, ablate_bias: bool = False, buffers_only: bool = False):
+    return _smoke(model_name, ablate_bias, buffers_only)
 
 
 @app.function(image=legacy_image, timeout=3600)
-def smoke_legacy(model_name: str, ablate_bias: bool = False):
-    return _smoke(model_name, ablate_bias)
+def smoke_legacy(model_name: str, ablate_bias: bool = False, buffers_only: bool = False):
+    return _smoke(model_name, ablate_bias, buffers_only)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=3600)
-def smoke_legacy_gpu(model_name: str, ablate_bias: bool = False):
+def smoke_legacy_gpu(model_name: str, ablate_bias: bool = False, buffers_only: bool = False):
     """The legacy image with a GPU, for a model whose failure needs two devices."""
-    return _smoke(model_name, ablate_bias)
+    return _smoke(model_name, ablate_bias, buffers_only)
 
 
 @app.function(image=evo_image, gpu="A10G", timeout=3600)
-def smoke_evo(model_name: str = "evo", ablate_bias: bool = False):
+def smoke_evo(model_name: str = "evo", ablate_bias: bool = False, buffers_only: bool = False):
     """On a GPU, because the Evo adapter refuses to place 7B parameters on a CPU."""
-    return _smoke(model_name, ablate_bias)
+    return _smoke(model_name, ablate_bias, buffers_only)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=3600)
-def smoke_dnabert2(model_name: str = "dnabert2", ablate_bias: bool = False):
+def smoke_dnabert2(model_name: str = "dnabert2", ablate_bias: bool = False, buffers_only: bool = False):
     """On a GPU, because the bundled Triton attention asserts `q.is_cuda`."""
-    return _smoke(model_name, ablate_bias)
+    return _smoke(model_name, ablate_bias, buffers_only)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=3600)
-def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False):
+def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False, buffers_only: bool = False):
     """On a GPU, because mamba-ssm has no CPU kernel to fall back to."""
-    return _smoke(model_name, ablate_bias)
+    return _smoke(model_name, ablate_bias, buffers_only)
 
 
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
