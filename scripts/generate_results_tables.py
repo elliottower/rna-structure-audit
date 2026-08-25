@@ -46,7 +46,11 @@ from compute_bootstrap_cis import N_BOOTSTRAP, SEED, bootstrap_ci
 from generate_table5_registered import QUARANTINE, mean, render_ps, summarize_entries
 
 REPO = Path(__file__).resolve().parents[1]
-RESULTS = REPO / "results" / "repaired_panel"
+# The panel every table reads. `repaired_panel` is the deposited run and predates
+# the Rung 3 token-alignment repair, the float64 metric and the measured
+# resolution floor; `repaired_panel_v3` is the pass that carries all three, at one
+# commit per cell.
+RESULTS = REPO / "results" / "repaired_panel_v3"
 GENERATED = REPO / "paper" / "generated"
 FAMILIES = REPO / "data" / "rfam_families"
 
