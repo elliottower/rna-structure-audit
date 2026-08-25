@@ -107,6 +107,14 @@ submitted `rna-structure-audit_v14.tex:328`. `generate_table5_registered.py`
 gives +0.04, p = 1.000 at both N = 32 and N = 34. Where -0.28 came from is not
 recoverable from the stored results. The FAIL verdict is unchanged either way.
 
+`scripts/audit_h2_disposition.py` reaches +0.040, p = 1.000 by an independent
+path, reading per-model mean PS from the phase 6 result files rather than from
+the table generator, so the discrepancy is in the printed value and not in one
+script. The ranking it prints also shows why the effect is near zero: the
+RNA-pretrained group holds the two highest positions and three of the four
+lowest, so the groups are bimodal rather than shifted, and a rank test on five
+against five cannot register that.
+
 ---
 
 ## D6. One DNABERT-2 run is unseeded
