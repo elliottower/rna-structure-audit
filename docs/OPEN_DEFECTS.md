@@ -668,10 +668,43 @@ holding a Watson-Crick and wobble table -- A-U 2.0, C-G 3.0, G-U 0.8 -- which
 randomization cannot reach. A model told which bases pair, with random weights on
 top, is not a model that knows nothing about pairing.
 
-The other excesses are unattributed. RiNALMo carries 34 non-persistent buffers,
-mostly per-layer rotary `inv_freq`, and rotary embeddings are a position prior
-rather than a pairing prior; whether a position prior can produce +0.095 on this
-statistic has not been tested. Nobody has looked at what those buffers hold.
+**RNA-FM's excess is not carried by a buffer.** It holds two non-persistent
+buffers, `position_ids` and `token_type_ids`, both integer, so there is no
+non-parameter float state for an effect to live in.
+
+**RiNALMo's reseeding is inconclusive by design.** Redrawing its 33 rotary
+`inv_freq` tables drops its excess from +0.105 to +0.029, but `inv_freq` is a
+deterministic geometric ladder, `1/base^(2i/d)`, rather than a table of learned
+values. Replacing it with noise corrupts a well-formed position code instead of
+removing information, and a drop is equally consistent with the buffers carrying
+the effect and with a malformed position code degrading everything downstream.
+The same manipulation on ERNIE-RNA drops +0.249 to +0.047, reproducing the
+zeroing ablation through a different intervention, because there the buffer is a
+lookup table and randomizing it does remove information.
+
+**A candidate mechanism for both, and it is one this register already carries.**
+Per-pair precision is read at the layer that maximizes mean PS, so a model with
+more layers has more draws to select from. Across randomly initialized
+character-level controls, with ERNIE-RNA set aside because its buffer is
+identified, the excess is monotone in layer count:
+
+| control | layers | excess over its own chance rate |
+|---|---|---|
+| RiNALMo | 34 | +0.105 |
+| RNA-FM | 13 | +0.093 |
+| SpliceBERT | 7 | +0.016 |
+| UTR-LM | 7 | +0.011 |
+
+Neither declared depth nor parameter count predicts it (Spearman +0.32 and
++0.27, both far from significance at n = 7). Layer count does, and it is the
+asymmetry D15 identified in the exceedance count appearing in the precision
+statistic: a maximum over layers compared against something not selected the
+same way.
+
+**The test.** `precision_per_layer` is now stored, so precision can be read at a
+layer no selection touched. If the excess is selection, the mean across layers
+sits at chance for the controls while the trained models keep theirs at every
+layer. Until that lands this is a candidate, not a cause.
 
 **Consequence for the reported result.** Every trained-versus-untrained
 comparison reads the untrained arm as a floor. H10, H14, H17 and H19 are sign
