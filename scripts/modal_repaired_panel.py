@@ -552,7 +552,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
             "panel_sha256": stamp["panel_sha256"]}
 
 
-def _smoke(model_name):
+def _smoke(model_name, ablate_bias=False):
     """Import, load the panel, load the model, score six families.
 
     Ten GPU containers that all die on the same missing package cost far more
@@ -575,7 +575,7 @@ def _smoke(model_name):
     # one piece of startup code that could kill all 27 containers untested.
     numerics = _pin_numerics()
     families = sorted(load_rfam_families(), key=lambda f: len(f["sequence"]))
-    adapter, device = _load_on_device(model_name)
+    adapter, device = _load_on_device(model_name, ablate_bias)
     ok = []
     for family in families:
         scored = run_phase6(adapter, [family], device=device, compute_null=False)
@@ -592,37 +592,37 @@ def _smoke(model_name):
 
 
 @app.function(image=multimol_image, timeout=3600)
-def smoke_multimol(model_name: str):
-    return _smoke(model_name)
+def smoke_multimol(model_name: str, ablate_bias: bool = False):
+    return _smoke(model_name, ablate_bias)
 
 
 @app.function(image=legacy_image, timeout=3600)
-def smoke_legacy(model_name: str):
-    return _smoke(model_name)
+def smoke_legacy(model_name: str, ablate_bias: bool = False):
+    return _smoke(model_name, ablate_bias)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=3600)
-def smoke_legacy_gpu(model_name: str):
+def smoke_legacy_gpu(model_name: str, ablate_bias: bool = False):
     """The legacy image with a GPU, for a model whose failure needs two devices."""
-    return _smoke(model_name)
+    return _smoke(model_name, ablate_bias)
 
 
 @app.function(image=evo_image, gpu="A10G", timeout=3600)
-def smoke_evo(model_name: str = "evo"):
+def smoke_evo(model_name: str = "evo", ablate_bias: bool = False):
     """On a GPU, because the Evo adapter refuses to place 7B parameters on a CPU."""
-    return _smoke(model_name)
+    return _smoke(model_name, ablate_bias)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=3600)
-def smoke_dnabert2(model_name: str = "dnabert2"):
+def smoke_dnabert2(model_name: str = "dnabert2", ablate_bias: bool = False):
     """On a GPU, because the bundled Triton attention asserts `q.is_cuda`."""
-    return _smoke(model_name)
+    return _smoke(model_name, ablate_bias)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=3600)
-def smoke_caduceus(model_name: str = "caduceus"):
+def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False):
     """On a GPU, because mamba-ssm has no CPU kernel to fall back to."""
-    return _smoke(model_name)
+    return _smoke(model_name, ablate_bias)
 
 
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
@@ -725,11 +725,13 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         # counterpart, so smoking both twice buys nothing.
         requested = sorted({base_model(m) for m in requested},
                            key=lambda m: AVAILABLE_MODELS.index(m))
-        print(f"Smoke check, {len(requested)} adapters: {requested}")
+        print(f"Smoke check, {len(requested)} adapters: {requested}"
+              + (", pairwise bias ablated" if ablate_bias else ""))
         # Spawned rather than called, so one broken adapter reports itself
         # alongside the nine that work instead of hiding them behind its own
         # traceback, and so the four images build concurrently.
-        handles = {m: _smoke_route(m).spawn(m) for m in requested}
+        handles = {m: _smoke_route(m).spawn(m, ablate_bias=ablate_bias)
+                   for m in requested}
         outcomes = {}
         for model_name, handle in handles.items():
             try:
