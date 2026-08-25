@@ -13,17 +13,22 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# The panel every figure reads. Each of these named a separate July run
+# directory at an unrecorded commit, so the figures and the tables could disagree
+# about the same model. `repaired_panel_v3` is one commit per cell.
+PANEL = ROOT / "results" / "repaired_panel_v3"
+
 MODEL_FILES = {
-    "RNA-FM": ROOT / "data/gpu_results/expanded_rfam_rerun/rnafm_phases15_20260716_175429",
-    "RiNALMo": ROOT / "results/rinalmo_phases_1_to_5.json",
-    "ERNIE-RNA": ROOT / "results/ernierna_phases15_dinuc.json",
-    "SpliceBERT": ROOT / "results/splicebert_phases15_dinuc.json",
-    "UTR-LM": ROOT / "data/gpu_results/expanded_rfam/utrlm_phases_1_to_5.json",
-    "NT v2": ROOT / "data/gpu_results/expanded_rfam_rerun/nt_phases15_20260716_175433",
-    "DNABERT-2": ROOT / "results/dnabert2_phases15_dinuc.json",
-    "Caduceus": ROOT / "data/gpu_results/expanded_rfam/caduceus_phases_1_to_5.json",
-    "HyenaDNA": ROOT / "data/gpu_results/expanded_rfam_rerun/hyenadna_phases15_20260716_180202",
-    "Evo": ROOT / "data/gpu_results/expanded_rfam/evo_phases_1_to_5.json",
+    "RNA-FM": PANEL / "rnafm" / "rnafm_phases_1_to_5.json",
+    "RiNALMo": PANEL / "rinalmo" / "rinalmo_phases_1_to_5.json",
+    "ERNIE-RNA": PANEL / "ernierna" / "ernierna_phases_1_to_5.json",
+    "SpliceBERT": PANEL / "splicebert" / "splicebert_phases_1_to_5.json",
+    "UTR-LM": PANEL / "utrlm" / "utrlm_phases_1_to_5.json",
+    "NT v2": PANEL / "nt" / "nt_phases_1_to_5.json",
+    "DNABERT-2": PANEL / "dnabert2" / "dnabert2_phases_1_to_5.json",
+    "Caduceus": PANEL / "caduceus" / "caduceus_phases_1_to_5.json",
+    "HyenaDNA": PANEL / "hyenadna" / "hyenadna_phases_1_to_5.json",
+    "Evo": PANEL / "evo" / "evo_phases_1_to_5.json",
 }
 
 RNA_MODELS = {"RNA-FM", "RiNALMo", "ERNIE-RNA", "SpliceBERT", "UTR-LM"}

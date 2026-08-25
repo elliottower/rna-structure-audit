@@ -28,10 +28,12 @@ def load_ps(path):
     return np.array([pr[f]["best_ps"] for f in pr if pr[f].get("best_ps") is not None])
 
 
-rinalmo_trained = load_ps(ROOT / "results/rinalmo_phase6_ps.json")
-rinalmo_rand = load_ps(ROOT / "results/rinalmo_untrained_phase6_ps.json")
-ernie_trained = load_ps(ROOT / "data/gpu_results/phase6_compensatory/ernierna_phase6_ps.json")
-ernie_rand = load_ps(ROOT / "data/gpu_results/phase6_compensatory/ernierna_untrained_phase6.json")
+PANEL = ROOT / "results" / "repaired_panel_v3"
+
+rinalmo_trained = load_ps(PANEL / "rinalmo" / "rinalmo_phase6_ps.json")
+rinalmo_rand = load_ps(PANEL / "rinalmo_untrained" / "rinalmo_untrained_phase6_ps.json")
+ernie_trained = load_ps(PANEL / "ernierna" / "ernierna_phase6_ps.json")
+ernie_rand = load_ps(PANEL / "ernierna_untrained" / "ernierna_untrained_phase6_ps.json")
 
 # ---------------------------------------------------------------------------
 # Mean PS for all models (from paper Table 2)
