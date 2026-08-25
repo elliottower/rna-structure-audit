@@ -512,6 +512,10 @@ def _smoke(model_name):
 
     from phase6_compensatory_mutation import load_rfam_families, run_phase6
 
+    # The real run pins these before loading anything, and the calls differ by
+    # torch version across the four images. A smoke that skips them leaves the
+    # one piece of startup code that could kill all 27 containers untested.
+    numerics = _pin_numerics()
     families = sorted(load_rfam_families(), key=lambda f: len(f["sequence"]))
     adapter, device = _load_on_device(model_name)
     ok = []
@@ -523,6 +527,7 @@ def _smoke(model_name):
             break
     print(f"{model_name}: {len(families)} families, loaded on {device}, scored {ok}")
     print(f"  libraries: {_library_versions()}")
+    print(f"  numerics: {numerics['defaults_observed']}")
     if not ok:
         raise RuntimeError(f"{model_name} scored no family in the whole panel")
     return model_name
