@@ -818,37 +818,43 @@ def _smoke(model_name, ablate_bias=False, buffers_only=False,
 
 
 @app.function(image=multimol_image, timeout=3600)
-def smoke_multimol(model_name: str, ablate_bias: bool = False, buffers_only: bool = False):
-    return _smoke(model_name, ablate_bias, buffers_only)
+def smoke_multimol(model_name: str, ablate_bias: bool = False, buffers_only: bool = False,
+                   reseed_buffers: bool = False):
+    return _smoke(model_name, ablate_bias, buffers_only, reseed_buffers)
 
 
 @app.function(image=legacy_image, timeout=3600)
-def smoke_legacy(model_name: str, ablate_bias: bool = False, buffers_only: bool = False):
-    return _smoke(model_name, ablate_bias, buffers_only)
+def smoke_legacy(model_name: str, ablate_bias: bool = False, buffers_only: bool = False,
+                   reseed_buffers: bool = False):
+    return _smoke(model_name, ablate_bias, buffers_only, reseed_buffers)
 
 
 @app.function(image=legacy_image, gpu="A10G", timeout=3600)
-def smoke_legacy_gpu(model_name: str, ablate_bias: bool = False, buffers_only: bool = False):
+def smoke_legacy_gpu(model_name: str, ablate_bias: bool = False, buffers_only: bool = False,
+                   reseed_buffers: bool = False):
     """The legacy image with a GPU, for a model whose failure needs two devices."""
-    return _smoke(model_name, ablate_bias, buffers_only)
+    return _smoke(model_name, ablate_bias, buffers_only, reseed_buffers)
 
 
 @app.function(image=evo_image, gpu="A10G", timeout=3600)
-def smoke_evo(model_name: str = "evo", ablate_bias: bool = False, buffers_only: bool = False):
+def smoke_evo(model_name: str = "evo", ablate_bias: bool = False, buffers_only: bool = False,
+                   reseed_buffers: bool = False):
     """On a GPU, because the Evo adapter refuses to place 7B parameters on a CPU."""
-    return _smoke(model_name, ablate_bias, buffers_only)
+    return _smoke(model_name, ablate_bias, buffers_only, reseed_buffers)
 
 
 @app.function(image=dnabert2_image, gpu="A10G", timeout=3600)
-def smoke_dnabert2(model_name: str = "dnabert2", ablate_bias: bool = False, buffers_only: bool = False):
+def smoke_dnabert2(model_name: str = "dnabert2", ablate_bias: bool = False, buffers_only: bool = False,
+                   reseed_buffers: bool = False):
     """On a GPU, because the bundled Triton attention asserts `q.is_cuda`."""
-    return _smoke(model_name, ablate_bias, buffers_only)
+    return _smoke(model_name, ablate_bias, buffers_only, reseed_buffers)
 
 
 @app.function(image=caduceus_image, gpu="A10G", timeout=3600)
-def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False, buffers_only: bool = False):
+def smoke_caduceus(model_name: str = "caduceus", ablate_bias: bool = False, buffers_only: bool = False,
+                   reseed_buffers: bool = False):
     """On a GPU, because mamba-ssm has no CPU kernel to fall back to."""
-    return _smoke(model_name, ablate_bias, buffers_only)
+    return _smoke(model_name, ablate_bias, buffers_only, reseed_buffers)
 
 
 @app.function(image=multimol_image, gpu="A10G", timeout=86400, volumes={"/results": vol})
@@ -985,7 +991,8 @@ def main(models: str = "", phase6_only: bool = False, smoke_only: bool = False,
         # alongside the nine that work instead of hiding them behind its own
         # traceback, and so the four images build concurrently.
         handles = {m: _smoke_route(m).spawn(m, ablate_bias=ablate_bias,
-                                           buffers_only=buffers_only)
+                                           buffers_only=buffers_only,
+                                           reseed_buffers=reseed_buffers)
                    for m in requested}
         outcomes = {}
         for model_name, handle in handles.items():
