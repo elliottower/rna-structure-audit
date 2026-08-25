@@ -72,7 +72,14 @@ def with_project(image):
     """
     return (
         image
-        .env({"PYTHONPATH": "/root/project:/root/project/scripts"})
+        .env({"PYTHONPATH": "/root/project:/root/project/scripts",
+              # cuBLAS picks a workspace per call above CUDA 10.2 and the choice
+              # is not reproducible, so `use_deterministic_algorithms(True)`
+              # refuses without this. Unset, it is the reason one model's no-op
+              # floor exceeded its own signal (D18); it must be set before torch
+              # initializes CUDA, which is why it is an image variable rather
+              # than something the run sets.
+              "CUBLAS_WORKSPACE_CONFIG": ":4096:8"})
         .add_local_file("multi_model_audit.py", "/root/project/multi_model_audit.py")
         .add_local_dir("scripts", "/root/project/scripts")
         .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
