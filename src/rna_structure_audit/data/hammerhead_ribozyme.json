@@ -1,8 +1,8 @@
 {
   "name": "hammerhead_ribozyme",
-  "sequence": "GGAGACCGCUGCCGAAACGCGAAAGCGUCUAGCGUCCG",
-  "dot_bracket": "((((...((((..........))))(((...)))..))",
-  "source": "Phase 1 curated (PDB/Rfam)",
+  "sequence": "AUCCAGCUGACGAGUCCUAAAUAGGGUGAAACGCGCGUCCUGGAU",
+  "dot_bracket": "((((((.......((((......))))...(((()))).))))))",
+  "source": "Rfam RF00163 seed alignment member (AF036748.1/120-164)",
   "rfam_id": "RF00163",
-  "length": 38
+  "length": 45
 }

@@ -4,5 +4,10 @@
   "dot_bracket": "((((((.((((((((.((((((.((.....)).)))))).)))))))).))))))..(((((((((..........))))))))).....",
   "source": "Phase 1 curated (PDB/Rfam)",
   "rfam_id": "RF00017",
-  "length": 90
+  "length": 90,
+  "excluded": {
+    "reason": "no RF00017 member projects to a structure under 5% non-canonical",
+    "rule": "DROP",
+    "logged": "DEVIATIONS.md, 2026-08-24"
+  }
 }

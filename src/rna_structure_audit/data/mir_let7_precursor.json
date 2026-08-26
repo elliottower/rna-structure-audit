@@ -1,10 +1,10 @@
 {
   "name": "mir_let7_precursor",
-  "sequence": "GUCUACGACCAUACCACAAUGAACACACCGGUUCUCGUCCGAUCACCGAAGUUAAGCAUUGUCGGGCCAGGAUAGUACCUGGAUGGGGGACCGCCUGGGAACGCCUGGUGUCGUAGACU",
-  "dot_bracket": "(((((((((....((.(((((...((..((((((......))..))))..))....)))))..))(((.((....(.((.....((....)).....)).)..)).)))))))))))).",
-  "source": "Rfam RF00001 seed alignment member (K02350.1/1-119)",
-  "rfam_id": "RF00001",
-  "length": 119,
-  "seed_member": "K02350.1/1-119",
-  "seed_members_available": 604
+  "sequence": "GUAGGAUGAGGUAGUAGAUUGUAUAGUUGUAGGUCAUAACCCAUCUUGGAGAUAACUAUACAGUCUACUGUCUUUCCCAC",
+  "dot_bracket": "((((((.((((((((((((((((((((....((((...)))).((....))...))))))))))))))))))))))))))",
+  "source": "Rfam RF00027 seed alignment member (AAIY01003579.1/1841-1762)",
+  "rfam_id": "RF00027",
+  "length": 80,
+  "seed_member": "AAIY01003579.1/1841-1762",
+  "seed_members_available": 64
 }

@@ -1,8 +1,10 @@
 {
   "name": "mir_21_precursor",
-  "sequence": "UGUCGGGUAGCUUAUCAGACUGAUGUUGACUGUUGAAUCUCAUGGCAACACCAGUCGAUGGGCUGUCUGACA",
-  "dot_bracket": "(((((((((((((((((((((((((((((((((..........)))))))))))))))))))))))))))))",
-  "source": "Phase 1 curated (PDB/Rfam)",
-  "rfam_id": "RF00001",
-  "length": 72
+  "sequence": "UGUCGGGUAGCUUAUCAGACUGAUGUUGACUGUUGAAUCUCAUGGCAACAGCAGUCGAUGGGCUGUCUGACA",
+  "dot_bracket": ".......((((((((..(((((.(((((.(.............).))))).))))).)))))))).......",
+  "source": "Rfam RF00658 seed alignment member (URS0000013967_10029/11-82)",
+  "rfam_id": "RF00658",
+  "length": 72,
+  "seed_member": "URS0000013967_10029/11-82",
+  "seed_members_available": 41
 }

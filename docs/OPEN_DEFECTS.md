@@ -950,6 +950,50 @@ this pipeline on raw alignment sequences meets the same wall.
 
 ---
 
+## D24. The published package scores a panel the paper withdrew
+
+**Detector:** `tests/test_benchmark.py::test_bundled_annotations_match_the_repository_panel`
+and `::test_withdrawn_families_are_not_scored_by_default`.
+
+`pip install rna-structure-audit` ships its own copy of the families under
+`src/rna_structure_audit/data/`, and `load_families()` returned every file it
+found. Two things followed.
+
+**It scored the withdrawn families.** Five of the 52 curated families were
+withdrawn on annotation review and the analysis tree marks them with an
+`excluded` record. The bundled copies carried no such marker, so a user running
+`evaluate()` scored all 52, including families whose names assert something the
+sequence is not -- a stem of U2 snRNA that is the whole snRNA, a specificity
+domain of RNase P that is the whole RNA.
+
+**Eight bundled annotations were the pre-correction ones.** `HDV_ribozyme`,
+`SAM_riboswitch`, `TPP_riboswitch`, `hammerhead_ribozyme` and the four `mir_*`
+precursors differed from the corrected files in sequence, dot-bracket or both.
+A user scoring a model through the package and an author scoring it through the
+analysis tree got different panels under the same family names, with no way to
+tell from either side.
+
+**Consequence for the reported result.** The manuscript is unaffected: it reads
+`results/`, which is the analysis tree. The grades advertised in the README were
+affected, and were wrong for four models -- NT v2, HyenaDNA and Evo grade B on
+the corrected panel and Caduceus grades C, against D for all four as published.
+`_grade()` reaches B when more than five families survive the dinucleotide null,
+which those models do.
+
+**Fix.** The 13 differing files are synced from `data/rfam_families/`.
+`load_families()` skips families carrying an `excluded` record and takes
+`include_withdrawn=True` to return the full curated set, so a result computed
+before the review is still reproducible. `withdrawn_families()` reports what was
+skipped and why. The count assertion that would have caught none of this
+(`assert len(families) == 52`) is replaced by invariants: no scored family
+carries an exclusion marker, the withdrawn set is still reachable, and every
+bundled annotation equals the repository's.
+
+**Not yet released.** The fix is on the branch; the version on PyPI still ships
+the old panel. A release note has to say that grades change for four models.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

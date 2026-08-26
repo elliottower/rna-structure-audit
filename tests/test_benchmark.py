@@ -8,7 +8,7 @@ import pytest
 import torch
 
 from rna_structure_audit.adapter import ModelAdapter
-from rna_structure_audit.data import load_families
+from rna_structure_audit.data import load_families, withdrawn_families
 from rna_structure_audit.evaluate import _grade, evaluate
 from rna_structure_audit.rungs.rung1 import (
     COMPLEMENT,
@@ -27,9 +27,36 @@ from rna_structure_audit.rungs.rung3 import (
 # ── Data loading ────────────────────────────────────────────────────────────
 
 
-def test_load_families_returns_52():
-    families = load_families()
-    assert len(families) == 52
+def test_withdrawn_families_are_not_scored_by_default():
+    scored = {f["name"] for f in load_families()}
+    withdrawn = set(withdrawn_families())
+    assert withdrawn, "the bundle should still carry the withdrawn families"
+    assert not (scored & withdrawn), (
+        "a family withdrawn on annotation review reached the default panel")
+    assert all("excluded" not in f for f in load_families())
+
+
+def test_withdrawn_families_are_still_reachable():
+    curated = {f["name"] for f in load_families(include_withdrawn=True)}
+    assert curated == {f["name"] for f in load_families()} | set(withdrawn_families()), (
+        "asking for the withdrawn families must return exactly the curated set")
+
+
+def test_bundled_annotations_match_the_repository_panel():
+    """The package ships the annotations the paper reports, not an earlier set.
+
+    Eight bundled families once carried pre-correction sequences and dot-brackets
+    while the repository held the corrected ones, so a user scoring a model
+    through the package and an author scoring it through the analysis tree got
+    different panels under the same name.
+    """
+    repo = Path(__file__).resolve().parents[1] / "data" / "rfam_families"
+    if not repo.is_dir():
+        pytest.skip("analysis tree not present; the package is installed alone")
+    for family in load_families(include_withdrawn=True):
+        stored = json.loads((repo / f"{family['name']}.json").read_text())
+        assert family["sequence"] == stored["sequence"], family["name"]
+        assert family["dot_bracket"] == stored["dot_bracket"], family["name"]
 
 
 def test_family_schema():

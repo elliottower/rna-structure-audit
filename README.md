@@ -1,14 +1,17 @@
 # rna-structure-audit
 
-Three-rung benchmark for evaluating whether RNA/DNA foundation models encode genuine secondary structure or composition shortcuts.
+Three-rung benchmark for whether RNA and DNA foundation models encode base-pairing structure or nucleotide composition.
 
-> **Correction, 2026-08-24.** Four of the 52 evaluation families carried wrong
-> annotations, and three of them were the same 5S rRNA sequence under three
-> microRNA names. The annotations are fixed; the results in `results/` were
-> computed before the fix and have not been re-run, so `data/` and `results/`
-> are inconsistent until the runs are repeated. No verdict changes. See
-> [docs/CHANGELOG.md](docs/CHANGELOG.md) for what moves and by how much, and
-> `scripts/audit_duplicate_families.py` to reproduce it.
+> **State of the panel.** Four of the 52 curated families carried wrong
+> annotations and five were withdrawn on review, leaving 47 that the benchmark
+> scores. The whole panel was then re-run under pinned numerics, and
+> `results/repaired_panel_v3/` is that run: one commit per cell, each file
+> stamped with the commit, panel hash and library versions that produced it.
+> `docs/OPEN_DEFECTS.md` registers every defect found during the audit, each
+> with a detector.
+>
+> The withdrawn families still ship, so a result computed before the review can
+> be reproduced, and `load_families(include_withdrawn=True)` returns them.
 >
 > The `as-submitted` branch reconstructs the state the submitted manuscript's
 > numbers were computed from. `main` is the corrected line.
@@ -43,14 +46,19 @@ print(results["report"]["grade"])  # A
 |---------|-------|--------|-------|
 | `ERNIERNAAdapter` | ERNIE-RNA | 86M | A |
 | `RiNALMoAdapter` | RiNALMo | 650M | A |
+| `NTAdapter` | Nucleotide Transformer v2 | 56M | B |
+| `HyenaDNAAdapter` | HyenaDNA | 0.45M | B |
+| `EvoAdapter` | Evo | 7B | B |
+| `CaduceusAdapter` | Caduceus | 7.7M | C |
 | `SpliceBERTAdapter` | SpliceBERT | 19M | D |
 | `UTRLMAdapter` | UTR-LM | 1.2M | D |
 | `RNAFMAdapter` | RNA-FM | 99M | D |
-| `NTAdapter` | Nucleotide Transformer v2 | 56M | D |
-| `HyenaDNAAdapter` | HyenaDNA | 5.4M | D |
-| `CaduceusAdapter` | Caduceus | 14M | D |
-| `EvoAdapter` | Evo | 7B | D |
 | `DNABERT2Adapter` | DNABERT-2 | 117M | D |
+
+Parameter counts are the loaded checkpoint's, except Evo and DNABERT-2 where
+they are the authors' designation. Grades are `_grade()` applied to the 47-family
+panel; a B means families survive the dinucleotide null, which is a weaker claim
+than partner specificity and is not evidence that a model resolves pairing.
 
 ## Bring your own model
 
@@ -113,10 +121,10 @@ See the [Bring Your Own Model tutorial](notebooks/bring_your_own_model.ipynb) fo
 
 ## The paper and its verification
 
-The manuscript is [`paper/paper_v12.pdf`](paper/paper_v12.pdf). Every figure it
-prints in Tables 1, 2 and 5 is re-derived from `results/` by a script in
-`scripts/`, so the paper can be checked against the data without re-running a
-model:
+The manuscript is the highest-numbered `paper/rna-structure-audit_vNN.tex`.
+Every table it prints is written from `results/` by a generator in `scripts/`
+rather than entered by hand, so the paper can be checked against the data
+without re-running a model:
 
 ```bash
 for s in verify_paper_rung12_figures verify_paper_phase6_figures \

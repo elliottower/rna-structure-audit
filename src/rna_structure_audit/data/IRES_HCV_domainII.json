@@ -4,5 +4,10 @@
   "dot_bracket": "(((((.(((((((.((.((.(((((((((((((.........)))))))..........)))))))).)).))))))).)))))..",
   "source": "Phase 1 curated (PDB/Rfam)",
   "rfam_id": null,
-  "length": 86
+  "length": 86,
+  "excluded": {
+    "reason": "the name asserts domain II of the HCV IRES, not the whole IRES; every seed member is a whole molecule",
+    "rule": "DROP",
+    "logged": "DEVIATIONS.md, 2026-08-24"
+  }
 }

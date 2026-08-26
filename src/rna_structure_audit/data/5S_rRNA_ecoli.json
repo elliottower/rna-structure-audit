@@ -4,5 +4,10 @@
   "dot_bracket": "(((((((...(((((...........))))).(((((...((((((((.......)))).)))).....))))).......(((((.......))))))))))))...............",
   "source": "Phase 1 curated (PDB/Rfam)",
   "rfam_id": "RF00001",
-  "length": 120
+  "length": 120,
+  "excluded": {
+    "reason": "the name asserts E. coli; RF00001's seed carries no E. coli member; a substitute would leave the name false, and the stored sequence needs an annotation from outside the seed alignment",
+    "rule": "DEFER",
+    "logged": "DEVIATIONS.md, 2026-08-24"
+  }
 }
