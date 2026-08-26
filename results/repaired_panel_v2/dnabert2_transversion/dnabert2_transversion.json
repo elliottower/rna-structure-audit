@@ -1,0 +1,431 @@
+{
+  "model": "dnabert2",
+  "stamp": {
+    "commit": "a5f14c66f39e7219e93de2271a25631ffb362778",
+    "panel_sha256": "5c4d6f6d4c32b47a8b0f8802efd26af98708d3c3b5f848b298ddfaddea6e6fb3",
+    "n_families": 47,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.4.0",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.28.0",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "device": "cuda",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-25 01:16:39 UTC",
+  "experiment": "transversion_control",
+  "complement": {
+    "A": "C",
+    "U": "C",
+    "C": "A",
+    "G": "U",
+    "T": "C"
+  },
+  "mutation_trained": {
+    "model": "dnabert2",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "6S_RNA": {
+        "best_ratio": 1.0139943258847213,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0546515298745882,
+        "exceeds_nuc_null": false,
+        "n_stem": 102,
+        "n_loop": 82
+      },
+      "7SK_RNA": {
+        "best_ratio": 1.0096033413788854,
+        "best_layer": 0,
+        "nuc_null_95th": 1.034654695242288,
+        "exceeds_nuc_null": false,
+        "n_stem": 174,
+        "n_loop": 159
+      },
+      "Bacterial_SRP": {
+        "best_ratio": 1.069110233396173,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0781690156303154,
+        "exceeds_nuc_null": false,
+        "n_stem": 66,
+        "n_loop": 37
+      },
+      "CRISPR_leader": {
+        "best_ratio": 0.9544121456781892,
+        "best_layer": 0,
+        "nuc_null_95th": 1.065149525572412,
+        "exceeds_nuc_null": false,
+        "n_stem": 12,
+        "n_loop": 18
+      },
+      "Corona_5UTR": {
+        "best_ratio": 1.0226355470456798,
+        "best_layer": 0,
+        "nuc_null_95th": 1.050342909095992,
+        "exceeds_nuc_null": false,
+        "n_stem": 178,
+        "n_loop": 121
+      },
+      "Corona_s2m": {
+        "best_ratio": 0.9556434846648746,
+        "best_layer": 0,
+        "nuc_null_95th": 1.1400430186421735,
+        "exceeds_nuc_null": false,
+        "n_stem": 24,
+        "n_loop": 19
+      },
+      "CrPV_IRES": {
+        "best_ratio": 0.99212703719056,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0469964956292224,
+        "exceeds_nuc_null": false,
+        "n_stem": 92,
+        "n_loop": 104
+      },
+      "FMN_riboswitch": {
+        "best_ratio": 0.9718864713322093,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0606237469797068,
+        "exceeds_nuc_null": false,
+        "n_stem": 56,
+        "n_loop": 61
+      },
+      "HDV_ribozyme": {
+        "best_ratio": 0.9408742860963412,
+        "best_layer": 0,
+        "nuc_null_95th": 1.061561378249324,
+        "exceeds_nuc_null": false,
+        "n_stem": 44,
+        "n_loop": 43
+      },
+      "Hepatitis_C_IRES_III": {
+        "best_ratio": 1.0164127860824475,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0271726936301482,
+        "exceeds_nuc_null": false,
+        "n_stem": 202,
+        "n_loop": 150
+      },
+      "Histone_3prime": {
+        "best_ratio": 0.9451600667835234,
+        "best_layer": 0,
+        "nuc_null_95th": 1.123561558264515,
+        "exceeds_nuc_null": false,
+        "n_stem": 12,
+        "n_loop": 34
+      },
+      "IRE_stem_loop": {
+        "best_ratio": 0.9106884204517626,
+        "best_layer": 0,
+        "nuc_null_95th": 1.465462252353304,
+        "exceeds_nuc_null": false,
+        "n_stem": 30,
+        "n_loop": 7
+      },
+      "SAH_riboswitch": {
+        "best_ratio": 1.0177944229166043,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0837117152942517,
+        "exceeds_nuc_null": false,
+        "n_stem": 26,
+        "n_loop": 80
+      },
+      "SAM_riboswitch": {
+        "best_ratio": 1.0270835831935434,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0629523881507956,
+        "exceeds_nuc_null": false,
+        "n_stem": 66,
+        "n_loop": 53
+      },
+      "SECIS_element": {
+        "best_ratio": 0.9352115639934631,
+        "best_layer": 0,
+        "nuc_null_95th": 1.1142702075961506,
+        "exceeds_nuc_null": false,
+        "n_stem": 36,
+        "n_loop": 31
+      },
+      "THF_riboswitch": {
+        "best_ratio": 1.1197502109906037,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0792272524689366,
+        "exceeds_nuc_null": true,
+        "n_stem": 64,
+        "n_loop": 53,
+        "dinuc_null_95th": 1.0855349317654583,
+        "exceeds_dinuc_null": true
+      },
+      "TPP_riboswitch": {
+        "best_ratio": 1.0212920457241335,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0857568793738197,
+        "exceeds_nuc_null": false,
+        "n_stem": 56,
+        "n_loop": 47
+      },
+      "T_box_leader": {
+        "best_ratio": 0.9740273788340859,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0489401537820655,
+        "exceeds_nuc_null": false,
+        "n_stem": 94,
+        "n_loop": 140
+      },
+      "U1_snRNA": {
+        "best_ratio": 1.0081480521784614,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0441319029847502,
+        "exceeds_nuc_null": false,
+        "n_stem": 92,
+        "n_loop": 73
+      },
+      "U4_snRNA": {
+        "best_ratio": 1.0234817882701688,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0520770707793807,
+        "exceeds_nuc_null": false,
+        "n_stem": 56,
+        "n_loop": 95
+      },
+      "U5_snRNA": {
+        "best_ratio": 1.0821084696473933,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0539149208335699,
+        "exceeds_nuc_null": true,
+        "n_stem": 60,
+        "n_loop": 61,
+        "dinuc_null_95th": 1.037991684795505,
+        "exceeds_dinuc_null": true
+      },
+      "U6_snRNA": {
+        "best_ratio": 0.9394336855370012,
+        "best_layer": 0,
+        "nuc_null_95th": 1.1315239307997833,
+        "exceeds_nuc_null": false,
+        "n_stem": 10,
+        "n_loop": 157
+      },
+      "Vault_RNA": {
+        "best_ratio": 0.9741937722896873,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0620372717311801,
+        "exceeds_nuc_null": false,
+        "n_stem": 38,
+        "n_loop": 106
+      },
+      "Y_RNA": {
+        "best_ratio": 1.068730142878902,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0727101551416767,
+        "exceeds_nuc_null": false,
+        "n_stem": 46,
+        "n_loop": 56
+      },
+      "ZMP_riboswitch": {
+        "best_ratio": 1.0525912206416146,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0691464537892912,
+        "exceeds_nuc_null": false,
+        "n_stem": 42,
+        "n_loop": 88
+      },
+      "c_di_GMP_riboswitch": {
+        "best_ratio": 1.0551105970224681,
+        "best_layer": 0,
+        "nuc_null_95th": 1.072777959311637,
+        "exceeds_nuc_null": false,
+        "n_stem": 44,
+        "n_loop": 50
+      },
+      "cobalamin_riboswitch": {
+        "best_ratio": 0.9739178126266036,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0433842272321434,
+        "exceeds_nuc_null": false,
+        "n_stem": 102,
+        "n_loop": 120
+      },
+      "fluoride_riboswitch": {
+        "best_ratio": 0.9997236982791984,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0519256152648253,
+        "exceeds_nuc_null": false,
+        "n_stem": 16,
+        "n_loop": 90
+      },
+      "glmS_ribozyme": {
+        "best_ratio": 1.0112948883003408,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0490790005136768,
+        "exceeds_nuc_null": false,
+        "n_stem": 76,
+        "n_loop": 95
+      },
+      "glycine_riboswitch": {
+        "best_ratio": 0.9782912871913959,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0486318951082807,
+        "exceeds_nuc_null": false,
+        "n_stem": 44,
+        "n_loop": 67
+      },
+      "group_II_intron_D5": {
+        "best_ratio": 1.0019771321361075,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0599378484813857,
+        "exceeds_nuc_null": false,
+        "n_stem": 38,
+        "n_loop": 50
+      },
+      "group_I_intron_P4P6": {
+        "best_ratio": 0.9810066822426573,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0466276141475348,
+        "exceeds_nuc_null": false,
+        "n_stem": 110,
+        "n_loop": 277
+      },
+      "hammerhead_ribozyme": {
+        "best_ratio": 1.0023013081294319,
+        "best_layer": 0,
+        "nuc_null_95th": 1.122780477120433,
+        "exceeds_nuc_null": false,
+        "n_stem": 28,
+        "n_loop": 17
+      },
+      "hatchet_ribozyme": {
+        "best_ratio": 1.039451839474851,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0755840001280872,
+        "exceeds_nuc_null": false,
+        "n_stem": 52,
+        "n_loop": 96
+      },
+      "lysine_riboswitch": {
+        "best_ratio": 1.0166337015260059,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0664281387234447,
+        "exceeds_nuc_null": false,
+        "n_stem": 106,
+        "n_loop": 74
+      },
+      "manganese_riboswitch": {
+        "best_ratio": 1.043244298427498,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0877558994005412,
+        "exceeds_nuc_null": false,
+        "n_stem": 44,
+        "n_loop": 42
+      },
+      "mir_122_precursor": {
+        "best_ratio": 0.9822308171873275,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0993376733776672,
+        "exceeds_nuc_null": false,
+        "n_stem": 36,
+        "n_loop": 37
+      },
+      "mir_155_precursor": {
+        "best_ratio": 0.9587779174615086,
+        "best_layer": 0,
+        "nuc_null_95th": 1.09394182264694,
+        "exceeds_nuc_null": false,
+        "n_stem": 36,
+        "n_loop": 29
+      },
+      "mir_21_precursor": {
+        "best_ratio": 1.012013131855155,
+        "best_layer": 0,
+        "nuc_null_95th": 1.099976199306771,
+        "exceeds_nuc_null": false,
+        "n_stem": 38,
+        "n_loop": 34
+      },
+      "mir_let7_precursor": {
+        "best_ratio": 0.9755868198172759,
+        "best_layer": 0,
+        "nuc_null_95th": 1.158897829214474,
+        "exceeds_nuc_null": false,
+        "n_stem": 64,
+        "n_loop": 16
+      },
+      "pistol_ribozyme": {
+        "best_ratio": 1.0084990626027832,
+        "best_layer": 0,
+        "nuc_null_95th": 1.12243551148699,
+        "exceeds_nuc_null": false,
+        "n_stem": 34,
+        "n_loop": 45
+      },
+      "preQ1_riboswitch": {
+        "best_ratio": 0.9334294868094196,
+        "best_layer": 0,
+        "nuc_null_95th": 1.120780071358898,
+        "exceeds_nuc_null": false,
+        "n_stem": 10,
+        "n_loop": 56
+      },
+      "purine_riboswitch": {
+        "best_ratio": 0.9470709908600243,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0782535873027521,
+        "exceeds_nuc_null": false,
+        "n_stem": 44,
+        "n_loop": 58
+      },
+      "tRNA_Ala_human": {
+        "best_ratio": 0.9403766367249655,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0842831031183078,
+        "exceeds_nuc_null": false,
+        "n_stem": 42,
+        "n_loop": 33
+      },
+      "tRNA_Phe_yeast": {
+        "best_ratio": 0.9981601594628631,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0637430795429665,
+        "exceeds_nuc_null": false,
+        "n_stem": 42,
+        "n_loop": 34
+      },
+      "tmRNA": {
+        "best_ratio": 1.01086818161537,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0524472026046783,
+        "exceeds_nuc_null": false,
+        "n_stem": 186,
+        "n_loop": 183
+      },
+      "twister_ribozyme": {
+        "best_ratio": 1.0029030734465838,
+        "best_layer": 0,
+        "nuc_null_95th": 1.0712380140339512,
+        "exceeds_nuc_null": false,
+        "n_stem": 40,
+        "n_loop": 76
+      }
+    },
+    "mean_best_ratio": 0.9982822128995926,
+    "median_best_ratio": 1.0023013081294319,
+    "n_exceeding_nuc_null": 2,
+    "n_families_scored": 47
+  }
+}

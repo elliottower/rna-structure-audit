@@ -51,7 +51,7 @@ def collect(pattern):
             found[model] = {
                 "mean": results.get("mean_best_ps"),
                 "n_active": results.get("families_total"),
-                "exceeding": results.get("families_exceeding_null_primary"),
+                "exceeding": results.get("families_exceeding_null_conservative"),
                 "conservative": results.get("families_exceeding_null_conservative"),
                 "path": path,
             }

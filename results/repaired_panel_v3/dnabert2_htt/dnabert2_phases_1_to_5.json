@@ -1,0 +1,244 @@
+{
+  "model": "dnabert2",
+  "stamp": {
+    "commit": "e9a0ed4d5aadd9d4ff8ab1872d3cbdc950f28cec",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.4.0",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.28.0",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-26 03:53:08 UTC",
+  "experiment": "phases_1_to_5",
+  "mutation_trained": {
+    "model": "dnabert2",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 0.9614340288079314,
+        "best_layer": 0,
+        "noop_floor": 0.367163938015862,
+        "nuc_null_95th": 1.0089917447506018,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 0.9712455490750199,
+        "best_layer": 0,
+        "noop_floor": 0.42435860534218006,
+        "nuc_null_95th": 1.004445216619647,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0615498257646756,
+        "best_layer": 0,
+        "noop_floor": 1.5287307281871019,
+        "nuc_null_95th": 1.0670621178771018,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.0048694740437665,
+        "best_layer": 0,
+        "noop_floor": 0.9322289517731813,
+        "nuc_null_95th": 1.0547884846333644,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 0.9917339471180646,
+        "best_layer": 0,
+        "noop_floor": 0.7498734330342428,
+        "nuc_null_95th": 1.0211942228912516,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132
+      }
+    },
+    "mean_best_ratio": 0.9981665649618916,
+    "median_best_ratio": 0.9917339471180646,
+    "n_exceeding_nuc_null": 0,
+    "n_families_scored": 5
+  },
+  "attention_trained": {
+    "model": "dnabert2",
+    "metric": "attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.10613931038042106,
+        "best_layer": 2
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.1490485210894004,
+        "best_layer": 8
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.1290111914462072,
+        "best_layer": 7
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.14039907488580938,
+        "best_layer": 1
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.17444457237391225,
+        "best_layer": 10
+      }
+    }
+  },
+  "probing": {
+    "model": "dnabert2",
+    "metric": "structure_probing",
+    "per_layer": {
+      "0": {
+        "mean_balanced_accuracy": 0.6118938544329972,
+        "std_balanced_accuracy": 0.023285707751253982,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "1": {
+        "mean_balanced_accuracy": 0.6079369875727627,
+        "std_balanced_accuracy": 0.008988803785498274,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "2": {
+        "mean_balanced_accuracy": 0.6074573889075693,
+        "std_balanced_accuracy": 0.04061012852878932,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "3": {
+        "mean_balanced_accuracy": 0.5880479722975138,
+        "std_balanced_accuracy": 0.03706721892777451,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "4": {
+        "mean_balanced_accuracy": 0.5726052838735238,
+        "std_balanced_accuracy": 0.021951766019870922,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "5": {
+        "mean_balanced_accuracy": 0.583192954219412,
+        "std_balanced_accuracy": 0.031847147468441896,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "6": {
+        "mean_balanced_accuracy": 0.597039563406949,
+        "std_balanced_accuracy": 0.05622880589658969,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "7": {
+        "mean_balanced_accuracy": 0.5859977825325232,
+        "std_balanced_accuracy": 0.05316172607006764,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "8": {
+        "mean_balanced_accuracy": 0.5935935921829024,
+        "std_balanced_accuracy": 0.04195974517943234,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "9": {
+        "mean_balanced_accuracy": 0.5845246536590512,
+        "std_balanced_accuracy": 0.05052471910225899,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "10": {
+        "mean_balanced_accuracy": 0.6061890467082621,
+        "std_balanced_accuracy": 0.03593797593195666,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "11": {
+        "mean_balanced_accuracy": 0.5685287407639631,
+        "std_balanced_accuracy": 0.02578186234484893,
+        "n_samples": 1442,
+        "n_targets": 5
+      }
+    },
+    "best_layer": 0,
+    "best_accuracy": 0.6118938544329972
+  },
+  "htt_distances": {
+    "metric": "cosine_distance_from_fewest_repeats",
+    "reference": "HTT_CAG17_normal",
+    "repeat_counts": [
+      17,
+      21,
+      36,
+      40,
+      60
+    ],
+    "dtype": "float64",
+    "n_layers": 1,
+    "per_layer": {
+      "0": [
+        -2.220446049250313e-16,
+        0.5932501832516399,
+        0.33070421078691414,
+        0.312286314315684,
+        0.5072977619572205
+      ]
+    },
+    "best_layer": 0,
+    "best_spearman": 0.3,
+    "at_best_layer": [
+      -2.220446049250313e-16,
+      0.5932501832516399,
+      0.33070421078691414,
+      0.312286314315684,
+      0.5072977619572205
+    ],
+    "at_last_layer": [
+      -2.220446049250313e-16,
+      0.5932501832516399,
+      0.33070421078691414,
+      0.312286314315684,
+      0.5072977619572205
+    ]
+  }
+}

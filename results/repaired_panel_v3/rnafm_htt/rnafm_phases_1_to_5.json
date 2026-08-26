@@ -1,0 +1,336 @@
+{
+  "model": "rnafm",
+  "stamp": {
+    "commit": "e9a0ed4d5aadd9d4ff8ab1872d3cbdc950f28cec",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.4.1",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.44.2",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-26 03:49:35 UTC",
+  "experiment": "phases_1_to_5",
+  "mutation_trained": {
+    "model": "rnafm",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.699243202756386,
+        "best_layer": 10,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.7739430330243169,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.996329215621087,
+        "best_layer": 11,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 2.0134629854458295,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.989724327249122,
+        "best_layer": 7,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 2.149067734438806,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.9474537967524335,
+        "best_layer": 6,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.750766820488432,
+        "exceeds_nuc_null": true,
+        "n_stem": 192,
+        "n_loop": 112,
+        "dinuc_null_95th": 2.0127860833989093,
+        "exceeds_dinuc_null": false
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.3652278547493157,
+        "best_layer": 3,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.7355546900659418,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132
+      }
+    },
+    "mean_best_ratio": 1.799595679425669,
+    "median_best_ratio": 1.9474537967524335,
+    "n_exceeding_nuc_null": 1,
+    "n_families_scored": 5
+  },
+  "attention_trained": {
+    "model": "rnafm",
+    "metric": "attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.04111007958415206,
+        "best_layer": 0
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.03667818860011715,
+        "best_layer": 0
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.03377158467941229,
+        "best_layer": 0
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.033593426482333426,
+        "best_layer": 0
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.03249426138612133,
+        "best_layer": 0
+      }
+    }
+  },
+  "probing": {
+    "model": "rnafm",
+    "metric": "structure_probing",
+    "per_layer": {
+      "0": {
+        "mean_balanced_accuracy": 0.7924185484254986,
+        "std_balanced_accuracy": 0.019827881631093103,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "1": {
+        "mean_balanced_accuracy": 0.7057768428746157,
+        "std_balanced_accuracy": 0.06787183958980889,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "2": {
+        "mean_balanced_accuracy": 0.5931895142900799,
+        "std_balanced_accuracy": 0.10735979572432489,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "3": {
+        "mean_balanced_accuracy": 0.5969449323439484,
+        "std_balanced_accuracy": 0.05202491195653106,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "4": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "5": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "6": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "7": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "8": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "9": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "10": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "11": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "12": {
+        "mean_balanced_accuracy": 0.5,
+        "std_balanced_accuracy": 0.0,
+        "n_samples": 1442,
+        "n_targets": 5
+      }
+    },
+    "best_layer": 0,
+    "best_accuracy": 0.7924185484254986
+  },
+  "htt_distances": {
+    "metric": "cosine_distance_from_fewest_repeats",
+    "reference": "HTT_CAG17_normal",
+    "repeat_counts": [
+      17,
+      21,
+      36,
+      40,
+      60
+    ],
+    "dtype": "float64",
+    "n_layers": 13,
+    "per_layer": {
+      "0": [
+        0.0,
+        0.0005495577416998465,
+        0.005145680383427331,
+        0.006741891372306963,
+        0.01507128789944745
+      ],
+      "1": [
+        0.0,
+        0.022150725919227066,
+        0.023619187842125466,
+        0.03340604235105182,
+        0.05121851273092404
+      ],
+      "2": [
+        0.0,
+        0.02125023852480845,
+        0.028538687186499434,
+        0.04363672154686338,
+        0.12100733643349226
+      ],
+      "3": [
+        0.0,
+        0.008532118739511207,
+        0.014994776756904526,
+        0.026855969179571892,
+        0.10156890927845907
+      ],
+      "4": [
+        0.0,
+        0.003920218238988027,
+        0.003932801862795765,
+        0.02833995071411466,
+        0.08456875486708781
+      ],
+      "5": [
+        2.220446049250313e-16,
+        0.002937136308992727,
+        0.0021922678199192136,
+        0.029354634992761253,
+        0.04087203051941801
+      ],
+      "6": [
+        0.0,
+        0.0019494701298007344,
+        0.0014908655856588071,
+        0.014868474550826849,
+        0.023724955952836857
+      ],
+      "7": [
+        0.0,
+        0.0007981469927542673,
+        0.0005879694128597679,
+        0.0048070312377025415,
+        0.007786378497557256
+      ],
+      "8": [
+        -2.220446049250313e-16,
+        6.827188832581044e-05,
+        4.280776217269189e-05,
+        0.0004698528687634429,
+        0.0008996512396487466
+      ],
+      "9": [
+        1.1102230246251565e-16,
+        3.2442939972288087e-06,
+        1.3759335554253127e-06,
+        2.451434130912311e-05,
+        2.0537037090706534e-05
+      ],
+      "10": [
+        1.1102230246251565e-16,
+        1.9312761212475493e-07,
+        7.380617128571743e-08,
+        2.0360901065163972e-06,
+        1.254980375176018e-06
+      ],
+      "11": [
+        0.0,
+        1.7412609554234848e-07,
+        6.728250467880059e-08,
+        2.2048430887711135e-06,
+        1.0923234201598575e-06
+      ],
+      "12": [
+        0.0,
+        3.710955553959394e-08,
+        1.8344823771165863e-08,
+        3.493986208136235e-07,
+        2.19099847709181e-07
+      ]
+    },
+    "best_layer": 0,
+    "best_spearman": 0.9999999999999999,
+    "at_best_layer": [
+      0.0,
+      0.0005495577416998465,
+      0.005145680383427331,
+      0.006741891372306963,
+      0.01507128789944745
+    ],
+    "at_last_layer": [
+      0.0,
+      3.710955553959394e-08,
+      1.8344823771165863e-08,
+      3.493986208136235e-07,
+      2.19099847709181e-07
+    ]
+  }
+}

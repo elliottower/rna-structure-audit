@@ -24,6 +24,10 @@ import torch
 from scipy import stats
 from tqdm import tqdm
 
+from family_checkpoint import FamilyCheckpoint, no_checkpoint
+from family_seed import family_rng
+from token_spans import content_spans, nucleotide_rows
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 COMPLEMENT = {"A": "U", "U": "A", "C": "G", "G": "C"}
@@ -46,6 +50,24 @@ ADAPTER_OFFSETS = {
     "dnabert2": 0,
 }
 NON_CHARACTER_TOKENIZERS = {"nt", "dnabert2"}
+SUBWORD_RESOLUTIONS = {"6mer", "bpe"}
+
+
+def _row_map(adapter, sequence):
+    """Hidden-state row holding each nucleotide, or None when rows are nucleotides.
+
+    Reading `emb[k]` for nucleotide `k` is right only for the eight models
+    that emit one token per nucleotide. NT v2 puts six nucleotides in a token,
+    so a 106-nucleotide family has about eighteen rows and every partner
+    position in a stem falls past the end of the array; the bounds check below
+    then drops the pair, and a family that loses all of its pairs is recorded
+    as having no valid PS values. That discarded 34 of NT v2's 38 qualifying
+    families and 30 of DNABERT-2's; see docs/OPEN_DEFECTS.md, D13.
+    """
+    if getattr(adapter, "token_resolution", "nucleotide") not in SUBWORD_RESOLUTIONS:
+        return None
+    spans = content_spans(adapter.tokenizer, sequence.replace("U", "T"))
+    return nucleotide_rows(spans, len(sequence))
 
 
 def parse_dot_bracket(db_string):
@@ -124,8 +146,52 @@ def complement_swap(sequence, position):
 
 
 def cosine_distance(a, b):
-    sim = torch.nn.functional.cosine_similarity(a.unsqueeze(0), b.unsqueeze(0))
+    """Cosine distance, with the subtraction done in float64.
+
+    PS is a difference of two of these, and on a model whose representation
+    barely moves the two agree to within a few float32 ulps: the deposited
+    values land on integer multiples of 2^-28, which is the spacing of float32
+    on [2^-5, 2^-4), so the operands were 0.03 to 0.06 and their difference kept
+    a handful of significant bits. Computing in float64 does not recover
+    precision the float32 forward pass never had -- see `noop_floor`, which
+    measures what it did have -- but it stops the metric from adding to the
+    loss.
+    """
+    a64, b64 = a.double(), b.double()
+    sim = torch.nn.functional.cosine_similarity(a64.unsqueeze(0), b64.unsqueeze(0))
     return (1.0 - sim).item()
+
+
+def noop_floor(adapter, sequence, eligible_pairs, device="cpu"):
+    """The same statistic as `best_ps`, between two forward passes of one sequence.
+
+    Nothing is mutated in either pass, so the true PS is exactly zero and
+    whatever comes back is the floor the measurement can resolve: run-to-run
+    nondeterminism in the forward pass, plus the arithmetic. Reporting it per
+    model makes the resolution limit a measured quantity rather than a chosen
+    multiple of machine epsilon, and it localizes nondeterminism without needing
+    to explain it -- a model that returns exactly zero here is deterministic.
+    """
+    rows = _row_map(adapter, sequence)
+    first = adapter.get_all_layer_embeddings(adapter.tokenize(sequence).to(device))
+    second = adapter.get_all_layer_embeddings(adapter.tokenize(sequence).to(device))
+
+    per_layer = []
+    for layer_idx in range(len(first)):
+        a, b = first[layer_idx], second[layer_idx]
+        ps_values = []
+        for pair in eligible_pairs:
+            mapped = [k if rows is None else int(rows[k])
+                      for k in (pair["j"], pair["j_prev"], pair["j_next"])]
+            if any(m >= a.shape[0] or m >= b.shape[0] for m in mapped):
+                continue
+            d = [cosine_distance(a[m], b[m]) for m in mapped]
+            ps_values.append(d[0] - max(d[1], d[2]))
+        per_layer.append(float(np.mean(ps_values)) if ps_values else float("nan"))
+
+    valid = [v for v in per_layer if not np.isnan(v)]
+    return {"best_ps_noop": max(valid) if valid else None,
+            "per_layer_ps_noop": per_layer}
 
 
 def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device="cpu", offset=0):
@@ -139,6 +205,7 @@ def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device=
     tokens_wt = adapter.tokenize(sequence).to(device)
     layers_wt = adapter.get_all_layer_embeddings(tokens_wt)
     n_layers = len(layers_wt)
+    rows_wt = _row_map(adapter, sequence)
 
     all_positions = set(range(len(sequence)))
     stem_positions = set()
@@ -162,6 +229,7 @@ def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device=
         seq_mut = complement_swap(sequence, pos_i)
         tokens_mut = adapter.tokenize(seq_mut).to(device)
         layers_mut = adapter.get_all_layer_embeddings(tokens_mut)
+        rows_mut = None if rows_wt is None else _row_map(adapter, seq_mut)
 
         for layer_idx in range(n_layers):
             emb_wt = layers_wt[layer_idx]
@@ -178,9 +246,12 @@ def compute_delta_profiles(adapter, sequence, eligible_pairs, all_stems, device=
 
             deltas_this_layer = {}
             for k in positions_needed:
-                k_off = k + offset
-                if k_off < emb_wt.shape[0] and k_off < emb_mut.shape[0]:
-                    deltas_this_layer[k] = cosine_distance(emb_wt[k_off], emb_mut[k_off])
+                if rows_wt is None:
+                    k_wt = k_mut = k + offset
+                else:
+                    k_wt, k_mut = int(rows_wt[k]), int(rows_mut[k])
+                if k_wt < emb_wt.shape[0] and k_mut < emb_mut.shape[0]:
+                    deltas_this_layer[k] = cosine_distance(emb_wt[k_wt], emb_mut[k_mut])
 
             for pidx in pair_indices:
                 delta_profiles[pidx][layer_idx] = deltas_this_layer
@@ -217,6 +288,7 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
     best_ps = per_layer_ps[best_layer]
 
     pair_details_at_best = []
+    nearer_larger = []
     for idx, p in enumerate(eligible_pairs):
         deltas = delta_profiles[idx].get(best_layer, {})
         if p["j"] not in deltas or p["j_prev"] not in deltas or p["j_next"] not in deltas:
@@ -225,6 +297,15 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
         d_prev = deltas[p["j_prev"]]
         d_next = deltas[p["j_next"]]
         d_adj = max(d_prev, d_next)
+        # `j_prev` is `j - 1` and `j_next` is `j + 1`, so on a pair with i < j
+        # the neighbour nearer the mutated position is `j_prev`, and on i > j it
+        # is `j_next`. If perturbation decays with sequence distance the nearer
+        # neighbour carries the larger delta, which is the candidate explanation
+        # for H3's chance rate sitting below 1/3 (D16). Only the maximum of the
+        # two survived to disk before, so the prediction was untestable.
+        nearer, farther = ((d_prev, d_next) if p["i"] < p["j"]
+                           else (d_next, d_prev))
+        nearer_larger.append(nearer > farther)
         pair_details_at_best.append({
             "i": p["i"], "j": p["j"],
             "pair_type": p["pair_type"],
@@ -240,21 +321,24 @@ def compute_ps_from_deltas(eligible_pairs, delta_profiles, n_layers):
         "best_ps": float(best_ps),
         "best_layer": best_layer,
         "pair_details": pair_details_at_best,
+        "nearer_neighbor_larger": (float(np.mean(nearer_larger))
+                                   if nearer_larger else None),
     }
 
 
-def generate_derangement(n):
+def generate_derangement(n, rng):
     """Generate a random derangement of range(n). No element maps to itself."""
     if n < 2:
         return list(range(n))
     while True:
         perm = list(range(n))
-        np.random.shuffle(perm)
+        rng.shuffle(perm)
         if all(perm[i] != i for i in range(n)):
             return perm
 
 
-def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_derangements=1000):
+def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, rng,
+                     n_derangements=1000):
     """Within-stem derangement null.
 
     Shuffles partner assignments within each stem, recomputes PS from
@@ -283,13 +367,14 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_der
     null_ps_primary = []
     null_ps_conservative = []
 
+    chance_hits = [0, 0]
     for _ in range(n_derangements):
         deranged_ps_at_best = []
         deranged_ps_per_layer = [[] for _ in range(n_layers)]
 
         for sid, pair_idxs in derangeable.items():
             k = len(pair_idxs)
-            derangement = generate_derangement(k)
+            derangement = generate_derangement(k, rng)
             j_positions = [eligible_pairs[pair_idxs[orig]]["j"] for orig in range(k)]
             j_prev_positions = [eligible_pairs[pair_idxs[orig]]["j_prev"] for orig in range(k)]
             j_next_positions = [eligible_pairs[pair_idxs[orig]]["j_next"] for orig in range(k)]
@@ -312,6 +397,13 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_der
                     deranged_ps_per_layer[layer_idx].append(ps)
                     if layer_idx == best_layer:
                         deranged_ps_at_best.append(ps)
+                        # The deranged pairing is false by construction, so how
+                        # often the assigned partner still beats both its
+                        # neighbours is H3's chance rate for this model on this
+                        # family -- matched to the same weights, sequence and
+                        # layer, which the untrained control is not (D16).
+                        chance_hits[0] += ps > 0
+                        chance_hits[1] += 1
 
         if deranged_ps_at_best:
             null_ps_primary.append(float(np.mean(deranged_ps_at_best)))
@@ -325,6 +417,8 @@ def derangement_null(eligible_pairs, delta_profiles, n_layers, best_layer, n_der
         "null_mean_primary": float(np.mean(null_ps_primary)) if null_ps_primary else 0.0,
         "n_derangements": n_derangements,
         "n_stems_in_null": len(derangeable),
+        "h3_chance_fraction": (chance_hits[0] / chance_hits[1]
+                               if chance_hits[1] else None),
         "null_available": True,
     }
 
@@ -354,6 +448,33 @@ def positive_control(eligible_pairs, delta_profiles, best_layer, stem_positions,
         "mean_stem_delta": float(np.mean(paired_stem)),
         "mean_loop_delta": float(np.mean(paired_loop)),
     }
+
+
+def precision_at_every_layer(eligible_pairs, delta_profiles, n_layers):
+    """Per-pair precision at each layer, not only at the one argmax selected.
+
+    Precision is reported at the layer that maximizes mean PS, so a model with
+    more layers has more draws to select from. That is the asymmetry D15
+    identified in the exceedance count, appearing in the precision statistic:
+    among randomly initialized character-level controls, excess over chance runs
+    +0.105, +0.093, +0.016, +0.011 for models with 34, 13, 7 and 7 layers.
+
+    Reading precision at every layer allows a comparison that no selection
+    touches. If the excess is selection, the mean across layers is at chance.
+    """
+    out = []
+    for layer in range(n_layers):
+        hits = total = 0
+        for idx, pair in enumerate(eligible_pairs):
+            if pair["pos_in_stem"] < 2 or pair["pos_in_stem"] > pair["stem_length"] - 3:
+                continue
+            deltas = delta_profiles[idx].get(layer, {})
+            if not all(k in deltas for k in (pair["j"], pair["j_prev"], pair["j_next"])):
+                continue
+            total += 1
+            hits += deltas[pair["j"]] > max(deltas[pair["j_prev"]], deltas[pair["j_next"]])
+        out.append(hits / total if total else None)
+    return out
 
 
 def h3_precision_test(pair_details, eligible_pairs):
@@ -397,6 +518,10 @@ def load_rfam_families(family_names=None):
             with open(f) as fh:
                 fam = json.load(fh)
             if family_names and fam["name"] not in family_names:
+                continue
+            # Records whose annotation could not be repaired against the Rfam
+            # seed alignment carry an `excluded` block; see DEVIATIONS.md.
+            if "excluded" in fam:
                 continue
             families.append(fam)
         return families
@@ -460,42 +585,51 @@ def load_adapter(model_name):
     return adapters[model_name]()
 
 
-def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
+def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0,
+               checkpoint=None):
     results = {"per_rna": {}}
+    ckpt = checkpoint if checkpoint is not None else no_checkpoint()
+
+    def record(name, entry):
+        results["per_rna"][name] = entry
+        ckpt.record(name, entry)
 
     for fam in tqdm(families, desc=f"Phase 6 [{adapter.name}]"):
         name = fam["name"]
+        if name in ckpt.done:
+            results["per_rna"][name] = ckpt.done[name]
+            continue
         seq = fam["sequence"]
         db = fam["dot_bracket"]
         quarantined = name in QUARANTINED
 
         if len(seq) != len(db):
-            results["per_rna"][name] = {
+            record(name, {
                 "skipped": True,
                 "reason": f"sequence/dot_bracket length mismatch ({len(seq)} vs {len(db)})",
-            }
+            })
             continue
 
         stems = parse_stems(db, seq)
         n_wc_total = sum(len(s) for s in stems)
 
         if n_wc_total < 15:
-            results["per_rna"][name] = {
+            record(name, {
                 "skipped": True,
                 "reason": f"< 15 WC pairs ({n_wc_total} found)",
                 "n_wc_pairs_total": n_wc_total,
-            }
+            })
             continue
 
         eligible = get_eligible_pairs(seq, stems)
 
         if len(eligible) < 5:
-            results["per_rna"][name] = {
+            record(name, {
                 "skipped": True,
                 "reason": f"< 5 eligible interior pairs ({len(eligible)} found)",
                 "n_wc_pairs_total": n_wc_total,
                 "n_stems": len(stems),
-            }
+            })
             continue
 
         delta_profiles, stem_pos, loop_pos, n_layers = compute_delta_profiles(
@@ -504,7 +638,7 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
 
         ps_result = compute_ps_from_deltas(eligible, delta_profiles, n_layers)
         if ps_result is None:
-            results["per_rna"][name] = {"skipped": True, "reason": "no valid PS values"}
+            record(name, {"skipped": True, "reason": "no valid PS values"})
             continue
 
         best_layer = ps_result["best_layer"]
@@ -513,7 +647,8 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
 
         null_result = None
         if compute_null:
-            null_result = derangement_null(eligible, delta_profiles, n_layers, best_layer)
+            null_result = derangement_null(eligible, delta_profiles, n_layers,
+                                           best_layer, family_rng(name))
 
         h3 = h3_precision_test(ps_result["pair_details"], eligible)
 
@@ -529,14 +664,19 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
             "n_wc_pairs_total": sum(len(s) for s in stems),
             "positive_control": pc,
             "h3_precision": h3,
+            "precision_per_layer": precision_at_every_layer(
+                eligible, delta_profiles, n_layers),
             "ps_gc_pairs": float(np.mean(gc_ps)) if gc_ps else None,
             "ps_au_pairs": float(np.mean(au_ps)) if au_ps else None,
+            "nearer_neighbor_larger": ps_result["nearer_neighbor_larger"],
+            "noop_floor": noop_floor(adapter, seq, eligible, device),
             "quarantined": quarantined,
         }
 
         if null_result:
             entry["null_95th_primary"] = null_result["null_95th_primary"]
             entry["null_95th_conservative"] = null_result["null_95th_conservative"]
+            entry["h3_chance_fraction"] = null_result.get("h3_chance_fraction")
             entry["null_available"] = null_result.get("null_available", True)
             if null_result["null_95th_primary"] is not None:
                 entry["exceeds_null_primary"] = ps_result["best_ps"] > null_result["null_95th_primary"]
@@ -545,7 +685,7 @@ def run_phase6(adapter, families, device="cpu", compute_null=True, offset=0):
                 entry["exceeds_null_primary"] = None
                 entry["exceeds_null_conservative"] = None
 
-        results["per_rna"][name] = entry
+        record(name, entry)
 
     active = {k: v for k, v in results["per_rna"].items()
               if not v.get("skipped") and not v.get("quarantined")
@@ -582,13 +722,9 @@ def main():
                         help="Skip null computation (for quick testing)")
     parser.add_argument("--offset", type=int, default=None,
                         help="Override token offset (default: per-adapter lookup)")
-    parser.add_argument("--seed", type=int, default=42,
-                        help="Random seed for derangement null (saved in output)")
     parser.add_argument("--allow-non-character", action="store_true",
                         help="Run non-character tokenizers (NT, DNABERT-2) with caveated results")
     args = parser.parse_args()
-
-    np.random.seed(args.seed)
 
     DATA_OUT.mkdir(parents=True, exist_ok=True)
     families = load_rfam_families(args.families)
@@ -623,7 +759,7 @@ def main():
             "metric": "perturbation_specificity",
             "preregistration": "PREREGISTRATION_PHASE6_V2.md",
             "offset": offset,
-            "seed": args.seed,
+            "seeding": "family_seed.family_rng, derived from the family name",
             "tokenizer_caveated": tokenizer_caveated,
             "results": trained_results,
         }

@@ -1,0 +1,9 @@
+{
+  "name": "HTT_CAG17_normal",
+  "sequence": "AUGAAGGCCUUCGAGUCCCUCAAGUCCUUCCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAACAGCCGCCACCGCCGCCGCCGCCGCCGCCGCCUCCUCAGCUUCCUCAGCCGCCGCCGCAGGCACAGCCGCUGCUGCCUCAGCCGCAGCCGCCCCCGCCGCCGCCCCCGCCGCCACCCGGCCCGGCUGUGGCUGAGGAGCCGCUGCACCGAC",
+  "dot_bracket": "..(((((.(((.(((...)))))).)))))..(((((.((.((((((((.((.((.((.((.((.((.((.((.(..((.((....)).))..).)).)).)).)).)).)).)).......(((.....))).(((......)))...)).))))))))((((((((((((((...(((..((.((....)).))....)))..))))))))))))))..)).)))))......",
+  "n_cag": 17,
+  "clinical_label": "normal",
+  "mfe": -102.3,
+  "source": "NM_002111.7, 30 nt upstream and 154 nt downstream of the CAG tract, folded with ViennaRNA 2.7.0"
+}

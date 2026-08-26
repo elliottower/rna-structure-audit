@@ -1,0 +1,39 @@
+{
+  "commit": "0cfe8b91ead820a27116dd900ed39af0f1c5d2b7",
+  "panel_sha256": "5c4d6f6d4c32b47a8b0f8802efd26af98708d3c3b5f848b298ddfaddea6e6fb3",
+  "n_families": 47,
+  "withdrawn": [
+    "5S_rRNA_ecoli",
+    "IRES_HCV_domainII",
+    "RNaseP_specificity",
+    "SRP_RNA_helix8",
+    "U2_snRNA_stem"
+  ],
+  "seeding": "family_seed.family_rng, derived from the family name",
+  "deviation": "DEVIATIONS.md, 2026-08-24",
+  "libraries": {
+    "torch": "2.1.2",
+    "triton": "2.1.0",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "scikit-learn": "1.5.0",
+    "transformers": "4.49.0",
+    "multimolecule": "0.1.0",
+    "huggingface-hub": "0.36.2",
+    "flash-attn": "2.5.8",
+    "mamba-ssm": null
+  },
+  "numerics": {
+    "defaults_observed": {
+      "cuda_matmul_allow_tf32": false,
+      "cudnn_allow_tf32": true,
+      "cudnn_benchmark": false
+    },
+    "determinism": "forced",
+    "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+  },
+  "device": "cuda",
+  "ablation": null,
+  "sequences": "natural",
+  "weights": "pretrained"
+}

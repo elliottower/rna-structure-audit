@@ -1,0 +1,30 @@
+\begin{table}[htbp]
+\centering
+\caption{Perturbation specificity on the repaired panel. 38 of \panelN{} families qualify ($\geq 15$ WC pairs with $\geq 3$ per stem); the two pilot families are quarantined, leaving $N = 36$ confirmatory families. Mean PS is taken over those $N$. Gate counts families passing the stem-versus-loop positive control, and the two null columns are computed among gate-passing families: $>$~null is the primary within-stem derangement null and $>$~cons.\ the conservative variant, reported together because the registration defines both. H3 precision is the mean of per-family partner-is-max fractions. Bold rows satisfy H1$_6$ at the repaired gate of 8. NT~v2 and DNABERT-2 qualify on fewer families because their tokenizers resolve short families into too few tokens to perturb.}
+\label{tab:rung3}
+\small
+\begin{tabular}{llrcccc}
+\toprule
+\textbf{Model} & \textbf{Domain} & \textbf{Mean PS} & \textbf{Gate} & \textbf{$>$ null} & \textbf{$>$ cons.} & \textbf{H3 prec.} \\
+\midrule
+\textbf{RiNALMo} (650M)      & RNA & \textbf{0.2062} & 33/36 & \textbf{29/33} & 29/33 & 0.859 \\
+\textbf{ERNIE-RNA} (86M)     & RNA & \textbf{0.1113} & 34/36 & \textbf{32/34} & 32/34 & 0.885 \\
+\textbf{Caduceus} (7.7M)     & DNA & \textbf{0.0039} & 16/36 & \textbf{8/16} & 8/16 & 0.442 \\
+Evo (7B)                     & DNA & 0.0017 & 13/36 & 2/13 & 2/13 & 0.376 \\
+HyenaDNA (0.45M)             & DNA & 0.0002 & 7/36 & 3/7 & 3/7 & 0.254 \\
+SpliceBERT (19M)             & RNA & 0.0002 & 22/36 & 3/22 & 3/22 & 0.290 \\
+RNA-FM (99M)                 & RNA & $8.4 \times 10^{-5}$ & 2/36 & 0/2 & 0/2 & 0.417 \\
+UTR-LM (1.2M)                & RNA & $8.3 \times 10^{-6}$ & 13/36 & 4/13 & 4/13 & 0.345 \\
+NT~v2 (56M)                  & DNA & $-9.7 \times 10^{-5}$ & 34/36 & 6/34 & 6/34 & 0.007 \\
+DNABERT-2 (117M)             & DNA & -0.0160 & 22/36 & 4/22 & 4/22 & 0.000 \\
+\midrule
+ERNIE-RNA untrained          & RNA & $3.4 \times 10^{-9}$ & 13/36 & 11/13 & 11/13 & 0.347 \\
+RiNALMo untrained            & RNA & $2.2 \times 10^{-9}$ & 10/36 & 1/10 & 1/10 & 0.191 \\
+RNA-FM untrained             & RNA & $4.2 \times 10^{-12}$ & 12/36 & 2/12 & 2/12 & 0.200 \\
+UTR-LM untrained             & RNA & $2.3 \times 10^{-9}$ & 28/36 & 10/28 & 10/28 & 0.104 \\
+SpliceBERT untrained         & RNA & $6.2 \times 10^{-15}$ & 10/36 & 3/10 & 3/10 & 0.117 \\
+NT~v2 untrained              & DNA & $-3.4 \times 10^{-5}$ & 33/36 & 9/33 & 9/33 & 0.000 \\
+DNABERT-2 untrained          & DNA & -0.0004 & 19/36 & 4/19 & 4/19 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}

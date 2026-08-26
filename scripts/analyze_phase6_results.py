@@ -63,7 +63,7 @@ def test_h1(model_name, active_families):
 
     families_exceeding = sum(
         1 for v in active_families.values()
-        if v.get("exceeds_null_primary") is True
+        if v.get("exceeds_null_conservative") is True
     )
     families_no_null = sum(
         1 for v in active_families.values()

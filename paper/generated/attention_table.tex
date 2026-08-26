@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\caption{Attention-contact Spearman correlation, trained against randomly
+initialized weights, for the seven models in the panel that expose attention.
+$\Delta$ within $\pm 0.05$ is read as architectural: the
+correlation is present before any pretraining. Both columns are means over the
+repaired panel, computed with eager attention.}
+\label{tab:attn_trained_untrained}
+\small
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Model} & \textbf{Trained} & \textbf{Untrained} & \textbf{Interpretation} \\
+\midrule
+NT~v2        & 0.234 & 0.241 & Architectural ($\Delta = -0.007$) \\
+DNABERT-2    & 0.196 & 0.153 & Architectural ($\Delta = +0.043$) \\
+ERNIE-RNA    & 0.113 & 0.085 & Architectural ($\Delta = +0.027$) \\
+RiNALMo      & 0.107 & 0.064 & Architectural ($\Delta = +0.044$) \\
+SpliceBERT   & 0.054 & 0.032 & Architectural ($\Delta = +0.022$) \\
+UTR-LM       & 0.051 & 0.054 & Architectural ($\Delta = -0.003$) \\
+RNA-FM       & 0.048 & 0.043 & Architectural ($\Delta = +0.005$) \\
+\bottomrule
+\end{tabular}
+\end{table}

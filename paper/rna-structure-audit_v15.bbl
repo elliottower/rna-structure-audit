@@ -1,0 +1,162 @@
+\begin{thebibliography}{17}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Anthropic}(2025)]{anthropic2025claude}
+{Anthropic}.
+\newblock Claude code.
+\newblock \url{https://claude.ai/code}, 2025.
+
+\bibitem[Chen et~al.(2022)Chen, Hu, Sun, Tan, Wang, Yu, Zong, Hong, Xiao, Shen,
+  King, and Li]{rnafm}
+Jiayang Chen, Zhihang Hu, Siqi Sun, Qingxiong Tan, Yixuan Wang, Qinze Yu,
+  Licheng Zong, Liang Hong, Jin Xiao, Tao Shen, Irwin King, and Yu~Li.
+\newblock Interpretable {RNA} foundation model from unannotated data for highly
+  accurate {RNA} structure and function predictions.
+\newblock \emph{bioRxiv (Cold Spring Harbor Laboratory)}, 2022.
+\newblock \doi{10.1101/2022.08.06.503062}.
+
+\bibitem[Chen et~al.(2024)Chen, Zhou, Ding, Wang, Ren, and
+  Yang]{chen2024splicebert}
+Ken Chen, Yue Zhou, Maolin Ding, Yu~Wang, Zhixiang Ren, and Yuedong Yang.
+\newblock Self-supervised learning on millions of primary {RNA} sequences from
+  72 vertebrates improves sequence-based {RNA} splicing prediction.
+\newblock \emph{Briefings in Bioinformatics}, 25, 2024.
+\newblock \doi{10.1093/bib/bbae163}.
+
+\bibitem[Chu et~al.(2024)Chu, Yu, Li, Huang, Shen, Cong, Zhang, and
+  Wang]{chu2024utrlm}
+Yanyi Chu, Dan Yu, Yupeng Li, Kaixuan Huang, Yue Shen, Le~Cong, Jason Zhang,
+  and Mengdi Wang.
+\newblock A 5$'$ {UTR} language model for decoding untranslated regions of mrna
+  and function predictions.
+\newblock \emph{Nature Machine Intelligence}, 6:\penalty0 449--460, 2024.
+\newblock \doi{10.1038/s42256-024-00823-9}.
+
+\bibitem[Dalla-Torre et~al.(2024)Dalla-Torre, Gonzalez, Mendoza-Revilla,
+  Carranza, Grzywaczewski, Oteri, Dallago, Trop, Almeida, Sirelkhatim, Richard,
+  Skwark, Beguir, Lopez, and Pierrot]{dalla2023nucleotide}
+Hugo Dalla-Torre, Liam Gonzalez, Javier Mendoza-Revilla, Nicol\'as~L\'opez
+  Carranza, Adam Grzywaczewski, Francesco Oteri, Christian Dallago, Evan Trop,
+  Bernardo P.~de Almeida, Hassan Sirelkhatim, Guillaume Richard, Marcin~J.
+  Skwark, Karim Beguir, M.~Lopez, and Thomas Pierrot.
+\newblock Nucleotide transformer: building and evaluating robust foundation
+  models for human genomics.
+\newblock \emph{Nature Methods}, 22:\penalty0 287--297, 2024.
+\newblock \doi{10.1038/s41592-024-02523-z}.
+
+\bibitem[Kalvari et~al.(2020)Kalvari, Nawrocki, Ontiveros-Palacios, Argasinska,
+  Lamkiewicz, Marz, Griffiths-Jones, Toffano-Nioche, Gautheret, Weinberg,
+  Rivas, Eddy, FINN, Bateman, and Petrov]{kalvari2021rfam}
+Ioanna Kalvari, Eric~P. Nawrocki, Nancy Ontiveros-Palacios, Joanna Argasinska,
+  Kevin Lamkiewicz, Manja Marz, Sam Griffiths-Jones, Claire Toffano-Nioche,
+  Daniel Gautheret, Zasha Weinberg, Elena Rivas, Sean~R. Eddy, ROBERT FINN,
+  Alex Bateman, and Anton~I. Petrov.
+\newblock Rfam 14: expanded coverage of metagenomic, viral and microrna
+  families.
+\newblock \emph{Nucleic Acids Research}, 49:\penalty0 D192--D200, 2020.
+\newblock \doi{10.1093/nar/gkaa1047}.
+
+\bibitem[Krzy\.zosiak et~al.(2011)Krzy\.zosiak, Sobczak, Wojciechowska, Fiszer,
+  Mykowska, and Koz{\l}owski]{krzyzosiak2012triplet}
+W{\l}odzimierz~J. Krzy\.zosiak, Krzysztof Sobczak, Marzena Wojciechowska,
+  Agnieszka Fiszer, Agnieszka Mykowska, and Piotr Koz{\l}owski.
+\newblock Triplet repeat {RNA} structure and its role as pathogenic agent and
+  therapeutic target.
+\newblock \emph{Nucleic Acids Research}, 40:\penalty0 11--26, 2011.
+\newblock \doi{10.1093/nar/gkr729}.
+
+\bibitem[Lorenz et~al.(2011)Lorenz, Bernhart, Siederdissen, Tafer, Flamm,
+  Stadler, and Hofacker]{lorenz2011viennarna}
+Ronny Lorenz, Stephan~H Bernhart, Christian H\"oner~zu Siederdissen, Hakim
+  Tafer, Christoph Flamm, Peter~F. Stadler, and Ivo~L. Hofacker.
+\newblock {ViennaRNA} package 2.0.
+\newblock \emph{Algorithms for Molecular Biology}, 6:\penalty0 26--26, 2011.
+\newblock \doi{10.1186/1748-7188-6-26}.
+
+\bibitem[Mezer et~al.(2011)Mezer, Wojciechowska, Napierala, Sobczak, and
+  Krzy\.zosiak]{demezer2011mutant}
+Mateusz~de Mezer, Marzena Wojciechowska, Marek Napierala, Krzysztof Sobczak,
+  and W{\l}odzimierz~J. Krzy\.zosiak.
+\newblock Mutant {CAG} repeats of huntingtin transcript fold into hairpins,
+  form nuclear foci and are targets for {RNA} interference.
+\newblock \emph{Nucleic Acids Research}, 39:\penalty0 3852--3863, 2011.
+\newblock \doi{10.1093/nar/gkq1323}.
+
+\bibitem[Nguyen et~al.(2023)Nguyen, Poli, Faizi, Thomas, Birch-sykes, Wornow,
+  Patel, Rabideau, Massaroli, Bengio, Ermon, Baccus, and
+  R\'e]{nguyen2024hyenadna}
+\'Eric Nguyen, Michael Poli, Marjan Faizi, Armin~W. Thomas, C.~J. Birch-sykes,
+  Michael Wornow, Aman Patel, Clayton~M. Rabideau, Stefano Massaroli, Yoshua
+  Bengio, Stefano Ermon, Stephen~A. Baccus, and Chris R\'e.
+\newblock {HyenaDNA}: {Long-Range} genomic sequence modeling at single
+  nucleotide resolution.
+\newblock \emph{arXiv (Cornell University)}, 2023.
+\newblock \doi{10.48550/arxiv.2306.15794}.
+
+\bibitem[Nguyen et~al.(2024)Nguyen, Poli, Durrant, Kang, Katrekar, Li, Bartie,
+  Thomas, King, Brixi, Sullivan, Ng, Lewis, Lou, Ermon, Baccus,
+  Hernandez-Boussard, R\'e, Hsu, and Hie]{nguyen2024evo}
+Eric Nguyen, Michael Poli, Matthew~G. Durrant, Brian Kang, Dhruva Katrekar,
+  David Li, Liam~J. Bartie, Armin~W. Thomas, S.~B. King, Garyk Brixi, Jeremy~A.
+  Sullivan, Madelena~Y. Ng, Ashley Lewis, Aaron Lou, Stefano Ermon, Stephen~A.
+  Baccus, Tina Hernandez-Boussard, Christopher R\'e, Patrick~D. Hsu, and Brian
+  Hie.
+\newblock Sequence modeling and design from molecular to genome scale with evo.
+\newblock \emph{Science}, 386:\penalty0 eado9336--eado9336, 2024.
+\newblock \doi{10.1126/science.ado9336}.
+
+\bibitem[Peni\'c et~al.(2025)Peni\'c, Vla\v{s}i\'c, Huber, Wan, and
+  \v{S}iki\'c]{rinalmo}
+Rafael~Josip Peni\'c, Tin Vla\v{s}i\'c, Roland~G. Huber, Yue Wan, and Mile
+  \v{S}iki\'c.
+\newblock {RiNALMo}: general-purpose {RNA} language models can generalize well
+  on structure prediction tasks.
+\newblock \emph{Nature Communications}, 16:\penalty0 5671--5671, 2025.
+\newblock \doi{10.1038/s41467-025-60872-5}.
+
+\bibitem[Schiff et~al.(2024)Schiff, Kao, Gokaslan, Dao, Gu, and
+  Kuleshov]{schiff2024caduceus}
+Yair Schiff, Chia-Hsiang Kao, Aaron Gokaslan, Tri Dao, Albert Gu, and Volodymyr
+  Kuleshov.
+\newblock Caduceus: {Bi-Directional} equivariant {Long-Range} {DNA} sequence
+  modeling.
+\newblock \emph{PubMed}, 235:\penalty0 43632--43648, 2024.
+\newblock \doi{10.48550/arxiv.2403.03234}.
+
+\bibitem[Szikszai et~al.(2022)Szikszai, Wise, Datta, Ward, and
+  Mathews]{szikszai2022generalization}
+Marcell Szikszai, Michael~J. Wise, Amitava Datta, Max Ward, and David~H.
+  Mathews.
+\newblock Deep learning models for {RNA} secondary structure prediction
+  (probably) do not generalize across families.
+\newblock \emph{Bioinformatics}, 38:\penalty0 3892--3899, 2022.
+\newblock \doi{10.1093/bioinformatics/btac415}.
+
+\bibitem[Tower(2026)]{tower2026reproducible}
+Elliot Tower.
+\newblock reproducible-science: prereg, results and citations, 2026.
+\newblock URL \url{https://github.com/elliottower/reproducible-science}.
+
+\bibitem[Yin et~al.(2024)Yin, Zhang, He, Jiang, Zhang, Liu, Zhang, Qin, and
+  Xie]{yin2024ernierna}
+Weijie Yin, Zhaoyu Zhang, Liang He, Rui Jiang, Shuo Zhang, Gan Liu, Xuegong
+  Zhang, Tao Qin, and Zhen Xie.
+\newblock {ERNIE-RNA}: An {RNA} language model with structure-enhanced
+  representations.
+\newblock \emph{bioRxiv (Cold Spring Harbor Laboratory)}, 2024.
+\newblock \doi{10.1101/2024.03.17.585376}.
+
+\bibitem[Zhou et~al.(2023)Zhou, Ji, Li, Dutta, Davuluri, and
+  Liu]{zhou2024dnabert2}
+Zhihan Zhou, Yanrong Ji, Weijian Li, Pratik Dutta, Ramana~V. Davuluri, and Han
+  Liu.
+\newblock {DNABERT-2}: Efficient foundation model and benchmark for
+  {Multi-Species} genome.
+\newblock \emph{arXiv (Cornell University)}, 2023.
+\newblock \doi{10.48550/arxiv.2306.15006}.
+
+\end{thebibliography}

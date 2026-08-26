@@ -19,7 +19,8 @@ Each results file already stores `families_quarantined` and a per-family
 recomputes every candidate aggregation from the stored per-family values and
 reports which one reproduces each printed figure, so the correction is made
 against a known cause rather than a guess. Nothing is re-run: `best_ps`,
-`positive_control`, `exceeds_null_primary` and `h3_precision` are all stored.
+`positive_control`, `h3_precision` and both `exceeds_null_primary` and
+`exceeds_null_conservative` are all stored.
 """
 
 import json

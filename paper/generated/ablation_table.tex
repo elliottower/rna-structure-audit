@@ -1,0 +1,23 @@
+% Written by scripts/generate_ablation_table.py. Do not edit.
+\begin{table}[htbp]
+\centering
+\caption{ERNIE-RNA with and without its pairwise bias buffer, trained and
+randomly initialized. Per-pair precision is the fraction of eligible pairs whose
+partner is perturbed more than either of its stem neighbors. Chance is the same
+fraction under a within-stem derangement, where the assigned partner is false by
+construction, and excess is their difference. All four arms cover the same 35
+families. Ablation zeroes \texttt{pairwise\_bias\_map} and
+\texttt{pairwise\_bias\_proj} and sets the rebuild guard, without which the
+first forward pass restores the buffer.}
+\label{tab:ablation}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Arm} & \textbf{Precision} & \textbf{Chance} & \textbf{Excess} \\
+\midrule
+Trained, bias intact         & 0.888 & 0.124 & $+0.764$ \\
+Trained, bias ablated        & 0.842 & 0.118 & $+0.725$ \\
+Random-init, bias intact     & 0.490 & 0.241 & $+0.249$ \\
+Random-init, bias ablated    & 0.267 & 0.255 & $+0.012$ \\
+\bottomrule
+\end{tabular}
+\end{table}

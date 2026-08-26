@@ -1,10 +1,10 @@
 {
   "name": "mir_122_precursor",
-  "sequence": "GUCUACGACCAUACCACAAUGAACACACCGGUUCUCGUCCGAUCACCGAAGUUAAGCAUUGUCGGGCCAGGAUAGUACCUGGAUGGGGGACCGCCUGGGAACGCCUGGUGUCGUAGACU",
-  "dot_bracket": "(((((((((....((.(((((...((..((((((......))..))))..))....)))))..))(((.((....(.((.....((....)).....)).)..)).)))))))))))).",
-  "source": "Rfam RF00001 seed alignment member (K02350.1/1-119)",
-  "rfam_id": "RF00001",
-  "length": 119,
-  "seed_member": "K02350.1/1-119",
-  "seed_members_available": 604
+  "sequence": "CAGAGCUGUGGAGUGUGACAAUGGUGUUUGUGUCCAAACUAUCAAACGCCAUUAUCACACUAAAUAGCUACUG",
+  "dot_bracket": "...........(((((((.(((((((((((............))))))))))).)))))))............",
+  "source": "Rfam RF00684 seed alignment member (URS00000BAFD3_9823/7-79)",
+  "rfam_id": "RF00684",
+  "length": 73,
+  "seed_member": "URS00000BAFD3_9823/7-79",
+  "seed_members_available": 32
 }

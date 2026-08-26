@@ -32,6 +32,8 @@ from scipy.linalg import subspace_angles
 from sklearn.decomposition import PCA
 from tqdm import tqdm
 
+from token_spans import content_bounds
+
 REPEAT_COUNTS = [10, 15, 18, 21, 24, 27, 30, 36, 40, 50, 60, 80]
 WT_REPEATS = 21
 FLANK_SIZE = 50
@@ -82,6 +84,7 @@ class RNAFMAdapter(ModelAdapter):
 
     def __init__(self):
         self.model = None
+        self.final_layer_norm = None
 
     # Fetched at load time so the analysis runs anywhere without a local
     # checkpoint. Pinned so the weights cannot change under the results.
@@ -135,9 +138,60 @@ class RNAFMAdapter(ModelAdapter):
                 nk = nk.replace("embeddings.layer_norm", "embeddings.LayerNorm")
             clean_state[nk] = v
 
+        # RNA-FM is ESM-architecture and carries a layer norm after the last
+        # encoder block. `BertModel` has no slot for it, so the key fell through
+        # the remapping unrenamed and the normalization was dropped. Held here
+        # and applied to the final hidden state, which is where ESM applies it.
+        # The checkpoint carries the weights but not the epsilon, so it takes the
+        # one the rest of this port uses.
+        norm_weight = clean_state.pop("encoder.layer_norm.weight", None)
+        norm_bias = clean_state.pop("encoder.layer_norm.bias", None)
+        if norm_weight is None or norm_bias is None:
+            raise KeyError(
+                f"RNA-FM checkpoint at {weight_path} carries no "
+                "encoder.layer_norm; the final normalization would be dropped.")
+        final_layer_norm = torch.nn.LayerNorm(
+            config.hidden_size, eps=config.layer_norm_eps)
+        final_layer_norm.load_state_dict(
+            {"weight": norm_weight, "bias": norm_bias})
+        self.final_layer_norm = final_layer_norm
+
         report = self.model.load_state_dict(clean_state, strict=False)
         expected = len(self.model.state_dict())
         loaded = expected - len(report.missing_keys)
+        # A missing key keeps whatever `BertModel(config)` drew for it, unseeded,
+        # so every container gets different weights and the model is not
+        # reproducible. Trained RNA-FM drifted 2.26e-04 between two runs while
+        # its untrained control, which re-seeds every parameter, was
+        # bit-identical -- `scripts/audit_run_to_run_drift.py`. The 0.9 threshold
+        # below catches a remapping that failed wholesale and never fired on
+        # three tensors out of 199.
+        #
+        # `token_type_embeddings` is the one that mattered: RNA-FM has no token
+        # types, the forward pass supplies no `token_type_ids`, so BertModel
+        # defaulted them to zero and added row 0 -- a random vector of norm about
+        # 0.5 -- to every position of every sequence. Zeroed, which is what
+        # having no token types means.
+        self.model.embeddings.token_type_embeddings.weight.data.zero_()
+
+        harmless = {"embeddings.token_type_embeddings.weight",
+                    "pooler.dense.weight", "pooler.dense.bias"}
+        consequential = sorted(set(report.missing_keys) - harmless)
+        if consequential or report.unexpected_keys:
+            raise RuntimeError(
+                f"RNA-FM: {consequential} were not in the checkpoint and would "
+                f"keep an unseeded random initialization; "
+                f"{sorted(report.unexpected_keys)} matched nothing in the model. "
+                "Both silently change what the model computes.")
+
+        # Attached after the load and after the check above. Attaching it before
+        # would put its two tensors into the model's state_dict, where they would
+        # be absent from `clean_state` and count as missing keys. It is a child of
+        # the model rather than held beside it so that every `.to(device)` and
+        # `.eval()` reaches it; held separately it stayed on the CPU while the
+        # hidden states went to the GPU, and the CPU-only smoke could not see the
+        # mismatch because there is only one device there.
+        self.model.final_layer_norm = self.final_layer_norm
         if loaded < 0.9 * expected:
             raise RuntimeError(
                 f"RNA-FM: only {loaded} of {expected} parameters were loaded from "
@@ -152,7 +206,14 @@ class RNAFMAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        hidden = list(out.hidden_states)
+        # ESM normalizes after the last block, so only the final representation
+        # takes it; the intermediate states are the unnormalized block outputs in
+        # the source model too.
+        hidden[-1] = self.final_layer_norm(hidden[-1])
+        # `tokenize` above builds the ids as [2] + nucleotides + [3], so the
+        # brackets are this file's own and the slice cannot drift.
+        return [hs[0, 1:-1, :] for hs in hidden]
 
 
 # ── Nucleotide Transformer v2 adapter ────────────────────────────────────────
@@ -188,11 +249,12 @@ class NTAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        # Strip CLS/EOS, expand 6-mer tokens to per-nucleotide by repeating
+        # NT v2 emits <cls> and no closing token, so the rows that carry
+        # sequence are found from the tokenization rather than assumed.
         layers = []
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
         for hs in out.hidden_states:
-            emb = hs[0, 1:-1, :]  # strip special tokens
-            layers.append(emb)
+            layers.append(hs[0, start:stop, :])
         return layers
 
 
@@ -353,7 +415,8 @@ class RiNALMoAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── UTR-LM adapter ───────────────────────────────────────────────────────────
@@ -384,7 +447,8 @@ class UTRLMAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── ERNIE-RNA adapter ────────────────────────────────────────────────────────
@@ -415,7 +479,8 @@ class ERNIERNAAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── SpliceBERT adapter ───────────────────────────────────────────────────────
@@ -446,7 +511,8 @@ class SpliceBERTAdapter(ModelAdapter):
     @torch.no_grad()
     def get_all_layer_embeddings(self, tokens: torch.Tensor) -> list[torch.Tensor]:
         out = self.model(tokens, output_hidden_states=True)
-        return [hs[0, 1:-1, :] for hs in out.hidden_states]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [hs[0, start:stop, :] for hs in out.hidden_states]
 
 
 # ── DNABERT-2 adapter ────────────────────────────────────────────────────────
@@ -485,7 +551,8 @@ class DNABERT2Adapter(ModelAdapter):
         last_hidden = out.last_hidden_state if hasattr(out, 'last_hidden_state') else (out[0] if isinstance(out, tuple) else out)
         if last_hidden.dim() == 2:
             last_hidden = last_hidden.unsqueeze(0)
-        return [last_hidden[0, 1:-1, :]]
+        start, stop = content_bounds(self.tokenizer, tokens[0].tolist())
+        return [last_hidden[0, start:stop, :]]
 
 
 # ── HTT mRNA variant construction ───────────────────────────────────────────

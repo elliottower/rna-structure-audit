@@ -28,34 +28,35 @@ from pathlib import Path
 
 from scipy.stats import mannwhitneyu
 
+from registered_quarantine import QUARANTINE
+
 REPO = Path(__file__).resolve().parents[1]
-QUARANTINE = {"tRNA_Phe_yeast", "tRNA_Ala_human"}
+
+# The panel every row reads. `repaired_panel_v3` is the pass carrying the Rung 3
+# token-alignment repair, the float64 metric and the measured resolution floor,
+# at one commit per cell. Before this, each row named a separate July run
+# directory at an unrecorded commit, so the table mixed pipelines.
+PANEL = REPO / "results" / "repaired_panel_v3"
+
+
+def cell(key: str) -> str:
+    """The phase 6 file for one model, relative to the repository."""
+    return str((PANEL / key / f"{key}_phase6_ps.json").relative_to(REPO))
+
 
 # (display label, domain, results file, bold in the table).
 ROWS = [
-    (r"\textbf{RiNALMo} (650M)", "RNA",
-     "results/rinalmo_phase6_ps.json", True),
-    (r"\textbf{ERNIE-RNA} (86M)", "RNA",
-     "results/audit/phase6_ernierna_20260714_060520/ernierna_phase6_ps.json", True),
-    ("ERNIE-RNA untrained", "RNA",
-     "results/audit/phase6_ernierna_untrained_20260714_172412/"
-     "ernierna_untrained_phase6_ps.json", False),
-    ("Caduceus (14M)", "DNA",
-     "data/gpu_results/expanded_rfam/caduceus_phase6_ps.json", False),
-    ("Evo (7B)", "DNA",
-     "results/audit/phase6_evo_20260715_073218/evo_phase6_ps.json", False),
-    ("SpliceBERT (19M)", "RNA",
-     "results/audit/phase6_splicebert_20260714_060520/splicebert_phase6_ps.json", False),
-    ("HyenaDNA (5.4M)", "DNA",
-     "results/audit/phase6_hyenadna_20260714_060542/hyenadna_phase6_ps.json", False),
-    ("RNA-FM (99M)", "RNA",
-     "results/audit/phase6_rnafm_20260714_065238/rnafm_phase6_ps.json", False),
-    (r"UTR-LM ($\sim$2M)", "RNA",
-     "results/audit/phase6_utrlm_20260714_060516/utrlm_phase6_ps.json", False),
-    ("NT~v2 (56M)", "DNA",
-     "results/audit/phase6_nt_20260714_082334/nt_phase6_ps.json", False),
-    ("DNABERT-2 (117M)", "DNA",
-     "results/phase6_dnabert2_natural.json", False),
+    (r"\textbf{RiNALMo} (650M)", "RNA", cell("rinalmo"), True),
+    (r"\textbf{ERNIE-RNA} (86M)", "RNA", cell("ernierna"), True),
+    ("ERNIE-RNA random-init", "RNA", cell("ernierna_untrained"), False),
+    ("Caduceus (14M)", "DNA", cell("caduceus"), False),
+    ("Evo (7B)", "DNA", cell("evo"), False),
+    ("SpliceBERT (19M)", "RNA", cell("splicebert"), False),
+    ("HyenaDNA (5.4M)", "DNA", cell("hyenadna"), False),
+    ("RNA-FM (99M)", "RNA", cell("rnafm"), False),
+    (r"UTR-LM ($\sim$2M)", "RNA", cell("utrlm"), False),
+    ("NT~v2 (56M)", "DNA", cell("nt"), False),
+    ("DNABERT-2 (117M)", "DNA", cell("dnabert2"), False),
 ]
 
 # H2 groups as registered.
@@ -103,7 +104,17 @@ def render_ps(value: float) -> str:
 
 def summarize(rel: str) -> dict:
     """Every Table 5 quantity for one model, with the quarantine applied."""
-    entries = scored(rel)
+    return summarize_entries(scored(rel))
+
+
+def summarize_entries(entries: dict) -> dict:
+    """The registered Table 5 aggregation, over already-loaded per-family entries.
+
+    Split out so generate_results_tables.py computes the repaired-panel table
+    through the same code audit_table5_aggregation.py checked against the
+    manuscript, rather than through a second implementation that agrees with it
+    until one of them is edited.
+    """
     nonq = {name: body for name, body in entries.items() if name not in QUARANTINE}
     passing = [body for body in nonq.values() if gate_pass(body)]
     fractions = [body["h3_precision"]["fraction"] for body in passing
@@ -114,7 +125,14 @@ def summarize(rel: str) -> dict:
         mean_ps_gated=mean([body["best_ps"] for body in passing]),
         eligible=len(nonq),
         gate=len(passing),
-        exceed=sum(1 for body in passing if body.get("exceeds_null_primary")),
+        # The conservative variant maxes over layers on the null side as well,
+        # matching the observed statistic. The primary variant compares a
+        # maximum over L layers against a single-layer threshold, and its size
+        # measures 0.49 to 0.60 on randomly initialized weights (D15). Both are
+        # carried because the registration requires both wherever they disagree.
+        exceed=sum(1 for body in passing if body.get("exceeds_null_conservative")),
+        exceed_primary=sum(1 for body in passing
+                           if body.get("exceeds_null_primary")),
         h3=mean(fractions),
     )
 
@@ -165,7 +183,7 @@ def main() -> int:
     rinalmo, ernie = stats["RiNALMo"], stats["ERNIE-RNA"]
     caduceus, evo = stats["Caduceus"], stats["Evo"]
     splice, hyena = stats["SpliceBERT"], stats["HyenaDNA"]
-    untrained = stats["ERNIE-RNA untrained"]
+    untrained = stats["ERNIE-RNA random-init"]
 
     print("\n--- separation from the leaders (lower leader = ERNIE-RNA) ---")
     for name in ["Caduceus", "Evo", "SpliceBERT", "HyenaDNA", "RNA-FM",
@@ -200,7 +218,7 @@ def main() -> int:
         n32 = mean([b["best_ps"] for n, b in entries.items()
                     if n not in QUARANTINE])
         n34 = mean([b["best_ps"] for b in entries.values()])
-        if key == "ERNIE-RNA untrained":
+        if key == "ERNIE-RNA random-init":
             continue
         print(f"{key.replace('~', ' '):<26} & {render_ps(held['tRNA_Phe_yeast'])} & "
               f"{render_ps(held['tRNA_Ala_human'])} & {render_ps(n32)} & "
@@ -210,11 +228,13 @@ def main() -> int:
     for key, rel in [("RiNALMo", ROWS[0][2]), ("ERNIE-RNA", ROWS[1][2])]:
         entries = scored(rel)
         passing = [b for b in entries.values() if gate_pass(b)]
-        exceed = sum(1 for b in passing if b.get("exceeds_null_primary"))
+        exceed = sum(1 for b in passing if b.get("exceeds_null_conservative"))
+        exceed_primary = sum(1 for b in passing if b.get("exceeds_null_primary"))
         fractions = [b["h3_precision"]["fraction"] for b in passing
                      if isinstance(b.get("h3_precision"), dict)]
         print(f"  {key:<10} N=34: {exceed}/{len(passing)} exceed null "
-              f"(criterion >= 7), H3 = {mean(fractions):.3f} (criterion > 1/3)")
+              f"(criterion >= 7), {exceed_primary}/{len(passing)} on the "
+              f"primary null, H3 = {mean(fractions):.3f} (criterion > 1/3)")
     rna34, dna34 = [], []
     for label, _domain, rel, _bold in ROWS:
         key = label.replace(r"\textbf{", "").replace("}", "").split(" (")[0]

@@ -9,16 +9,21 @@ These are pure analysis functions — no Modal, no model loading.
 import math
 
 import numpy as np
+
+from family_checkpoint import FamilyCheckpoint, no_checkpoint
+from family_seed import family_rng
 from scipy import stats
 from scipy.spatial.distance import cosine
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupKFold, cross_val_score
+from token_spans import content_bounds, content_spans, nucleotide_rows
 from tqdm import tqdm
 
 COMPLEMENT = {"A": "U", "U": "A", "C": "G", "G": "C", "T": "A"}
 
 RNA_TOKENIZER_MODELS = {"rnafm", "rinalmo", "utrlm", "ernierna", "splicebert"}
 ATTENTION_MODELS = {"rnafm", "nt", "rinalmo", "utrlm", "ernierna", "splicebert", "dnabert2"}
+SUBWORD_MODELS = {"nt", "dnabert2"}
 
 
 def _get_paired_and_unpaired_positions(structure, max_pos=None):
@@ -55,32 +60,37 @@ def _parse_structure_to_contacts(structure):
     return contacts
 
 
-def _expand_6mer_to_nucleotide(embeddings, n_nucleotides):
-    n_tokens, d = embeddings.shape
-    expanded = np.empty((n_nucleotides, d), dtype=embeddings.dtype)
-    for i in range(n_nucleotides):
-        token_idx = min(i // 6, n_tokens - 1)
-        expanded[i] = embeddings[token_idx]
-    return expanded
+def _tokenizer_sequence(model_key, seq):
+    """The exact string the adapter hands its tokenizer.
+
+    Spans have to be computed on that string and not on the stored sequence:
+    the RNA tokenizers see U and the DNA tokenizers see T, and DNABERT-2's
+    merges depend on which.
+    """
+    if model_key in RNA_TOKENIZER_MODELS:
+        return seq.replace("T", "U")
+    return seq.replace("U", "T")
 
 
-def _expand_bpe_to_nucleotide(embeddings, n_nucleotides):
-    n_tokens, d = embeddings.shape
-    expanded = np.empty((n_nucleotides, d), dtype=embeddings.dtype)
-    for i in range(n_nucleotides):
-        token_idx = min(int(i * n_tokens / n_nucleotides), n_tokens - 1)
-        expanded[i] = embeddings[token_idx]
-    return expanded
+def _family_spans(adapter, model_key, seq):
+    """Token spans for the models that put more than one nucleotide in a token."""
+    if model_key not in SUBWORD_MODELS:
+        return None
+    return content_spans(adapter.tokenizer, _tokenizer_sequence(model_key, seq))
 
 
-def _aggregate_contacts_to_tokens(contact_map, n_nucleotides, n_tokens):
+def _aggregate_contacts_to_tokens(contact_map, spans):
+    """Two tokens are in contact when any nucleotide they cover is paired.
+
+    The spans come from the tokenizer. Taking the window as `ti * 6` instead
+    put 88.7% of DNABERT-2's rows on a stretch of sequence sharing no
+    nucleotide with the token whose attention that row carried; see
+    docs/OPEN_DEFECTS.md, D12.
+    """
+    n_tokens = len(spans)
     token_contacts = np.zeros((n_tokens, n_tokens), dtype=np.float32)
-    for ti in range(n_tokens):
-        si = ti * 6
-        ei = min(si + 6, n_nucleotides)
-        for tj in range(n_tokens):
-            sj = tj * 6
-            ej = min(sj + 6, n_nucleotides)
+    for ti, (si, ei) in enumerate(spans):
+        for tj, (sj, ej) in enumerate(spans):
             if contact_map[si:ei, sj:ej].any():
                 token_contacts[ti, tj] = 1.0
     return token_contacts
@@ -102,7 +112,7 @@ def _validate_rna(rna):
     return True, "ok"
 
 
-def _get_dnabert2_all_hidden_states(model, tokens):
+def _get_dnabert2_all_hidden_states(model, tokens, bounds=None):
     import torch
 
     hidden_states = []
@@ -120,11 +130,12 @@ def _get_dnabert2_all_hidden_states(model, tokens):
     for h in hooks:
         h.remove()
 
+    start, stop = bounds if bounds is not None else (1, -1)
     result = []
     for hs in hidden_states:
         if hs.dim() == 2:
             hs = hs.unsqueeze(0)
-        result.append(hs[0, 1:-1, :])
+        result.append(hs[0, start:stop, :])
     return result
 
 
@@ -173,33 +184,60 @@ def _extract_dnabert2_attention(model, tokens):
 
 
 def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
-                             n_permutations=1000):
+                             n_permutations=1000, checkpoint=None, positions=None):
     """Mutation sensitivity ratio with composition-controlled null.
 
     Returns per-family best_ratio, nucleotide-stratified null, dinucleotide null.
+
+    `positions` is a second checkpoint. Given one, every per-layer per-position
+    cosine distance is written to it with the labels, the nucleotides and, for
+    the subword models, whether the mutated position kept its token span. The
+    null is a function of those distances and those labels alone, so a null that
+    turns out to be wrong -- the registered one has a measured 9.1% false
+    positive rate on randomly initialized models, docs/OPEN_DEFECTS.md D10 --
+    can be replaced from the stored values without loading a model again.
     """
     import torch
 
     results = {"model": model_key, "metric": "mutation_sensitivity",
                "n_permutations": n_permutations, "per_rna": {}}
-    all_ratios = []
+    ckpt = checkpoint if checkpoint is not None else no_checkpoint()
 
     for rna_idx, rna in enumerate(tqdm(families, desc=f"Phase 1-5 [{model_key}]")):
+        if rna["name"] in ckpt.done:
+            results["per_rna"][rna["name"]] = ckpt.done[rna["name"]]
+            continue
         valid, reason = _validate_rna(rna)
         if not valid:
             results["per_rna"][rna["name"]] = {"skipped": reason}
+            ckpt.record(rna["name"], {"skipped": reason})
             continue
 
         seq = rna["sequence"]
         db = rna["dot_bracket"]
         n_pos = min(len(seq), len(db))
 
-        if model_key in RNA_TOKENIZER_MODELS:
-            tokens = adapter.tokenize(seq[:n_pos].replace("T", "U")).to(device)
-        else:
-            tokens = adapter.tokenize(seq[:n_pos]).to(device)
+        tokens = adapter.tokenize(_tokenizer_sequence(model_key, seq[:n_pos])).to(device)
         wt_embs = adapter.get_all_layer_embeddings(tokens)
         n_layers = len(wt_embs)
+
+        # The same sequence through the same model a second time. Nothing is
+        # mutated, so every distance below is zero in exact arithmetic and what
+        # comes back is the floor this statistic resolves. Measured here as well
+        # as at Rung 3, because a model whose floor exceeds its own signal at one
+        # rung says nothing about the other, and D18 left that unmeasured.
+        noop_embs = adapter.get_all_layer_embeddings(
+            adapter.tokenize(seq[:n_pos]).to(device))
+        noop_floor = max(
+            float(cosine(wt_embs[layer][row].cpu().numpy().astype(np.float64),
+                         noop_embs[layer][row].cpu().numpy().astype(np.float64)))
+            for layer in range(n_layers)
+            for row in range(min(wt_embs[layer].shape[0], noop_embs[layer].shape[0]))
+        )
+        wt_spans = _family_spans(adapter, model_key, seq[:n_pos])
+        wt_rows = (nucleotide_rows(wt_spans, n_pos) if wt_spans is not None
+                   else np.arange(n_pos))
+        same_span = np.ones(n_pos, dtype=bool)
 
         paired, unpaired = _get_paired_and_unpaired_positions(db, max_pos=n_pos)
         labels = np.array(["stem" if i in set(paired) else "loop" for i in range(n_pos)])
@@ -217,24 +255,28 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
             mut_seq[pos] = comp
             mut_seq_str = "".join(mut_seq)
 
-            if model_key in RNA_TOKENIZER_MODELS:
-                mut_tokens = adapter.tokenize(mut_seq_str.replace("T", "U")).to(device)
-            else:
-                mut_tokens = adapter.tokenize(mut_seq_str).to(device)
+            mut_tokens = adapter.tokenize(
+                _tokenizer_sequence(model_key, mut_seq_str)).to(device)
             mut_embs = adapter.get_all_layer_embeddings(mut_tokens)
 
+            if wt_spans is None:
+                mut_rows = wt_rows
+            else:
+                mut_spans = _family_spans(adapter, model_key, mut_seq_str)
+                mut_rows = nucleotide_rows(mut_spans, n_pos)
+                same_span[pos] = wt_spans[wt_rows[pos]] == mut_spans[mut_rows[pos]]
+
+            wt_row, mut_row = int(wt_rows[pos]), int(mut_rows[pos])
             for layer_idx in range(n_layers):
                 wt_layer = wt_embs[layer_idx].cpu().numpy()
                 mut_layer = mut_embs[layer_idx].cpu().numpy()
-                if model_key == "nt":
-                    wt_layer = _expand_6mer_to_nucleotide(wt_layer, n_pos)
-                    mut_layer = _expand_6mer_to_nucleotide(mut_layer, n_pos)
-                elif model_key == "dnabert2":
-                    wt_layer = _expand_bpe_to_nucleotide(wt_layer, n_pos)
-                    mut_layer = _expand_bpe_to_nucleotide(mut_layer, n_pos)
-                if pos >= min(wt_layer.shape[0], mut_layer.shape[0]):
+                if wt_row >= wt_layer.shape[0] or mut_row >= mut_layer.shape[0]:
                     continue
-                dist = cosine(wt_layer[pos], mut_layer[pos])
+                # float64 for the same reason as `phase6.cosine_distance`: the
+                # embeddings are float32 and `1 - cos_sim` on two rows that
+                # barely differ loses its significant digits to cancellation.
+                dist = cosine(wt_layer[wt_row].astype(np.float64),
+                              mut_layer[mut_row].astype(np.float64))
                 per_layer_dists[layer_idx][pos] = float(dist)
                 per_layer_valid[layer_idx][pos] = True
 
@@ -262,7 +304,10 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
         best_ratio = real_ratios_per_layer[best_layer_idx]["ratio"]
 
         valid_layers = sorted(real_ratios_per_layer.keys())
-        perm_rng = np.random.default_rng(42 + rna_idx * 1000)
+        # Seeded from the family name, not its position in the panel: the null
+        # is defined within the family, so withdrawing another record must not
+        # change this family's draws. See DEVIATIONS.md, 2026-08-24.
+        perm_rng = family_rng(rna["name"])
         nucs_full = np.array(list(seq[:n_pos]))
 
         null_max_ratios = []
@@ -294,6 +339,7 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
 
         rna_result = {
             "best_ratio": best_ratio, "best_layer": int(best_layer_idx),
+            "noop_floor": noop_floor,
             "nuc_null_95th": nuc_null_95th, "exceeds_nuc_null": exceeds_nuc,
             "n_stem": real_ratios_per_layer[best_layer_idx]["n_stem"],
             "n_loop": real_ratios_per_layer[best_layer_idx]["n_loop"],
@@ -331,8 +377,23 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
             rna_result["exceeds_dinuc_null"] = best_ratio > dinuc_null_95th
 
         results["per_rna"][rna["name"]] = rna_result
-        all_ratios.append(best_ratio)
+        ckpt.record(rna["name"], rna_result)
+        if positions is not None:
+            positions.record(rna["name"], {
+                "nucleotides": seq[:n_pos],
+                "labels": "".join("S" if lab == "stem" else "L" for lab in labels),
+                "same_span": "".join("1" if s else "0" for s in same_span),
+                "layer_distances": [[round(float(d), 6) for d in per_layer_dists[l]]
+                                    for l in range(n_layers)],
+                "layer_valid": ["".join("1" if v else "0" for v in per_layer_valid[l])
+                                for l in range(n_layers)],
+            })
 
+    # Read back from per_rna rather than accumulating in the loop: a resumed
+    # run never executes the loop body for a checkpointed family, so a list
+    # appended in the loop would hold only the families this container did.
+    all_ratios = [r["best_ratio"] for r in results["per_rna"].values()
+                  if "best_ratio" in r]
     results["mean_best_ratio"] = float(np.mean(all_ratios)) if all_ratios else 0.0
     results["median_best_ratio"] = float(np.median(all_ratios)) if all_ratios else 0.0
     n_exceed = sum(1 for r in results["per_rna"].values() if r.get("exceeds_nuc_null"))
@@ -341,30 +402,37 @@ def run_mutation_sensitivity(adapter, model_key, families, device="cuda",
     return results
 
 
-def run_attention_contact(adapter, model_key, families, device="cuda"):
+def run_attention_contact(adapter, model_key, families, device="cuda", checkpoint=None):
     """Attention-contact Spearman correlation."""
     import torch
 
     results = {"model": model_key, "metric": "attention_contact", "per_rna": {}}
+    ckpt = checkpoint if checkpoint is not None else no_checkpoint()
 
     if model_key not in ATTENTION_MODELS:
         results["skipped"] = "no attention (SSM architecture)"
         return results
 
     for rna in tqdm(families, desc=f"Attention [{model_key}]"):
+        if rna["name"] in ckpt.done:
+            results["per_rna"][rna["name"]] = ckpt.done[rna["name"]]
+            continue
         valid, reason = _validate_rna(rna)
         if not valid:
             results["per_rna"][rna["name"]] = {"skipped": reason}
+            ckpt.record(rna["name"], {"skipped": reason})
             continue
 
         seq = rna["sequence"]
         db = rna["dot_bracket"]
         n_pos = min(len(seq), len(db))
 
-        if model_key in RNA_TOKENIZER_MODELS:
-            tokens = adapter.tokenize(seq[:n_pos].replace("T", "U")).to(device)
-        else:
-            tokens = adapter.tokenize(seq[:n_pos]).to(device)
+        tokens = adapter.tokenize(_tokenizer_sequence(model_key, seq[:n_pos])).to(device)
+        spans = _family_spans(adapter, model_key, seq[:n_pos])
+        # RNA-FM builds its own ids and exposes no tokenizer, so the bounds are
+        # asked for only where a tokenizer decides them.
+        bounds = (content_bounds(adapter.tokenizer, tokens[0].tolist())
+                  if spans is not None else None)
 
         with torch.no_grad():
             if model_key == "dnabert2":
@@ -375,6 +443,7 @@ def run_attention_contact(adapter, model_key, families, device="cuda"):
 
         if attentions is None:
             results["per_rna"][rna["name"]] = {"skipped": "no attention returned"}
+            ckpt.record(rna["name"], {"skipped": "no attention returned"})
             continue
 
         contact_map = _parse_structure_to_contacts(db)
@@ -391,12 +460,14 @@ def run_attention_contact(adapter, model_key, families, device="cuda"):
             eff_contact_flat = contact_flat
             if model_key in RNA_TOKENIZER_MODELS:
                 attn = attn[:, 1:n_pos+1, 1:n_pos+1]
-            elif model_key in ("nt", "dnabert2"):
-                attn = attn[:, 1:-1, 1:-1]
-                n_tok = attn.shape[1]
-                tok_contact = _aggregate_contacts_to_tokens(contact_map, n_pos, n_tok)
-                eff_n = n_tok
-                eff_contact_flat = tok_contact[np.triu_indices(n_tok, k=1)]
+            elif model_key in SUBWORD_MODELS:
+                start, stop = bounds
+                attn = attn[:, start:stop, start:stop]
+                if attn.shape[1] != len(spans):
+                    continue
+                eff_n = len(spans)
+                tok_contact = _aggregate_contacts_to_tokens(contact_map, spans)
+                eff_contact_flat = tok_contact[np.triu_indices(eff_n, k=1)]
 
             if attn.shape[1] != eff_n or attn.shape[2] != eff_n:
                 continue
@@ -413,9 +484,9 @@ def run_attention_contact(adapter, model_key, families, device="cuda"):
                     best_corr = float(rho)
                     best_layer = layer_idx
 
-        results["per_rna"][rna["name"]] = {
-            "best_corr": best_corr, "best_layer": best_layer,
-        }
+        entry = {"best_corr": best_corr, "best_layer": best_layer}
+        results["per_rna"][rna["name"]] = entry
+        ckpt.record(rna["name"], entry)
 
     return results
 
@@ -439,13 +510,14 @@ def run_structure_probing(adapter, model_key, families, device="cuda"):
         db = rna["dot_bracket"]
         n_pos = min(len(seq), len(db))
 
-        if model_key in RNA_TOKENIZER_MODELS:
-            tokens = adapter.tokenize(seq[:n_pos].replace("T", "U")).to(device)
-        else:
-            tokens = adapter.tokenize(seq[:n_pos]).to(device)
+        tokens = adapter.tokenize(_tokenizer_sequence(model_key, seq[:n_pos])).to(device)
+        spans = _family_spans(adapter, model_key, seq[:n_pos])
+        rows = nucleotide_rows(spans, n_pos) if spans is not None else None
 
         if model_key == "dnabert2":
-            layer_embs = _get_dnabert2_all_hidden_states(adapter.model, tokens)
+            layer_embs = _get_dnabert2_all_hidden_states(
+                adapter.model, tokens,
+                bounds=content_bounds(adapter.tokenizer, tokens[0].tolist()))
         else:
             layer_embs = adapter.get_all_layer_embeddings(tokens)
         paired, unpaired = _get_paired_and_unpaired_positions(db, max_pos=n_pos)
@@ -456,13 +528,12 @@ def run_structure_probing(adapter, model_key, families, device="cuda"):
 
         for layer_idx in range(len(layer_embs)):
             emb = layer_embs[layer_idx].cpu().numpy()
-            if emb.shape[0] < n_pos:
-                if model_key == "nt":
-                    emb = _expand_6mer_to_nucleotide(emb, n_pos)
-                elif model_key == "dnabert2":
-                    emb = _expand_bpe_to_nucleotide(emb, n_pos)
-                else:
+            if rows is not None:
+                if emb.shape[0] != len(spans):
                     continue
+                emb = emb[rows]
+            elif emb.shape[0] < n_pos:
+                continue
             emb_trimmed = emb[:n_pos]
             if layer_idx >= len(all_embeddings):
                 all_embeddings.append([])

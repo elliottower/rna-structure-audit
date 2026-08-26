@@ -1,8 +1,8 @@
 {
   "name": "HDV_ribozyme",
-  "sequence": "GGCCGGCAUGGUCCCAGCCUCCUCGCUGGCGCCGGCUGGGCAACAUUCCGAGGGGACCGUCCCCUCGGUAAUGGCGAAUGGGUCC",
-  "dot_bracket": "(((((.((((((.....(((.((.((..((((..((((.......)))).)))).)).)).)))..))))))..)))))......",
-  "source": "Phase 1 curated (PDB/Rfam)",
+  "sequence": "UGGCCGGCAUGGUCCCAGCCUCCUCGUCGGCGCCGGCCGGGCAACAUUCCGAGGGGACCGUCCCUCGGUAAUGGCGAAUGGGACCCA",
+  "dot_bracket": ".(((((((.........(((........))))))))))......(((((((((((.(...)))))))).))))..............",
+  "source": "Rfam RF00094 seed alignment member (AF209859.1/689-775)",
   "rfam_id": "RF00094",
-  "length": 85
+  "length": 87
 }

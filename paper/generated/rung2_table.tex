@@ -1,0 +1,35 @@
+\begin{table}[htbp]
+\centering
+\caption{Dinucleotide-stratified null across all models on the repaired panel.
+``Fam $>$ nuc'' counts families exceeding the nucleotide-stratified null;
+``Survive dinuc'' counts how many of those also exceed the
+dinucleotide-stratified null, which is computed only where the first-order null
+is exceeded. Retention is the second count over the first, and its bootstrap
+95\% CI resamples the families in the first.}
+\label{tab:rung2}
+\small
+\begin{tabular}{lrrll}
+\toprule
+\textbf{Model} & \textbf{Fam $>$ nuc} & \textbf{Survive dinuc} & \textbf{Retention} & \textbf{95\% CI} \\
+\midrule
+ERNIE-RNA (86M, RNA)       & 31 & 30 & 97\% & [0.90, 1.00] \\
+RiNALMo (650M, RNA)        & 17 & 15 & 88\% & [0.71, 1.00] \\
+NT~v2 (56M, DNA)           & 9 & 8 & 89\% & [0.67, 1.00] \\
+HyenaDNA (0.45M, DNA)      & 8 & 7 & 88\% & [0.62, 1.00] \\
+Caduceus (7.7M, DNA)       & 8 & 4 & 50\% & [0.12, 0.88] \\
+Evo (7B, DNA)              & 8 & 6 & 75\% & [0.38, 1.00] \\
+UTR-LM (1.2M, RNA)         & 3 & 2 & 67\% & [0.00, 1.00] \\
+SpliceBERT (19M, RNA)      & 3 & 1 & 33\% & [0.00, 1.00] \\
+DNABERT-2 (117M, DNA)      & 3 & 2 & 67\% & [0.00, 1.00] \\
+RNA-FM (99M, RNA)          & 0 & 0 & --- & --- \\
+\midrule
+ERNIE-RNA untrained        & 10 & 6 & 60\% & [0.30, 0.90] \\
+RiNALMo untrained          & 10 & 7 & 70\% & [0.40, 1.00] \\
+RNA-FM untrained           & 3 & 2 & 67\% & [0.00, 1.00] \\
+UTR-LM untrained           & 1 & 0 & 0\% & [0.00, 0.00] \\
+SpliceBERT untrained       & 0 & 0 & --- & --- \\
+NT~v2 untrained            & 5 & 4 & 80\% & [0.40, 1.00] \\
+DNABERT-2 untrained        & 6 & 4 & 67\% & [0.33, 1.00] \\
+\bottomrule
+\end{tabular}
+\end{table}
