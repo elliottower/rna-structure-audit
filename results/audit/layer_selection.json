@@ -39,6 +39,102 @@
       "n_splits": 2000
     },
     {
+      "model": "caduceus",
+      "label": "Caduceus",
+      "n_families": 35,
+      "n_layers": 17,
+      "chance": 0.21815898319934032,
+      "per_family_layer": 0.3400834879406308,
+      "global_layer": 0.0,
+      "global_layer_index": 0,
+      "heldout": 0.0024756576756576757,
+      "heldout_ci": [
+        0.0,
+        0.0
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "rnafm",
+      "label": "RNA-FM",
+      "n_families": 35,
+      "n_layers": 13,
+      "chance": 0.2610494506345421,
+      "per_family_layer": 0.3696367124938553,
+      "global_layer": 0.12356548213691071,
+      "global_layer_index": 0,
+      "heldout": 0.12626321070904403,
+      "heldout_ci": [
+        0.07824074074074075,
+        0.1754516895141895
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "evo",
+      "label": "Evo",
+      "n_families": 35,
+      "n_layers": 32,
+      "chance": 0.3157191789032586,
+      "per_family_layer": 0.355687407830265,
+      "global_layer": 0.31429285000713575,
+      "global_layer_index": 12,
+      "heldout": 0.31561053321678323,
+      "heldout_ci": [
+        0.23207481176231176,
+        0.402315416065416
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "splicebert",
+      "label": "SpliceBERT",
+      "n_families": 35,
+      "n_layers": 7,
+      "chance": 0.23771964015208213,
+      "per_family_layer": 0.24652950224378795,
+      "global_layer": 0.20323945895374468,
+      "global_layer_index": 0,
+      "heldout": 0.20334420116920116,
+      "heldout_ci": [
+        0.1472564935064935,
+        0.25731050585217247
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "utrlm",
+      "label": "UTR-LM",
+      "n_families": 35,
+      "n_layers": 7,
+      "chance": 0.2302452241213438,
+      "per_family_layer": 0.2461794554651697,
+      "global_layer": 0.1913835370978228,
+      "global_layer_index": 0,
+      "heldout": 0.19098534613534612,
+      "heldout_ci": [
+        0.12980339105339106,
+        0.25039902998236324
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "hyenadna",
+      "label": "HyenaDNA",
+      "n_families": 35,
+      "n_layers": 4,
+      "chance": 0.14825220155847565,
+      "per_family_layer": 0.13830994402422975,
+      "global_layer": 0.12164327735756306,
+      "global_layer_index": 0,
+      "heldout": 0.12137762376512376,
+      "heldout_ci": [
+        0.06696590446590446,
+        0.17743115680615676
+      ],
+      "n_splits": 2000
+    },
+    {
       "model": "ernierna_untrained",
       "label": "ERNIE-RNA untrained",
       "n_families": 35,
@@ -47,10 +143,10 @@
       "per_family_layer": 0.4900390086104372,
       "global_layer": 0.47915465486894065,
       "global_layer_index": 1,
-      "heldout": 0.47849184264809264,
+      "heldout": 0.4777635579698079,
       "heldout_ci": [
-        0.39868530774780775,
-        0.554238516113516
+        0.3963541666666667,
+        0.5567760942760942
       ],
       "n_splits": 2000
     },
@@ -63,10 +159,10 @@
       "per_family_layer": 0.3367113045684474,
       "global_layer": 0.15776572633715488,
       "global_layer_index": 0,
-      "heldout": 0.15759640968599303,
+      "heldout": 0.15697543228376562,
       "heldout_ci": [
-        0.10587794150294151,
-        0.20762888346221678
+        0.10693838183421518,
+        0.20876077240660573
       ],
       "n_splits": 2000
     },
@@ -79,10 +175,10 @@
       "per_family_layer": 0.3228736343022058,
       "global_layer": 0.14281488352916924,
       "global_layer_index": 0,
-      "heldout": 0.1432469927449094,
+      "heldout": 0.14353402978194646,
       "heldout_ci": [
-        0.09120370370370372,
-        0.19266624579124578
+        0.09298701298701298,
+        0.19582521645021636
       ],
       "n_splits": 2000
     },
@@ -95,10 +191,10 @@
       "per_family_layer": 0.20974913974913972,
       "global_layer": 0.17165390165390165,
       "global_layer_index": 0,
-      "heldout": 0.17127135457135456,
+      "heldout": 0.17164596876888544,
       "heldout_ci": [
-        0.12125990136406803,
-        0.2215176875593542
+        0.12274095117845116,
+        0.22130163817663812
       ],
       "n_splits": 2000
     },
@@ -111,10 +207,10 @@
       "per_family_layer": 0.13893178250321106,
       "global_layer": 0.13178892536035391,
       "global_layer_index": 0,
-      "heldout": 0.13135040607540605,
+      "heldout": 0.1311222844285344,
       "heldout_ci": [
-        0.08060906685906687,
-        0.17991402116402114
+        0.08176024207274207,
+        0.1805145202020202
       ],
       "n_splits": 2000
     }

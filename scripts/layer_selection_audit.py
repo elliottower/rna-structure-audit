@@ -39,12 +39,19 @@ QUARANTINED = {"tRNA_Phe_yeast", "tRNA_Ala_human"}
 N_SPLITS = 2000
 SEED = 42
 
-MODELS = ["ernierna", "rinalmo", "ernierna_untrained", "rinalmo_untrained",
+MODELS = ["ernierna", "rinalmo", "caduceus", "rnafm", "evo", "splicebert",
+          "utrlm", "hyenadna", "ernierna_untrained", "rinalmo_untrained",
           "rnafm_untrained", "splicebert_untrained", "utrlm_untrained"]
 
 LABELS = {
     "ernierna": "ERNIE-RNA",
     "rinalmo": "RiNALMo",
+    "caduceus": "Caduceus",
+    "rnafm": "RNA-FM",
+    "evo": "Evo",
+    "splicebert": "SpliceBERT",
+    "utrlm": "UTR-LM",
+    "hyenadna": "HyenaDNA",
     "ernierna_untrained": "ERNIE-RNA untrained",
     "rinalmo_untrained": "RiNALMo untrained",
     "rnafm_untrained": "RNA-FM untrained",
@@ -142,8 +149,9 @@ def latex(rows: list[dict]) -> str:
         r"PS across all families. Held-out: the layer chosen on half the "
         r"families and precision reported on the other half, over "
         rf"{N_SPLITS:,} splits, with a 95\% interval over splits. "
-        r"Choosing per family costs the two trained models nothing and buys "
-        r"the randomly initialized controls up to $+0.18$.}",
+        r"Choosing per family costs the two trained models at most $0.010$ "
+        r"and is the whole of every other model's excess over its own chance "
+        r"rate.}",
         r"\label{tab:layer-selection}",
         r"\small",
         r"\begin{tabular}{@{}lrrrrr@{}}",

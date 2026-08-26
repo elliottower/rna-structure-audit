@@ -1,6 +1,6 @@
 \begin{table}[htbp]
 \centering
-\caption{Per-pair precision under three layer choices, each against the model's own within-stem derangement chance rate. Per-family: the layer maximizing mean PS within each family, which is how Table~\ref{tab:rung3} is computed. Panel: one layer maximizing mean PS across all families. Held-out: the layer chosen on half the families and precision reported on the other half, over 2,000 splits, with a 95\% interval over splits. Choosing per family costs the two trained models nothing and buys the randomly initialized controls up to $+0.18$.}
+\caption{Per-pair precision under three layer choices, each against the model's own within-stem derangement chance rate. Per-family: the layer maximizing mean PS within each family, which is how Table~\ref{tab:rung3} is computed. Panel: one layer maximizing mean PS across all families. Held-out: the layer chosen on half the families and precision reported on the other half, over 2,000 splits, with a 95\% interval over splits. Choosing per family costs the two trained models at most $0.010$ and is the whole of every other model's excess over its own chance rate.}
 \label{tab:layer-selection}
 \small
 \begin{tabular}{@{}lrrrrr@{}}
@@ -9,11 +9,17 @@
 \midrule
 ERNIE-RNA & 13 & 0.124 & 0.888 & 0.887 & 0.885 [0.814, 0.955] \\
 RiNALMo & 34 & 0.102 & 0.872 & 0.881 & 0.882 [0.822, 0.941] \\
-ERNIE-RNA untrained & 13 & 0.241 & 0.490 & 0.479 & 0.478 [0.399, 0.554] \\
-RiNALMo untrained & 34 & 0.232 & 0.337 & 0.158 & 0.158 [0.106, 0.208] \\
-RNA-FM untrained & 13 & 0.230 & 0.323 & 0.143 & 0.143 [0.091, 0.193] \\
-SpliceBERT untrained & 7 & 0.194 & 0.210 & 0.172 & 0.171 [0.121, 0.222] \\
-UTR-LM untrained & 7 & 0.127 & 0.139 & 0.132 & 0.131 [0.081, 0.180] \\
+Caduceus & 17 & 0.218 & 0.340 & 0.000 & 0.002 [0.000, 0.000] \\
+RNA-FM & 13 & 0.261 & 0.370 & 0.124 & 0.126 [0.078, 0.175] \\
+Evo & 32 & 0.316 & 0.356 & 0.314 & 0.316 [0.232, 0.402] \\
+SpliceBERT & 7 & 0.238 & 0.247 & 0.203 & 0.203 [0.147, 0.257] \\
+UTR-LM & 7 & 0.230 & 0.246 & 0.191 & 0.191 [0.130, 0.250] \\
+HyenaDNA & 4 & 0.148 & 0.138 & 0.122 & 0.121 [0.067, 0.177] \\
+ERNIE-RNA untrained & 13 & 0.241 & 0.490 & 0.479 & 0.478 [0.396, 0.557] \\
+RiNALMo untrained & 34 & 0.232 & 0.337 & 0.158 & 0.157 [0.107, 0.209] \\
+RNA-FM untrained & 13 & 0.230 & 0.323 & 0.143 & 0.144 [0.093, 0.196] \\
+SpliceBERT untrained & 7 & 0.194 & 0.210 & 0.172 & 0.172 [0.123, 0.221] \\
+UTR-LM untrained & 7 & 0.127 & 0.139 & 0.132 & 0.131 [0.082, 0.181] \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -735,15 +735,37 @@ The monotonicity in layer count above is the same fact seen from outside: a
 34-layer control draws the per-family maximum from 34 profiles and a 7-layer
 control from 7.
 
-**Not corrected for the rest of the panel.** `precision_per_layer` is stored only
-for the seven models re-run after it was added. Caduceus (+0.122 over its chance
-rate, 17 layers) and RNA-FM trained (+0.109, 13 layers) sit in the band RiNALMo
-untrained (+0.105) and RNA-FM untrained (+0.093) occupied before the correction,
-and both are reported in the manuscript abstract as exceeding chance. Deciding
-them needs a phase-6-only re-run of caduceus, rnafm, evo, utrlm, splicebert and
-hyenadna; the four models at precision 0.000 or 0.007 cannot move. The seven
-re-run cells reproduced their prior numbers byte for byte apart from the stamp,
-so the re-run is a read of an additional field rather than a new measurement.
+**The whole panel, and it is the whole of every mid-table excess.** Six further
+models were re-run phase-6-only to store `precision_per_layer`; each reproduced
+its prior numbers, and UTR-LM's six families differing at relative 1e-6 to 1e-4
+are the only drift, explained by its earlier run predating forced determinism.
+Excess over each model's own chance rate, per-family against held-out:
+
+| model | layers | per-family | held-out |
+|---|---|---|---|
+| RiNALMo | 34 | +0.770 | +0.780 |
+| ERNIE-RNA | 13 | +0.764 | +0.761 |
+| ERNIE-RNA untrained | 13 | +0.249 | +0.237 |
+| Caduceus | 17 | +0.122 | **-0.216** |
+| RNA-FM | 13 | +0.109 | **-0.135** |
+| RiNALMo untrained | 34 | +0.105 | -0.075 |
+| RNA-FM untrained | 13 | +0.093 | -0.086 |
+| Evo | 32 | +0.040 | -0.000 |
+| UTR-LM | 7 | +0.016 | -0.039 |
+| SpliceBERT untrained | 7 | +0.016 | -0.022 |
+| UTR-LM untrained | 7 | +0.011 | +0.004 |
+| SpliceBERT | 7 | +0.009 | -0.034 |
+| HyenaDNA | 4 | -0.010 | -0.027 |
+
+Every model except RiNALMo, ERNIE-RNA and ERNIE-RNA's bias-carrying control
+sits at or below its own chance rate once the layer is not chosen per family.
+Caduceus goes from 0.340 to 0.002, which is what a 17-layer noise profile looks
+like when the maximum is taken 35 times and when it is not. The four models at
+precision 0.000 or 0.007 cannot move and were not re-run.
+
+The manuscript abstract reported Caduceus and RNA-FM as exceeding chance. Both
+are corrected in `paper/rna-structure-audit_v16.tex`, which reports per-family,
+panel-layer and held-out precision side by side.
 
 **Consequence for the reported result.** Every trained-versus-untrained
 comparison reads the untrained arm as a floor. H10, H14, H17 and H19 are sign

@@ -54,10 +54,12 @@ mutation must perturb its base-pairing partner more than that partner's own stem
 neighbours, measured against a null that permutes partner assignments within
 each stem. Two models resolve which position pairs with which: RiNALMo at
 $0.872$ per-pair precision and ERNIE-RNA at $0.888$, where that null puts chance
-at $0.102$ and $0.124$. Three more exceed their own chance rates by an order of
-magnitude less---Caduceus by $0.122$, RNA-FM by $0.109$---and the remaining five
-are at chance. Pretraining domain does not order the panel: Caduceus is a 14M
-DNA-pretrained model and outscores three of the five RNA-pretrained ones.
+at $0.102$ and $0.124$. Precision is read at the layer maximizing mean PS within
+each family; choosing that layer on families that do not report the number
+leaves RiNALMo at $0.882$ and ERNIE-RNA at $0.885$ and places the other eight
+models at or below their own chance rates. Pretraining domain does not order
+those eight: Evo at 7B parameters and RNA-FM at 99M sit with the
+DNA-pretrained models.
 A randomly initialized ERNIE-RNA clears every rung, reaching $0.490$ per-pair
 precision. Its architecture holds a hardcoded Watson--Crick table in a buffer
 that weight randomization does not reach; ablating it drops the randomly
@@ -200,14 +202,27 @@ perturbs $j$'s own stem neighbours in two models. RiNALMo reaches mean
 PS $= \psRiNALMo{}$ and ERNIE-RNA $\psErnieRNA{}$, against per-pair precisions
 of $0.872$ and $0.888$ where each model's own within-stem derangement puts
 chance at $0.102$ and $0.124$ (Table~\ref{tab:rung3}). The remaining eight
-models sit within $0.02$ of their own chance rates.
+exceed their own chance rates by at most $0.122$, reached by Caduceus.
+
+None of those eight excesses survives the way the layer is chosen. Precision is
+read at the layer maximizing mean PS within each family, which is
+\chanceRateN{} independent selections, so a model with no partner-specific
+response collects the maximum of a noise profile in every family and collects
+more of it the more layers it has. Choosing one layer for the whole panel, or
+choosing it on half the families and reading precision on the other half over
+$2{,}000$ splits, moves RiNALMo and ERNIE-RNA by at most $0.010$ and puts all
+eight remaining models at or below their own chance rates
+(Table~\ref{tab:layer-selection}). Caduceus falls from $0.340$ to $0.002$ and
+RNA-FM from $0.370$ to $0.126$, against chance rates of $0.218$ and $0.261$.
+
+\input{generated/layer_selection_table}
 
 A chance rate is a property of a model rather than a constant of the comparison.
 Measured on the derangement, where the assigned partner is false by
 construction, it ranges from $0.000$ to $0.316$ across the panel. Judging
 per-pair precision against the exchangeability value of $1/3$ therefore holds
 ten models to a threshold none of them has: Caduceus at $0.340$ falls below
-$1/3$ by $0.002$ while clearing its own rate by $0.113$. Both comparisons are
+$1/3$ by $0.002$ while clearing its own rate by $0.122$. Both comparisons are
 reported in Table~\ref{tab:rung3}, and RiNALMo and ERNIE-RNA pass either by
 margins no choice of null affects.
 
@@ -276,9 +291,8 @@ layer for the whole panel puts RiNALMo at $-0.074$ and RNA-FM at $-0.087$
 against their own chance rates and moves the two trained models by at most
 $0.010$; choosing the layer on half the families and reporting precision on the
 other half reproduces both to three decimals
-(Table~\ref{tab:layer-selection}).
-
-\input{generated/layer_selection_table}
+(Table~\ref{tab:layer-selection}). The same control removes the excess of every
+model in the panel except these two and ERNIE-RNA's own bias-carrying control.
 
 \subsection{Multi-sequence replication}
 \label{sec:multiseq-results}
