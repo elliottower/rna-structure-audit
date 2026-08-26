@@ -13,10 +13,11 @@ __pycache__/
 *.snm
 *.toc
 
-# submission correspondence stays out of the public repo
-cover-letter.tex
-cover_letter*.tex
-submissions/README.md
+# Submission materials stay out of the public repo entirely: correspondence,
+# cover letters, fee waivers, and the venue bundles themselves. The paper
+# lives in paper/ and the deposit in Zenodo; a submissions/ directory is a
+# working copy for one venue and belongs to nobody but the author.
+submissions/
 
 # superseded volume pulls: kept for comparison, never deposited
 results/superseded_volume/
