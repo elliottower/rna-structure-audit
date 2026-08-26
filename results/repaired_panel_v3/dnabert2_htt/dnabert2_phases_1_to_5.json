@@ -1,0 +1,206 @@
+{
+  "model": "dnabert2",
+  "stamp": {
+    "commit": "0c9e66892cefb994fc487ef9c852eeaea1fed77f",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.4.0",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.28.0",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-25 18:53:36 UTC",
+  "experiment": "phases_1_to_5",
+  "mutation_trained": {
+    "model": "dnabert2",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 0.9896968589518012,
+        "best_layer": 0,
+        "noop_floor": 1.143878650705872,
+        "nuc_null_95th": 1.01910477503743,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 0.9316783985903764,
+        "best_layer": 0,
+        "noop_floor": 0.8929407543676131,
+        "nuc_null_95th": 1.0067482167876813,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0099163055893774,
+        "best_layer": 0,
+        "noop_floor": 0.7423685187620683,
+        "nuc_null_95th": 1.0343901700607459,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.0045587583367812,
+        "best_layer": 0,
+        "noop_floor": 0.9043984213837549,
+        "nuc_null_95th": 1.0087322640846843,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 0.9865019211561972,
+        "best_layer": 0,
+        "noop_floor": 0.8896409440705885,
+        "nuc_null_95th": 1.0175774285672563,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132
+      }
+    },
+    "mean_best_ratio": 0.9844704485249067,
+    "median_best_ratio": 0.9896968589518012,
+    "n_exceeding_nuc_null": 0,
+    "n_families_scored": 5
+  },
+  "attention_trained": {
+    "model": "dnabert2",
+    "metric": "attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.12843522317086314,
+        "best_layer": 1
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.12183766174838465,
+        "best_layer": 9
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.11079367704968235,
+        "best_layer": 1
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.14474267560868986,
+        "best_layer": 1
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.13726824844128707,
+        "best_layer": 7
+      }
+    }
+  },
+  "probing": {
+    "model": "dnabert2",
+    "metric": "structure_probing",
+    "per_layer": {
+      "0": {
+        "mean_balanced_accuracy": 0.6026852889782844,
+        "std_balanced_accuracy": 0.02862408488075076,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "1": {
+        "mean_balanced_accuracy": 0.603618865299856,
+        "std_balanced_accuracy": 0.03033441624846839,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "2": {
+        "mean_balanced_accuracy": 0.6139032158074764,
+        "std_balanced_accuracy": 0.035765049284692735,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "3": {
+        "mean_balanced_accuracy": 0.601648616332082,
+        "std_balanced_accuracy": 0.035874967813077134,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "4": {
+        "mean_balanced_accuracy": 0.6081983415257961,
+        "std_balanced_accuracy": 0.02883596951450062,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "5": {
+        "mean_balanced_accuracy": 0.5871684151396652,
+        "std_balanced_accuracy": 0.027067068479591963,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "6": {
+        "mean_balanced_accuracy": 0.6063243113451457,
+        "std_balanced_accuracy": 0.034812415318578205,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "7": {
+        "mean_balanced_accuracy": 0.6078376807861726,
+        "std_balanced_accuracy": 0.04859576143046475,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "8": {
+        "mean_balanced_accuracy": 0.6022312528316617,
+        "std_balanced_accuracy": 0.05604816138116294,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "9": {
+        "mean_balanced_accuracy": 0.5971728468840684,
+        "std_balanced_accuracy": 0.06183629000358032,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "10": {
+        "mean_balanced_accuracy": 0.6178138597699556,
+        "std_balanced_accuracy": 0.034033388385354316,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "11": {
+        "mean_balanced_accuracy": 0.599954370628449,
+        "std_balanced_accuracy": 0.0402131524938126,
+        "n_samples": 1442,
+        "n_targets": 5
+      }
+    },
+    "best_layer": 10,
+    "best_accuracy": 0.6178138597699556
+  }
+}

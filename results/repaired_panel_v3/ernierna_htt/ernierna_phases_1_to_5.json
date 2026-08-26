@@ -1,0 +1,212 @@
+{
+  "model": "ernierna",
+  "stamp": {
+    "commit": "0c9e66892cefb994fc487ef9c852eeaea1fed77f",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.6.0",
+      "triton": "3.2.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "5.14.1",
+      "multimolecule": "0.2.0",
+      "huggingface-hub": "1.28.0",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-25 18:53:35 UTC",
+  "experiment": "phases_1_to_5",
+  "mutation_trained": {
+    "model": "ernierna",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.0773361811534108,
+        "best_layer": 12,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.0850005931588644,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.087783145965688,
+        "best_layer": 8,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.0897733416044326,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0792934134740293,
+        "best_layer": 12,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.12423005553107,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.0947547797118475,
+        "best_layer": 12,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.1508949501819679,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.0893912044123575,
+        "best_layer": 12,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.1916400310044462,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132
+      }
+    },
+    "mean_best_ratio": 1.0857117449434666,
+    "median_best_ratio": 1.087783145965688,
+    "n_exceeding_nuc_null": 0,
+    "n_families_scored": 5
+  },
+  "attention_trained": {
+    "model": "ernierna",
+    "metric": "attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.07676337969393791,
+        "best_layer": 11
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.07408050650913457,
+        "best_layer": 11
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.06939883350583724,
+        "best_layer": 11
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.06784217323413706,
+        "best_layer": 11
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.06224673016118883,
+        "best_layer": 11
+      }
+    }
+  },
+  "probing": {
+    "model": "ernierna",
+    "metric": "structure_probing",
+    "per_layer": {
+      "0": {
+        "mean_balanced_accuracy": 0.7383841317984052,
+        "std_balanced_accuracy": 0.03274644954683143,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "1": {
+        "mean_balanced_accuracy": 0.7819955868951188,
+        "std_balanced_accuracy": 0.011084083340184006,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "2": {
+        "mean_balanced_accuracy": 0.865539453340336,
+        "std_balanced_accuracy": 0.02858709983024881,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "3": {
+        "mean_balanced_accuracy": 0.9319384538671519,
+        "std_balanced_accuracy": 0.012127640671604585,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "4": {
+        "mean_balanced_accuracy": 0.9649748282051467,
+        "std_balanced_accuracy": 0.010545763470311775,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "5": {
+        "mean_balanced_accuracy": 0.9733865630968879,
+        "std_balanced_accuracy": 0.004662681909930647,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "6": {
+        "mean_balanced_accuracy": 0.9698031873461341,
+        "std_balanced_accuracy": 0.008656565069937816,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "7": {
+        "mean_balanced_accuracy": 0.9755601905797061,
+        "std_balanced_accuracy": 0.006246976052899231,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "8": {
+        "mean_balanced_accuracy": 0.9775142753462909,
+        "std_balanced_accuracy": 0.007072644931377754,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "9": {
+        "mean_balanced_accuracy": 0.9846625055403366,
+        "std_balanced_accuracy": 0.008091104065081973,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "10": {
+        "mean_balanced_accuracy": 0.9852910974943597,
+        "std_balanced_accuracy": 0.00968655125323554,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "11": {
+        "mean_balanced_accuracy": 0.9846625055403366,
+        "std_balanced_accuracy": 0.008091104065081973,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "12": {
+        "mean_balanced_accuracy": 0.9765547735247202,
+        "std_balanced_accuracy": 0.006485164931222688,
+        "n_samples": 1442,
+        "n_targets": 5
+      }
+    },
+    "best_layer": 10,
+    "best_accuracy": 0.9852910974943597
+  }
+}

@@ -1,0 +1,375 @@
+{
+  "model": "nt",
+  "stamp": {
+    "commit": "0c9e66892cefb994fc487ef9c852eeaea1fed77f",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.4.1",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.44.2",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-25 18:54:35 UTC",
+  "phase": 6,
+  "metric": "perturbation_specificity",
+  "preregistration": "PREREGISTRATION_PHASE6_V2.md",
+  "offset": 0,
+  "tokenizer_caveated": true,
+  "results": {
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ps": -2.9890619893754213e-17,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -2.9890619893754213e-17,
+          -5.54954266913398e-06,
+          -2.5043776624822378e-05,
+          -1.6122079232217832e-05,
+          -0.00013875510339804122,
+          -4.507808797321173e-05,
+          -0.0008553300055287999,
+          -0.0003726491587936305,
+          -0.0005476753049121592,
+          -0.0005656650549800776,
+          -0.0006168654125879686,
+          -0.002131636401216104,
+          -0.00032409476341370533
+        ],
+        "n_eligible_pairs": 26,
+        "n_stems": 10,
+        "n_wc_pairs_total": 73,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.001208807726870294,
+          "mean_stem_delta": 0.026493144782563205,
+          "mean_loop_delta": 0.012285294042586496
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 11,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -4.163336342344337e-17,
+        "ps_au_pairs": -1.1102230246251566e-17,
+        "nearer_neighbor_larger": 0.11538461538461539,
+        "noop_floor": {
+          "best_ps_noop": 0.0,
+          "per_layer_ps_noop": [
+            -2.9890619893754213e-17,
+            -1.2810265668751807e-17,
+            -8.540177112501205e-18,
+            -1.708035422500241e-17,
+            -2.5620531337503614e-17,
+            -2.1350442781253012e-17,
+            -8.540177112501205e-18,
+            -4.270088556250602e-18,
+            -2.5620531337503614e-17,
+            -1.2810265668751807e-17,
+            -4.2700885562506023e-17,
+            -1.2810265668751807e-17,
+            0.0
+          ]
+        },
+        "quarantined": false,
+        "null_95th_primary": -2.114710523095536e-17,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "HTT_CAG21_normal": {
+        "best_ps": -3.1086244689504386e-17,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -3.1086244689504386e-17,
+          -3.583230599986109e-06,
+          -1.944186114468227e-05,
+          -1.3658859783540755e-05,
+          -4.508856379290549e-06,
+          -8.459458202159098e-07,
+          -3.547904703369298e-06,
+          -6.735816485647472e-05,
+          -1.8134869632806528e-05,
+          -2.350862632577222e-05,
+          -1.27357513787274e-05,
+          -2.2534840759096398e-05,
+          -7.192325104625752e-06
+        ],
+        "n_eligible_pairs": 25,
+        "n_stems": 9,
+        "n_wc_pairs_total": 78,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0019247816879721074,
+          "mean_stem_delta": 0.025024149352879825,
+          "mean_loop_delta": 0.011642982720575451
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 11,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -4.4408920985006264e-17,
+        "ps_au_pairs": -1.1102230246251566e-17,
+        "nearer_neighbor_larger": 0.08,
+        "noop_floor": {
+          "best_ps_noop": -8.881784197001253e-18,
+          "per_layer_ps_noop": [
+            -3.1086244689504386e-17,
+            -3.552713678800501e-17,
+            -3.9968028886505634e-17,
+            -1.3322676295501878e-17,
+            -8.881784197001253e-18,
+            -1.7763568394002505e-17,
+            -2.6645352591003756e-17,
+            -2.6645352591003756e-17,
+            -3.552713678800501e-17,
+            -1.3322676295501878e-17,
+            -8.881784197001253e-18,
+            -1.7763568394002505e-17,
+            -1.7763568394002505e-17
+          ]
+        },
+        "quarantined": false,
+        "null_95th_primary": -2.114710523095536e-17,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ps": -1.2810265668751807e-17,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -1.2810265668751807e-17,
+          -2.2807209869110027e-06,
+          -1.9516603699386828e-05,
+          -1.903178895817071e-05,
+          -2.6279532572375937e-05,
+          -5.3976830896845366e-05,
+          -4.349175788855767e-05,
+          -5.7753046154894144e-05,
+          -3.2734320404117844e-05,
+          -0.0001579765190951684,
+          -1.4871690589314001e-05,
+          -2.8315754241981814e-05,
+          -1.2423388067087734e-05
+        ],
+        "n_eligible_pairs": 26,
+        "n_stems": 10,
+        "n_wc_pairs_total": 91,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.22752841883594838,
+          "mean_stem_delta": 0.018675924708844556,
+          "mean_loop_delta": 0.014669992213151746
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 11,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -2.0816681711721685e-17,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.038461538461538464,
+        "noop_floor": {
+          "best_ps_noop": 0.0,
+          "per_layer_ps_noop": [
+            -1.2810265668751807e-17,
+            -1.708035422500241e-17,
+            -1.708035422500241e-17,
+            -2.9890619893754213e-17,
+            -4.270088556250602e-18,
+            -1.2810265668751807e-17,
+            -4.697097411875662e-17,
+            -2.5620531337503614e-17,
+            -2.1350442781253012e-17,
+            -8.540177112501205e-18,
+            0.0,
+            -2.5620531337503614e-17,
+            0.0
+          ]
+        },
+        "quarantined": false,
+        "null_95th_primary": -1.586032892321652e-17,
+        "null_95th_conservative": -1.586032892321652e-17,
+        "h3_chance_fraction": 0.0,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ps": -1.2810265668751807e-17,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -1.2810265668751807e-17,
+          -3.1250720391536783e-06,
+          -1.8255686142353547e-05,
+          -1.735329773305816e-05,
+          -2.6695057518041268e-05,
+          -5.133088291739632e-05,
+          -4.4994952306198766e-05,
+          -0.00017696490151789194,
+          -0.00012750037158858302,
+          -0.0002596001732172619,
+          -4.777060192983757e-05,
+          -0.0001018206458623383,
+          -3.516019803842316e-05
+        ],
+        "n_eligible_pairs": 26,
+        "n_stems": 10,
+        "n_wc_pairs_total": 95,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.24243254985378443,
+          "mean_stem_delta": 0.01788540937725325,
+          "mean_loop_delta": 0.014155255644269229
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 11,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -2.0816681711721685e-17,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.038461538461538464,
+        "noop_floor": {
+          "best_ps_noop": -4.270088556250602e-18,
+          "per_layer_ps_noop": [
+            -1.2810265668751807e-17,
+            -3.843079700625542e-17,
+            -8.540177112501205e-18,
+            -8.540177112501205e-18,
+            -4.270088556250602e-18,
+            -5.551115123125783e-17,
+            -2.9890619893754213e-17,
+            -8.540177112501205e-18,
+            -1.2810265668751807e-17,
+            -1.2810265668751807e-17,
+            -2.1350442781253012e-17,
+            -4.2700885562506023e-17,
+            -1.708035422500241e-17
+          ]
+        },
+        "quarantined": false,
+        "null_95th_primary": -1.586032892321652e-17,
+        "null_95th_conservative": -1.586032892321652e-17,
+        "h3_chance_fraction": 0.0,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ps": -1.2810265668751807e-17,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -1.2810265668751807e-17,
+          -2.7589276255534345e-06,
+          -1.2785459417160497e-05,
+          -1.212792038626573e-05,
+          -2.1427404477653438e-05,
+          -4.2883837383036815e-05,
+          -2.8442581090214727e-05,
+          -4.803449746976645e-06,
+          -9.659185600133022e-06,
+          -3.6077572404894595e-05,
+          -1.0068573211153586e-05,
+          -1.6177600088664355e-05,
+          -7.65277423375305e-06
+        ],
+        "n_eligible_pairs": 26,
+        "n_stems": 10,
+        "n_wc_pairs_total": 115,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.30947225212918517,
+          "mean_stem_delta": 0.014761320403060543,
+          "mean_loop_delta": 0.012042530921243973
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 11,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "ps_gc_pairs": -2.0816681711721685e-17,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.038461538461538464,
+        "noop_floor": {
+          "best_ps_noop": 0.0,
+          "per_layer_ps_noop": [
+            -1.2810265668751807e-17,
+            -5.124106267500723e-17,
+            -1.708035422500241e-17,
+            -2.9890619893754213e-17,
+            -4.270088556250602e-18,
+            -2.5620531337503614e-17,
+            -8.540177112501205e-18,
+            0.0,
+            -4.270088556250602e-18,
+            -8.540177112501205e-18,
+            -8.540177112501205e-18,
+            -2.5620531337503614e-17,
+            -2.9890619893754213e-17
+          ]
+        },
+        "quarantined": false,
+        "null_95th_primary": -1.586032892321652e-17,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": false
+      }
+    },
+    "mean_best_ps": -3.0488432291629297e-17,
+    "median_best_ps": -3.0488432291629297e-17,
+    "families_exceeding_null_primary": 0,
+    "families_exceeding_null_conservative": 0,
+    "families_no_null": [],
+    "families_total": 2,
+    "families_quarantined": [],
+    "families_skipped": [],
+    "families_failed_gate": [
+      "HTT_CAG36_pathogenic",
+      "HTT_CAG40_pathogenic",
+      "HTT_CAG60_pathogenic"
+    ]
+  }
+}

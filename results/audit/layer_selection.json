@@ -1,0 +1,122 @@
+{
+  "n_splits": 2000,
+  "seed": 42,
+  "quarantined": [
+    "tRNA_Ala_human",
+    "tRNA_Phe_yeast"
+  ],
+  "models": [
+    {
+      "model": "ernierna",
+      "label": "ERNIE-RNA",
+      "n_families": 35,
+      "n_layers": 13,
+      "chance": 0.1241523972647526,
+      "per_family_layer": 0.8882879818594104,
+      "global_layer": 0.8869274376417233,
+      "global_layer_index": 12,
+      "heldout": 0.8850029982363316,
+      "heldout_ci": [
+        0.8140873015873016,
+        0.9554166666666666
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "rinalmo",
+      "label": "RiNALMo",
+      "n_families": 35,
+      "n_layers": 34,
+      "chance": 0.10216342512151683,
+      "per_family_layer": 0.8717068645640074,
+      "global_layer": 0.881230674087817,
+      "global_layer_index": 33,
+      "heldout": 0.8816644360269361,
+      "heldout_ci": [
+        0.8220899470899471,
+        0.9406084656084656
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "ernierna_untrained",
+      "label": "ERNIE-RNA untrained",
+      "n_families": 35,
+      "n_layers": 13,
+      "chance": 0.24091960754158123,
+      "per_family_layer": 0.4900390086104372,
+      "global_layer": 0.47915465486894065,
+      "global_layer_index": 1,
+      "heldout": 0.47849184264809264,
+      "heldout_ci": [
+        0.39868530774780775,
+        0.554238516113516
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "rinalmo_untrained",
+      "label": "RiNALMo untrained",
+      "n_families": 35,
+      "n_layers": 34,
+      "chance": 0.23198653663506227,
+      "per_family_layer": 0.3367113045684474,
+      "global_layer": 0.15776572633715488,
+      "global_layer_index": 0,
+      "heldout": 0.15759640968599303,
+      "heldout_ci": [
+        0.10587794150294151,
+        0.20762888346221678
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "rnafm_untrained",
+      "label": "RNA-FM untrained",
+      "n_families": 35,
+      "n_layers": 13,
+      "chance": 0.22999247081929,
+      "per_family_layer": 0.3228736343022058,
+      "global_layer": 0.14281488352916924,
+      "global_layer_index": 0,
+      "heldout": 0.1432469927449094,
+      "heldout_ci": [
+        0.09120370370370372,
+        0.19266624579124578
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "splicebert_untrained",
+      "label": "SpliceBERT untrained",
+      "n_families": 35,
+      "n_layers": 7,
+      "chance": 0.19389343097424167,
+      "per_family_layer": 0.20974913974913972,
+      "global_layer": 0.17165390165390165,
+      "global_layer_index": 0,
+      "heldout": 0.17127135457135456,
+      "heldout_ci": [
+        0.12125990136406803,
+        0.2215176875593542
+      ],
+      "n_splits": 2000
+    },
+    {
+      "model": "utrlm_untrained",
+      "label": "UTR-LM untrained",
+      "n_families": 35,
+      "n_layers": 7,
+      "chance": 0.12746949285867232,
+      "per_family_layer": 0.13893178250321106,
+      "global_layer": 0.13178892536035391,
+      "global_layer_index": 0,
+      "heldout": 0.13135040607540605,
+      "heldout_ci": [
+        0.08060906685906687,
+        0.17991402116402114
+      ],
+      "n_splits": 2000
+    }
+  ]
+}
