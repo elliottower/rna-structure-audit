@@ -1,0 +1,7 @@
+{
+  "n_families": 47,
+  "paired_mi_mean": 0.34652437085171883,
+  "unpaired_mi_mean": 0.06562311654137021,
+  "wilcoxon_p": 7.105427357601002e-14,
+  "note": "restricted to the 47-family repaired panel"
+}

@@ -420,13 +420,12 @@ covariation contribution and the three quarters that remain are a lower bound
 on the rest.
 
 As an independent check, we computed mutual information (MI) between
-paired positions from Rfam seed alignments (51 families, $n \geq 3$
-sequences each). MI cleanly separates paired from unpaired positions
-(mean MI $= 0.349$ vs $0.063$; Wilcoxon $p = 3.5 \times 10^{-10}$),
-confirming that evolutionary covariation is detectable in the
-alignments. Per-family mean MI does not correlate significantly with
-model PS (ERNIE-RNA: $\rho = 0.320$, $p = 0.065$; RiNALMo:
-$\rho = 0.265$, $p = 0.130$). Families with strong covariation signal
+paired positions from the Rfam seed alignments of the \panelN{} panel families.
+MI separates paired from unpaired positions (mean MI $= 0.347$ against
+$0.066$; Wilcoxon $p = 7.1 \times 10^{-14}$), confirming that evolutionary
+covariation is detectable in the alignments. Per-family mean MI does not
+correlate significantly with model PS (RiNALMo: $\rho = +0.272$, $p = 0.109$;
+ERNIE-RNA: $\rho = +0.239$, $p = 0.160$; $n = \confirmatoryN{}$). Families with strong covariation signal
 do not systematically produce higher PS, suggesting that the models'
 partner specificity reflects learned structure rather than
 recapitulated covariation.
@@ -501,11 +500,11 @@ positions is open.
 
 % P4: What predicts composition-controlled sensitivity
 Neither training domain nor architecture family alone predicts
-composition-controlled sensitivity. The three SSM-based models (Evo,
-Caduceus, HyenaDNA) span nearly the full range of mean ratios
-(1.17--1.48), as do the seven transformers (0.99--1.89). RNA-pretrained
-models occupy four of the top five positions, but Evo and Caduceus---both
-DNA-pretrained---outperform three of the five RNA models. The two models
+composition-controlled sensitivity. The three state-space models span mean
+ratios $\ratioHyenaDNA{}$ to $\ratioEvo{}$ and the seven transformers
+$\ratioDNABERTTwo{}$ to $\ratioRNAFM{}$, so the architecture families overlap
+almost entirely. Evo at $\ratioEvo{}$ exceeds four of the five RNA-pretrained
+models on the raw ratio and Caduceus at $\ratioCaduceus{}$ exceeds three. The two models
 that survive the partner specificity test (RiNALMo and ERNIE-RNA) share
 RNA pretraining but differ in mechanism: ERNIE-RNA injects explicit
 base-pairing attention bias, while RiNALMo uses standard self-attention at
@@ -521,10 +520,13 @@ RNA structure prediction benchmarks have moved toward stricter evaluation
 because high apparent performance can fail to generalize across families
 \citep{szikszai2022generalization}. This work extends the concern from
 dataset similarity to sequence-composition confounding. NT~v2 and DNABERT-2
-show near-zero embedding-level partner specificity despite passing many
-families at the composition gate, suggesting that structure-relevant
-information in these models, if present, may reside in attention patterns
-that embedding-level metrics do not capture.
+show near-zero embedding-level partner specificity while passing many families
+at the composition gate, and their attention--contact correlations do not
+supply the missing channel: NT~v2 reads $\attnNTvTwo{}$ trained against
+$\attnUntrainedNTvTwo{}$ randomly initialized, so its correlation is
+architectural, and DNABERT-2's trained excess of $\attnDeltaDNABERTTwo{}$ rests
+on a model that does not reproduce itself between runs
+(Table~\ref{tab:attn_trained_untrained}).
 
 % P6: Limitations
 % (Updated to reference covariation results in Section 2.5)
