@@ -52,7 +52,7 @@ nucleotide-stratified null absorbs most of the apparent signal at Rung~1; a
 dinucleotide-preserving null at Rung~2 leaves ERNIE-RNA with 30 families and
 RiNALMo with 15, and every other model with fewer than nine. At Rung~3 a
 mutation must perturb its base-pairing partner more than that partner's own stem
-neighbours, measured against a null that permutes partner assignments within
+neighbors, measured against a null that permutes partner assignments within
 each stem. Two models resolve which position pairs with which: RiNALMo at
 $0.872$ per-pair precision and ERNIE-RNA at $0.888$, where that null puts chance
 at $0.102$ and $0.124$. Precision is read at the layer maximizing mean PS within
@@ -180,7 +180,7 @@ readings the panel cannot separate, since every arm in it is a model under test.
 We therefore run the Rung 3 procedure unchanged on two constructed embeddings
 whose answer is fixed in advance. In the oracle, each position's representation
 is a function of its own nucleotide and its partner's; in the local control, of
-its own nucleotide and its two sequence neighbours.
+its own nucleotide and its two sequence neighbors.
 
 The oracle reaches per-pair precision $1.000$ against a derangement chance rate
 of $0.099$. The local control reaches $0.155$ against $0.173$. Both use the same
@@ -201,7 +201,7 @@ known.
 \input{generated/rung3_table}
 
 Mutating position $i$ to its complement perturbs its partner $j$ more than it
-perturbs $j$'s own stem neighbours in two models. RiNALMo reaches mean
+perturbs $j$'s own stem neighbors in two models. RiNALMo reaches mean
 PS $= \psRiNALMo{}$ and ERNIE-RNA $\psErnieRNA{}$, against per-pair precisions
 of $0.872$ and $0.888$ where each model's own within-stem derangement puts
 chance at $0.102$ and $0.124$ (Table~\ref{tab:rung3}). The remaining eight
@@ -413,7 +413,7 @@ from \natExcessRiNALMo{} to \synExcessRiNALMo{}, retaining
 different questions on these sequences. Mean PS is a magnitude, and synthetic
 sequences have flatter composition, so every perturbation is smaller. Per-pair
 precision asks whether a mutated position's partner moves more than that
-partner's neighbours, which is what Rung 3 tests, and three quarters of it
+partner's neighbors, which is what Rung 3 tests, and three quarters of it
 survives on sequences with no covariation at all. Those sequences also destroy
 natural sequence context, so the quarter that is lost is an upper bound on the
 covariation contribution and the three quarters that remain are a lower bound
