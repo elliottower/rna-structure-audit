@@ -1,0 +1,232 @@
+[
+  {
+    "key": "rinalmo",
+    "label": "RiNALMo",
+    "size": "650M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 0.20616093517704703,
+      "precision": 0.8717068645640074,
+      "chance": 0.10216342512151683,
+      "excess": 0.7695434394424905,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.09191621034476677,
+      "precision": 0.7734797254028022,
+      "chance": 0.19195502535915618,
+      "excess": 0.581524700043646,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "ernierna",
+    "label": "ERNIE-RNA",
+    "size": "86M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 0.11132504787220948,
+      "precision": 0.8882879818594104,
+      "chance": 0.1241523972647526,
+      "excess": 0.7641355845946578,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.04150750747670864,
+      "precision": 0.7644732688963458,
+      "chance": 0.19087253901302617,
+      "excess": 0.5736007298833197,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "caduceus",
+    "label": "Caduceus",
+    "size": "14M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 0.003894492437753446,
+      "precision": 0.3400834879406308,
+      "chance": 0.21815898319934032,
+      "excess": 0.12192450474129049,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.00362132690377021,
+      "precision": 0.26425285540670157,
+      "chance": 0.2060961795880235,
+      "excess": 0.05815667581867806,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "evo",
+    "label": "Evo",
+    "size": "7B",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 0.0017188207461298769,
+      "precision": 0.355687407830265,
+      "chance": 0.3157191789032586,
+      "excess": 0.039968228927006355,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.0013007021914097892,
+      "precision": 0.33217528909836597,
+      "chance": 0.3164226018116101,
+      "excess": 0.015752687286755884,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "hyenadna",
+    "label": "HyenaDNA",
+    "size": "5.4M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 0.0002441243788349346,
+      "precision": 0.13830994402422975,
+      "chance": 0.14825220155847565,
+      "excess": -0.009942257534245907,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.00015335992086014995,
+      "precision": 0.16604874470259084,
+      "chance": 0.1615140491344945,
+      "excess": 0.004534695568096353,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "splicebert",
+    "label": "SpliceBERT",
+    "size": "19M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 0.00021754862994211914,
+      "precision": 0.24652950224378795,
+      "chance": 0.23771964015208213,
+      "excess": 0.008809862091705811,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.00022679013264963494,
+      "precision": 0.29844651786959475,
+      "chance": 0.24097318349114855,
+      "excess": 0.057473334378446206,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "rnafm",
+    "label": "RNA-FM",
+    "size": "99M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 8.441251746985277e-05,
+      "precision": 0.3696367124938553,
+      "chance": 0.2610494506345421,
+      "excess": 0.10858726185931322,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 0.0001428265052457648,
+      "precision": 0.3727478575555499,
+      "chance": 0.28054845957397734,
+      "excess": 0.09219939798157256,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "utrlm",
+    "label": "UTR-LM",
+    "size": "$\\sim$2M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": 8.29891482017131e-06,
+      "precision": 0.2461794554651697,
+      "chance": 0.2302452241213438,
+      "excess": 0.015934231343825905,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": 1.5178180582875247e-05,
+      "precision": 0.28295208352900664,
+      "chance": 0.24789326572382395,
+      "excess": 0.03505881780518269,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "nt",
+    "label": "NT~v2",
+    "size": "56M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": -9.675314959167915e-05,
+      "precision": 0.007142857142857143,
+      "chance": 0.0067460317460317455,
+      "excess": 0.00039682539682539715,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": -0.00021013869025753436,
+      "precision": 0.001605801605801606,
+      "chance": 0.0021520479955774072,
+      "excess": -0.0005462463897758013,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  },
+  {
+    "key": "dnabert2",
+    "label": "DNABERT-2",
+    "size": "117M",
+    "natural": {
+      "n_scored": 36,
+      "n_rated": 35,
+      "mean_ps": -0.015968077150244255,
+      "precision": 0.0,
+      "chance": 0.0,
+      "excess": 0.0,
+      "sequences": "natural"
+    },
+    "synthetic": {
+      "n_scored": 195,
+      "n_rated": 195,
+      "mean_ps": -0.020396716595088946,
+      "precision": 0.0,
+      "chance": 0.0,
+      "excess": 0.0,
+      "sequences": "synthetic, structure preserved and nucleotides reassigned"
+    }
+  }
+]

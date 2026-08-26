@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\caption{Partner specificity on natural and synthetic sequences. Synthetic sequences keep each family's dot-bracket structure and reassign its nucleotides -- uniform Watson--Crick pairs at paired positions, uniform elsewhere -- five per family, so they carry no evolutionary covariation. Excess is per-pair precision minus that arm's own within-stem derangement chance rate, over 35 natural and 195 synthetic sequences. Mean PS falls further than excess precision does, because PS is a magnitude and the synthetic sequences are less structured in composition.}
+\label{tab:synthetic}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Mean PS}} & \multicolumn{3}{c}{\textbf{Excess precision over own chance}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}
+\textbf{Model} & \textbf{Natural} & \textbf{Synthetic} & \textbf{Natural} & \textbf{Synthetic} & \textbf{Retained} \\
+\midrule
+RiNALMo (650M) & 0.2062 & 0.0919 & +0.770 & +0.582 & 76\% \\
+ERNIE-RNA (86M) & 0.1113 & 0.0415 & +0.764 & +0.574 & 75\% \\
+Caduceus (14M) & 0.0039 & 0.0036 & +0.122 & +0.058 & 48\% \\
+Evo (7B) & 0.0017 & 0.0013 & +0.040 & +0.016 & --- \\
+HyenaDNA (5.4M) & $2.4 \times 10^{-4}$ & $1.5 \times 10^{-4}$ & -0.010 & +0.005 & --- \\
+SpliceBERT (19M) & $2.2 \times 10^{-4}$ & $2.3 \times 10^{-4}$ & +0.009 & +0.057 & --- \\
+RNA-FM (99M) & $8.4 \times 10^{-5}$ & $1.4 \times 10^{-4}$ & +0.109 & +0.092 & 85\% \\
+UTR-LM ($\sim$2M) & $8.3 \times 10^{-6}$ & $1.5 \times 10^{-5}$ & +0.016 & +0.035 & --- \\
+NT~v2 (56M) & $-9.7 \times 10^{-5}$ & $-2.1 \times 10^{-4}$ & +0.000 & -0.001 & --- \\
+DNABERT-2 (117M) & -0.0160 & -0.0204 & +0.000 & +0.000 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
