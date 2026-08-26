@@ -85,6 +85,9 @@ def with_project(image):
         .add_local_dir("data/rfam_families", "/root/project/data/rfam_families")
         # 2.9 MB of Stockholm alignments, for the multi-sequence replication.
         .add_local_dir("data/rfam_seeds", "/root/project/data/rfam_seeds")
+        # The 3--5 seed replicates per family that the deposited within-family
+        # variance was computed on, already extracted and folded.
+        .add_local_dir("data/multi_sequence", "/root/project/data/multi_sequence")
         # Five folded CAG-repeat fragments, in the same record format as the
         # Rfam families, so the case study runs through the panel's own stages.
         .add_local_dir("data/htt_fragments", "/root/project/data/htt_fragments")
@@ -590,6 +593,36 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
                                       _np.random.default_rng(RANDOM_INIT_SEED))
         print(f"  synthetic: {n_before} families -> {len(families)} sequences, "
               f"{SYNTHETIC_PER_FAMILY} per family at seed {RANDOM_INIT_SEED}")
+    multiseq_members: dict[str, list[str]] = {}
+    if multi_seq:
+        # Replication across the seed replicates of each family, which is what
+        # the deposited within-family variance was measured on: the same
+        # `run_mutation_sensitivity` over `<family>_seq<i>` pseudo-families,
+        # regrouped afterwards. Running it this way rather than through its own
+        # loop is what gives it the checkpoint -- a reclaimed container took the
+        # whole of the first attempt, which wrote only at the end.
+        multi_dir = Path("data/multi_sequence")
+        panel = {f["name"] for f in families}
+        replicates = []
+        for path in sorted(multi_dir.glob("*_multi.json")):
+            record = json.loads(path.read_text())
+            # A family withdrawn from the panel is withdrawn here too, or the
+            # replication covers a set the rest of the manuscript does not.
+            if record["name"] not in panel:
+                continue
+            members = []
+            for index, entry in enumerate(record["sequences"]):
+                name = f"{record['name']}_seq{index}"
+                replicates.append({"name": name, "sequence": entry["sequence"],
+                                   "dot_bracket": entry["dot_bracket"]})
+                members.append(name)
+            multiseq_members[record["name"]] = members
+        if not replicates:
+            raise RuntimeError(
+                f"no seed replicates matched the panel in {multi_dir}")
+        print(f"  multi-sequence: {len(replicates)} sequences across "
+              f"{len(multiseq_members)} of {len(panel)} panel families")
+        families = replicates
     withdrawn = sorted(
         json.loads(p.read_text())["name"]
         for p in Path("data/rfam_families").glob("*.json")
@@ -610,7 +643,9 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         "ablation": ("pairwise_bias_map and pairwise_bias_proj zeroed, _inited set"
                      if ablate_bias else None),
         "sequences": ("synthetic, structure preserved and nucleotides reassigned"
-                      if synthetic else "natural"),
+                      if synthetic else
+                      "Rfam seed replicates, 3--5 per family" if multi_seq else
+                      "natural"),
         "weights": ("randomized, xavier_normal_ on matrices and normal_(0, 0.02) "
                     f"on vectors, seed {RANDOM_INIT_SEED}"
                     if model_name.endswith("_untrained") else "pretrained"),
@@ -662,25 +697,57 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         print(f"[{now()}] wrote {name}")
 
     if multi_seq:
-        # Replication across the Rfam seed alignments: every sequence in a
-        # family rather than the one curated representative, so within-family
-        # variance is measurable. `multi_seq_ps` imports the same
-        # `compute_delta_profiles` and `derangement_null` this runner uses, so
-        # it picks up the token-span repair and the float64 metric without
-        # changes; what it did not have was a pinned image, a stamp or a
-        # checkpoint, which is why it runs here rather than from its own script.
-        from multi_seq_ps import run_multi_seq_ps
+        # Within-family variance of the stem-loop sensitivity ratio, over the
+        # seed replicates built above. Each replicate is scored as its own
+        # family, so the checkpoint is per sequence and a reclaimed container
+        # resumes at the sequence it died on.
+        import numpy as _np
 
         print(f"[{now()}] {model_name}: multi-sequence replication over "
-              f"data/rfam_seeds")
-        results = run_multi_seq_ps(
-            adapter, seed_dir="/root/project/data/rfam_seeds", device=device,
-            offset=ADAPTER_OFFSETS.get(base_model(model_name), 0),
-            compute_null=True,
-        )
-        save(f"{model_name}_multiseq_ps.json", {"metric": "multi_sequence_ps",
-                                                "results": results})
-        print(f"[{now()}] {model_name} MULTI-SEQ COMPLETE")
+              f"{len(families)} sequences")
+        mutation = run_mutation_sensitivity(
+            adapter, base_model(model_name), families, device=device,
+            checkpoint=checkpoint("multiseq"))
+
+        per_family = {}
+        for family, members in multiseq_members.items():
+            scored = [mutation["per_rna"][name] for name in members
+                      if "best_ratio" in mutation["per_rna"].get(name, {})]
+            entry = {"n_sequences": len(members), "n_scored": len(scored)}
+            if scored:
+                ratios = [r["best_ratio"] for r in scored]
+                exceeds = [bool(r.get("exceeds_nuc_null", False)) for r in scored]
+                mean = float(_np.mean(ratios))
+                sd = float(_np.std(ratios, ddof=1)) if len(ratios) > 1 else 0.0
+                entry.update({
+                    "per_sequence_ratios": ratios,
+                    "per_sequence_exceeds_nuc": exceeds,
+                    "mean_ratio": mean,
+                    "sd_ratio": sd,
+                    # A ratio near zero would make this meaningless, and no
+                    # model in the panel produces one; guarding it silently
+                    # would hide the case where one did.
+                    "cv_ratio": sd / mean if mean > 1e-10 else None,
+                    "n_exceeds_nuc": sum(exceeds),
+                })
+            per_family[family] = entry
+
+        scored_families = [v for v in per_family.values()
+                           if v.get("cv_ratio") is not None]
+        summary = {
+            "n_families": len(per_family),
+            "n_families_scored": len(scored_families),
+            "n_total_sequences": sum(v["n_scored"] for v in per_family.values()),
+            "mean_cv": float(_np.mean([v["cv_ratio"] for v in scored_families])),
+            "median_cv": float(_np.median([v["cv_ratio"] for v in scored_families])),
+            "mean_ratio": float(_np.mean([v["mean_ratio"] for v in scored_families])),
+        }
+        save(f"{model_name}_multiseq.json",
+             {"metric": "multi_sequence_mutation_sensitivity",
+              "summary": summary, "per_family": per_family})
+        print(f"[{now()}] {model_name} MULTI-SEQ COMPLETE: "
+              f"mean CV {summary['mean_cv']:.3f} over "
+              f"{summary['n_families_scored']} families")
         return model_name
 
     # Every stage in phases_1_to_5 dispatches on the key it is given -- which

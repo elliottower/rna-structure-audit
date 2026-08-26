@@ -29,13 +29,18 @@ DESTINATION = REPO / "results" / "repaired_panel"
 VOLUME = "rna-repaired-panel-results"
 
 # What a finished directory holds, by the kind of run it is. `<key>` stands for
-# the directory name, which is also the prefix every stage writes under.
+# the prefix the stages write under, which is the model name rather than the
+# directory name whenever the directory carries a mode suffix.
 EXPECTED = {
     # A transversion directory is named `<model>_transversion`, so `<key>`
     # already carries the suffix the runner puts in the file name.
     "transversion": ["<key>.json", "<key>_positions.json", "stamp.json"],
     "run": ["<key>_phases_1_to_5.json", "<key>_rung1_positions.json",
             "<key>_phase6_ps.json", "stamp.json"],
+    # Modes that re-run Rung 3 alone: the sequences or the weights change, and
+    # Rungs 1--2 are not what they are asked about.
+    "phase6": ["<key>_phase6_ps.json", "stamp.json"],
+    "multiseq": ["<key>_multiseq.json", "stamp.json"],
 }
 
 
@@ -46,22 +51,29 @@ def volume_ls(path: str = "") -> list[str]:
     return [line.split("/")[-1] for line in listed.stdout.split("\n") if line.strip()]
 
 
-ABLATION_SUFFIX = "_noattnbias"
+# Every mode except transversion writes into `<model><suffix>/` but names its
+# files after the model, because `result_dir` carries the suffix and the file
+# writer does not. The transversion path carries it in both, which is why it is
+# absent here. This reads what is on the volume rather than what would have been
+# tidier; renaming would orphan files already written and cost a re-run.
+MODE_KINDS = {
+    "_noattnbias": "run",
+    "_htt": "run",
+    "_synthetic": "phase6",
+    "_reseeded": "phase6",
+    "_multiseq": "multiseq",
+}
 
 
 def expected_files(directory: str) -> list[str]:
-    """The files a finished directory holds, by the kind of run it is.
-
-    An ablated run writes into its own directory but names its files after the
-    model rather than the directory, because `result_dir` carries the suffix and
-    the file writer does not. The transversion path does carry it, so the two
-    layouts differ. This reads what is on the volume rather than what would have
-    been tidier; renaming would orphan files already written and cost a re-run.
-    """
-    kind = "transversion" if directory.endswith("_transversion") else "run"
-    key = (directory[:-len(ABLATION_SUFFIX)]
-           if directory.endswith(ABLATION_SUFFIX) else directory)
-    return [name.replace("<key>", key) for name in EXPECTED[kind]]
+    """The files a finished directory holds, by the kind of run it is."""
+    if directory.endswith("_transversion"):
+        return [name.replace("<key>", directory) for name in EXPECTED["transversion"]]
+    for suffix, kind in MODE_KINDS.items():
+        if directory.endswith(suffix):
+            key = directory[: -len(suffix)]
+            return [name.replace("<key>", key) for name in EXPECTED[kind]]
+    return [name.replace("<key>", directory) for name in EXPECTED["run"]]
 
 
 def fetch(directory: str, name: str, force: bool, destination: Path) -> bool:

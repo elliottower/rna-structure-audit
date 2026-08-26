@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\caption{Per-pair precision under three layer choices, each against the model's own within-stem derangement chance rate. Per-family: the layer maximizing mean PS within each family, which is how Table~\ref{tab:rung3} is computed. Panel: one layer maximizing mean PS across all families. Held-out: the layer chosen on half the families and precision reported on the other half, over 2,000 splits, with a 95\% interval over splits. Choosing per family costs the two trained models nothing and buys the randomly initialized controls up to $+0.18$.}
+\label{tab:layer-selection}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+\textbf{Model} & \textbf{Layers} & \textbf{Chance} & \textbf{Per-family} & \textbf{Panel} & \textbf{Held-out} \\
+\midrule
+ERNIE-RNA & 13 & 0.124 & 0.888 & 0.887 & 0.885 [0.814, 0.955] \\
+RiNALMo & 34 & 0.102 & 0.872 & 0.881 & 0.882 [0.822, 0.941] \\
+ERNIE-RNA untrained & 13 & 0.241 & 0.490 & 0.479 & 0.478 [0.399, 0.554] \\
+RiNALMo untrained & 34 & 0.232 & 0.337 & 0.158 & 0.158 [0.106, 0.208] \\
+RNA-FM untrained & 13 & 0.230 & 0.323 & 0.143 & 0.143 [0.091, 0.193] \\
+SpliceBERT untrained & 7 & 0.194 & 0.210 & 0.172 & 0.171 [0.121, 0.222] \\
+UTR-LM untrained & 7 & 0.127 & 0.139 & 0.132 & 0.131 [0.081, 0.180] \\
+\bottomrule
+\end{tabular}
+\end{table}

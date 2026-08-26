@@ -701,10 +701,49 @@ asymmetry D15 identified in the exceedance count appearing in the precision
 statistic: a maximum over layers compared against something not selected the
 same way.
 
-**The test.** `precision_per_layer` is now stored, so precision can be read at a
-layer no selection touched. If the excess is selection, the mean across layers
-sits at chance for the controls while the trained models keep theirs at every
-layer. Until that lands this is a candidate, not a cause.
+**The cause, and the candidate was stated at the wrong grain.** The layer is
+chosen per family: 35 independent argmax draws, one for each family in the Rung 3
+analysis set, not one draw for the model. Choosing once for the whole panel
+instead leaves the trained models where they were and removes almost all of both
+residual excesses (`scripts/layer_selection_audit.py`, which raises if a stored
+`h3_precision` and its recomputation from `precision_per_layer` disagree):
+
+| model | per-family layer | one panel layer | held-out |
+|---|---|---|---|
+| ERNIE-RNA trained | 0.888 | 0.887 | 0.885 [0.814, 0.955] |
+| RiNALMo trained | 0.872 | 0.881 | 0.882 [0.822, 0.941] |
+| ERNIE-RNA untrained | 0.490 | 0.479 | 0.478 [0.399, 0.554] |
+| RiNALMo untrained | 0.337 | 0.158 | 0.158 [0.106, 0.208] |
+| RNA-FM untrained | 0.323 | 0.143 | 0.143 [0.091, 0.193] |
+| SpliceBERT untrained | 0.210 | 0.172 | 0.171 [0.121, 0.222] |
+| UTR-LM untrained | 0.139 | 0.132 | 0.131 [0.081, 0.180] |
+
+The held-out column chooses the layer on half the families and reports precision
+on the other half, over 2,000 splits, and is selection-free by construction. It
+reproduces the panel-layer column to three decimals in every row, so the two
+disagree with the per-family column for the same reason.
+
+Against each model's own chance rate the held-out excesses are +0.761
+(ERNIE-RNA), +0.780 (RiNALMo), +0.238 (ERNIE-RNA untrained), **-0.074** (RiNALMo
+untrained), **-0.087** (RNA-FM untrained), -0.023 (SpliceBERT untrained) and
++0.004 (UTR-LM untrained). Four of the five controls whose cause was unidentified
+sit at or below their own chance rates once the layer is not chosen per family.
+The one that does not is ERNIE-RNA, whose buffer is identified above and whose
+ablation removes it.
+
+The monotonicity in layer count above is the same fact seen from outside: a
+34-layer control draws the per-family maximum from 34 profiles and a 7-layer
+control from 7.
+
+**Not corrected for the rest of the panel.** `precision_per_layer` is stored only
+for the seven models re-run after it was added. Caduceus (+0.122 over its chance
+rate, 17 layers) and RNA-FM trained (+0.109, 13 layers) sit in the band RiNALMo
+untrained (+0.105) and RNA-FM untrained (+0.093) occupied before the correction,
+and both are reported in the manuscript abstract as exceeding chance. Deciding
+them needs a phase-6-only re-run of caduceus, rnafm, evo, utrlm, splicebert and
+hyenadna; the four models at precision 0.000 or 0.007 cannot move. The seven
+re-run cells reproduced their prior numbers byte for byte apart from the stamp,
+so the re-run is a read of an additional field rather than a new measurement.
 
 **Consequence for the reported result.** Every trained-versus-untrained
 comparison reads the untrained arm as a floor. H10, H14, H17 and H19 are sign
