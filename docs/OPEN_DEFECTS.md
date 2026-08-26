@@ -899,6 +899,55 @@ hand-entered.
 
 ---
 
+## D23. The token-span repair treats an IUPAC ambiguity code as a special token
+
+**Detector:** the multi-sequence arm, which is the first stage to score raw
+seed-alignment sequences rather than curated families.
+
+`scripts/token_spans.py` finds which rows of a hidden state carry sequence by
+asking which token strings are made of nucleotides:
+
+    NUCLEOTIDES = set("ACGTUN")
+    is_content = [bool(p) and set(p) <= NUCLEOTIDES for p in pieces]
+
+A token is content when its characters are a subset of that set, and anything
+else is a special token. Rfam seed alignments carry the rest of IUPAC -- W, Y
+and H appear in this panel's replicates -- so a position holding one of them is
+classified as a special token, and because it sits between content tokens the
+contiguity guard raises:
+
+    TokenizationMismatch: special tokens ['W'] sit between content tokens
+
+Six of ten models died on it at the same sequence, `Corona_5UTR_seq0`, the 21st
+of 233. The four that survived do not call `content_bounds`: RNA-FM slices
+`hidden[0, 1:-1, :]` directly and HyenaDNA, Caduceus and Evo are character-level
+with no special tokens. The models running the repaired code are exactly the
+models that failed, which is the shape of a repair introducing its own defect.
+
+Both spellings occur. multimolecule tokenizers emit the letter (`'W'`);
+DNABERT-2 emits `[UNK]` and NT v2 `<unk>`.
+
+**Why it is not repaired in place.** For a character tokenizer an interior
+unknown covers one nucleotide and the row could be kept. For NT v2's 6-mer and
+DNABERT-2's byte-pair vocabularies a single unknown token covers a whole k-mer,
+and which nucleotides that row holds cannot be read back from the tokenization.
+Widening `NUCLEOTIDES` would fix four models and silently invent a span mapping
+for two.
+
+**Fix.** Sequences carrying characters outside `ACGTUN` are excluded from the
+multi-sequence arm for every model, and the excluded names travel in the result
+file as `excluded_for_ambiguity`. That is 6 of 233 sequences across 3 of 47
+families -- Corona_5UTR (3 of 5), preQ1_riboswitch (2 of 5), THF_riboswitch
+(1 of 5) -- and no family loses all its replicates. Excluding uniformly matters
+more than excluding few: the arm compares within-family variance across models,
+and a set that differs by model is not a comparison.
+
+**Scope.** No curated panel family contains a character outside ACGU, so Rungs
+1--3, the transversion, synthetic and HTT arms are untouched. Any future use of
+this pipeline on raw alignment sequences meets the same wall.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

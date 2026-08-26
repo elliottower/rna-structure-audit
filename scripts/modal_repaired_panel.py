@@ -381,6 +381,12 @@ SYNTHETIC_NUCLEOTIDES = ["A", "U", "G", "C"]
 # Five per family, as in the run that produced the deposited synthetic numbers.
 SYNTHETIC_PER_FAMILY = 5
 
+# Characters a tokenizer in this panel resolves to exactly one nucleotide row.
+# Rfam seed alignments also carry R, Y, S, W, K, M, B, D, H and V, which the
+# 6-mer and byte-pair vocabularies map to a single unknown token spanning
+# several nucleotides.
+AMBIGUITY_SAFE = set("ACGTUN")
+
 
 def synthetic_families(families, n_synthetic, rng):
     """`n_synthetic` sequences per family, each keeping that family's structure."""
@@ -594,6 +600,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         print(f"  synthetic: {n_before} families -> {len(families)} sequences, "
               f"{SYNTHETIC_PER_FAMILY} per family at seed {RANDOM_INIT_SEED}")
     multiseq_members: dict[str, list[str]] = {}
+    multiseq_excluded: list[dict] = []
     if multi_seq:
         # Replication across the seed replicates of each family, which is what
         # the deposited within-family variance was measured on: the same
@@ -612,16 +619,34 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
                 continue
             members = []
             for index, entry in enumerate(record["sequences"]):
+                # Seed alignments carry IUPAC ambiguity codes that the curated
+                # families do not. A character tokenizer emits the letter or its
+                # unknown marker for one nucleotide, which is recoverable; NT's
+                # 6-mer and DNABERT-2's byte-pair vocabularies emit one unknown
+                # token covering a whole k-mer, and which nucleotides that row
+                # holds cannot be read back. Dropping the sequence for every
+                # model keeps the panel identical across models, which the
+                # within-family variance comparison needs; repairing it for the
+                # character models alone would not.
+                odd = set(entry["sequence"].upper()) - AMBIGUITY_SAFE
+                if odd:
+                    multiseq_excluded.append(
+                        {"name": f"{record['name']}_seq{index}",
+                         "characters": sorted(odd)})
+                    continue
                 name = f"{record['name']}_seq{index}"
                 replicates.append({"name": name, "sequence": entry["sequence"],
                                    "dot_bracket": entry["dot_bracket"]})
                 members.append(name)
-            multiseq_members[record["name"]] = members
+            if members:
+                multiseq_members[record["name"]] = members
         if not replicates:
             raise RuntimeError(
                 f"no seed replicates matched the panel in {multi_dir}")
         print(f"  multi-sequence: {len(replicates)} sequences across "
-              f"{len(multiseq_members)} of {len(panel)} panel families")
+              f"{len(multiseq_members)} of {len(panel)} panel families, "
+              f"{len(multiseq_excluded)} excluded for ambiguity codes: "
+              f"{[e['name'] for e in multiseq_excluded]}")
         families = replicates
     withdrawn = sorted(
         json.loads(p.read_text())["name"]
@@ -744,6 +769,7 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         }
         save(f"{model_name}_multiseq.json",
              {"metric": "multi_sequence_mutation_sensitivity",
+              "excluded_for_ambiguity": multiseq_excluded,
               "summary": summary, "per_family": per_family})
         print(f"[{now()}] {model_name} MULTI-SEQ COMPLETE: "
               f"mean CV {summary['mean_cv']:.3f} over "
