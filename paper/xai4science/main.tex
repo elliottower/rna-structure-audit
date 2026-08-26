@@ -331,6 +331,17 @@ correlation approaches NT~v2's absolute value, so ranking models by
 attention--contact correlation and ranking them by partner specificity give
 different orders.
 
+\paragraph{Replication across seed members.} Each family enters the panel as one
+curated sequence, so a ratio could belong to that sequence rather than the
+family. Rescoring Rung~1 on 3--5 members of each family's seed alignment
+(\multiseqN{} sequences, \multiseqFamilies{} families, every model on the same
+set) leaves seven of ten varying by under 6\% within a family. RNA-FM and Evo
+are the exceptions at $\cvRNAFM{}$ and $\cvEvo{}$, and both also fail
+composition control; a ratio that moves by a third between members of one family
+and vanishes under a composition null is a response to sequence composition. The
+two models that clear Rung~3 are among the most stable, at $\cvRiNALMo{}$ and
+$\cvErnieRNA{}$ (Table~\ref{tab:multiseq}).
+
 \section{A Composition-Biased Case Study}
 \label{sec:htt}
 
@@ -479,6 +490,8 @@ because its earlier run predated the determinism pin.
 
 \section{Supplementary tables}
 \label{app:supplement}
+
+\input{generated/multiseq_table}
 
 \input{generated/panel_table}
 

@@ -1,9 +1,9 @@
 {
   "model": "hyenadna",
   "stamp": {
-    "commit": "0cfe8b91ead820a27116dd900ed39af0f1c5d2b7",
-    "panel_sha256": "a1ff421cd788c83336dffa758d0d59e45ed5a80fda7813b47733903114a17fa9",
-    "n_families": 233,
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4",
+    "panel_sha256": "b8e93511af7db9b023d8748c10fa93eb998f51886135182855caf92e972afcf7",
+    "n_families": 230,
     "withdrawn": [
       "5S_rRNA_ecoli",
       "IRES_HCV_domainII",
@@ -39,15 +39,37 @@
     "sequences": "Rfam seed replicates, 3--5 per family",
     "weights": "pretrained"
   },
-  "completed": "2026-08-26 03:56:59 UTC",
+  "completed": "2026-08-26 16:01:45 UTC",
   "metric": "multi_sequence_mutation_sensitivity",
+  "excluded_for_ambiguity": [
+    {
+      "name": "Corona_5UTR_seq0",
+      "characters": [
+        "W"
+      ]
+    },
+    {
+      "name": "Corona_5UTR_seq1",
+      "characters": [
+        "H",
+        "W",
+        "Y"
+      ]
+    },
+    {
+      "name": "Corona_5UTR_seq3",
+      "characters": [
+        "H"
+      ]
+    }
+  ],
   "summary": {
     "n_families": 47,
     "n_families_scored": 47,
-    "n_total_sequences": 233,
-    "mean_cv": 0.09420429601838559,
+    "n_total_sequences": 230,
+    "mean_cv": 0.09265410957931969,
     "median_cv": 0.08793441564894523,
-    "mean_ratio": 1.1694723323326595
+    "mean_ratio": 1.171420561082377
   },
   "per_family": {
     "6S_RNA": {
@@ -139,25 +161,19 @@
       "n_exceeds_nuc": 0
     },
     "Corona_5UTR": {
-      "n_sequences": 5,
-      "n_scored": 5,
+      "n_sequences": 2,
+      "n_scored": 2,
       "per_sequence_ratios": [
-        1.0783978972747992,
-        1.0836853156459527,
         1.2398219556222945,
-        1.0989023684279255,
         1.23939093606589
       ],
       "per_sequence_exceeds_nuc": [
         false,
-        false,
-        false,
-        false,
         false
       ],
-      "mean_ratio": 1.1480396946073723,
-      "sd_ratio": 0.08392701532330073,
-      "cv_ratio": 0.07310462845276759,
+      "mean_ratio": 1.239606445844092,
+      "sd_ratio": 0.00030477685115768625,
+      "cv_ratio": 0.0002458658166706715,
       "n_exceeds_nuc": 0
     },
     "Corona_s2m": {

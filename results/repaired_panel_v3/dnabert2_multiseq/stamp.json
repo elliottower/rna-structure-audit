@@ -1,5 +1,5 @@
 {
-  "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4",
+  "commit": "fd95dae2aca89dd4ec7e88a7e605a67b0bd96ec3",
   "panel_sha256": "b8e93511af7db9b023d8748c10fa93eb998f51886135182855caf92e972afcf7",
   "n_families": 230,
   "withdrawn": [
@@ -12,12 +12,12 @@
   "seeding": "family_seed.family_rng, derived from the family name",
   "deviation": "DEVIATIONS.md, 2026-08-24",
   "libraries": {
-    "torch": "2.4.1",
+    "torch": "2.4.0",
     "triton": "3.0.0",
     "numpy": "1.26.4",
     "scipy": "1.14.1",
     "scikit-learn": "1.5.2",
-    "transformers": "4.44.2",
+    "transformers": "4.28.0",
     "multimolecule": null,
     "huggingface-hub": "0.36.2",
     "flash-attn": null,

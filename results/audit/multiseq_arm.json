@@ -1,0 +1,152 @@
+[
+  {
+    "key": "rnafm",
+    "label": "RNA-FM",
+    "mean_ratio": 1.9035106107776385,
+    "mean_cv": 0.36007339485149115,
+    "median_cv": 0.3625276715227436,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "evo",
+    "label": "Evo",
+    "mean_ratio": 1.3336005308315828,
+    "mean_cv": 0.18016928288946152,
+    "median_cv": 0.1545444955916629,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "ernierna",
+    "label": "ERNIE-RNA",
+    "mean_ratio": 1.255651133802296,
+    "mean_cv": 0.058812725508620385,
+    "median_cv": 0.057186988070219706,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "caduceus",
+    "label": "Caduceus",
+    "mean_ratio": 1.2100125790681229,
+    "mean_cv": 0.059722072595824155,
+    "median_cv": 0.045801230991244654,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "hyenadna",
+    "label": "HyenaDNA",
+    "mean_ratio": 1.171420561082377,
+    "mean_cv": 0.09265410957931969,
+    "median_cv": 0.08793441564894523,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "rinalmo",
+    "label": "RiNALMo",
+    "mean_ratio": 1.13486734103727,
+    "mean_cv": 0.0364836481206297,
+    "median_cv": 0.03163287256626155,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "nt",
+    "label": "NT~v2",
+    "mean_ratio": 1.0914188814869283,
+    "mean_cv": 0.04412576766072526,
+    "median_cv": 0.0391139610505938,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "utrlm",
+    "label": "UTR-LM",
+    "mean_ratio": 1.0591139515262291,
+    "mean_cv": 0.025439558113319907,
+    "median_cv": 0.022976272337953185,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "splicebert",
+    "label": "SpliceBERT",
+    "mean_ratio": 1.0493045417070674,
+    "mean_cv": 0.027062613882941615,
+    "median_cv": 0.02288288089827669,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4"
+  },
+  {
+    "key": "dnabert2",
+    "label": "DNABERT-2",
+    "mean_ratio": 0.9974151538657127,
+    "mean_cv": 0.05416968138998656,
+    "median_cv": 0.04900839722528641,
+    "n_families": 47,
+    "n_sequences": 230,
+    "excluded": [
+      "Corona_5UTR_seq0",
+      "Corona_5UTR_seq1",
+      "Corona_5UTR_seq3"
+    ],
+    "commit": "fd95dae2aca89dd4ec7e88a7e605a67b0bd96ec3"
+  }
+]
