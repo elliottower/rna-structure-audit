@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rna-structure-audit"
-version = "0.1.0"
+version = "0.2.0"
 description = "Three-rung benchmark for evaluating whether RNA/DNA foundation models encode genuine secondary structure or composition shortcuts."
 readme = "README.md"
 license = "MIT"
@@ -51,6 +51,21 @@ Homepage = "https://github.com/elliottower/rna-structure-audit"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/rna_structure_audit"]
+
+# Without an explicit list the sdist takes everything git does not ignore, which
+# here is the analysis tree: 415 result files, the manuscripts and the figures,
+# 22 MB of research artifacts shipped to anyone running `pip download`. The
+# repository is where those live; the sdist carries what builds and tests the
+# package.
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/rna_structure_audit",
+  "tests",
+  "README.md",
+  "LICENSE",
+  "pyproject.toml",
+  "docs/CHANGELOG.md",
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

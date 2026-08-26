@@ -4,6 +4,43 @@ Corrections to the data, the code, and the reported figures, newest first.
 Each entry names what changed, which files settled it, and which reported
 numbers move. `docs/provenance.md` carries the longer narrative.
 
+## 2026-08-26 — 0.2.0: the package scores the corrected panel
+
+**`load_families()` returns 47 families, not 52.** Five were withdrawn on
+annotation review and the bundled copies carried no exclusion marker, so
+`evaluate()` scored families whose names assert something the sequence is not —
+a stem of U2 snRNA that is the whole snRNA, a specificity domain of RNase P that
+is the whole RNA. They still ship, and `load_families(include_withdrawn=True)`
+returns the full curated set so a result computed before the review reproduces.
+`withdrawn_families()` reports what was skipped and why.
+
+**Eight bundled annotations were the pre-correction ones.** `HDV_ribozyme`,
+`SAM_riboswitch`, `TPP_riboswitch`, `hammerhead_ribozyme` and the four `mir_*`
+precursors differed from `data/rfam_families/` in sequence, dot-bracket or both.
+A user scoring through the package and an author scoring through the analysis
+tree got different panels under the same names. All 13 differing files are
+synced.
+
+**Grades change for four models.** `_grade()` is unchanged; the panel it reads
+is not.
+
+| model | 0.1.0 | 0.2.0 | why |
+|---|---|---|---|
+| Nucleotide Transformer v2 | D | B | 8 families survive the dinucleotide null |
+| HyenaDNA | D | B | 7 survive |
+| Evo | D | B | 6 survive |
+| Caduceus | D | C | 8 exceed the Rung 1 null, 4 survive Rung 2 |
+
+ERNIE-RNA and RiNALMo stay A; SpliceBERT, UTR-LM, RNA-FM and DNABERT-2 stay D.
+A B means families survive the dinucleotide null, which is weaker than partner
+specificity and is not evidence that a model resolves pairing.
+
+**Reported parameter counts corrected.** HyenaDNA is 450,712 parameters, not
+5.4M — the bundled adapter loads the smallest release. Caduceus is 7,725,312,
+not 14M. Evo and DNABERT-2 keep their authors' designations.
+
+`docs/OPEN_DEFECTS.md` D24 carries the detectors.
+
 ## 2026-08-24 — four family annotations corrected; stored results not yet re-run
 
 **Four of the 52 evaluation families carried wrong annotations, and three of
