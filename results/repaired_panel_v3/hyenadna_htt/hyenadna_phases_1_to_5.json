@@ -1,7 +1,7 @@
 {
   "model": "hyenadna",
   "stamp": {
-    "commit": "0c9e66892cefb994fc487ef9c852eeaea1fed77f",
+    "commit": "e9a0ed4d5aadd9d4ff8ab1872d3cbdc950f28cec",
     "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
     "n_families": 5,
     "withdrawn": [
@@ -28,7 +28,7 @@
     "numerics": {
       "defaults_observed": {
         "cuda_matmul_allow_tf32": false,
-        "cudnn_allow_tf32": true,
+        "cudnn_allow_tf32": false,
         "cudnn_benchmark": false
       },
       "determinism": "forced",
@@ -39,7 +39,7 @@
     "sequences": "natural",
     "weights": "pretrained"
   },
-  "completed": "2026-08-25 18:52:40 UTC",
+  "completed": "2026-08-26 03:51:24 UTC",
   "experiment": "phases_1_to_5",
   "mutation_trained": {
     "model": "hyenadna",
@@ -134,5 +134,64 @@
     },
     "best_layer": 3,
     "best_accuracy": 0.9260854839263246
+  },
+  "htt_distances": {
+    "metric": "cosine_distance_from_fewest_repeats",
+    "reference": "HTT_CAG17_normal",
+    "repeat_counts": [
+      17,
+      21,
+      36,
+      40,
+      60
+    ],
+    "dtype": "float64",
+    "n_layers": 4,
+    "per_layer": {
+      "0": [
+        -2.220446049250313e-16,
+        0.0004360234061902002,
+        0.007329386681308225,
+        0.009980288461448938,
+        0.024888443609597077
+      ],
+      "1": [
+        0.0,
+        0.0024337834265102387,
+        0.03519055308360619,
+        0.046348144714853934,
+        0.10064279420041622
+      ],
+      "2": [
+        0.0,
+        0.0003758016186130586,
+        0.006270850964595565,
+        0.008494345742309561,
+        0.022239081931379356
+      ],
+      "3": [
+        2.220446049250313e-16,
+        0.00038925089055852347,
+        0.005770938742982512,
+        0.00773713967366374,
+        0.019297724074451073
+      ]
+    },
+    "best_layer": 0,
+    "best_spearman": 0.9999999999999999,
+    "at_best_layer": [
+      -2.220446049250313e-16,
+      0.0004360234061902002,
+      0.007329386681308225,
+      0.009980288461448938,
+      0.024888443609597077
+    ],
+    "at_last_layer": [
+      2.220446049250313e-16,
+      0.00038925089055852347,
+      0.005770938742982512,
+      0.00773713967366374,
+      0.019297724074451073
+    ]
   }
 }

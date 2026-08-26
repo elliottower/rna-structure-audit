@@ -85,8 +85,9 @@ learned representations has received less scrutiny.
 
 % P2: The specific confound
 Stems and loops differ in sequence composition. Across \panelN{} Rfam families,
-stems average 59.7\% G/C content while loops average 45.6\%---a 14.1
-percentage-point enrichment (Figure~\ref{fig:composition}). Because complement swaps at G/C positions
+stems average \panelStemGC{}\% G/C content while loops average
+\panelLoopGC{}\%, and stem G/C exceeds loop G/C in \panelGCEnriched{} of
+\panelGCScored{} families (Figure~\ref{fig:composition}). Because complement swaps at G/C positions
 produce inherently larger embedding perturbations than at A/U positions,
 any naive stem-versus-loop comparison inherits this enrichment. A
 representation can therefore separate stems from loops without encoding
@@ -162,7 +163,8 @@ in \panelGCEnriched{} of \panelGCScored{} families (mean stem GC
 \panelStemGC{}\% against loop GC \panelLoopGC{}\%). (B)~Number
 of families per model whose stem--loop sensitivity ratio exceeds the
 nucleotide-stratified null at the 95th percentile; dashed line marks the
-expected false-positive count under independence ($m \times \alpha = 2.6$).
+expected false-positive count under independence
+($m \times \alpha = \expectedFalsePositives{}$).
 ERNIE-RNA (31) and RiNALMo (18) retain the most signal after composition
 control.}
 \label{fig:composition}
@@ -229,9 +231,14 @@ margins no choice of null affects.
 Both concentrate partner specificity late: RiNALMo peaks at layer
 $\psPeakRiNALMo{}$ of $\psLayersRiNALMo{}$ in $\psPeakCountRiNALMo{}$ families,
 ERNIE-RNA at layer $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in
-$\psPeakCountErnieRNA{}$. Evo reaches $\psEvo{}$ with $80\times$ ERNIE-RNA's
-parameters, and Caduceus at 14M outscores three of the five RNA-pretrained
-models, so neither parameter count nor pretraining domain orders the panel.
+$\psPeakCountErnieRNA{}$. Among the eight that do not clear their own chance
+rates, neither parameter count nor pretraining domain orders anything: Evo
+reaches $\psEvo{}$ mean PS with $80\times$ ERNIE-RNA's parameters, Caduceus at
+14M outscores three of the five RNA-pretrained models on mean PS, and all eight
+sit together at chance on precision. The two that pass are both
+RNA-pretrained, two of five against zero of five, on a comparison of ten models
+that cannot resolve it (rank-biserial $\domainRankBiserial{}$,
+$p = \domainP{}$).
 
 \begin{figure}[htbp]
 \centering
@@ -428,47 +435,28 @@ recapitulated covariation.
 The CAG repeat region in huntingtin exon~1 forms hairpin structures whose
 stability scales with repeat count \citep{demezer2011mutant,
 krzyzosiak2012triplet}. We evaluated five HTT exon~1 fragments
-(NM\_002111.7) with CAG repeat counts of 17, 21, 36, 40, and 60;
-structures were predicted with ViennaRNA RNAfold
-\citep{lorenz2011viennarna}. Four models achieve $\geq 97$\% probing
-accuracy on these predicted structures (Table~\ref{tab:htt}), but the
-repeat region contains only C, A, and G---no U---creating extreme
-composition bias that linear probes exploit.
+(NM\_002111.7) with CAG repeat counts of 17, 21, 36, 40 and 60, folded with
+ViennaRNA RNAfold \citep{lorenz2011viennarna}, through the panel's own stages.
 
-\begin{table}[htbp]
-\centering
-\caption{HTT CAG-repeat case study. High probing accuracy coexists with null
-composition-controlled signal. Attn~$\rho$: Spearman correlation between
-self-attention weights and the base-pairing contact map.
-Probing: linear probe accuracy for stem-vs-loop classification.
-Structures are RNAfold predictions, not experimentally determined.}
-\label{tab:htt}
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-\textbf{Model} & \textbf{Mean ratio} & \textbf{$>$ null} &
-  \textbf{Attn $\rho$} & \textbf{Probing} &
-  \textbf{WT$\to$CAG60} \\
-\midrule
-RNA-FM     & 1.794 & 2/5  & 0.036 & 0.813 & 0.000 \\
-RiNALMo    & 1.031 & 0/5  & 0.054 & 0.985 & 0.068 \\
-NT~v2      & ---$^\dagger$ & ---   & \textbf{0.140} & 0.636 & 0.013 \\
-ERNIE-RNA  & 1.086 & 0/5  & 0.070 & 0.985 & 0.023 \\
-SpliceBERT & 0.996 & 0/5  & 0.036 & 0.977 & 0.042 \\
-UTR-LM     & 1.151 & 1/5  & 0.039 & 0.974 & 0.016 \\
-\bottomrule
-\end{tabular}
-\medskip
+\input{generated/htt_table}
 
-\small $^\dagger$6-mer tokenization yields degenerate embeddings on
-repetitive CAG. WT$\to$CAG60 = cosine distance from CAG17 reference.
-\end{table}
+\httHighProbing{} of \httModels{} models reach linear-probe accuracy above
+$0.97$ for stem-versus-loop classification, and \httHighProbingClean{} of those
+exceed the composition-preserving null in no more than one of the five
+fragments. The repeat region contains only C, A and G---no U---so a linear
+probe has an extreme composition bias available to it.
 
-RNA-FM produces embedding distances from wild-type below $10^{-4}$ for all
-repeat counts, failing to distinguish normal from pathogenic alleles.
-RiNALMo shows the strongest separation (0.068 at CAG60), with distances
-increasing monotonically with repeat count. High probing accuracy on a
-computationally predicted structure can coexist with null
-composition-controlled signal: apparent structure decoding persists in a
+Embedding distance from the CAG17 fragment rises monotonically with repeat
+count for all \httMonotone{} models with more than one layer, at Spearman
+$\rho = +1.00$, and does so at the embedding layer before any block has run:
+the fragments have lengths 235 to 364 and differ in composition accordingly.
+The measure separates the fragments by construction and does not rank models by
+whether they represent the expansion. RNA-FM is the one model whose final layer
+departs from the pattern, its distances there collapsing to
+$2 \times 10^{-7}$ in float64.
+
+High probing accuracy on a computationally predicted structure coexists with
+null composition-controlled signal: apparent structure decoding persists in a
 strongly composition-biased context.
 
 
@@ -644,9 +632,12 @@ For each Watson--Crick pair $(i, j)$ where $j$ is the annotated partner:
 \]
 where $\Delta_k$ is the cosine distance at position $k$ after the complement
 swap at position $i$. Positive PS indicates the model perturbs the true
-partner more than its immediate neighbors (chance $= 1/3$). Partner
-assignments are tested against a within-stem derangement null (500
-derangements), controlling for positional and compositional confounds.
+partner more than its immediate neighbors. Chance for the per-pair comparison
+is measured rather than assumed: partner assignments are permuted within each
+stem under a derangement (500 derangements), so every position keeps its stem,
+its nucleotide and its layer while its assigned partner is false by
+construction. Measured this way the chance rate ranges from $0.000$ to $0.316$
+across the panel.
 
 \paragraph{Covariation control.}
 To distinguish learned geometric sensitivity from recapitulated evolutionary
@@ -676,7 +667,8 @@ provides 95\% CIs for mean PS and mean sensitivity ratio. For the binary
 gate test, each family's ratio is compared to its own 95th-percentile
 permutation null; we report the count exceeding this threshold alongside
 the expected false-positive count under independence
-($m \times \alpha = 52 \times 0.05 = 2.6$). Bonferroni correction
+($m \times \alpha = \panelN{} \times 0.05 = \expectedFalsePositives{}$).
+Bonferroni correction
 ($\alpha / m \approx 0.001$) provides a conservative bound.
 
 

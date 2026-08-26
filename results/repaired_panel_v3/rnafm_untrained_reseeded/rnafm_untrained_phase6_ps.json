@@ -1,7 +1,7 @@
 {
   "model": "rnafm_untrained",
   "stamp": {
-    "commit": "0c9e66892cefb994fc487ef9c852eeaea1fed77f",
+    "commit": "8c9abdd463a82da16da30d5ed8370009e00cdffc",
     "panel_sha256": "5c4d6f6d4c32b47a8b0f8802efd26af98708d3c3b5f848b298ddfaddea6e6fb3",
     "n_families": 47,
     "withdrawn": [
@@ -39,7 +39,7 @@
     "sequences": "natural",
     "weights": "randomized, xavier_normal_ on matrices and normal_(0, 0.02) on vectors, seed 42"
   },
-  "completed": "2026-08-25 18:57:00 UTC",
+  "completed": "2026-08-25 19:42:46 UTC",
   "phase": 6,
   "metric": "perturbation_specificity",
   "preregistration": "PREREGISTRATION_PHASE6_V2.md",

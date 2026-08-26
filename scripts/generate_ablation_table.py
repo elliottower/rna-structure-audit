@@ -57,7 +57,7 @@ def main():
 \\centering
 \\caption{{ERNIE-RNA with and without its pairwise bias buffer, trained and
 randomly initialized. Per-pair precision is the fraction of eligible pairs whose
-partner is perturbed more than either of its stem neighbours. Chance is the same
+partner is perturbed more than either of its stem neighbors. Chance is the same
 fraction under a within-stem derangement, where the assigned partner is false by
 construction, and excess is their difference. All four arms cover the same {n}
 families. Ablation zeroes \\texttt{{pairwise\\_bias\\_map}} and

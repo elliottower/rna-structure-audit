@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\caption{Five HTT exon~1 fragments with CAG repeat counts 17, 21, 36, 40 and 60, folded with ViennaRNA. Ratio and $>$~null are stem--loop mutation sensitivity against the nucleotide-stratified null; Attn~$\rho$ is the mean Spearman correlation between self-attention and the contact map, absent for the state-space models; Probing is linear-probe accuracy for stem-versus-loop classification. CAG60 is cosine distance from the CAG17 fragment, at the final layer and at the embedding layer. The repeat region contains no U, so a linear probe has an extreme composition bias available to it, and the fragments differ in length, so embedding distance rises with repeat count at the embedding layer for every model ($\rho = +1.00$) before any block has run.}
+\label{tab:htt}
+\small
+\begin{tabular}{@{}lrcrrrr@{}}
+\toprule
+\textbf{Model} & \textbf{Ratio} & \textbf{$>$ null} & \textbf{Attn $\rho$} & \textbf{Probing} & \textbf{CAG60 last} & \textbf{CAG60 best} \\
+\midrule
+RiNALMo & 1.031 & 0/5 & 0.054 & 0.983 & 0.0679 & 0.0115 \\
+ERNIE-RNA & 1.086 & 0/5 & 0.070 & 0.985 & 0.0229 & 0.2130 \\
+RNA-FM & 1.800 & 1/5 & 0.036 & 0.792 & $2.2 \times 10^{-7}$ & 0.0151 \\
+UTR-LM & 1.151 & 1/5 & 0.039 & 0.971 & 0.0158 & 0.0134 \\
+SpliceBERT & 0.996 & 0/5 & 0.036 & 0.975 & 0.0424 & 0.2120 \\
+Caduceus & 1.231 & 0/5 & --- & 0.977 & 0.0017 & 0.0070 \\
+HyenaDNA & 1.045 & 0/5 & --- & 0.926 & 0.0193 & 0.0249 \\
+NT~v2 & 1.012 & 0/5 & 0.124 & 0.623 & 0.0120 & 0.1509 \\
+DNABERT-2 & 0.998 & 0/5 & 0.140 & 0.612 & 0.5073 & 0.5073 \\
+\bottomrule
+\end{tabular}
+\end{table}

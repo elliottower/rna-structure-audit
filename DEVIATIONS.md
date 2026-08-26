@@ -706,3 +706,37 @@ Every architecture, without learned weights, sits within 3.2e-08 of zero. The
 exceedance counts in the right-hand column are the negative-threshold artifact
 described under the derangement null: models scoring at zero clear a null whose
 95th percentile is below zero.
+
+## 2026-08-26 — HTT re-run, against `PREREGISTRATION_HTT_RERUN.md` (frozen at `08de258`)
+
+**Deviation from the registration's stated inputs, recorded before the run.** The
+registration states that rebuilding the fragments reproduces all five deposited
+lengths but gives minimum free energies 5 to 6 kcal/mol above those recorded on
+2026-07-13. The cause was found afterwards: the flanks are 30~nt on the 5$'$ side
+and 154~nt on the 3$'$ side, not the 92/92 split assumed while the registration
+was written. With the correct split, `scripts/build_htt_fragments.py` reproduces
+all five deposited MFEs exactly and asserts against them. The re-run therefore
+used the deposited structures rather than the approximations the registration
+anticipated, which removes a source of movement it had recorded in advance.
+
+**Outcomes.**
+
+| hypothesis | criterion | result |
+|---|---|---|
+| H1 | \|repaired RNA-FM ratio − 1.794\| > 0.1 | **fails**: 1.800, a difference of 0.006 |
+| H2 | NT v2 yields a finite ratio and an above-null count | **holds**: 1.012, 0/5 |
+| H3 | ≥ 3 models with probing > 0.97 exceed the null in ≤ 1 of 5 | **holds**: 5 of 5 |
+
+H3 carries the section, and its disposition table's first branch applies: the
+section stands as written. H1's failure is reportable in itself — the RNA-FM port
+repair (D17) does not move the HTT stem-loop ratio, though it moves the panel
+ratio.
+
+**Scope enlarged.** The registration sampled nine models; the re-run covers the
+same nine, and Caduceus, HyenaDNA and DNABERT-2 now carry rows the deposited
+table lacked because their 2026-07-13 runs failed to load.
+
+**A measure withdrawn from its stated reading.** The embedding-distance column
+is reported at the final layer and at the embedding layer, because the embedding
+layer already reaches Spearman +1.00 against repeat count for every model
+(D21). The column does not rank models by whether they encode the expansion.

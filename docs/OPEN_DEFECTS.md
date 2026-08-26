@@ -593,6 +593,28 @@ raises on the flash-attention kernel, that is the finding -- the model cannot be
 run deterministically in this configuration -- and it is reported rather than
 routed around.
 
+**Forcing it is not sufficient.** Determinism is now forced and
+`CUBLAS_WORKSPACE_CONFIG=":4096:8"` is set in the image, and DNABERT-2 still
+disagrees with itself. Two HTT runs at commits `0c9e668` and `e9a0ed4`, both
+stamped `determinism: forced`, both on torch 2.4.0, over the same five
+fragments:
+
+| model | mean stem-loop ratio | probing accuracy |
+|---|---|---|
+| DNABERT-2 | 0.984470 -> 0.998167 (1.4%) | 0.617814 -> 0.611894 (0.96%) |
+| Caduceus | 1.2314275527 -> 1.2314275321 (1.7e-08) | identical |
+| the other seven | identical | identical |
+
+Caduceus's difference is at float64 rounding. DNABERT-2's is a percent, on a
+quantity whose whole range across the panel is a few percent from unity, and it
+moves the probing accuracy as well as the ratio, so it is not confined to the
+Rung 3 statistic where the floor was measured. Eight models reproducing exactly
+under the same pins rules out the run-to-run environment as the cause.
+
+Its bundled `flash_attn_triton.py` is the remaining candidate and has not been
+tested in isolation. Until it is, DNABERT-2's numbers carry a reproducibility
+caveat wherever they appear, including Rungs 1 and 2.
+
 ---
 
 ## D19. An intervention applied before the first forward pass is silently discarded
@@ -788,6 +810,46 @@ which is what the ERNIE-RNA ablation registered in
 the rest, the derangement null is the only baseline in this project that is
 matched to a model's own weights, sequences and layer, and it should be preferred
 wherever a chance rate is needed.
+
+---
+
+## D21. The HTT embedding-distance column measures sequence length
+
+**Detector:** `scripts/generate_arm_tables.py`, which reports the Spearman
+correlation at the embedding layer beside the one at the final layer.
+
+The HTT case study reports cosine distance of each fragment's mean-pooled
+embedding from the CAG17 fragment, and reads it as whether a model separates
+normal from pathogenic alleles. The manuscript's sentence is that RNA-FM
+"produces embedding distances from wild-type below 1e-4 for all repeat counts,
+failing to distinguish normal from pathogenic alleles", and that RiNALMo "shows
+the strongest separation (0.068 at CAG60)".
+
+Recomputed in float64 at every layer, distance rises monotonically with repeat
+count for all eight models with more than one layer, at Spearman +1.00 -- and
+it already does so at the **embedding layer**, before any transformer block has
+run. The five fragments have lengths 235, 247, 292, 304 and 364 and differ in
+composition accordingly, so a mean-pooled token embedding separates them by
+construction. A monotone distance profile is evidence about the fragments, not
+about the representation.
+
+Two consequences. The column cannot rank models by whether they encode the
+expansion, so "RiNALMo shows the strongest separation" is a statement about
+where the measure was read. And selecting the layer by this correlation, which
+an earlier version of `_htt_distances` did, chooses among ties: every layer
+scores +1.00.
+
+**What survives.** The final-layer reading is still worth reporting, because one
+model departs from the pattern there: RNA-FM collapses to 2.2e-07 in float64,
+which is a real degeneracy of its final representation rather than a float32
+artifact. The deposited column, computed on 2026-07-13 by a script no longer in
+the repository, is reproduced exactly by the final-layer float64 recomputation
+for ERNIE-RNA, RiNALMo, SpliceBERT and UTR-LM, which recovers that script's
+specification.
+
+**Fix.** Report the final layer and the embedding layer side by side, and state
+that the embedding layer already reaches +1.00. Applied in
+`paper/generated/htt_table.tex`.
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "model": "dnabert2",
   "stamp": {
-    "commit": "0c9e66892cefb994fc487ef9c852eeaea1fed77f",
+    "commit": "e9a0ed4d5aadd9d4ff8ab1872d3cbdc950f28cec",
     "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
     "n_families": 5,
     "withdrawn": [
@@ -39,7 +39,7 @@
     "sequences": "natural",
     "weights": "pretrained"
   },
-  "completed": "2026-08-25 18:53:52 UTC",
+  "completed": "2026-08-26 03:53:26 UTC",
   "phase": 6,
   "metric": "perturbation_specificity",
   "preregistration": "PREREGISTRATION_PHASE6_V2.md",
@@ -48,19 +48,19 @@
   "results": {
     "per_rna": {
       "HTT_CAG17_normal": {
-        "best_ps": -0.005873365967105671,
+        "best_ps": -0.005279936452047931,
         "best_layer": 0,
         "per_layer_ps": [
-          -0.005873365967105671
+          -0.005279936452047931
         ],
         "n_eligible_pairs": 26,
         "n_stems": 10,
         "n_wc_pairs_total": 73,
         "positive_control": {
           "pass": false,
-          "p_value": 0.38866299418009287,
-          "mean_stem_delta": 0.22657934331646562,
-          "mean_loop_delta": 0.23114050507576597
+          "p_value": 0.09745610349067207,
+          "mean_stem_delta": 0.30610280388712935,
+          "mean_loop_delta": 0.3148591410593609
         },
         "h3_precision": {
           "fraction": 0.0,
@@ -68,37 +68,40 @@
           "partner_max_count": 0,
           "p_value": 1.0
         },
-        "ps_gc_pairs": -0.009249259246032003,
-        "ps_au_pairs": -0.00047193672082354034,
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.006340688201661407,
+        "ps_au_pairs": -0.00358273365266637,
         "nearer_neighbor_larger": 0.19230769230769232,
         "noop_floor": {
-          "best_ps_noop": -0.005980904451548321,
+          "best_ps_noop": -0.022195328387938914,
           "per_layer_ps_noop": [
-            -0.005980904451548321
+            -0.022195328387938914
           ]
         },
         "quarantined": false,
-        "null_95th_primary": -0.001498446147821337,
-        "null_95th_conservative": -0.001498446147821337,
+        "null_95th_primary": -0.0005369903269697956,
+        "null_95th_conservative": -0.0005369903269697956,
         "h3_chance_fraction": 0.0,
         "null_available": true,
         "exceeds_null_primary": false,
         "exceeds_null_conservative": false
       },
       "HTT_CAG21_normal": {
-        "best_ps": -0.00670722211502178,
+        "best_ps": -0.03357057876051764,
         "best_layer": 0,
         "per_layer_ps": [
-          -0.00670722211502178
+          -0.03357057876051764
         ],
         "n_eligible_pairs": 25,
         "n_stems": 9,
         "n_wc_pairs_total": 78,
         "positive_control": {
           "pass": false,
-          "p_value": 0.05582775942322414,
-          "mean_stem_delta": 0.2533454912175217,
-          "mean_loop_delta": 0.2475783661747601
+          "p_value": 1.1622449880276303e-05,
+          "mean_stem_delta": 0.30985359752075436,
+          "mean_loop_delta": 0.32951011354480236
         },
         "h3_precision": {
           "fraction": 0.0,
@@ -106,37 +109,40 @@
           "partner_max_count": 0,
           "p_value": 1.0
         },
-        "ps_gc_pairs": -0.010389736616699915,
-        "ps_au_pairs": -0.0011834503625045788,
-        "nearer_neighbor_larger": 0.16,
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.042883577645251324,
+        "ps_au_pairs": -0.019601080433417108,
+        "nearer_neighbor_larger": 0.24,
         "noop_floor": {
-          "best_ps_noop": -0.020935274614468237,
+          "best_ps_noop": -0.02749631308292665,
           "per_layer_ps_noop": [
-            -0.020935274614468237
+            -0.02749631308292665
           ]
         },
         "quarantined": false,
-        "null_95th_primary": -0.01079964827534821,
-        "null_95th_conservative": -0.01079964827534821,
+        "null_95th_primary": -0.00023715350916244025,
+        "null_95th_conservative": -0.00023715350916244025,
         "h3_chance_fraction": 0.0,
         "null_available": true,
-        "exceeds_null_primary": true,
-        "exceeds_null_conservative": true
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
       },
       "HTT_CAG36_pathogenic": {
-        "best_ps": -0.010456643825684649,
+        "best_ps": -0.04478389465143199,
         "best_layer": 0,
         "per_layer_ps": [
-          -0.010456643825684649
+          -0.04478389465143199
         ],
         "n_eligible_pairs": 26,
         "n_stems": 10,
         "n_wc_pairs_total": 91,
         "positive_control": {
-          "pass": true,
-          "p_value": 0.005558132373801752,
-          "mean_stem_delta": 0.3912737014034943,
-          "mean_loop_delta": 0.3830847039784967
+          "pass": false,
+          "p_value": 4.553992775440353e-05,
+          "mean_stem_delta": 0.30853489690661945,
+          "mean_loop_delta": 0.32552278463414175
         },
         "h3_precision": {
           "fraction": 0.0,
@@ -144,37 +150,40 @@
           "partner_max_count": 0,
           "p_value": 1.0
         },
-        "ps_gc_pairs": -0.01686609190312071,
-        "ps_au_pairs": -0.00020152690178695253,
-        "nearer_neighbor_larger": 0.15384615384615385,
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.06555111843540093,
+        "ps_au_pairs": -0.011556336597081685,
+        "nearer_neighbor_larger": 0.19230769230769232,
         "noop_floor": {
-          "best_ps_noop": -0.03282170409142388,
+          "best_ps_noop": -0.03932278192881048,
           "per_layer_ps_noop": [
-            -0.03282170409142388
+            -0.03932278192881048
           ]
         },
         "quarantined": false,
-        "null_95th_primary": -0.001147492131349898,
-        "null_95th_conservative": -0.001147492131349898,
+        "null_95th_primary": -0.02184896026264737,
+        "null_95th_conservative": -0.02184896026264737,
         "h3_chance_fraction": 0.0,
         "null_available": true,
         "exceeds_null_primary": false,
         "exceeds_null_conservative": false
       },
       "HTT_CAG40_pathogenic": {
-        "best_ps": -0.04778591318476953,
+        "best_ps": -0.016249213976634348,
         "best_layer": 0,
         "per_layer_ps": [
-          -0.04778591318476953
+          -0.016249213976634348
         ],
         "n_eligible_pairs": 26,
         "n_stems": 10,
         "n_wc_pairs_total": 95,
         "positive_control": {
           "pass": false,
-          "p_value": 0.6916551899046536,
-          "mean_stem_delta": 0.6180980930641321,
-          "mean_loop_delta": 0.6197263388399443
+          "p_value": 0.02479190885901638,
+          "mean_stem_delta": 0.32381462009902384,
+          "mean_loop_delta": 0.33136355679470747
         },
         "h3_precision": {
           "fraction": 0.0,
@@ -182,37 +191,40 @@
           "partner_max_count": 0,
           "p_value": 1.0
         },
-        "ps_gc_pairs": -0.07445526384397479,
-        "ps_au_pairs": -0.0051149521300411175,
-        "nearer_neighbor_larger": 0.19230769230769232,
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.026404972712030815,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.15384615384615385,
         "noop_floor": {
-          "best_ps_noop": -0.01426555763003725,
+          "best_ps_noop": -0.036586580026696784,
           "per_layer_ps_noop": [
-            -0.01426555763003725
+            -0.036586580026696784
           ]
         },
         "quarantined": false,
-        "null_95th_primary": -0.0038723950020184243,
-        "null_95th_conservative": -0.0038723950020184243,
+        "null_95th_primary": -8.024912490060358e-05,
+        "null_95th_conservative": -8.024912490060358e-05,
         "h3_chance_fraction": 0.0,
         "null_available": true,
         "exceeds_null_primary": false,
         "exceeds_null_conservative": false
       },
       "HTT_CAG60_pathogenic": {
-        "best_ps": -0.04468018974493267,
+        "best_ps": -0.01863976751907981,
         "best_layer": 0,
         "per_layer_ps": [
-          -0.04468018974493267
+          -0.01863976751907981
         ],
         "n_eligible_pairs": 26,
         "n_stems": 10,
         "n_wc_pairs_total": 115,
         "positive_control": {
           "pass": false,
-          "p_value": 0.7265243381685837,
-          "mean_stem_delta": 0.3336586846933416,
-          "mean_loop_delta": 0.3325411935554086
+          "p_value": 0.08407627583081526,
+          "mean_stem_delta": 0.3926783642218718,
+          "mean_loop_delta": 0.39783005594279747
         },
         "h3_precision": {
           "fraction": 0.0,
@@ -220,35 +232,34 @@
           "partner_max_count": 0,
           "p_value": 1.0
         },
-        "ps_gc_pairs": -0.06056254493456844,
-        "ps_au_pairs": -0.019268421441515436,
-        "nearer_neighbor_larger": 0.19230769230769232,
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.03028962221850469,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.15384615384615385,
         "noop_floor": {
-          "best_ps_noop": -0.02026284233364373,
+          "best_ps_noop": -0.021941575626913425,
           "per_layer_ps_noop": [
-            -0.02026284233364373
+            -0.021941575626913425
           ]
         },
         "quarantined": false,
-        "null_95th_primary": -0.03683242066550044,
-        "null_95th_conservative": -0.03683242066550044,
+        "null_95th_primary": -0.002587828582724359,
+        "null_95th_conservative": -0.002587828582724359,
         "h3_chance_fraction": 0.0,
         "null_available": true,
         "exceeds_null_primary": false,
         "exceeds_null_conservative": false
       }
     },
-    "mean_best_ps": -0.010456643825684649,
-    "median_best_ps": -0.010456643825684649,
-    "families_exceeding_null_primary": 0,
-    "families_exceeding_null_conservative": 0,
-    "families_no_null": [],
-    "families_total": 1,
+    "families_total": 0,
     "families_quarantined": [],
     "families_skipped": [],
     "families_failed_gate": [
       "HTT_CAG17_normal",
       "HTT_CAG21_normal",
+      "HTT_CAG36_pathogenic",
       "HTT_CAG40_pathogenic",
       "HTT_CAG60_pathogenic"
     ]
