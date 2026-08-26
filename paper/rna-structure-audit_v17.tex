@@ -1,0 +1,728 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage[affil-it]{authblk}
+\usepackage[section]{placeins}
+
+\newcommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+
+% Extra space before floats (matches pQTL/cross-ancestry papers)
+\setlength{\textfloatsep}{14pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+
+\title{A Graded Evaluation of RNA Structure Awareness\\in Foundation Models: From Stem--Loop Discrimination\\to Partner Specificity}
+
+\author{Elliot Tower}
+\affil{Independent researcher \\ \texttt{elliot@elliottower.ai}}
+\date{}
+
+% Running head for RNA journal (<=50 chars):
+% Graded evaluation of RNA structure awareness
+
+% Panel counts and every reported number, written by
+% scripts/generate_results_tables.py from the stamped runs.
+\input{generated/panel_description}
+\input{generated/results_macros}
+\input{generated/arm_macros}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Keywords:} RNA foundation models, secondary structure, composition confound, partner specificity, evaluation framework, perturbation analysis
+
+% ============================================================================
+% ABSTRACT — ~200 words
+% Sequence: problem, design, primary result, positive result, replication,
+%           interpretation, scope
+% ============================================================================
+\begin{abstract}
+Evaluating whether RNA foundation models encode base-pairing structure requires
+separating learned representation from nucleotide composition. Stems are GC-rich
+and loops are AU-rich, so any composition-sensitive embedding inherits that
+enrichment as apparent structure awareness. We apply a three-rung ladder to ten
+RNA- and DNA-pretrained models across \panelN{} Rfam families. A
+nucleotide-stratified null absorbs most of the apparent signal at Rung~1; a
+dinucleotide-preserving null at Rung~2 leaves ERNIE-RNA with 30 families and
+RiNALMo with 15, and every other model with fewer than nine. At Rung~3 a
+mutation must perturb its base-pairing partner more than that partner's own stem
+neighbors, measured against a null that permutes partner assignments within
+each stem. Two models resolve which position pairs with which: RiNALMo at
+$0.872$ per-pair precision and ERNIE-RNA at $0.888$, where that null puts chance
+at $0.102$ and $0.124$. Precision is read at the layer maximizing mean PS within
+each family; choosing that layer on families that do not report the number
+leaves RiNALMo at $0.882$ and ERNIE-RNA at $0.885$ and places the other eight
+models at or below their own chance rates. Pretraining domain does not order
+those eight: Evo at 7B parameters and RNA-FM at 99M sit with the
+DNA-pretrained models.
+A randomly initialized ERNIE-RNA clears every rung, reaching $0.490$ per-pair
+precision. Its architecture holds a hardcoded Watson--Crick table in a buffer
+that weight randomization does not reach; ablating it drops the randomly
+initialized model to its own chance rate, $+0.012$ excess, while the trained
+model retains $+0.725$.
+\end{abstract}
+
+% ============================================================================
+% INTRODUCTION — 5 paragraphs, ~800 words
+% Sequence: why it matters, confound, gap, what we do, contributions
+% ============================================================================
+\section{Introduction}
+\label{sec:intro}
+
+% P1: Why this matters
+RNA foundation models are routinely claimed to encode secondary structure,
+but the evaluation methods---downstream task performance, linear probing,
+mutation sensitivity, attention--contact correlation---each answer different
+questions, and none controls for sequence composition. Deep learning models
+for RNA structure prediction may fail to generalize across families
+\citep{szikszai2022generalization}; whether the same fragility applies to
+learned representations has received less scrutiny.
+
+% P2: The specific confound
+Stems and loops differ in sequence composition. Across \panelN{} Rfam families,
+stems average \panelStemGC{}\% G/C content while loops average
+\panelLoopGC{}\%, and stem G/C exceeds loop G/C in \panelGCEnriched{} of
+\panelGCScored{} families (Figure~\ref{fig:composition}). Because complement swaps at G/C positions
+produce inherently larger embedding perturbations than at A/U positions,
+any naive stem-versus-loop comparison inherits this enrichment. A
+representation can therefore separate stems from loops without encoding
+pairing topology.
+
+% P3: The gap
+Each evaluation method inherits the composition confound differently.
+Linear probes can classify stems from loops using GC content alone.
+Mutation sensitivity ratios conflate the larger perturbation magnitude at
+G/C sites with structural relevance. Attention--contact correlations
+bypass embeddings entirely and so measure a different channel. To
+distinguish composition sensitivity from structure awareness, an
+evaluation must control for nucleotide identity while testing whether
+perturbations propagate to specific pairing partners.
+
+% P4: What this study does — rung framing
+These observations motivate a graded evaluation.
+``Structure awareness'' encompasses at least three levels of
+resolution, each demanding stronger knowledge: (1)~stem-versus-loop
+discrimination, achievable by any representation sensitive to
+nucleotide composition; (2)~discrimination surviving composition
+controls at one and two orders of sequence context; and (3)~knowing
+which specific position pairs with which, requiring that the model
+encode the pairing topology. We apply this three-rung ladder to ten models across five architectures
+and three orders of magnitude in parameter count.
+
+% P5: Contributions + closing
+The evaluation reveals a surprising asymmetry: the hardest test
+produces the clearest positive result. Two RNA-pretrained
+models---ERNIE-RNA (86M, with an architectural base-pairing attention
+bias) and RiNALMo (650M, standard attention)---clear Rung~3 with
+partner specificity two orders of magnitude above all other models,
+while the remaining eight produce near-zero signal. We contribute:
+(1)~a composition-controlled perturbation evaluation for RNA
+foundation models; (2)~a ten-model benchmark with randomized-weight
+controls on \panelN{} Rfam families; and (3)~evidence that two models
+retain partner-specific pairing responses after composition controls are
+applied.
+
+
+% ============================================================================
+% RESULTS — inferential logic: confound first, positive result, replication,
+%           robustness, HTT last
+% ============================================================================
+\section{Results}
+
+\subsection{Composition creates apparent structure signal (Rungs 1--2)}
+\label{sec:composition-results}
+
+Mutating a position to its Watson--Crick complement perturbs stem positions
+more than loop positions in nine of ten models, with mean ratios from
+$\ratioRNAFM{}$ (RNA-FM) down to near unity (Table~\ref{tab:rung1}). Stems in
+this panel are GC-rich and loops are AU-rich---mean stem GC $\panelStemGC{}\%$
+against loop GC $\panelLoopGC{}\%$---so a ratio above one is what a
+composition-sensitive embedding produces whether or not it represents pairing.
+
+Against a null that permutes stem and loop labels within nucleotide strata, most
+of that signal is absorbed. At $\alpha = 0.05$ per family, chance alone places
+2.4 of $\panelN{}$ families above the 95th percentile. ERNIE-RNA exceeds it in
+$\exceedErnieRNA{}$ families and RiNALMo in $\exceedRiNALMo{}$; RNA-FM, whose
+raw ratio is the largest in the panel, exceeds it in $\exceedRNAFM{}$.
+
+A ratio and a composition-controlled count therefore order the models
+differently, and neither distinguishes a model that tracks pairing from one that
+tracks the nucleotides pairing implies. Rung 2 tightens the null to preserve
+dinucleotide composition; Rung 3 changes the question.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{../figures/figure2_composition.pdf}
+\caption{Composition confound. (A)~Stem GC content exceeds loop GC content
+in \panelGCEnriched{} of \panelGCScored{} families (mean stem GC
+\panelStemGC{}\% against loop GC \panelLoopGC{}\%). (B)~Number
+of families per model whose stem--loop sensitivity ratio exceeds the
+nucleotide-stratified null at the 95th percentile; dashed line marks the
+expected false-positive count under independence
+($m \times \alpha = \expectedFalsePositives{}$).
+ERNIE-RNA (31) and RiNALMo (18) retain the most signal after composition
+control.}
+\label{fig:composition}
+\end{figure}
+
+
+\subsection{Probe validation}
+\label{sec:probe-validation}
+
+Eight of ten models score at their own chance rate at Rung 3, which admits two
+readings the panel cannot separate, since every arm in it is a model under test.
+We therefore run the Rung 3 procedure unchanged on two constructed embeddings
+whose answer is fixed in advance. In the oracle, each position's representation
+is a function of its own nucleotide and its partner's; in the local control, of
+its own nucleotide and its two sequence neighbors.
+
+The oracle reaches per-pair precision $1.000$ against a derangement chance rate
+of $0.099$. The local control reaches $0.155$ against $0.173$. Both use the same
+statistic, the same null and the same code path as every model in
+Table~\ref{tab:rung3}, over the $\chanceRateN{}$ families of the Rung 3
+analysis set.
+
+The two chance rates differ, $0.099$ and $0.173$, on systems whose answers are
+known.
+
+\subsection{Partner specificity separates two models (Rung 3)}
+\label{sec:ps-results}
+
+\input{generated/rung1_table}
+
+\input{generated/rung2_table}
+
+\input{generated/rung3_table}
+
+Mutating position $i$ to its complement perturbs its partner $j$ more than it
+perturbs $j$'s own stem neighbors in two models. RiNALMo reaches mean
+PS $= \psRiNALMo{}$ and ERNIE-RNA $\psErnieRNA{}$, against per-pair precisions
+of $0.872$ and $0.888$ where each model's own within-stem derangement puts
+chance at $0.102$ and $0.124$ (Table~\ref{tab:rung3}). The remaining eight
+exceed their own chance rates by at most $0.122$, reached by Caduceus.
+
+None of those eight excesses survives the way the layer is chosen. Precision is
+read at the layer maximizing mean PS within each family, which is
+\chanceRateN{} independent selections, so a model with no partner-specific
+response collects the maximum of a noise profile in every family and collects
+more of it the more layers it has. Choosing one layer for the whole panel, or
+choosing it on half the families and reading precision on the other half over
+$2{,}000$ splits, moves RiNALMo and ERNIE-RNA by at most $0.010$ and puts all
+eight remaining models at or below their own chance rates
+(Table~\ref{tab:layer-selection}). Caduceus falls from $0.340$ to $0.002$ and
+RNA-FM from $0.370$ to $0.126$, against chance rates of $0.218$ and $0.261$.
+
+\input{generated/layer_selection_table}
+
+A chance rate is a property of a model rather than a constant of the comparison.
+Measured on the derangement, where the assigned partner is false by
+construction, it ranges from $0.000$ to $0.316$ across the panel. Judging
+per-pair precision against the exchangeability value of $1/3$ therefore holds
+ten models to a threshold none of them has: Caduceus at $0.340$ falls below
+$1/3$ by $0.002$ while clearing its own rate by $0.122$. Both comparisons are
+reported in Table~\ref{tab:rung3}, and RiNALMo and ERNIE-RNA pass either by
+margins no choice of null affects.
+
+Both concentrate partner specificity late: RiNALMo peaks at layer
+$\psPeakRiNALMo{}$ of $\psLayersRiNALMo{}$ in $\psPeakCountRiNALMo{}$ families,
+ERNIE-RNA at layer $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in
+$\psPeakCountErnieRNA{}$. Among the eight that do not clear their own chance
+rates, neither parameter count nor pretraining domain orders anything: Evo
+reaches $\psEvo{}$ mean PS with $80\times$ ERNIE-RNA's parameters, Caduceus at
+7.7M outscores three of the five RNA-pretrained models on mean PS, and all eight
+sit together at chance on precision. The two that pass are both
+RNA-pretrained, two of five against zero of five, on a comparison of ten models
+that cannot resolve it (rank-biserial $\domainRankBiserial{}$,
+$p = \domainP{}$).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../figures/figure3_partner_specificity.pdf}
+\caption{Partner specificity across ten models. (A)~Per-family PS
+distributions for RiNALMo and ERNIE-RNA (violins) with bootstrap 95\%
+CIs (error bars); randomized-weight controls (grey diamonds) produce
+PS indistinguishable from zero. (B)~$|\text{Mean PS}|$ on log scale
+for all ten models, sorted by PS. RiNALMo and ERNIE-RNA exceed the
+remaining models by two orders of magnitude. DNABERT-2 (negative PS)
+is marked separately.}
+\label{fig:ps}
+\end{figure}
+
+
+\subsection{The randomly initialized control}
+\label{sec:random-init}
+
+Seven models were also run with every parameter re-initialized, holding the
+architecture and the tokenizer and destroying the learned weights. ERNIE-RNA's
+control clears each rung of the ladder. At Rung 1 it exceeds its
+composition-preserving null in 10 of $\panelN{}$ families against a chance
+expectation of 2.4, retains 6 of those at Rung 2, and reaches per-pair precision
+$0.490$ at Rung 3 against a chance rate of $0.241$. Judged against the
+registered threshold of $1/3$ it passes, at pooled binomial $p = 2.4 \times
+10^{-4}$.
+
+The cause is a tensor that randomization does not reach.
+\texttt{ErnieRnaModel} holds \texttt{pairwise\_bias\_map}, a
+vocabulary-square buffer registered non-persistent, which after the first
+forward pass contains six non-zero cells: A--U and U--A at $2.0$, C--G and G--C
+at $3.0$, G--U and U--G at $0.8$. Re-initialization iterates a model's
+parameters, and a buffer is not a parameter, so the control retains a hardcoded
+Watson--Crick and wobble table while its weights are random.
+
+\input{generated/ablation_table}
+
+Ablating that table and the projection above it, with the model's rebuild guard
+set so the first forward pass cannot restore it, separates the two arms
+(Table~\ref{tab:ablation}). Writing excess as precision minus that arm's own
+chance rate, the randomly initialized model falls from $+0.249$ to $+0.012$,
+while the trained model falls from $+0.764$ to $+0.725$. The difference between
+those losses is $+0.198$ (95\% CI $[+0.069, +0.320]$), and the trained model's
+remaining excess is $+0.725$ ($[+0.597, +0.836]$), both over
+$\chanceRateN{}$ families with $\bootstrapB{}$ resamples. Predictions and
+criteria were fixed before either ablated arm was computed.
+
+Across the other nine models no buffer encodes anything about base pairing;
+the rest carry position indices, rotary frequencies, or all-zero token-type
+vectors, which survive randomization and record where a nucleotide sits. Two
+controls nonetheless sat above their own chance rates, RiNALMo by $0.105$ and
+RNA-FM by $0.093$. Both excesses come from the layer choice. Per-pair precision
+is read at the layer maximizing mean PS within each family, which is
+\chanceRateN{} independent selections, and a control with no partner-specific
+response collects the maximum of a noise profile in each of them. Choosing one
+layer for the whole panel puts RiNALMo at $-0.074$ and RNA-FM at $-0.087$
+against their own chance rates and moves the two trained models by at most
+$0.010$; choosing the layer on half the families and reporting precision on the
+other half reproduces both to three decimals
+(Table~\ref{tab:layer-selection}). The same control removes the excess of every
+model in the panel except these two and ERNIE-RNA's own bias-carrying control.
+
+\subsection{Multi-sequence replication}
+\label{sec:multiseq-results}
+
+Each family is represented in the panel by one curated sequence, so a ratio
+could be a property of that sequence rather than of the family. We therefore
+score 3--5 members of each family's Rfam seed alignment, \multiseqN{} sequences
+over \multiseqFamilies{} families, and measure the within-family coefficient of
+variation of the stem--loop ratio. Every model is scored on the same set.
+
+\input{generated/multiseq_table}
+
+Seven of the ten models vary by under 6\% within a family, from UTR-LM at
+$0.025$ to Caduceus at $0.060$ (Table~\ref{tab:multiseq}). For those models the
+ratio is a property of the family and the single curated representative is a
+fair stand-in for it.
+
+RNA-FM and Evo are the exceptions, at $\cvRNAFM{}$ and $\cvEvo{}$. Both also
+fail composition control (Section~\ref{sec:composition-results}): RNA-FM has the
+panel's largest raw ratio and exceeds the nucleotide-stratified null in
+$\exceedRNAFM{}$ families. A ratio that moves by a third between members of the
+same family, and vanishes under a composition null, is what a
+sequence-composition response looks like rather than a structural one.
+
+The two models that clear Rung 3 are among the most stable, at $\cvRiNALMo{}$
+and $\cvErnieRNA{}$.
+
+\subsection{Robustness analyses}
+\label{sec:robustness}
+
+The dinucleotide-stratified null absorbs the sole family (tRNA-Ala)
+surviving the nucleotide-stratified null for RNA-FM; second-order sequence
+context accounts for the residual signal. Replacing
+mean aggregation with median changes PS estimates by $< 5$\% for RiNALMo
+and ERNIE-RNA and does not alter the model ranking. Reading PS at the last
+layer rather than each family's best changes RiNALMo by $-0.1$\% and ERNIE-RNA
+by $-1.9$\%, because both peak at or beside their final layer
+(Section~\ref{sec:ps-results}). Restricting to Watson--Crick pairs only (excluding wobble G--U
+pairs) does not change the primary conclusions. Widening the PS neighbor
+window from $\pm 1$ to $\pm 2$ positions reduces PS magnitudes uniformly
+across models without altering their relative ranking.
+A transversion control (\transversionAlphabet{}, substitutions that disrupt
+pairing without being complement swaps) reproduces the Watson--Crick ratios
+across all ten models, with the widest deviation \transversionWidestDeviation{}
+at \transversionWidest{} and seven models inside $2.2$\%
+(Table~\ref{tab:transversion}). The stem--loop contrast is not an artifact of
+the substitution alphabet. Five of the seven randomized-weight
+controls produce $|\text{mean PS}| < 10^{-8}$. The two that do not are the
+multi-nucleotide tokenizers, NT~v2 at $-3.4 \times 10^{-5}$ and DNABERT-2 at
+$-4.0 \times 10^{-4}$, the second comparable in magnitude to its trained value.
+The two Rung 3 statistics disagree on these controls: ERNIE-RNA's has mean PS
+$3.4 \times 10^{-9}$ and per-pair precision $0.490$, so a mean PS at zero does
+not place a control at chance.
+
+Family-level results, the attention--contact channel, the transversion control
+and the full registered-hypothesis table appear in
+Appendix~\ref{app:supplement}.
+
+
+Twenty-one hypotheses registered across four protocols, each hashed before its
+data were collected, produce nine confirmations and eleven failures
+(Table~\ref{tab:hypotheses}). The registered prediction that RNA-pretrained
+models would outperform DNA-pretrained models on partner specificity failed
+($r_b = \domainRankBiserial{}$, $p = \domainP{}$): Caduceus (7.7M, DNA) exceeds
+three RNA models on mean PS.
+
+
+\subsection{Covariation versus geometry}
+\label{sec:covariation-results}
+
+Partner specificity could reflect sequence covariation rather than
+learned geometric pairing. Compensatory mutations that maintain base
+pairing are overrepresented in evolutionary RNA alignments; a model
+trained on such sequences might predict that mutating one position
+perturbs its covarying partner without encoding the physical mechanism
+of pairing.
+
+To test this, each panel family was regenerated \synPerFamily{} times with its
+dot-bracket structure preserved exactly and its nucleotides reassigned---uniform
+Watson--Crick pairs at paired positions, uniform elsewhere---giving \synN{}
+sequences that share structure with their natural counterparts and carry no
+evolutionary covariation. All ten models were run on them
+(Table~\ref{tab:synthetic}).
+
+\input{generated/synthetic_table}
+
+Mean PS falls by \synPSDropErnieRNA{} for ERNIE-RNA, to \synPSErnieRNA{}, and
+by \synPSDropRiNALMo{} for RiNALMo, to \synPSRiNALMo{}. Per-pair precision
+measured against each arm's own chance rate falls by a quarter: ERNIE-RNA's
+excess goes from \natExcessErnieRNA{} to \synExcessErnieRNA{} and RiNALMo's
+from \natExcessRiNALMo{} to \synExcessRiNALMo{}, retaining
+\synRetainedErnieRNA{} and \synRetainedRiNALMo{}. The two statistics answer
+different questions on these sequences. Mean PS is a magnitude, and synthetic
+sequences have flatter composition, so every perturbation is smaller. Per-pair
+precision asks whether a mutated position's partner moves more than that
+partner's neighbors, which is what Rung 3 tests, and three quarters of it
+survives on sequences with no covariation at all. Those sequences also destroy
+natural sequence context, so the quarter that is lost is an upper bound on the
+covariation contribution and the three quarters that remain are a lower bound
+on the rest.
+
+As an independent check, we computed mutual information (MI) between
+paired positions from the Rfam seed alignments of the \panelN{} panel families.
+MI separates paired from unpaired positions (mean MI $= 0.347$ against
+$0.066$; Wilcoxon $p = 7.1 \times 10^{-14}$), confirming that evolutionary
+covariation is detectable in the alignments. Per-family mean MI does not
+correlate significantly with model PS (RiNALMo: $\rho = +0.272$, $p = 0.109$;
+ERNIE-RNA: $\rho = +0.239$, $p = 0.160$; $n = \confirmatoryN{}$). Families with strong covariation signal
+do not systematically produce higher PS, suggesting that the models'
+partner specificity reflects learned structure rather than
+recapitulated covariation.
+
+
+\subsection{HTT case study}
+\label{sec:htt-results}
+
+The CAG repeat region in huntingtin exon~1 forms hairpin structures whose
+stability scales with repeat count \citep{demezer2011mutant,
+krzyzosiak2012triplet}. We evaluated five HTT exon~1 fragments
+(NM\_002111.7) with CAG repeat counts of 17, 21, 36, 40 and 60, folded with
+ViennaRNA RNAfold \citep{lorenz2011viennarna}, through the panel's own stages.
+
+\input{generated/htt_table}
+
+\httHighProbing{} of \httModels{} models reach linear-probe accuracy above
+$0.97$ for stem-versus-loop classification, and \httHighProbingClean{} of those
+exceed the composition-preserving null in no more than one of the five
+fragments. The repeat region contains only C, A and G---no U---so a linear
+probe has an extreme composition bias available to it.
+
+Embedding distance from the CAG17 fragment rises monotonically with repeat
+count for all \httMonotone{} models with more than one layer, at Spearman
+$\rho = +1.00$, and does so at the embedding layer before any block has run:
+the fragments have lengths 235 to 364 and differ in composition accordingly.
+The measure separates the fragments by construction and does not rank models by
+whether they represent the expansion. RNA-FM is the one model whose final layer
+departs from the pattern, its distances there collapsing to
+$2 \times 10^{-7}$ in float64.
+
+High probing accuracy on a computationally predicted structure coexists with
+null composition-controlled signal: apparent structure decoding persists in a
+strongly composition-biased context.
+
+
+% ============================================================================
+% DISCUSSION — 7 paragraphs
+% ============================================================================
+\section{Discussion}
+\label{sec:discussion}
+
+% P1: Primary conclusion + positive result
+Composition-matched nulls absorb most of the apparent stem--loop
+sensitivity across all ten models. Two RNA-pretrained models---RiNALMo and
+ERNIE-RNA---retain reproducible partner-specific responses under the most
+stringent test. Multi-sequence replication shows low within-family
+variance across eight of ten models.
+
+% P2: Why composition matching changes interpretation
+The underlying problem is general: whenever a structural annotation
+correlates with feature composition, any embedding metric sensitive to
+feature identity inherits the correlation. The nucleotide-stratified
+permutation null controls for this by breaking the structure--composition
+link while preserving nucleotide identity. The same template applies to
+any biological structure correlated with sequence composition.
+
+% P3: Interpret positive models cautiously
+RiNALMo and ERNIE-RNA reach partner specificity through different pathways.
+ERNIE-RNA injects a base-pairing attention bias, and that bias with random
+weights above it resolves partners at $0.490$ against a chance rate of $0.241$;
+ablating it removes the control's excess and costs the trained model $0.039$.
+RiNALMo uses standard attention with no structural bias and reaches comparable
+precision at $7.5\times$ the parameters. On synthetic sequences that preserve
+structure and destroy covariation (Section~\ref{sec:covariation-results}), both
+retain roughly three quarters of their excess over chance. Those sequences also
+destroy natural sequence context, so the quarter that is lost bounds the
+covariation contribution from above and the three quarters that remain bound
+the non-covariation contribution from below. Whether that remainder reflects a
+geometric internal model of folding or a statistical regularity of paired
+positions is open.
+
+% P4: What predicts composition-controlled sensitivity
+Neither training domain nor architecture family alone predicts
+composition-controlled sensitivity. The three state-space models span mean
+ratios $\ratioHyenaDNA{}$ to $\ratioEvo{}$ and the seven transformers
+$\ratioDNABERTTwo{}$ to $\ratioRNAFM{}$, so the architecture families overlap
+almost entirely. Evo at $\ratioEvo{}$ exceeds four of the five RNA-pretrained
+models on the raw ratio and Caduceus at $\ratioCaduceus{}$ exceeds three. The two models
+that survive the partner specificity test (RiNALMo and ERNIE-RNA) share
+RNA pretraining but differ in mechanism: ERNIE-RNA injects explicit
+base-pairing attention bias, while RiNALMo uses standard self-attention at
+$7.5\times$ the parameters. Scale alone does not explain the result:
+Evo at 7B parameters produces high raw ratios but high within-family
+variance, and its signal is largely absorbed by composition nulls. What
+distinguishes the two positive models from the remaining eight is an open
+question whose answer likely requires internal mechanistic analysis rather
+than further behavioral benchmarking.
+
+% P5: Broader evaluation implications
+RNA structure prediction benchmarks have moved toward stricter evaluation
+because high apparent performance can fail to generalize across families
+\citep{szikszai2022generalization}. This work extends the concern from
+dataset similarity to sequence-composition confounding. NT~v2 and DNABERT-2
+show near-zero embedding-level partner specificity while passing many families
+at the composition gate, and their attention--contact correlations do not
+supply the missing channel: NT~v2 reads $\attnNTvTwo{}$ trained against
+$\attnUntrainedNTvTwo{}$ randomly initialized, so its correlation is
+architectural, and DNABERT-2's trained excess of $\attnDeltaDNABERTTwo{}$ rests
+on a model that does not reproduce itself between runs
+(Table~\ref{tab:attn_trained_untrained}).
+
+% P6: Limitations
+% (Updated to reference covariation results in Section 2.5)
+\paragraph{Limitations.}
+The complement-swap metric tests sensitivity to single base-pair disruptions;
+it does not test tertiary contacts, pseudoknots, or long-range interactions.
+The synthetic covariation control (Section~\ref{sec:covariation-results})
+removes covariation and natural sequence context together, so the quarter of
+the excess it costs is an upper bound on what covariation contributes. HTT structures
+are RNAfold predictions. Ten models do not cover the full model space. Pretraining-set contamination cannot be
+fully reconstructed. Multi-nucleotide tokenization limits direct
+comparability for NT~v2 and DNABERT-2.
+
+\paragraph{Practical recommendations.}
+Any claim that an RNA representation encodes secondary structure should
+report stem--loop sensitivity alongside a nucleotide-stratified null, so
+readers can separate composition sensitivity from structure awareness.
+Partner specificity is more informative than aggregate stem--loop contrasts:
+a model that perturbs stems more than loops may respond to GC content, while
+one that selectively perturbs the annotated pairing partner encodes
+positional pairing information. Randomized-weight controls should establish
+each architecture's baseline capacity. Replication across
+multiple sequences per family guards against single-sequence artifacts; a
+coefficient of variation above 10\% signals instability. For
+multi-nucleotide tokenizers, the mapping from token-level to position-level
+metrics should be stated explicitly.
+
+
+% ============================================================================
+% MATERIALS AND METHODS (after Discussion per RNA journal format)
+% ============================================================================
+\section{Materials and Methods}
+\label{sec:methods}
+
+\subsection{Benchmark construction}
+\label{sec:benchmark}
+
+We evaluate \panelN{} Rfam~14.10 families \citep{kalvari2021rfam} spanning ribozymes, riboswitches, snRNAs,
+cis-regulatory elements, miRNA precursors, CRISPR repeats, and other ncRNAs.
+Positions are labeled stem or loop from consensus dot-bracket annotation.
+Minimum inclusion criteria: $\geq 20$~nt, $\geq 5$ stem and $\geq 5$ loop
+positions. Pseudoknots, noncanonical pairs, and gap positions are excluded.
+
+All structures are consensus secondary structures from Rfam seed alignments;
+none are experimentally determined crystal or cryo-EM structures. Pretraining
+data overlap cannot be fully reconstructed for all models. The full family
+list with accessions appears in Table~\ref{tab:panel}.
+
+\subsection{Models and controls}
+\label{sec:models}
+
+\begin{table}[htbp]
+\centering
+\caption{Models evaluated.}
+\label{tab:models}
+\begin{tabular}{@{}llrll@{}}
+\toprule
+\textbf{Model} & \textbf{Domain} & \textbf{Params} & \textbf{Architecture} & \textbf{Tokenization} \\
+\midrule
+RNA-FM \citep{rnafm}                    & RNA & 99M  & Transformer           & Character \\
+RiNALMo \citep{rinalmo}                 & RNA & 650M & Transformer           & Character \\
+ERNIE-RNA \citep{yin2024ernierna}        & RNA & 86M  & Transformer$^\dagger$ & Character \\
+SpliceBERT \citep{chen2024splicebert}     & RNA & 19M  & Transformer           & Character \\
+UTR-LM \citep{chu2024utrlm}             & RNA & 1.2M & Transformer           & Character \\
+NT~v2 \citep{dalla2023nucleotide}        & DNA & 56M  & Transformer           & 6-mer     \\
+DNABERT-2 \citep{zhou2024dnabert2}       & DNA & 117M & Transformer           & BPE       \\
+Caduceus \citep{schiff2024caduceus}      & DNA & 7.7M & Mamba (SSM)           & Character \\
+HyenaDNA \citep{nguyen2024hyenadna}      & DNA & 0.45M & Hyena (SSM)          & Character \\
+Evo \citep{nguyen2024evo}                & DNA & 7B   & StripedHyena          & Character \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\small $^\dagger$ERNIE-RNA injects a base-pairing attention bias from the
+second layer onward.
+\end{table}
+
+We evaluate ten models covering attention, SSM, and hybrid architectures
+(Table~\ref{tab:models}): five pretrained on RNA, five on DNA.
+Randomized-weight controls for all ten models reinitialize all
+learned parameters (Xavier normal for matrices, $\mathcal{N}(0, 0.02)$
+for vectors) while preserving architecture. NT~v2 and DNABERT-2 use
+multi-nucleotide tokenization (6-mer and BPE), limiting direct
+comparability for position-level metrics.
+
+\subsection{Perturbation tests}
+\label{sec:perturbation}
+
+For each annotated position, we swap the nucleotide with its Watson--Crick
+complement (A$\leftrightarrow$U, C$\leftrightarrow$G) and measure the cosine
+distance between wild-type and mutant embeddings at that position, maximized
+over layers. Cosine distance is scale-invariant across architectures.
+For multi-nucleotide tokenization, token-level outputs are mapped to
+nucleotide positions by distributing the token embedding equally across
+constituent nucleotides.
+
+\paragraph{Nucleotide-stratified null.}
+Stem/loop labels are shuffled within each nucleotide type (1{,}000
+permutations), preserving nucleotide identity while breaking its structural
+label. Layer selection is repeated inside every permutation. A
+dinucleotide-stratified extension additionally conditions on the 3' neighbor.
+
+\paragraph{Partner specificity.}
+\label{sec:ps-method}
+For each Watson--Crick pair $(i, j)$ where $j$ is the annotated partner:
+\[
+\text{PS}(i,j) = \Delta_j - \max(\Delta_{j-1}, \Delta_{j+1})
+\]
+where $\Delta_k$ is the cosine distance at position $k$ after the complement
+swap at position $i$. Positive PS indicates the model perturbs the true
+partner more than its immediate neighbors. Chance for the per-pair comparison
+is measured rather than assumed: partner assignments are permuted within each
+stem under a derangement (500 derangements), so every position keeps its stem,
+its nucleotide and its layer while its assigned partner is false by
+construction. Measured this way the chance rate ranges from $0.000$ to $0.316$
+across the panel.
+
+\paragraph{Covariation control.}
+To distinguish learned geometric sensitivity from recapitulated evolutionary
+covariation, synthetic sequences were generated for each family: dot-bracket
+structure preserved exactly, nucleotides assigned randomly (uniform
+Watson--Crick pairs at paired positions, uniform random at unpaired). Mutual
+information (MI) between paired and unpaired positions was computed from Rfam
+seed alignments as an independent covariation measure.
+
+\subsection{Statistical analysis and replication}
+\label{sec:stats}
+
+The biological unit of replication is the RNA family. The primary outcome is
+partner specificity (PS); the primary comparison is trained vs.\
+randomized-weight PS. A family is \emph{gate-qualifying} for a given model
+if its raw stem--loop sensitivity ratio exceeds the nucleotide-stratified
+null at the 95th percentile. PS is computed only over gate-qualifying
+families and aggregated as their mean.
+
+To test stability across biological replicates, the Rung~1 stage is repeated on
+the seed-alignment members of each panel family: \multiseqN{} sequences across
+\multiseqFamilies{} families, 3--5 per family, each scored as its own family and
+regrouped afterwards. Within-family coefficient of variation (CV) quantifies
+replication stability. Three sequences carrying IUPAC ambiguity codes outside
+\texttt{ACGTUN} are excluded for every model, so the comparison is over a common
+set.
+
+Family-level bootstrap resampling (10{,}000 iterations, seed 42)
+provides 95\% CIs for mean PS and mean sensitivity ratio. For the binary
+gate test, each family's ratio is compared to its own 95th-percentile
+permutation null; we report the count exceeding this threshold alongside
+the expected false-positive count under independence
+($m \times \alpha = \panelN{} \times 0.05 = \expectedFalsePositives{}$).
+Bonferroni correction
+($\alpha / m \approx 0.001$) provides a conservative bound.
+
+
+% ============================================================================
+% DATA AVAILABILITY
+% ============================================================================
+\section*{Data and Code Availability}
+
+All data, scripts, and pre-registration protocols are available at
+\url{https://github.com/elliottower/rna-structure-audit} and archived at
+Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.21362717}{10.5281/zenodo.21362717}).
+
+The deposited panel holds one directory per model, each stamped with the commit
+and library versions it was computed under. Preregistrations are frozen at a
+commit hash, deviations are dated in \texttt{DEVIATIONS.md}, and reported numbers
+are bound to their runs, using \texttt{prereg}, \texttt{results} and
+\texttt{citations} \citep{tower2026reproducible}.
+
+
+% ============================================================================
+% DECLARATIONS
+% ============================================================================
+\section*{Acknowledgements}
+
+The author used Claude Code \citep{anthropic2025claude} to assist with
+drafting manuscript text and with writing and debugging analysis code.
+The author reviewed and verified all outputs, takes full responsibility
+for the accuracy and integrity of the work, and confirms that all
+hypotheses, preregistered predictions, interpretations, and conclusions
+are the author's own.
+
+\paragraph{Ethics approval and consent to participate.}
+This study uses exclusively publicly available pretrained model weights
+and published RNA sequences. No human subjects or animal subjects were
+involved. No ethical approval was required.
+
+\paragraph{Competing interests.} The author declares no competing interests.
+
+\paragraph{Funding.} None. This work was conducted independently.
+
+\paragraph{Author contributions.} E.T.: Conceptualization, Methodology,
+Software, Formal analysis, Investigation, Data curation, Writing ---
+original draft, Writing --- review \& editing, Visualization.
+
+
+% ============================================================================
+% REFERENCES
+% ============================================================================
+\appendix
+\section{Supplementary tables}
+\label{app:supplement}
+
+\input{generated/panel_table}
+
+\input{generated/attention_table}
+
+\input{generated/transversion_table}
+
+\input{generated/hypotheses_table}
+
+\input{generated/provenance_table}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

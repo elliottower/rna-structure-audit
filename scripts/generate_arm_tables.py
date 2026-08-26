@@ -236,6 +236,90 @@ def htt_table(rows: list[dict]) -> str:
     return "\n".join(lines)
 
 
+MULTISEQ_MODELS = [
+    ("rnafm", "RNA-FM"), ("evo", "Evo"), ("ernierna", "ERNIE-RNA"),
+    ("caduceus", "Caduceus"), ("hyenadna", "HyenaDNA"), ("rinalmo", "RiNALMo"),
+    ("nt", "NT~v2"), ("utrlm", "UTR-LM"), ("splicebert", "SpliceBERT"),
+    ("dnabert2", "DNABERT-2"),
+]
+
+
+def multiseq_row(key: str, label: str) -> dict:
+    path = PANEL / f"{key}_multiseq" / f"{key}_multiseq.json"
+    if not path.exists():
+        raise ArmMismatch(f"missing {path.relative_to(REPO)}")
+    stored = json.loads(path.read_text())
+    summary = stored["summary"]
+    return {
+        "key": key, "label": label,
+        "mean_ratio": summary["mean_ratio"],
+        "mean_cv": summary["mean_cv"],
+        "median_cv": summary["median_cv"],
+        "n_families": summary["n_families_scored"],
+        "n_sequences": summary["n_total_sequences"],
+        "excluded": [e["name"] for e in stored.get("excluded_for_ambiguity", [])],
+        "commit": stored["stamp"]["commit"],
+    }
+
+
+def multiseq_table(rows: list[dict]) -> str:
+    """Within-family variance of the Rung 1 ratio across seed replicates."""
+    sequences = {row["n_sequences"] for row in rows}
+    families = {row["n_families"] for row in rows}
+    if len(sequences) != 1 or len(families) != 1:
+        raise ArmMismatch(
+            f"models scored different sets: {sorted(sequences)} sequences over "
+            f"{sorted(families)} families; within-family variance is only "
+            f"comparable across a common set")
+    excluded = {tuple(sorted(row["excluded"])) for row in rows}
+    if len(excluded) != 1:
+        raise ArmMismatch(f"models excluded different sequences: {excluded}")
+    ordered = sorted(rows, key=lambda row: -row["mean_ratio"])
+    dropped = ", ".join(f"\\texttt{{{name.replace('_', chr(92) + '_')}}}"
+                        for name in sorted(next(iter(excluded))))
+    lines = [
+        r"\begin{table}[htbp]",
+        r"\centering",
+        rf"\caption{{Multi-sequence replication. Each family contributes 3--5 "
+        rf"members of its Rfam seed alignment, giving {sorted(sequences)[0]} "
+        rf"sequences over {sorted(families)[0]} families, and every model is "
+        rf"scored on the same set. CV is the within-family coefficient of "
+        rf"variation of the stem--loop sensitivity ratio, averaged over "
+        rf"families. Three sequences carrying IUPAC ambiguity codes are "
+        rf"excluded for every model ({dropped}). A low CV means the ratio is a "
+        rf"property of the family rather than of the one curated "
+        rf"representative.}}",
+        r"\label{tab:multiseq}",
+        r"\begin{tabular}{@{}lrrr@{}}",
+        r"\toprule",
+        r"\textbf{Model} & \textbf{Mean ratio} & \textbf{Mean CV} & "
+        r"\textbf{Median CV} \\",
+        r"\midrule",
+    ]
+    for row in ordered:
+        lines.append(f"{row['label']} & {row['mean_ratio']:.3f} & "
+                     f"{row['mean_cv']:.3f} & {row['median_cv']:.3f} \\\\")
+    lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", ""]
+    return "\n".join(lines)
+
+
+def multiseq_macros(rows: list[dict]) -> str:
+    by = {row["key"]: row for row in rows}
+    stable = sorted((r for r in rows if r["mean_cv"] < 0.06),
+                    key=lambda r: r["mean_cv"])
+    lines = [
+        rf"\newcommand{{\multiseqN}}{{{rows[0]['n_sequences']}}}",
+        rf"\newcommand{{\multiseqFamilies}}{{{rows[0]['n_families']}}}",
+        rf"\newcommand{{\multiseqStable}}{{{len(stable)}}}",
+        rf"\newcommand{{\multiseqStableList}}{{"
+        + ", ".join(f"{r['label']} ({r['mean_cv']:.3f})" for r in stable) + r"}",
+    ]
+    for key, macro in (("rinalmo", "RiNALMo"), ("ernierna", "ErnieRNA"),
+                       ("rnafm", "RNAFM"), ("evo", "Evo")):
+        lines.append(rf"\newcommand{{\cv{macro}}}{{{by[key]['mean_cv']:.3f}}}")
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     rows = []
     for key, label, size in MODELS:
@@ -248,14 +332,22 @@ def main() -> int:
                      "natural": natural, "synthetic": synthetic})
 
     htt_rows = [htt_row(key, label) for key, label in HTT_MODELS]
+    multiseq_rows = [multiseq_row(key, label) for key, label in MULTISEQ_MODELS]
 
     GENERATED.mkdir(parents=True, exist_ok=True)
     (GENERATED / "synthetic_table.tex").write_text(table(rows))
     (GENERATED / "htt_table.tex").write_text(htt_table(htt_rows))
-    (GENERATED / "arm_macros.tex").write_text(macros(rows) + htt_macros(htt_rows))
+    (GENERATED / "multiseq_table.tex").write_text(multiseq_table(multiseq_rows))
+    (GENERATED / "arm_macros.tex").write_text(
+        macros(rows) + htt_macros(htt_rows) + multiseq_macros(multiseq_rows))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(rows, indent=2))
     (OUT.parent / "htt_arm.json").write_text(json.dumps(htt_rows, indent=2))
+    (OUT.parent / "multiseq_arm.json").write_text(json.dumps(multiseq_rows, indent=2))
+    print(f"\n  {'model':12s}{'ratio':>8s}{'meanCV':>9s}{'medCV':>8s}")
+    for row in sorted(multiseq_rows, key=lambda r: -r["mean_ratio"]):
+        print(f"  {row['label']:12s}{row['mean_ratio']:8.3f}{row['mean_cv']:9.3f}"
+              f"{row['median_cv']:8.3f}")
     print(f"\n  {'model':12s}{'ratio':>8s}{'>null':>7s}{'probe':>8s}"
           f"{'CAG60 last':>12s}{'CAG60 emb':>12s}{'layers':>8s}{'rho L0':>7s}")
     for row in htt_rows:

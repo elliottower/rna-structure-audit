@@ -1,7 +1,7 @@
 {
-  "commit": "0cfe8b91ead820a27116dd900ed39af0f1c5d2b7",
-  "panel_sha256": "a1ff421cd788c83336dffa758d0d59e45ed5a80fda7813b47733903114a17fa9",
-  "n_families": 233,
+  "commit": "81a2fe6a1042678b87251a3f09bcba65011760f4",
+  "panel_sha256": "b8e93511af7db9b023d8748c10fa93eb998f51886135182855caf92e972afcf7",
+  "n_families": 230,
   "withdrawn": [
     "5S_rRNA_ecoli",
     "IRES_HCV_domainII",
