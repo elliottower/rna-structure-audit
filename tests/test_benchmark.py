@@ -27,6 +27,16 @@ from rna_structure_audit.rungs.rung3 import (
 # ── Data loading ────────────────────────────────────────────────────────────
 
 
+def test_version_matches_the_distribution_metadata():
+    """A hardcoded __version__ drifts: 0.2.0 shipped reporting itself as 0.1.0."""
+    import importlib.metadata
+
+    import rna_structure_audit
+
+    assert rna_structure_audit.__version__ == importlib.metadata.version(
+        "rna-structure-audit")
+
+
 def test_withdrawn_families_are_not_scored_by_default():
     scored = {f["name"] for f in load_families()}
     withdrawn = set(withdrawn_families())
