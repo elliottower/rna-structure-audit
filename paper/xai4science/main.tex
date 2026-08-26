@@ -32,23 +32,28 @@
 \maketitle
 
 \begin{abstract}
-Stems in RNA are GC-rich and loops are AU-rich, so an embedding sensitive to
-nucleotide identity alone separates them, and apparent structure awareness may
-be composition. We evaluate ten RNA- and DNA-pretrained foundation models on
-\panelN{} Rfam families with a three-rung ladder: stem-versus-loop
-discrimination, discrimination surviving nucleotide- and dinucleotide-stratified
-nulls, and partner specificity, where mutating a position must perturb its
-base-pairing partner more than that partner's own stem neighbors. Every baseline
-is itself checked. A constructed embedding with partner specificity by design
-reaches per-pair precision $1.000$, and one carrying only local sequence context
-reaches its own chance rate. Two models resolve which position pairs with which,
-RiNALMo at $0.872$ and ERNIE-RNA at $0.888$ against within-stem derangement
-chance rates of $0.102$ and $0.124$; the other eight sit at or below their own
-chance rates once the read-out layer is chosen on families that do not report the
-number. A randomly initialized ERNIE-RNA clears every rung and reaches $0.490$,
-because weight randomization iterates parameters and the architecture holds a
-Watson--Crick table in a buffer. Zeroing it returns the control to its chance
-rate while the trained model keeps $+0.725$.
+RNA foundation models are widely claimed to encode secondary structure, but
+stems are GC-rich and loops are AU-rich, and no benchmark of these models
+controls for it. We introduce a three-rung evaluation. Rung~1 asks whether a
+model distinguishes stem from loop positions after controlling for base
+composition; Rung~2 tightens the control to dinucleotide frequencies; Rung~3
+asks whether a model knows which specific position pairs with which. We evaluate
+\panelN{} Rfam~14.10 families spanning riboswitches, ribozymes, snRNAs, miRNA
+precursors and CRISPR repeats, on ten models covering attention, state-space and
+hybrid architectures, RNA and DNA pretraining, and 0.45M to 7B parameters. At
+Rung~1, ERNIE-RNA discriminates stems from loops in \exceedErnieRNA{} of
+\panelN{} families and RiNALMo in \exceedRiNALMo{}, where
+\expectedFalsePositives{} are expected by chance; the best of the other eight
+reaches nine. At Rung~3, only two of ten resolve which position pairs with
+which: ERNIE-RNA at $0.888$ per-pair precision and RiNALMo at $0.872$, against
+within-stem derangement chance rates of $0.124$ and $0.102$. The other eight sit
+at chance. Their apparent excess comes entirely from choosing the read-out layer
+per family. Three quarters of the two models' excess survives on synthetic
+sequences carrying no evolutionary covariation. A randomly initialized ERNIE-RNA
+clears every rung and reaches $0.490$, because re-initialization iterates
+parameters and the architecture keeps a Watson--Crick table in a buffer; zeroing
+it returns the control to its chance rate while the trained model keeps
+$+0.725$.
 \end{abstract}
 
 \section{Introduction}
@@ -70,6 +75,17 @@ embedding perturbations than swaps at A/U positions for reasons unrelated to
 pairing, so any stem-versus-loop contrast inherits the enrichment. A
 representation can separate stems from loops while encoding nothing about which
 position pairs with which.
+
+\paragraph{Prior controls.} Composition-preserving null models are standard in
+comparative RNA genomics, where dinucleotide-controlled shuffling was introduced
+because mononucleotide shuffling understates false-positive rates for structure
+prediction \citep{gesell2008dinucleotide, anandam2009multiperm}. No benchmark of
+RNA language models applies one to model-derived structural signal. Current
+evaluations score model output against reference structures, with a one-hot
+sequence encoding as the closest control \citep{zablocki2025benchmarking}, which
+asks whether an embedding beats raw nucleotide identity through a trained
+predictor rather than whether the embedding's own structure sensitivity is
+composition.
 
 \paragraph{Graded resolution.} Structure awareness is not one property. We
 separate three, each demanding more of a representation than the last:
@@ -110,12 +126,14 @@ positions make the comparison local, so a model that spreads perturbation along
 a helix gains nothing. Per-pair precision is the fraction of eligible pairs for
 which $\delta_j$ exceeds both neighbors.
 
-\paragraph{The null.} Chance for this comparison is neither $0$ nor $\nicefrac{1}{3}$.
-We permute partner assignments within each stem under a derangement, so every
+\paragraph{The null.} Chance for this comparison is not a constant. Whether a
+falsely assigned partner still outmoves its neighbors depends on how far a model
+spreads a mutation: one whose perturbation decays sharply almost never ranks a
+false partner first, and one that spreads it along the helix often does. We
+permute partner assignments within each stem under a derangement, so every
 position keeps its stem, its nucleotide and its layer while its assigned partner
 is false by construction, and recompute per-pair precision. Measured this way the
-chance rate ranges from $0.000$ to $0.316$ across the panel: it is a property of
-a model, not a constant of the comparison.
+rate runs from $0.000$ to $0.316$ across the ten models.
 
 \paragraph{Panel.} We evaluate \panelN{} Rfam~14.10 families
 \citep{kalvari2021rfam} spanning \panelClasses{}, with lengths
@@ -182,7 +200,7 @@ $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in $\psPeakCountErnieRNA{}$.
 
 Among the eight that do not clear their own chance rates, neither parameter
 count nor pretraining domain orders anything: Evo reaches $\psEvo{}$ mean PS
-with $80\times$ ERNIE-RNA's parameters, Caduceus at 14M outscores three of the
+with $75\times$ ERNIE-RNA's parameters, Caduceus at 7.7M outscores three of the
 five RNA-pretrained models on mean PS, and all eight sit together at chance on
 precision (Section~\ref{sec:selection}). The two that pass are both
 RNA-pretrained, two of five against zero of five, on a comparison of ten models
@@ -192,11 +210,12 @@ $p = \domainP{}$).
 \section{Layer Selection}
 \label{sec:selection}
 
-Per-pair precision is read at the layer maximizing mean PS within each family,
-which is \chanceRateN{} independent selections rather than one. The chance rate
-it is compared against receives no such choice. A model with no partner-specific
-response therefore collects the maximum of a noise profile in every family, and
-collects more of it the more layers it has.
+Per-pair precision is read at the layer where mean PS peaks, and that peak is
+located separately in each of the \chanceRateN{} families. A model with a real
+partner-specific response peaks in the same place every time, so choosing one
+layer for the whole panel changes nothing. A model without one is taking the
+maximum of a noise profile \chanceRateN{} times, against a chance rate that
+receives no such choice.
 
 \input{generated/layer_selection_table}
 
@@ -206,9 +225,11 @@ reading precision on the other half over $2{,}000$ splits, agree to three
 decimals in every row. Under either, RiNALMo and ERNIE-RNA move by at most
 $0.010$ and every other model in the panel falls to or below its own chance
 rate. Caduceus goes from $0.340$ to $0.002$ and RNA-FM from $0.370$ to $0.126$,
-against chance rates of $0.218$ and $0.261$. The size of the effect tracks depth:
-the two 7-layer models lose $0.04$ or less, the 13- and 17-layer models lose
-$0.25$ to $0.34$.
+against chance rates of $0.218$ and $0.261$. Depth does not predict how much the
+per-family choice is worth---Evo has 32 layers and gains $0.041$, Caduceus has 17
+and gains $0.340$, Spearman $+0.12$ over the thirteen arms ($p = 0.70$)---but the
+presence of a peak does, which makes the gap between the two readings a test for
+whether one exists.
 
 The held-out estimate is selection-free by construction, and it is the number we
 report for the two positive models: RiNALMo $0.882$ ($95\%$ interval over splits
@@ -225,15 +246,14 @@ against a chance expectation of \expectedFalsePositives{}, retains
 \retainUntrainedErnieRNA{} at Rung~2, and reaches per-pair precision $0.490$ at
 Rung~3 against a chance rate of $0.241$.
 
-\paragraph{A tensor randomization does not reach.} \texttt{ErnieRnaModel} holds
+\paragraph{A tensor randomization does not reach.} Re-initialization iterates a
+model's parameters, and buffers are not parameters, so ERNIE-RNA's control keeps
+the Watson--Crick table its architecture ships with:
 \texttt{pairwise\_bias\_map}, a vocabulary-square buffer registered
-non-persistent, which after the first forward pass contains six non-zero cells:
-A--U and U--A at $2.0$, C--G and G--C at $3.0$, G--U and U--G at $0.8$.
-Re-initialization iterates a model's parameters, and a buffer is not a
-parameter, so the control retains a hardcoded Watson--Crick and wobble table
-while its weights are random. This is a property of the standard construction
-rather than of this model: any architecture shipping a task-relevant lookup
-table outside \texttt{named\_parameters()} produces a control that is not a null.
+non-persistent, whose only non-zero cells after the first forward pass are A--U
+and U--A at $2.0$, C--G and G--C at $3.0$, and G--U and U--G at $0.8$. Any
+architecture shipping a task-relevant lookup table outside
+\texttt{named\_parameters()} produces a control that is not a null.
 
 \input{generated/ablation_table}
 
@@ -375,10 +395,10 @@ DNABERT-2.
 
 \paragraph{Models.} Ten models spanning five architectures. RNA-pretrained:
 RNA-FM (99M, transformer), RiNALMo (650M, transformer), ERNIE-RNA (86M,
-transformer with a base-pairing attention bias), UTR-LM ($\sim$2M,
+transformer with a base-pairing attention bias), UTR-LM (1.2M,
 transformer), SpliceBERT (19M, transformer). DNA-pretrained: NT~v2 (56M,
-transformer, 6-mer), DNABERT-2 (117M, transformer, byte-pair), HyenaDNA (5.4M,
-state-space), Caduceus (14M, state-space), Evo (7B, state-space). Seven were
+transformer, 6-mer), DNABERT-2 (117M, transformer, byte-pair), HyenaDNA (0.45M,
+state-space), Caduceus (7.7M, state-space), Evo (7B, StripedHyena hybrid). Seven were
 additionally run with every parameter re-initialized, xavier\_normal\_ on
 matrices and normal\_$(0, 0.02)$ on vectors at a fixed seed.
 

@@ -853,6 +853,52 @@ that the embedding layer already reaches +1.00. Applied in
 
 ---
 
+## D22. Three parameter counts in the models table are not the checkpoints that ran
+
+**Detector:** the HuggingFace API's `safetensors.total` for each model id in
+`multi_model_audit.py`, which reports the parameter count of the exact
+checkpoint loaded.
+
+The models table reports a parameter count per model, and the manuscript quotes
+those counts in three places to argue that scale does not order the panel.
+Checked against the checkpoints the adapters actually load:
+
+| model | checkpoint | table | actual |
+|---|---|---|---|
+| RNA-FM | `multimolecule/rnafm` | 99M | 99,523,469 |
+| RiNALMo | `multimolecule/rinalmo-giga` | 650M | 650,917,159 |
+| ERNIE-RNA | `multimolecule/ernierna` | 86M | 86,261,884 |
+| SpliceBERT | `multimolecule/splicebert` | 19M | 19,719,708 |
+| UTR-LM | `multimolecule/utrlm-te_el` | 1.2M | 1,210,494 |
+| NT v2 | `InstaDeepAI/nucleotide-transformer-v2-50m-multi-species` | 56M | 55,905,164 |
+| **HyenaDNA** | `LongSafari/hyenadna-tiny-1k-seqlen-hf` | **5.4M** | **450,712** |
+| **Caduceus** | `kuleshov-group/caduceus-ph_seqlen-131k_d_model-256_n_layer-16` | **14M** | **7,725,312** |
+| Evo | `togethercomputer/evo-1-8k-base` | 7B | 6,452,781,248 |
+| DNABERT-2 | `zhihan1996/DNABERT-2-117M` | 117M | no safetensors metadata |
+
+HyenaDNA is out by 12x: the checkpoint loaded is the smallest release, and 5.4M
+matches none of the published HyenaDNA sizes. Caduceus is out by 1.8x. Neither
+checkpoint carries a parameter count in its name, so neither number was an
+author designation -- both were wrong.
+
+Evo and DNABERT-2 are different: 7B and 117M are what their authors call them,
+and the names are how readers recognize the models, so those are kept. Evo's
+checkpoint holds 6.45B, which is the usual gap between a model's name and its
+released weights. DNABERT-2 publishes only a `pytorch_model.bin` with no
+metadata, so its count is the authors' designation and is unverified here.
+
+**Consequence for the reported result.** The direction of the argument is
+unchanged and its force increases: the sentence "Caduceus at 14M outscores three
+of the five RNA-pretrained models" is stronger at 7.7M, and the panel's range is
+0.45M to 7B rather than 1.2M to 7B.
+
+**Fix.** Applied in `scripts/generate_results_tables.py`, the v16 models table
+and the workshop paper. A generator that asserted its parameter counts against
+the API at build time would have caught this; it does not, and the counts remain
+hand-entered.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

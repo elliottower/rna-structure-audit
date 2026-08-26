@@ -234,7 +234,7 @@ ERNIE-RNA at layer $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in
 $\psPeakCountErnieRNA{}$. Among the eight that do not clear their own chance
 rates, neither parameter count nor pretraining domain orders anything: Evo
 reaches $\psEvo{}$ mean PS with $80\times$ ERNIE-RNA's parameters, Caduceus at
-14M outscores three of the five RNA-pretrained models on mean PS, and all eight
+7.7M outscores three of the five RNA-pretrained models on mean PS, and all eight
 sit together at chance on precision. The two that pass are both
 RNA-pretrained, two of five against zero of five, on a comparison of ten models
 that cannot resolve it (rank-biserial $\domainRankBiserial{}$,
@@ -378,7 +378,7 @@ Eight pre-registered hypotheses (SHA-256 hashed before data collection)
 produced five confirmations and three failures.
 The pre-registered prediction that RNA-pretrained models would
 outperform DNA-pretrained models on partner specificity failed
-($r_b = -0.28$, $p = 0.265$): Caduceus (14M, DNA) exceeds three RNA
+($r_b = -0.28$, $p = 0.265$): Caduceus (7.7M, DNA) exceeds three RNA
 models.
 
 
@@ -588,8 +588,8 @@ SpliceBERT \citep{chen2024splicebert}     & RNA & 19M  & Transformer           &
 UTR-LM \citep{chu2024utrlm}             & RNA & 1.2M & Transformer           & Character \\
 NT~v2 \citep{dalla2023nucleotide}        & DNA & 56M  & Transformer           & 6-mer     \\
 DNABERT-2 \citep{zhou2024dnabert2}       & DNA & 117M & Transformer           & BPE       \\
-Caduceus \citep{schiff2024caduceus}      & DNA & 14M  & Mamba (SSM)           & Character \\
-HyenaDNA \citep{nguyen2024hyenadna}      & DNA & 5.4M & Hyena (SSM)           & Character \\
+Caduceus \citep{schiff2024caduceus}      & DNA & 7.7M & Mamba (SSM)           & Character \\
+HyenaDNA \citep{nguyen2024hyenadna}      & DNA & 0.45M & Hyena (SSM)          & Character \\
 Evo \citep{nguyen2024evo}                & DNA & 7B   & StripedHyena          & Character \\
 \bottomrule
 \end{tabular}

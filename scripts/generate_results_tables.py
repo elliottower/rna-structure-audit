@@ -69,12 +69,12 @@ MODELS = [
     ("ernierna", "ERNIE-RNA", "86M", "RNA", "ErnieRNA"),
     ("rinalmo", "RiNALMo", "650M", "RNA", "RiNALMo"),
     ("rnafm", "RNA-FM", "99M", "RNA", "RNAFM"),
-    ("utrlm", "UTR-LM", r"$\sim$2M", "RNA", "UTRLM"),
+    ("utrlm", "UTR-LM", "1.2M", "RNA", "UTRLM"),
     ("splicebert", "SpliceBERT", "19M", "RNA", "SpliceBERT"),
     ("nt", "NT~v2", "56M", "DNA", "NTvTwo"),
     ("dnabert2", "DNABERT-2", "117M", "DNA", "DNABERTTwo"),
-    ("hyenadna", "HyenaDNA", "5.4M", "DNA", "HyenaDNA"),
-    ("caduceus", "Caduceus", "14M", "DNA", "Caduceus"),
+    ("hyenadna", "HyenaDNA", "0.45M", "DNA", "HyenaDNA"),
+    ("caduceus", "Caduceus", "7.7M", "DNA", "Caduceus"),
     ("evo", "Evo", "7B", "DNA", "Evo"),
 ]
 
