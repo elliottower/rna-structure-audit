@@ -788,9 +788,16 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
         # per-family unit to checkpoint; it is saved the moment it returns.
         print(f"[{now()}] {model_name}: structure probing")
         probing = run_structure_probing(adapter, key, families, device=device)
+        distances = _htt_distances(adapter, families, device) if htt else None
+        if distances is not None:
+            print(f"  distances from {distances['reference']}: "
+                  f"{[round(v, 6) for v in distances['at_best_layer']]} "
+                  f"at layer {distances['best_layer']}, "
+                  f"rho {distances['best_spearman']:+.3f}")
         save(f"{model_name}_phases_1_to_5.json",
              {"experiment": "phases_1_to_5", "mutation_trained": mutation,
-              "attention_trained": attention, "probing": probing})
+              "attention_trained": attention, "probing": probing,
+              "htt_distances": distances})
         print(f"  mutation: mean_ratio={mutation.get('mean_best_ratio', 0):.4f}, "
               f"exceeding null {mutation.get('n_exceeding_nuc_null', 0)}"
               f"/{mutation.get('n_families_scored', 0)}")
@@ -813,6 +820,65 @@ def _run_model(model_name, commit, phase6_only, transversion=False,
           f"(primary null: {phase6.get('families_exceeding_null_primary')})")
     return {"model": model_name, "mean_ps": phase6.get("mean_best_ps"),
             "panel_sha256": stamp["panel_sha256"]}
+
+
+def _htt_distances(adapter, families, device):
+    """Cosine distance of each fragment's mean-pooled embedding from the shortest.
+
+    The manuscript's WT->CAG60 column was computed on 2026-07-13 by a script
+    that is no longer in the repository, in float32, where `1 - cos` near 1 is
+    quantized to 2^-22. RNA-FM's five deposited values are 0, 0, 0,
+    3.6e-07 and 3.0e-07 -- at that spacing, and falling between CAG40 and
+    CAG60, which is what quantization looks like rather than a model unable to
+    separate the alleles. This recomputes the column in float64, with the
+    fragment carrying the fewest repeats as the reference, and reports every
+    layer so the one being quoted is named.
+    """
+    import numpy as np
+    import torch
+    from scipy.stats import spearmanr
+
+    ordered = sorted(families, key=lambda f: f["n_cag"])
+    counts = [f["n_cag"] for f in ordered]
+    pooled = []
+    for family in ordered:
+        tokens = adapter.tokenize(family["sequence"])
+        if device == "cuda":
+            tokens = tokens.to(device)
+        with torch.no_grad():
+            layers = adapter.get_all_layer_embeddings(tokens)
+        pooled.append([layer.double().mean(dim=0).cpu().numpy() for layer in layers])
+
+    n_layers = min(len(p) for p in pooled)
+    per_layer = {}
+    for layer in range(n_layers):
+        reference = pooled[0][layer]
+        scale = np.linalg.norm(reference)
+        row = []
+        for embeddings in pooled:
+            vector = embeddings[layer]
+            denominator = scale * np.linalg.norm(vector)
+            row.append(float(1.0 - np.dot(reference, vector) / denominator)
+                       if denominator > 0 else None)
+        per_layer[layer] = row
+
+    # The layer whose distances track repeat count most strongly, which is what
+    # a model that represents the expansion at all would produce somewhere.
+    best_layer, best_rho = 0, 0.0
+    for layer, row in per_layer.items():
+        if any(v is None for v in row):
+            continue
+        rho = spearmanr(counts, row).statistic
+        if not np.isnan(rho) and abs(rho) > abs(best_rho):
+            best_layer, best_rho = layer, float(rho)
+
+    return {"metric": "cosine_distance_from_fewest_repeats",
+            "reference": ordered[0]["name"], "repeat_counts": counts,
+            "dtype": "float64", "n_layers": n_layers,
+            "per_layer": {str(k): v for k, v in per_layer.items()},
+            "best_layer": best_layer, "best_spearman": best_rho,
+            "at_best_layer": per_layer[best_layer],
+            "at_last_layer": per_layer[n_layers - 1]}
 
 
 def _inspect_buffers(adapter, model_name, device="cpu"):
