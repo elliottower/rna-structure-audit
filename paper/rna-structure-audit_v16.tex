@@ -3,6 +3,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{xcolor}
@@ -351,18 +352,19 @@ The dinucleotide-stratified null absorbs the sole family (tRNA-Ala)
 surviving the nucleotide-stratified null for RNA-FM; second-order sequence
 context accounts for the residual signal. Replacing
 mean aggregation with median changes PS estimates by $< 5$\% for RiNALMo
-and ERNIE-RNA and does not alter the model ranking. Using the last layer
-instead of the best layer reduces RiNALMo PS by 12\% and ERNIE-RNA PS by
-8\%; both remain above the derangement null in $> 90$\% of gate-qualifying
-families. Restricting to Watson--Crick pairs only (excluding wobble G--U
+and ERNIE-RNA and does not alter the model ranking. Reading PS at the last
+layer rather than each family's best changes RiNALMo by $-0.1$\% and ERNIE-RNA
+by $-1.9$\%, because both peak at or beside their final layer
+(Section~\ref{sec:ps-results}). Restricting to Watson--Crick pairs only (excluding wobble G--U
 pairs) does not change the primary conclusions. Widening the PS neighbor
 window from $\pm 1$ to $\pm 2$ positions reduces PS magnitudes uniformly
 across models without altering their relative ranking.
-A transversion control (purine $\to$ pyrimidine mutations, which
-guarantee disrupted pairing) produces ratios within 1.2\% of the
-Watson--Crick complement ratios for five of six models tested,
-confirming that reversed base pairs differ from correct pairs enough
-to register as embedding perturbations. Five of the seven randomized-weight
+A transversion control (\transversionAlphabet{}, substitutions that disrupt
+pairing without being complement swaps) reproduces the Watson--Crick ratios
+across all ten models, with the widest deviation \transversionWidestDeviation{}
+at \transversionWidest{} and seven models inside $2.2$\%
+(Table~\ref{tab:transversion}). The stem--loop contrast is not an artifact of
+the substitution alphabet. Five of the seven randomized-weight
 controls produce $|\text{mean PS}| < 10^{-8}$. The two that do not are the
 multi-nucleotide tokenizers, NT~v2 at $-3.4 \times 10^{-5}$ and DNABERT-2 at
 $-4.0 \times 10^{-4}$, the second comparable in magnitude to its trained value.
@@ -370,16 +372,17 @@ The two Rung 3 statistics disagree on these controls: ERNIE-RNA's has mean PS
 $3.4 \times 10^{-9}$ and per-pair precision $0.490$, so a mean PS at zero does
 not place a control at chance.
 
-Family-level results and full robustness tables appear in Supplementary
-Tables S2--S4.
+Family-level results, the attention--contact channel, the transversion control
+and the full registered-hypothesis table appear in
+Appendix~\ref{app:supplement}.
 
 
-Eight pre-registered hypotheses (SHA-256 hashed before data collection)
-produced five confirmations and three failures.
-The pre-registered prediction that RNA-pretrained models would
-outperform DNA-pretrained models on partner specificity failed
-($r_b = -0.28$, $p = 0.265$): Caduceus (7.7M, DNA) exceeds three RNA
-models.
+Twenty-one hypotheses registered across four protocols, each hashed before its
+data were collected, produce nine confirmations and eleven failures
+(Table~\ref{tab:hypotheses}). The registered prediction that RNA-pretrained
+models would outperform DNA-pretrained models on partner specificity failed
+($r_b = \domainRankBiserial{}$, $p = \domainP{}$): Caduceus (7.7M, DNA) exceeds
+three RNA models on mean PS.
 
 
 \subsection{Covariation versus geometry}
@@ -568,7 +571,7 @@ positions. Pseudoknots, noncanonical pairs, and gap positions are excluded.
 All structures are consensus secondary structures from Rfam seed alignments;
 none are experimentally determined crystal or cryo-EM structures. Pretraining
 data overlap cannot be fully reconstructed for all models. The full family
-list with accessions appears in Supplementary Table~S1.
+list with accessions appears in Table~\ref{tab:panel}.
 
 \subsection{Models and controls}
 \label{sec:models}
@@ -717,6 +720,20 @@ original draft, Writing --- review \& editing, Visualization.
 % ============================================================================
 % REFERENCES
 % ============================================================================
+\appendix
+\section{Supplementary tables}
+\label{app:supplement}
+
+\input{generated/panel_table}
+
+\input{generated/attention_table}
+
+\input{generated/transversion_table}
+
+\input{generated/hypotheses_table}
+
+\input{generated/provenance_table}
+
 \bibliographystyle{plainnat}
 \bibliography{references}
 
