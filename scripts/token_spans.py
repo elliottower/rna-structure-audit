@@ -34,14 +34,21 @@ class TokenizationMismatch(ValueError):
     """The token strings do not account for the sequence one-to-one."""
 
 
-def _bounds(pieces: list[str]) -> tuple[int, int]:
-    """Half-open row range holding the nucleotide tokens.
+def _bounds(pieces: list[str], unk_token: str | None = None) -> tuple[int, int]:
+    """Half-open row range holding the sequence tokens.
 
     Special tokens are recognized by not being nucleotide strings rather than
     by name, so a tokenizer that brackets the sequence differently is handled
     without a per-model table.
+
+    An unknown token counts as content. A vocabulary that cannot spell part of
+    the sequence emits one -- DNABERT-2's byte-pair vocabulary does it for `N`,
+    which Rfam seed alignments carry -- and that token still occupies a row
+    holding sequence. Treating it as a bracket instead split the row block and
+    stopped six of ten models on the same alignment (D23).
     """
-    is_content = [bool(p) and set(p) <= NUCLEOTIDES for p in pieces]
+    is_content = [bool(p) and (set(p) <= NUCLEOTIDES or p == unk_token)
+                  for p in pieces]
     if not any(is_content):
         raise TokenizationMismatch("no token is a nucleotide string")
     start = is_content.index(True)
@@ -62,7 +69,8 @@ def content_bounds(tokenizer, token_ids) -> tuple[int, int]:
     which is right only for a tokenizer that brackets the sequence
     symmetrically. `token_ids` is the flat id list for one sequence.
     """
-    return _bounds(tokenizer.convert_ids_to_tokens(list(token_ids)))
+    return _bounds(tokenizer.convert_ids_to_tokens(list(token_ids)),
+                   getattr(tokenizer, "unk_token", None))
 
 
 def content_spans(tokenizer, sequence: str) -> list[tuple[int, int]]:
@@ -71,9 +79,27 @@ def content_spans(tokenizer, sequence: str) -> list[tuple[int, int]]:
     `sequence` must be the exact string the adapter hands the tokenizer --
     already transcribed to the alphabet that adapter uses.
     """
+    unk = getattr(tokenizer, "unk_token", None)
+    if getattr(tokenizer, "is_fast", False):
+        # The tokenizer's own character offsets, which are the only thing that
+        # can place an unknown token: its string is `[UNK]`, so its width is
+        # not its length. Reconstructing spans by joining token strings silently
+        # loses the nucleotides an unknown token covers, and every span after it
+        # shifts.
+        encoded = tokenizer(sequence, return_offsets_mapping=True)
+        pieces = tokenizer.convert_ids_to_tokens(encoded["input_ids"])
+        start, stop = _bounds(pieces, unk)
+        spans = [tuple(span) for span in encoded["offset_mapping"][start:stop]]
+        covered = sum(end - begin for begin, end in spans)
+        if spans[0][0] != 0 or spans[-1][1] != len(sequence) or covered != len(sequence):
+            raise TokenizationMismatch(
+                f"offsets cover {covered} of {len(sequence)} nucleotides, "
+                f"from {spans[0][0]} to {spans[-1][1]}")
+        return spans
+
     ids = tokenizer(sequence)["input_ids"]
     pieces = tokenizer.convert_ids_to_tokens(ids)
-    start, stop = _bounds(pieces)
+    start, stop = _bounds(pieces, unk)
     content = pieces[start:stop]
 
     joined = "".join(content)

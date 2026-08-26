@@ -337,3 +337,78 @@ def test_rung3_leaves_a_nucleotide_tokenizer_indexed_by_nucleotide():
         for position in (pair["j"], pair["j_prev"], pair["j_next"]):
             expected = cosine(embed(sequence[position]), embed(mutant[position]))
             assert profiles[idx][0][position] == pytest.approx(expected, abs=1e-6)
+
+
+# ── An unknown token holds sequence ─────────────────────────────────────────
+#
+# DNABERT-2's byte-pair vocabulary cannot spell `N`, which Rfam seed alignments
+# carry, so it emits `[UNK]` for that nucleotide. Reading the row block by
+# asking which tokens are nucleotide strings classified that row as a bracket
+# and split the block; reconstructing spans by joining token strings gave the
+# row the width of `[UNK]` and shifted every span after it (D23).
+
+
+class UnknownEmittingTokenizer:
+    """The parts of a fast tokenizer the helpers use.
+
+    `vocab` is the set of substrings it can spell; anything else becomes the
+    unknown token, as a byte-pair vocabulary missing `N` behaves.
+    """
+
+    unk_token = "[UNK]"
+    is_fast = True
+
+    def __init__(self, vocab, width=2):
+        self.vocab = vocab
+        self.width = width
+
+    def _pieces(self, sequence):
+        out, at = [], 0
+        while at < len(sequence):
+            chunk = sequence[at:at + self.width]
+            if chunk not in self.vocab:
+                out.append((self.unk_token, at, at + 1))
+                at += 1
+                continue
+            out.append((chunk, at, at + len(chunk)))
+            at += len(chunk)
+        return out
+
+    def __call__(self, sequence, return_offsets_mapping=False):
+        pieces = self._pieces(sequence)
+        self._last = pieces
+        out = {"input_ids": [0] + list(range(2, 2 + len(pieces))) + [1]}
+        if return_offsets_mapping:
+            out["offset_mapping"] = ([(0, 0)] + [(s, e) for _, s, e in pieces]
+                                     + [(0, 0)])
+        return out
+
+    def convert_ids_to_tokens(self, ids):
+        return ["[CLS]"] + [p for p, _, _ in self._last] + ["[SEP]"]
+
+
+UNKNOWN_VOCAB = {"AC", "GT", "TA", "CG", "GG", "AA", "TT", "CC", "AG", "CA",
+                 "GA", "TC"}
+
+
+def test_unknown_token_does_not_split_the_row_block():
+    tok = UnknownEmittingTokenizer(UNKNOWN_VOCAB)
+    sequence = "ACGTNACGT"
+    ids = tok(sequence)["input_ids"]
+    start, stop = content_bounds(tok, ids)
+    assert (start, stop) == (1, 1 + len(tok._last))
+
+
+def test_spans_cover_the_sequence_when_a_token_is_unknown():
+    tok = UnknownEmittingTokenizer(UNKNOWN_VOCAB)
+    sequence = "ACGTNACGT"
+    spans = content_spans(tok, sequence)
+    assert spans[0][0] == 0 and spans[-1][1] == len(sequence)
+    assert all(spans[i][1] == spans[i + 1][0] for i in range(len(spans) - 1))
+    assert sum(end - start for start, end in spans) == len(sequence)
+
+
+def test_the_unknown_token_covers_one_nucleotide_not_the_width_of_its_name():
+    tok = UnknownEmittingTokenizer(UNKNOWN_VOCAB)
+    spans = content_spans(tok, "ACGTNACGT")
+    assert [s for s in spans if s[0] <= 4 < s[1]] == [(4, 5)]

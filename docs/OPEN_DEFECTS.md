@@ -927,22 +927,38 @@ models that failed, which is the shape of a repair introducing its own defect.
 Both spellings occur. multimolecule tokenizers emit the letter (`'W'`);
 DNABERT-2 emits `[UNK]` and NT v2 `<unk>`.
 
-**Why it is not repaired in place.** For a character tokenizer an interior
-unknown covers one nucleotide and the row could be kept. For NT v2's 6-mer and
-DNABERT-2's byte-pair vocabularies a single unknown token covers a whole k-mer,
-and which nucleotides that row holds cannot be read back from the tokenization.
-Widening `NUCLEOTIDES` would fix four models and silently invent a span mapping
-for two.
+**It is repaired in place, and the first fix was the wrong one.** The reasoning
+that an unknown token's width cannot be recovered is false for a fast tokenizer:
+`return_offsets_mapping=True` gives the character span of every token, unknown
+ones included. On the sequence that stopped DNABERT-2 the offsets place `[UNK]`
+at characters (57, 58) -- one nucleotide, not the five characters of its name.
+`_bounds` now counts the tokenizer's unknown token as content, and
+`content_spans` reads offsets when the tokenizer is fast, falling back to
+joining token strings when it is not.
 
-**Fix.** Sequences carrying characters outside `ACGTUN` are excluded from the
-multi-sequence arm for every model, and the excluded names travel in the result
-file as `excluded_for_ambiguity`. That is 3 of 233 sequences, all in
-Corona_5UTR, which keeps 2 of its 5 replicates: `seq0` (W), `seq1` (H, W, Y)
-and `seq3` (H). `N` is kept, because every tokenizer in the panel resolves it
-to one row; three further sequences contain N and are scored
-(THF_riboswitch_seq2, preQ1_riboswitch_seq2, preQ1_riboswitch_seq3). Excluding
-uniformly matters more than excluding few: the arm compares within-family
-variance across models, and a set that differs by model is not a comparison.
+The replacement is checked rather than assumed: over all 52 curated families the
+offsets and the old join agree exactly for DNABERT-2, and NT v2's tokenizer is
+not fast, so it keeps the join path untouched. No previously computed number
+moves.
+
+**The exclusion that preceded the repair, and the count that was wrong twice.**
+Before the offsets fix, sequences carrying characters outside `ACGTUN` were
+excluded from the multi-sequence arm for every model: 3 of 233, all in
+Corona_5UTR. `N` was kept on the reasoning that every tokenizer resolves it to
+one row -- true for the character tokenizers and false for DNABERT-2, whose
+byte-pair vocabulary emits `[UNK]` for it. DNABERT-2 therefore ran 74 of 230
+sequences and died on `THF_riboswitch_seq2`, whose only unusual character is an
+N. The original count of 6 exclusions, taken against `ACGTU`, had been the
+correct set; narrowing it to 3 introduced the failure.
+
+**Fix.** `scripts/token_spans.py`, as above, with
+`tests/test_token_spans.py` covering an unknown token that does not split the
+row block, spans that still cover the sequence, and an unknown token whose width
+is one nucleotide rather than the five characters of its name. The
+three-sequence exclusion is kept, now as a conservative choice rather than a
+requirement, because the nine models that completed ran with it and the arm
+compares within-family variance across models: a set that differs by model is
+not a comparison.
 
 **Scope.** No curated panel family contains a character outside ACGU, so Rungs
 1--3, the transversion, synthetic and HTT arms are untouched. Any future use of
