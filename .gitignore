@@ -33,3 +33,8 @@ logs/
 
 # results-cli ledger: kept locally, never committed
 .results/
+
+# Build artifacts: hatchling writes these on every build.
+dist/
+build/
+*.egg-info/
