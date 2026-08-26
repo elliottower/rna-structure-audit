@@ -1,0 +1,390 @@
+{
+  "started_utc": "2026-08-26T03:50:00.244016+00:00",
+  "branches": {
+    "main": {
+      "checkout": {
+        "returncode": 0,
+        "tail": [
+          "Your branch is up to date with 'origin/main'.",
+          "Already on 'main'"
+        ]
+      },
+      "sha": "87f4dad",
+      "nnsight_tests": {
+        "returncode": 0,
+        "tail": [
+          "..................                                                       [100%]",
+          "18 passed in 2.78s"
+        ]
+      },
+      "repro_tests": {
+        "returncode": 1,
+        "tail": [
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.bert.encoder.layer.2.attention` of type `<class 'transformers.models.bert.modeling_bert.BertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.bert.encoder.layer.2` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.bert.encoder.layer.3.attention` of type `<class 'transformers.models.bert.modeling_bert.BertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.bert.encoder.layer.3` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.bert.encoder.layer.4.attention` of type `<class 'transformers.models.bert.modeling_bert.BertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.bert.encoder.layer.4` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+          "=========================== short test summary info ============================",
+          "FAILED test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "FAILED test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_is_resolvable_in_its_module",
+          "FAILED test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_is_picklable",
+          "3 failed, 3 passed, 2 skipped, 11 warnings in 14.97s"
+        ]
+      },
+      "rna_check": {
+        "returncode": 0,
+        "tail": [
+          "pooler.dense.weight                 | MISSING    | ",
+          "pooler.dense.bias                   | MISSING    | ",
+          "",
+          "Notes:",
+          "- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch.",
+          "- MISSING:\tthose params were newly initialized because missing from the checkpoint. Consider training on your downstream task.",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.0.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.0` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.1.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.1` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.2.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.2` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.3.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.3` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.4.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.4` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.5.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:765: UserWarning: Module `model.encoder.layer.5` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn("
+        ]
+      },
+      "rna": {
+        "nnsight_version": "0.7.1.dev43+g87f4dadaa",
+        "models": {
+          "multimolecule/rnabert": {
+            "envoy_class": "Envoy.Preserved",
+            "dot_in_name": true,
+            "resolves_back": false,
+            "siblings_share_class": false,
+            "n_distinct_layer_classes": 6,
+            "class_picklable": false,
+            "pickle_error": "PicklingError: Can't pickle <class 'nnsight.intervention.envoy.Envoy.Preserved'>: attribute lookup Envoy.Preserved on nnsight.intervention.envoy failed",
+            "n_layers": 7,
+            "layer_shape": [
+              1,
+              20,
+              120
+            ],
+            "per_position_l2_shift": [
+              0.2864,
+              0.2852,
+              0.2604,
+              0.2768,
+              0.2177,
+              0.146,
+              0.2401,
+              0.2269,
+              0.314,
+              0.0797,
+              0.8089,
+              0.2187,
+              0.1411,
+              0.1418,
+              0.2738,
+              0.2021,
+              0.1798,
+              0.1504,
+              0.1409,
+              0.5706
+            ],
+            "argmax_position": 10,
+            "traced_shape": [
+              20,
+              120
+            ],
+            "status": "ok"
+          },
+          "multimolecule/rnafm": {
+            "status": "error",
+            "error": "ValueError: vocab_size (28) must be 26 when codon=False.",
+            "traceback": "Traceback (most recent call last):\n  File \"/root/repro/_rna_envoy_check.py\", line 85, in main\n    entry = check(repo, cls_name)\n            ^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/repro/_rna_envoy_check.py\", line 33, in check\n    hf = getattr(multimolecule, cls_name).from_pretrained(\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/transformers/modeling_utils.py\", line 4217, in from_pretrained\n    config, model_kwargs = config_class.from_pretrained(\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/transformers/configuration_utils.py\", line 691, in from_pretrained\n    return cls.from_dict(config_dict, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/transformers/configuration_utils.py\", line 868, in from_dict\n    config = cls(**config_dict)\n             ^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/multimolecule/models/rnafm/configuration_rnafm.py\", line 140, in __init__\n    raise ValueError(f\"vocab_size ({vocab_size}) must be {expected_vocab_size} when codon={codon}.\")\nValueError: vocab_size (28) must be 26 when codon=False.\n"
+          },
+          "multimolecule/splicebert": {
+            "envoy_class": "Envoy.Preserved",
+            "dot_in_name": true,
+            "resolves_back": false,
+            "siblings_share_class": false,
+            "n_distinct_layer_classes": 6,
+            "class_picklable": false,
+            "pickle_error": "PicklingError: Can't pickle <class 'nnsight.intervention.envoy.Envoy.Preserved'>: attribute lookup Envoy.Preserved on nnsight.intervention.envoy failed",
+            "n_layers": 7,
+            "layer_shape": [
+              1,
+              20,
+              512
+            ],
+            "per_position_l2_shift": [
+              1.9588,
+              2.0604,
+              1.8931,
+              1.7785,
+              1.478,
+              1.6852,
+              1.7163,
+              1.7309,
+              3.355,
+              2.4945,
+              8.5443,
+              2.3225,
+              2.1158,
+              1.7993,
+              1.6969,
+              1.4358,
+              1.8137,
+              1.991,
+              2.0442,
+              2.115
+            ],
+            "argmax_position": 10,
+            "traced_shape": [
+              20,
+              512
+            ],
+            "status": "ok"
+          }
+        }
+      }
+    },
+    "verify/both-fixes": {
+      "checkout": {
+        "returncode": 0,
+        "tail": [
+          "Switched to branch 'verify/both-fixes'"
+        ]
+      },
+      "sha": "e9ae3ef",
+      "nnsight_tests": {
+        "returncode": 0,
+        "tail": [
+          "..................                                                       [100%]",
+          "18 passed in 2.25s"
+        ]
+      },
+      "repro_tests": {
+        "returncode": 0,
+        "tail": [
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.1` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.2.attention` of type `<class 'transformers.models.bert.modeling_bert.BertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.2` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.3.attention` of type `<class 'transformers.models.bert.modeling_bert.BertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.3` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.4.attention` of type `<class 'transformers.models.bert.modeling_bert.BertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "test_envoy_overloaded_mount.py::test_encoder_layer_envoy_class_name_has_no_dot",
+          "  /root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.bert.encoder.layer.4` of type `<class 'transformers.models.bert.modeling_bert.BertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "    warnings.warn(",
+          "",
+          "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+          "6 passed, 2 skipped, 11 warnings in 13.05s"
+        ]
+      },
+      "rna_check": {
+        "returncode": 0,
+        "tail": [
+          "pooler.dense.weight                 | MISSING    | ",
+          "pooler.dense.bias                   | MISSING    | ",
+          "",
+          "Notes:",
+          "- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch.",
+          "- MISSING:\tthose params were newly initialized because missing from the checkpoint. Consider training on your downstream task.",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.0.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.0` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.1.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.1` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.2.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.2` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.3.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.3` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.4.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.4` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.5.attention` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertAttention'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn(",
+          "/root/nnsight/src/nnsight/intervention/envoy.py:819: UserWarning: Module `model.encoder.layer.5` of type `<class 'multimolecule.models.splicebert.modeling_splicebert.SpliceBertLayer'>` has pre-defined a `output` attribute. nnsight access for `output` will be mounted at `.nns_output` instead of `.output` for this module only.",
+          "  warnings.warn("
+        ]
+      },
+      "rna": {
+        "nnsight_version": "0.7.1.dev43+g87f4dadaa",
+        "models": {
+          "multimolecule/rnabert": {
+            "envoy_class": "Envoy__nns_output",
+            "dot_in_name": false,
+            "resolves_back": true,
+            "siblings_share_class": true,
+            "n_distinct_layer_classes": 1,
+            "class_picklable": true,
+            "n_layers": 7,
+            "layer_shape": [
+              1,
+              20,
+              120
+            ],
+            "per_position_l2_shift": [
+              0.2864,
+              0.2852,
+              0.2604,
+              0.2768,
+              0.2177,
+              0.146,
+              0.2401,
+              0.2269,
+              0.314,
+              0.0797,
+              0.8089,
+              0.2187,
+              0.1411,
+              0.1418,
+              0.2738,
+              0.2021,
+              0.1798,
+              0.1504,
+              0.1409,
+              0.5706
+            ],
+            "argmax_position": 10,
+            "traced_shape": [
+              20,
+              120
+            ],
+            "status": "ok"
+          },
+          "multimolecule/rnafm": {
+            "status": "error",
+            "error": "ValueError: vocab_size (28) must be 26 when codon=False.",
+            "traceback": "Traceback (most recent call last):\n  File \"/root/repro/_rna_envoy_check.py\", line 85, in main\n    entry = check(repo, cls_name)\n            ^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/repro/_rna_envoy_check.py\", line 33, in check\n    hf = getattr(multimolecule, cls_name).from_pretrained(\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/transformers/modeling_utils.py\", line 4217, in from_pretrained\n    config, model_kwargs = config_class.from_pretrained(\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/transformers/configuration_utils.py\", line 691, in from_pretrained\n    return cls.from_dict(config_dict, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/transformers/configuration_utils.py\", line 868, in from_dict\n    config = cls(**config_dict)\n             ^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/multimolecule/models/rnafm/configuration_rnafm.py\", line 140, in __init__\n    raise ValueError(f\"vocab_size ({vocab_size}) must be {expected_vocab_size} when codon={codon}.\")\nValueError: vocab_size (28) must be 26 when codon=False.\n"
+          },
+          "multimolecule/splicebert": {
+            "envoy_class": "Envoy__nns_output",
+            "dot_in_name": false,
+            "resolves_back": true,
+            "siblings_share_class": true,
+            "n_distinct_layer_classes": 1,
+            "class_picklable": true,
+            "n_layers": 7,
+            "layer_shape": [
+              1,
+              20,
+              512
+            ],
+            "per_position_l2_shift": [
+              1.9588,
+              2.0604,
+              1.8931,
+              1.7785,
+              1.478,
+              1.6852,
+              1.7163,
+              1.7309,
+              3.355,
+              2.4945,
+              8.5443,
+              2.3225,
+              2.1158,
+              1.7993,
+              1.6969,
+              1.4358,
+              1.8137,
+              1.991,
+              2.0442,
+              2.115
+            ],
+            "argmax_position": 10,
+            "traced_shape": [
+              20,
+              512
+            ],
+            "status": "ok"
+          }
+        }
+      }
+    }
+  },
+  "install": {
+    "returncode": 0,
+    "tail": [
+      "Obtaining file:///root/nnsight",
+      "  Checking if build backend supports build_editable: started",
+      "  Checking if build backend supports build_editable: finished with status 'done'",
+      "  Preparing editable metadata (pyproject.toml): started",
+      "  Preparing editable metadata (pyproject.toml): finished with status 'done'",
+      "Building wheels for collected packages: nnsight",
+      "  Building editable for nnsight (pyproject.toml): started",
+      "  Building editable for nnsight (pyproject.toml): finished with status 'done'",
+      "  Created wheel for nnsight: filename=nnsight-0.7.1.dev43+g87f4dadaa-0.editable-cp311-cp311-linux_x86_64.whl size=12124 sha256=0f01c82ce9a2d7691de62cf7fdb5a5efaf92e4a59f6576a5eef33f8e2c319e18",
+      "  Stored in directory: /tmp/pip-ephem-wheel-cache-uu69mv7p/wheels/aa/0e/ba/8f241461f65893ba6222deffea7c60b83f9756440fd694298d",
+      "Successfully built nnsight",
+      "Installing collected packages: nnsight",
+      "Successfully installed nnsight-0.7.1.dev43+g87f4dadaa",
+      "",
+      "[notice] A new release of pip is available: 25.2 -> 26.2.1",
+      "[notice] To update, run: pip install --upgrade pip"
+    ]
+  },
+  "finished_utc": "2026-08-26T03:51:28.870395+00:00"
+}
