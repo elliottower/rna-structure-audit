@@ -936,11 +936,13 @@ for two.
 
 **Fix.** Sequences carrying characters outside `ACGTUN` are excluded from the
 multi-sequence arm for every model, and the excluded names travel in the result
-file as `excluded_for_ambiguity`. That is 6 of 233 sequences across 3 of 47
-families -- Corona_5UTR (3 of 5), preQ1_riboswitch (2 of 5), THF_riboswitch
-(1 of 5) -- and no family loses all its replicates. Excluding uniformly matters
-more than excluding few: the arm compares within-family variance across models,
-and a set that differs by model is not a comparison.
+file as `excluded_for_ambiguity`. That is 3 of 233 sequences, all in
+Corona_5UTR, which keeps 2 of its 5 replicates: `seq0` (W), `seq1` (H, W, Y)
+and `seq3` (H). `N` is kept, because every tokenizer in the panel resolves it
+to one row; three further sequences contain N and are scored
+(THF_riboswitch_seq2, preQ1_riboswitch_seq2, preQ1_riboswitch_seq3). Excluding
+uniformly matters more than excluding few: the arm compares within-family
+variance across models, and a set that differs by model is not a comparison.
 
 **Scope.** No curated panel family contains a character outside ACGU, so Rungs
 1--3, the transversion, synthetic and HTT arms are untouched. Any future use of
