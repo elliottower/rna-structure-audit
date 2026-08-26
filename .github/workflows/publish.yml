@@ -3,6 +3,14 @@ name: Publish to PyPI
 on:
   release:
     types: [published]
+  # A release event that does not reach Actions leaves no way to publish the tag
+  # without deleting and recreating the release. Dispatching on the tag builds
+  # exactly what the release points at.
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Tag or ref to build and publish"
+        required: true
 
 jobs:
   publish:
@@ -13,6 +21,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
