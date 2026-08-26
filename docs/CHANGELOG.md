@@ -4,6 +4,30 @@ Corrections to the data, the code, and the reported figures, newest first.
 Each entry names what changed, which files settled it, and which reported
 numbers move. `docs/provenance.md` carries the longer narrative.
 
+## 2026-08-26 — 0.2.1: the version string, and unknown tokens
+
+**`__version__` reported `0.1.0` on a 0.2.0 install.** The version lived in
+`pyproject.toml` and again in `__init__.py`, and only the first was bumped, so
+anyone checking `rna_structure_audit.__version__` or quoting it in a bug report
+got the wrong answer. It is now read from the installed distribution, which
+removes the second source of truth, and a test asserts the two agree.
+
+**A token the vocabulary cannot spell no longer breaks the row mapping.**
+DNABERT-2's byte-pair vocabulary emits `[UNK]` for `N`, which Rfam seed
+alignments carry. The span helpers classified that token as a bracket, which
+split the block of rows holding sequence and raised; reconstructing spans by
+joining token strings would have given the row the width of `[UNK]` and shifted
+every span after it. `_bounds` now counts an unknown token as content, and
+`content_spans` reads the tokenizer's character offsets when the tokenizer is
+fast, which place the token exactly.
+
+Checked rather than assumed: across all 52 curated families the offsets and the
+previous join agree exactly for DNABERT-2, and Nucleotide Transformer v2's
+tokenizer is not fast, so it keeps the join path. No grade or reported number
+changes from 0.2.0.
+
+**Packaging.** `dist/`, `build/` and `*.egg-info/` are ignored.
+
 ## 2026-08-26 — 0.2.0: the package scores the corrected panel
 
 **`load_families()` returns 47 families, not 52.** Five were withdrawn on

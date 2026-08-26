@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rna-structure-audit"
-version = "0.2.0"
+version = "0.2.1"
 description = "Three-rung benchmark for evaluating whether RNA/DNA foundation models encode genuine secondary structure or composition shortcuts."
 readme = "README.md"
 license = "MIT"
