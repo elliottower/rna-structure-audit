@@ -184,6 +184,8 @@ composition-controlled count order the models differently, and neither
 distinguishes a model that tracks pairing from one that tracks the nucleotides
 pairing implies.
 
+\input{generated/rung1_table}
+
 \section{Partner Specificity}
 \label{sec:rung3}
 
@@ -307,6 +309,27 @@ survives on sequences with no covariation at all. Those sequences also destroy
 natural sequence context, so the quarter that is lost is an upper bound on the
 covariation contribution and the three quarters that remain are a lower bound on
 the rest.
+
+\section{Attention as a Second Channel}
+\label{sec:attention}
+
+Perturbing an embedding measures one channel. A model could carry pairing in
+its attention pattern instead, which is how contact prediction is usually read
+off a protein or RNA language model, so we correlate each layer's attention map
+with the family's contact map and take the best layer per family.
+
+\input{generated/attention_table}
+
+The correlations are small in absolute terms and mostly architectural. NT~v2
+reads $\attnNTvTwo{}$ trained against $\attnUntrainedNTvTwo{}$ randomly
+initialized, a difference of $\attnDeltaNTvTwo{}$: its attention tracks contacts
+no better after pretraining than before. ERNIE-RNA and RiNALMo, the two models
+that clear Rung 3, gain $\attnDeltaErnieRNA{}$ and $\attnDeltaRiNALMo{}$ over
+their own controls, and RiNALMo's trained value exceeds its untrained one in
+$\attnHigherTrainedRiNALMo{}$ of \panelN{} families. Neither model's attention
+correlation approaches NT~v2's absolute value, so ranking models by
+attention--contact correlation and ranking them by partner specificity give
+different orders.
 
 \section{A Composition-Biased Case Study}
 \label{sec:htt}
