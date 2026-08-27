@@ -5,6 +5,11 @@
     "tRNA_Ala_human",
     "tRNA_Phe_yeast"
   ],
+  "depth_correlation": {
+    "n_arms": 13,
+    "rho": 0.11886432776254911,
+    "p": 0.6989307418773347
+  },
   "models": [
     {
       "model": "ernierna",

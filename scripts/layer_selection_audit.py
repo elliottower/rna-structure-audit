@@ -4,11 +4,12 @@ Precision at Rung 3 is read at the layer maximizing mean PS, and until now the
 families that chose the layer were also the families that reported the number.
 Two things follow from that, and they are separable.
 
-The layer is chosen per family: 35 independent argmax draws, one per family, not
-one draw for the model. A model whose partner specificity sits at a consistent
-layer loses nothing when the choice is made once for the whole panel. A model
-with no effect gains the maximum of a noise profile in every family, and the
-gain grows with the number of layers it can draw from.
+The layer is chosen per family: 35 independent argmax draws, one per family,
+rather than one draw for the model. A model whose partner specificity sits at a
+consistent layer loses nothing when the choice is made once for the whole panel.
+A model with no effect gains the maximum of a noise profile in every family. The
+size of that gain is not ordered by how many layers there are to draw from, and
+the correlation is computed here rather than assumed.
 
 Selection also inflates the number even when the layer is right, because the
 same families supply both the argmax and the estimate. Splitting the panel
@@ -29,6 +30,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+from scipy.stats import spearmanr
 
 REPO = Path(__file__).resolve().parents[1]
 PANEL = REPO / "results" / "repaired_panel_v3"
@@ -137,6 +139,78 @@ def audit(key: str, rng) -> dict:
     }
 
 
+def depth_correlation(rows: list[dict]) -> dict:
+    """Whether the per-family choice buys more in a model with more layers.
+
+    Among the randomly initialized character-level controls alone the excess
+    over chance does rise with depth, which is where the expectation came from.
+    Across the whole panel it does not, so the gap between the two readings
+    cannot be attributed to the number of layers searched.
+    """
+    layers = [row["n_layers"] for row in rows]
+    gain = [row["per_family_layer"] - row["global_layer"] for row in rows]
+    rho, p = spearmanr(layers, gain)
+    return {"n_arms": len(rows), "rho": float(rho), "p": float(p)}
+
+
+# LaTeX control sequences take letters only, so each arm gets a spelled-out
+# name. Every arm is emitted whether or not the prose currently quotes it: a
+# number typed as a digit is one a later edit can leave stale, and several of
+# these collide with unrelated quantities elsewhere in the manuscript.
+SUFFIX = {
+    "ernierna": "ErnieRNA",
+    "rinalmo": "RiNALMo",
+    "caduceus": "Caduceus",
+    "rnafm": "RNAFM",
+    "evo": "Evo",
+    "splicebert": "SpliceBERT",
+    "utrlm": "UTRLM",
+    "hyenadna": "HyenaDNA",
+}
+
+
+def macro_name(key: str) -> str:
+    base, _, untrained = key.partition("_")
+    return SUFFIX[base] + ("Untrained" if untrained else "")
+
+
+def macros(depth: dict, rows: list[dict]) -> str:
+    """Preamble macros, so no number in the prose can be typed as a stale digit."""
+    lines = [
+        r"% Written by scripts/layer_selection_audit.py. Do not edit.",
+        rf"\newcommand{{\selectionDepthRho}}{{{depth['rho']:+.2f}}}",
+        rf"\newcommand{{\selectionDepthP}}{{{depth['p']:.2f}}}",
+        rf"\newcommand{{\selectionArms}}{{{depth['n_arms']}}}",
+    ]
+    for row in rows:
+        name = macro_name(row["model"])
+        low, high = row["heldout_ci"]
+        lines += [
+            rf"\newcommand{{\selLayers{name}}}{{{row['n_layers']}}}",
+            rf"\newcommand{{\selChance{name}}}{{{row['chance']:.3f}}}",
+            rf"\newcommand{{\selPerFamily{name}}}{{{row['per_family_layer']:.3f}}}",
+            rf"\newcommand{{\selPanel{name}}}{{{row['global_layer']:.3f}}}",
+            rf"\newcommand{{\selHeldOut{name}}}{{{row['heldout']:.3f}}}",
+            rf"\newcommand{{\selHeldOutCI{name}}}{{[{low:.3f}, {high:.3f}]}}",
+            # Excess over the arm's own chance rate, which the prose quotes
+            # directly rather than leaving the reader to subtract.
+            rf"\newcommand{{\selExcess{name}}}"
+            rf"{{{row['per_family_layer'] - row['chance']:.3f}}}",
+            # Distance from the exchangeability value the manuscript contrasts
+            # each model's own chance rate against.
+            rf"\newcommand{{\selVsThird{name}}}"
+            rf"{{{abs(row['per_family_layer'] - 1 / 3):.3f}}}",
+        ]
+    # The largest distance the panel-layer repair moves either model that
+    # clears Rung 3, quoted wherever the repair is said to cost them nothing.
+    positive = [row for row in rows if row["model"] in ("rinalmo", "ernierna")]
+    shift = max(abs(row["per_family_layer"] - row["global_layer"])
+                for row in positive)
+    lines.append(rf"\newcommand{{\selMaxShiftPositive}}{{{shift:.3f}}}")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def latex(rows: list[dict]) -> str:
     """Supplementary table: the three ways of choosing a layer, side by side."""
     lines = [
@@ -191,13 +265,22 @@ def main() -> int:
               f"{row['global_layer'] - row['chance']:+7.3f} "
               f"{row['heldout'] - row['chance']:+9.3f}")
 
+    depth = depth_correlation(rows)
+    print(f"\n  depth against per-family gain, {depth['n_arms']} arms: "
+          f"Spearman rho = {depth['rho']:+.3f}, p = {depth['p']:.3f}")
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"n_splits": N_SPLITS, "seed": SEED,
                                "quarantined": sorted(QUARANTINED),
+                               "depth_correlation": depth,
                                "models": rows}, indent=2))
-    table = REPO / "paper" / "generated" / "layer_selection_table.tex"
+    generated = REPO / "paper" / "generated"
+    table = generated / "layer_selection_table.tex"
     table.write_text(latex(rows))
-    print(f"\n  wrote {OUT.relative_to(REPO)} and {table.relative_to(REPO)}")
+    macro_file = generated / "layer_selection_macros.tex"
+    macro_file.write_text(macros(depth, rows))
+    print(f"\n  wrote {OUT.relative_to(REPO)}, {table.relative_to(REPO)} "
+          f"and {macro_file.relative_to(REPO)}")
     return 0
 
 
