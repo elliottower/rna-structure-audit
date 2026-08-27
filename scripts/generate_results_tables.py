@@ -64,6 +64,28 @@ PANEL_CURATED = 52
 PHASE1_H1_RATIO = 1.74
 PHASE1_H1_N = 12
 
+# Parameters in the checkpoint each adapter loads, read from the HuggingFace
+# API's `safetensors.total`. The display strings in MODELS are what the papers
+# print; these are what any ratio between them is computed from. Typing a ratio
+# instead let it drift twice: it was written as 80x from Evo's nominal 7B, and
+# it did not move when D22 corrected two of the counts underneath it.
+#
+# DNABERT-2 publishes only a pytorch_model.bin with no metadata, so its count is
+# the authors' designation and is not used in any derived quantity.
+CHECKPOINT_PARAMETERS = {
+    "ernierna": 86_261_884,
+    "rinalmo": 650_917_159,
+    "rnafm": 99_523_469,
+    "utrlm": 1_210_494,
+    "splicebert": 19_719_708,
+    "nt": 55_905_164,
+    "hyenadna": 450_712,
+    "caduceus": 7_725_312,
+    "evo": 6_452_781_248,
+    "dnabert2": None,
+}
+
+
 # (key, short name, parameter count, domain, macro-safe name).
 MODELS = [
     ("ernierna", "ERNIE-RNA", "86M", "RNA", "ErnieRNA"),
@@ -972,8 +994,20 @@ def check_claims(runs: dict, rung3: dict, mut: dict, controls: dict) -> None:
 # ---------------------------------------------------------------------------
 
 
+def parameter_ratio_macros() -> list[str]:
+    """Ratios between checkpoint sizes, so the prose never types one."""
+    base = CHECKPOINT_PARAMETERS["ernierna"]
+    lines = []
+    for key, macro in (("evo", "Evo"), ("rinalmo", "RiNALMo")):
+        ratio = CHECKPOINT_PARAMETERS[key] / base
+        rendered = f"{ratio:.0f}" if ratio >= 10 else f"{ratio:.1f}"
+        lines.append(rf"\newcommand{{\paramsOver{macro}}}{{{rendered}}}")
+    return lines
+
+
 def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
     lines = [r"% Written by scripts/generate_results_tables.py. Do not edit."]
+    lines.extend(parameter_ratio_macros())
 
     def macro(name: str, value: str) -> None:
         lines.append(f"\\newcommand{{\\{name}}}{{{value}}}")

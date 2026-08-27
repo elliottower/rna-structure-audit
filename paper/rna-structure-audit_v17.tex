@@ -234,7 +234,7 @@ $\psPeakRiNALMo{}$ of $\psLayersRiNALMo{}$ in $\psPeakCountRiNALMo{}$ families,
 ERNIE-RNA at layer $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in
 $\psPeakCountErnieRNA{}$. Among the eight that do not clear their own chance
 rates, neither parameter count nor pretraining domain orders anything: Evo
-reaches $\psEvo{}$ mean PS with $80\times$ ERNIE-RNA's parameters, Caduceus at
+reaches $\psEvo{}$ mean PS with $\paramsOverEvo{}\times$ ERNIE-RNA's parameters, Caduceus at
 7.7M outscores three of the five RNA-pretrained models on mean PS, and all eight
 sit together at chance on precision. The two that pass are both
 RNA-pretrained, two of five against zero of five, on a comparison of ten models
@@ -472,7 +472,7 @@ ERNIE-RNA injects a base-pairing attention bias, and that bias with random
 weights above it resolves partners at $0.490$ against a chance rate of $0.241$;
 ablating it removes the control's excess and costs the trained model $0.039$.
 RiNALMo uses standard attention with no structural bias and reaches comparable
-precision at $7.5\times$ the parameters. On synthetic sequences that preserve
+precision at $\paramsOverRiNALMo{}\times$ the parameters. On synthetic sequences that preserve
 structure and destroy covariation (Section~\ref{sec:covariation-results}), both
 retain roughly three quarters of their excess over chance. Those sequences also
 destroy natural sequence context, so the quarter that is lost bounds the
@@ -491,7 +491,7 @@ models on the raw ratio and Caduceus at $\ratioCaduceus{}$ exceeds three. The tw
 that survive the partner specificity test (RiNALMo and ERNIE-RNA) share
 RNA pretraining but differ in mechanism: ERNIE-RNA injects explicit
 base-pairing attention bias, while RiNALMo uses standard self-attention at
-$7.5\times$ the parameters. Scale alone does not explain the result:
+$\paramsOverRiNALMo{}\times$ the parameters. Scale alone does not explain the result:
 Evo at 7B parameters produces high raw ratios but high within-family
 variance, and its signal is largely absorbed by composition nulls. What
 distinguishes the two positive models from the remaining eight is an open

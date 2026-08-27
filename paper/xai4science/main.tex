@@ -88,8 +88,8 @@ asks whether an embedding beats raw nucleotide identity through a trained
 predictor rather than whether the embedding's own structure sensitivity is
 composition.
 
-\paragraph{Graded resolution.} Structure awareness is not one property. We
-separate three, each demanding more of a representation than the last:
+\paragraph{Graded resolution.} Three levels of resolution sit under the phrase
+``structure awareness'', each demanding more of a representation than the last:
 (1)~stem-versus-loop discrimination, available to any embedding sensitive to
 nucleotide composition; (2)~discrimination that survives nulls preserving
 composition at one and two orders of sequence context; and (3)~partner
@@ -127,10 +127,10 @@ positions make the comparison local, so a model that spreads perturbation along
 a helix gains nothing. Per-pair precision is the fraction of eligible pairs for
 which $\delta_j$ exceeds both neighbors.
 
-\paragraph{The null.} Chance for this comparison is not a constant. Whether a
-falsely assigned partner still outmoves its neighbors depends on how far a model
-spreads a mutation: one whose perturbation decays sharply almost never ranks a
-false partner first, and one that spreads it along the helix often does. We
+\paragraph{The null.} Whether a falsely assigned partner still outmoves its
+neighbors depends on how far a model spreads a mutation: one whose perturbation
+decays sharply almost never ranks a false partner first, and one that spreads it
+along the helix often does. Chance is therefore a property of the model. We
 permute partner assignments within each stem under a derangement, so every
 position keeps its stem, its nucleotide and its layer while its assigned partner
 is false by construction, and recompute per-pair precision. Measured this way the
@@ -166,7 +166,7 @@ it is absent. The two chance rates, $0.099$ and $0.173$ on systems whose answers
 are known, are a second reason to measure chance per system rather than assume
 it.
 
-\section{Composition Absorbs Most Apparent Structure Signal}
+\section{Composition Control}
 \label{sec:composition}
 
 Mutating a position to its Watson--Crick complement perturbs stem positions more
@@ -203,7 +203,7 @@ $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in $\psPeakCountErnieRNA{}$.
 
 Among the eight that do not clear their own chance rates, neither parameter
 count nor pretraining domain orders anything: Evo reaches $\psEvo{}$ mean PS
-with $75\times$ ERNIE-RNA's parameters, Caduceus at 7.7M outscores three of the
+with $\paramsOverEvo{}\times$ ERNIE-RNA's parameters, Caduceus at 7.7M outscores three of the
 five RNA-pretrained models on mean PS, and all eight sit together at chance on
 precision (Section~\ref{sec:selection}). The two that pass are both
 RNA-pretrained, two of five against zero of five, on a comparison of ten models
@@ -249,7 +249,7 @@ against a chance expectation of \expectedFalsePositives{}, retains
 \retainUntrainedErnieRNA{} at Rung~2, and reaches per-pair precision $0.490$ at
 Rung~3 against a chance rate of $0.241$.
 
-\paragraph{A tensor randomization does not reach.} Re-initialization iterates a
+\paragraph{The buffer.} Re-initialization iterates a
 model's parameters, and buffers are not parameters, so ERNIE-RNA's control keeps
 the Watson--Crick table its architecture ships with:
 \texttt{pairwise\_bias\_map}, a vocabulary-square buffer registered
@@ -260,7 +260,7 @@ architecture shipping a task-relevant lookup table outside
 
 \input{generated/ablation_table}
 
-\paragraph{Pricing it.} Ablating the table and the projection above it, with the
+\paragraph{The ablation.} Ablating the table and the projection above it, with the
 model's rebuild guard set so the first forward pass cannot restore it, separates
 the two arms (Table~\ref{tab:ablation}). Writing excess as precision minus that
 arm's own chance rate, the randomly initialized model falls from $+0.249$ to
@@ -313,10 +313,10 @@ the rest.
 \section{Attention as a Second Channel}
 \label{sec:attention}
 
-Perturbing an embedding measures one channel. A model could carry pairing in
-its attention pattern instead, which is how contact prediction is usually read
-off a protein or RNA language model, so we correlate each layer's attention map
-with the family's contact map and take the best layer per family.
+A model could carry pairing in its attention pattern rather than its
+embeddings, which is how contact prediction is usually read off a protein or RNA
+language model. We correlate each layer's attention map with the family's contact
+map and take the best layer per family.
 
 \input{generated/attention_table}
 
@@ -380,12 +380,12 @@ differently. ERNIE-RNA injects a base-pairing attention bias, and that bias with
 random weights above it resolves partners at $0.490$ against a chance rate of
 $0.241$; ablating it removes the control's excess and costs the trained model
 $0.039$. RiNALMo uses standard attention with no structural bias and reaches
-comparable precision at $7.5\times$ the parameters. Whether the remainder
+comparable precision at $\paramsOverRiNALMo{}\times$ the parameters. Whether the remainder
 reflects a geometric internal model of folding or a statistical regularity of
 paired positions is open, and answering it likely requires mechanistic analysis
 rather than further behavioral benchmarking.
 
-\paragraph{What a control has to be.} Both baseline failures here have the same
+\paragraph{Matched controls.} Both baseline failures here have the same
 form: the control received a weaker version of the treatment the estimate
 received. Weight randomization was assumed to remove everything the model was not
 born with, and it missed a buffer. The estimate was a maximum over $L$ layers
