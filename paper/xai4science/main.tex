@@ -19,6 +19,7 @@
 \input{generated/panel_description}
 \input{generated/results_macros}
 \input{generated/arm_macros}
+\input{generated/layer_selection_macros}
 
 \title{Only Two of Ten Nucleic Acid Foundation Models\\Encode Base-Pairing Partners}
 \workshoptitle{XAI4Science: Knowledge Discovery and Trust through Interpretable Foundation Models}
@@ -46,12 +47,14 @@ Rung~1, ERNIE-RNA discriminates stems from loops in \exceedErnieRNA{} of
 \panelN{} families and RiNALMo in \exceedRiNALMo{}, where
 \expectedFalsePositives{} are expected by chance; the best of the other eight
 reaches nine. At Rung~3, only two of ten resolve which position pairs with
-which: ERNIE-RNA at $0.888$ per-pair precision and RiNALMo at $0.872$, against
-within-stem derangement chance rates of $0.124$ and $0.102$. The other eight sit
+which: ERNIE-RNA at $\selPerFamilyErnieRNA{}$ per-pair precision and RiNALMo at
+$\selPerFamilyRiNALMo{}$, against within-stem derangement chance rates of
+$\selChanceErnieRNA{}$ and $\selChanceRiNALMo{}$. The other eight sit
 at chance. Their apparent excess comes entirely from choosing the read-out layer
 per family. Three quarters of the two models' excess survives on synthetic
 sequences carrying no evolutionary covariation. A randomly initialized ERNIE-RNA
-clears every rung and reaches $0.490$, because re-initialization iterates
+clears every rung and reaches $\selPerFamilyErnieRNAUntrained{}$, because
+re-initialization iterates
 parameters and the architecture keeps a Watson--Crick table in a buffer; zeroing
 it returns the control to its chance rate while the trained model keeps
 $+0.725$.
@@ -193,10 +196,14 @@ pairing implies.
 
 Mutating position $i$ perturbs its partner $j$ more than $j$'s own stem
 neighbors in two models. RiNALMo reaches mean PS $=\psRiNALMo{}$ and ERNIE-RNA
-$\psErnieRNA{}$, at per-pair precisions of $0.872$ and $0.888$ where each model's
-own within-stem derangement puts chance at $0.102$ and $0.124$
-(Table~\ref{tab:rung3}). The remaining eight exceed their own chance rates by at
-most $0.122$, reached by Caduceus. Both positive models concentrate partner
+$\psErnieRNA{}$ (Table~\ref{tab:rung3}). Over the \chanceRateN{} families
+whose stems admit a derangement null, per-pair precision is
+$\selPerFamilyRiNALMo{}$ and $\selPerFamilyErnieRNA{}$ against chance rates of
+$\selChanceRiNALMo{}$ and $\selChanceErnieRNA{}$
+(Table~\ref{tab:layer-selection}); the H3 column of Table~\ref{tab:rung3}
+averages the same per-family fractions over the gate-passing families instead.
+The remaining eight exceed their own chance rates by at most
+$\selExcessCaduceus{}$, reached by Caduceus. Both positive models concentrate partner
 specificity late: RiNALMo peaks at layer $\psPeakRiNALMo{}$ of
 $\psLayersRiNALMo{}$ in $\psPeakCountRiNALMo{}$ families, ERNIE-RNA at layer
 $\psPeakErnieRNA{}$ of $\psLayersErnieRNA{}$ in $\psPeakCountErnieRNA{}$.
@@ -226,17 +233,18 @@ Two repairs give the same answer (Table~\ref{tab:layer-selection}). Choosing one
 layer for the whole panel, and choosing the layer on half the families while
 reading precision on the other half over $2{,}000$ splits, agree to three
 decimals in every row. Under either, RiNALMo and ERNIE-RNA move by at most
-$0.010$ and every other model in the panel falls to or below its own chance
-rate. Caduceus goes from $0.340$ to $0.002$ and RNA-FM from $0.370$ to $0.126$,
-against chance rates of $0.218$ and $0.261$. Depth does not predict how much the
-per-family choice is worth---Evo has 32 layers and gains $0.041$, Caduceus has 17
-and gains $0.340$, Spearman $+0.12$ over the thirteen arms ($p = 0.70$)---but the
-presence of a peak does, which makes the gap between the two readings a test for
-whether one exists.
+$\selMaxShiftPositive{}$ and every other model in the panel falls to or below its own chance
+rate. Caduceus goes from $\selPerFamilyCaduceus{}$ to $\selHeldOutCaduceus{}$
+and RNA-FM from $\selPerFamilyRNAFM{}$ to $\selHeldOutRNAFM{}$, against chance
+rates of $\selChanceCaduceus{}$ and $\selChanceRNAFM{}$. Depth does not order
+how much the per-family choice is worth: across the \selectionArms{} arms the
+correlation between layer count and the drop from per-family to panel selection
+is Spearman $\selectionDepthRho{}$ ($p = \selectionDepthP{}$).
 
 The held-out estimate is selection-free by construction, and it is the number we
-report for the two positive models: RiNALMo $0.882$ ($95\%$ interval over splits
-$[0.822, 0.941]$) and ERNIE-RNA $0.885$ $([0.814, 0.955])$.
+report for the two positive models: RiNALMo $\selHeldOutRiNALMo{}$ ($95\%$
+interval over splits $\selHeldOutCIRiNALMo{}$) and ERNIE-RNA
+$\selHeldOutErnieRNA{}$ ($\selHeldOutCIErnieRNA{}$).
 
 \section{The Randomly Initialized Control}
 \label{sec:random-init}
@@ -246,7 +254,8 @@ architecture and the tokenizer and destroying the learned weights. ERNIE-RNA's
 control clears each rung of the ladder. At Rung~1 it exceeds its
 composition-preserving null in \exceedUntrainedErnieRNA{} of \panelN{} families
 against a chance expectation of \expectedFalsePositives{}, retains
-\retainUntrainedErnieRNA{} at Rung~2, and reaches per-pair precision $0.490$ at
+\retainUntrainedErnieRNA{} at Rung~2, and reaches per-pair precision
+$\selPerFamilyErnieRNAUntrained{}$ at
 Rung~3 against a chance rate of $0.241$.
 
 \paragraph{A tensor randomization does not reach.} Re-initialization iterates a
@@ -274,11 +283,13 @@ were fixed before either ablated arm was computed.
 anything about base pairing; the rest carry position indices, rotary
 frequencies, or all-zero token-type vectors, which survive randomization and
 record where a nucleotide sits. Two controls nonetheless sat above their own
-chance rates, RiNALMo by $0.105$ and RNA-FM by $0.093$, and both are layer
+chance rates, RiNALMo by $\selExcessRiNALMoUntrained{}$ and RNA-FM by
+$\selExcessRNAFMUntrained{}$, and both are layer
 selection: read at a panel layer they fall to $-0.074$ and $-0.087$
 (Table~\ref{tab:layer-selection}). Mean PS and per-pair precision disagree on
 these arms. ERNIE-RNA's control has mean PS $3.4 \times 10^{-9}$ and per-pair
-precision $0.490$, so a signed statistic at zero does not place a control at
+precision $\selPerFamilyErnieRNAUntrained{}$, so a signed statistic at zero
+does not place a control at
 chance.
 
 \section{Covariation}
@@ -377,7 +388,8 @@ selection-free read-out.
 
 \paragraph{Two pathways.} RiNALMo and ERNIE-RNA reach partner specificity
 differently. ERNIE-RNA injects a base-pairing attention bias, and that bias with
-random weights above it resolves partners at $0.490$ against a chance rate of
+random weights above it resolves partners at
+$\selPerFamilyErnieRNAUntrained{}$ against a chance rate of
 $0.241$; ablating it removes the control's excess and costs the trained model
 $0.039$. RiNALMo uses standard attention with no structural bias and reaches
 comparable precision at $\paramsOverRiNALMo{}\times$ the parameters. Whether the remainder
@@ -402,9 +414,10 @@ Partner specificity is the more informative test: a model that perturbs stems
 more than loops may be responding to G/C content, while one that selectively
 perturbs the annotated pairing partner encodes positional pairing information.
 Chance rates should be measured per model on a within-structure derangement
-rather than assumed at $\nicefrac{1}{3}$: Caduceus at $0.340$ falls below
-$\nicefrac{1}{3}$ while clearing its own rate by $0.122$, and the two
-comparisons disagree about it.
+rather than assumed at $\nicefrac{1}{3}$: Caduceus reaches
+$\selPerFamilyCaduceus{}$, within $\selVsThirdCaduceus{}$ of
+$\nicefrac{1}{3}$, while clearing its own chance rate of
+$\selChanceCaduceus{}$ by $\selExcessCaduceus{}$.
 
 \section{Limitations}
 \label{sec:limitations}
