@@ -38,3 +38,6 @@ logs/
 dist/
 build/
 *.egg-info/
+
+# Venue status and correspondence stay out of the public tree.
+SUBMISSIONS.md
