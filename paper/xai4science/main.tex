@@ -88,8 +88,8 @@ asks whether an embedding beats raw nucleotide identity through a trained
 predictor rather than whether the embedding's own structure sensitivity is
 composition.
 
-\paragraph{Graded resolution.} Three levels of resolution sit under the phrase
-``structure awareness'', each demanding more of a representation than the last:
+\paragraph{Graded resolution.} Structure awareness is not one property. We
+separate three, each demanding more of a representation than the last:
 (1)~stem-versus-loop discrimination, available to any embedding sensitive to
 nucleotide composition; (2)~discrimination that survives nulls preserving
 composition at one and two orders of sequence context; and (3)~partner
@@ -127,10 +127,10 @@ positions make the comparison local, so a model that spreads perturbation along
 a helix gains nothing. Per-pair precision is the fraction of eligible pairs for
 which $\delta_j$ exceeds both neighbors.
 
-\paragraph{The null.} Whether a falsely assigned partner still outmoves its
-neighbors depends on how far a model spreads a mutation: one whose perturbation
-decays sharply almost never ranks a false partner first, and one that spreads it
-along the helix often does. Chance is therefore a property of the model. We
+\paragraph{The null.} Chance for this comparison is not a constant. Whether a
+falsely assigned partner still outmoves its neighbors depends on how far a model
+spreads a mutation: one whose perturbation decays sharply almost never ranks a
+false partner first, and one that spreads it along the helix often does. We
 permute partner assignments within each stem under a derangement, so every
 position keeps its stem, its nucleotide and its layer while its assigned partner
 is false by construction, and recompute per-pair precision. Measured this way the
@@ -249,7 +249,7 @@ against a chance expectation of \expectedFalsePositives{}, retains
 \retainUntrainedErnieRNA{} at Rung~2, and reaches per-pair precision $0.490$ at
 Rung~3 against a chance rate of $0.241$.
 
-\paragraph{The buffer.} Re-initialization iterates a
+\paragraph{A tensor randomization does not reach.} Re-initialization iterates a
 model's parameters, and buffers are not parameters, so ERNIE-RNA's control keeps
 the Watson--Crick table its architecture ships with:
 \texttt{pairwise\_bias\_map}, a vocabulary-square buffer registered
@@ -260,7 +260,7 @@ architecture shipping a task-relevant lookup table outside
 
 \input{generated/ablation_table}
 
-\paragraph{The ablation.} Ablating the table and the projection above it, with the
+\paragraph{Pricing it.} Ablating the table and the projection above it, with the
 model's rebuild guard set so the first forward pass cannot restore it, separates
 the two arms (Table~\ref{tab:ablation}). Writing excess as precision minus that
 arm's own chance rate, the randomly initialized model falls from $+0.249$ to
