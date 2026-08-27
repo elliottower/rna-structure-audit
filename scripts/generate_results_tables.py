@@ -1091,6 +1091,20 @@ def macros(runs: dict, rung3: dict, mut: dict, controls: dict) -> str:
     macro("rungThreeQualifying", str(len(scored)))
     macro("rungThreeQuarantined", str(len(scored) - len(non_quarantined)))
     macro("chanceRateN", str(len(with_chance)))
+
+    # The chance rate is a property of the model, and the prose quotes the span
+    # across the panel. DNABERT-2 sits at 0.000, which is also its H3 precision,
+    # so a digit typed here is indistinguishable from that unrelated quantity.
+    chance_by_model = []
+    for key, *_ in MODELS:
+        entries = runs[key]["phase6"]["per_rna"]
+        values = [body["h3_chance_fraction"] for name, body in entries.items()
+                  if name not in QUARANTINE and isinstance(body, dict)
+                  and body.get("h3_chance_fraction") is not None]
+        if values:
+            chance_by_model.append(sum(values) / len(values))
+    macro("chanceRateMin", f"{min(chance_by_model):.3f}")
+    macro("chanceRateMax", f"{max(chance_by_model):.3f}")
     macro("gateThreshold", str(gate_threshold(eligible)))
     macro("gateRegistered", "7")
     macro("bootstrapB", f"{N_BOOTSTRAP:,}".replace(",", "{,}"))

@@ -1,0 +1,109 @@
+% Written by scripts/layer_selection_audit.py. Do not edit.
+\newcommand{\selectionDepthRho}{+0.12}
+\newcommand{\selectionDepthP}{0.70}
+\newcommand{\selectionArms}{13}
+\newcommand{\selLayersErnieRNA}{13}
+\newcommand{\selChanceErnieRNA}{0.124}
+\newcommand{\selPerFamilyErnieRNA}{0.888}
+\newcommand{\selPanelErnieRNA}{0.887}
+\newcommand{\selHeldOutErnieRNA}{0.885}
+\newcommand{\selHeldOutCIErnieRNA}{[0.814, 0.955]}
+\newcommand{\selExcessErnieRNA}{0.764}
+\newcommand{\selVsThirdErnieRNA}{0.555}
+\newcommand{\selLayersRiNALMo}{34}
+\newcommand{\selChanceRiNALMo}{0.102}
+\newcommand{\selPerFamilyRiNALMo}{0.872}
+\newcommand{\selPanelRiNALMo}{0.881}
+\newcommand{\selHeldOutRiNALMo}{0.882}
+\newcommand{\selHeldOutCIRiNALMo}{[0.822, 0.941]}
+\newcommand{\selExcessRiNALMo}{0.770}
+\newcommand{\selVsThirdRiNALMo}{0.538}
+\newcommand{\selLayersCaduceus}{17}
+\newcommand{\selChanceCaduceus}{0.218}
+\newcommand{\selPerFamilyCaduceus}{0.340}
+\newcommand{\selPanelCaduceus}{0.000}
+\newcommand{\selHeldOutCaduceus}{0.002}
+\newcommand{\selHeldOutCICaduceus}{[0.000, 0.000]}
+\newcommand{\selExcessCaduceus}{0.122}
+\newcommand{\selVsThirdCaduceus}{0.007}
+\newcommand{\selLayersRNAFM}{13}
+\newcommand{\selChanceRNAFM}{0.261}
+\newcommand{\selPerFamilyRNAFM}{0.370}
+\newcommand{\selPanelRNAFM}{0.124}
+\newcommand{\selHeldOutRNAFM}{0.126}
+\newcommand{\selHeldOutCIRNAFM}{[0.078, 0.175]}
+\newcommand{\selExcessRNAFM}{0.109}
+\newcommand{\selVsThirdRNAFM}{0.036}
+\newcommand{\selLayersEvo}{32}
+\newcommand{\selChanceEvo}{0.316}
+\newcommand{\selPerFamilyEvo}{0.356}
+\newcommand{\selPanelEvo}{0.314}
+\newcommand{\selHeldOutEvo}{0.316}
+\newcommand{\selHeldOutCIEvo}{[0.232, 0.402]}
+\newcommand{\selExcessEvo}{0.040}
+\newcommand{\selVsThirdEvo}{0.022}
+\newcommand{\selLayersSpliceBERT}{7}
+\newcommand{\selChanceSpliceBERT}{0.238}
+\newcommand{\selPerFamilySpliceBERT}{0.247}
+\newcommand{\selPanelSpliceBERT}{0.203}
+\newcommand{\selHeldOutSpliceBERT}{0.203}
+\newcommand{\selHeldOutCISpliceBERT}{[0.147, 0.257]}
+\newcommand{\selExcessSpliceBERT}{0.009}
+\newcommand{\selVsThirdSpliceBERT}{0.087}
+\newcommand{\selLayersUTRLM}{7}
+\newcommand{\selChanceUTRLM}{0.230}
+\newcommand{\selPerFamilyUTRLM}{0.246}
+\newcommand{\selPanelUTRLM}{0.191}
+\newcommand{\selHeldOutUTRLM}{0.191}
+\newcommand{\selHeldOutCIUTRLM}{[0.130, 0.250]}
+\newcommand{\selExcessUTRLM}{0.016}
+\newcommand{\selVsThirdUTRLM}{0.087}
+\newcommand{\selLayersHyenaDNA}{4}
+\newcommand{\selChanceHyenaDNA}{0.148}
+\newcommand{\selPerFamilyHyenaDNA}{0.138}
+\newcommand{\selPanelHyenaDNA}{0.122}
+\newcommand{\selHeldOutHyenaDNA}{0.121}
+\newcommand{\selHeldOutCIHyenaDNA}{[0.067, 0.177]}
+\newcommand{\selExcessHyenaDNA}{-0.010}
+\newcommand{\selVsThirdHyenaDNA}{0.195}
+\newcommand{\selLayersErnieRNAUntrained}{13}
+\newcommand{\selChanceErnieRNAUntrained}{0.241}
+\newcommand{\selPerFamilyErnieRNAUntrained}{0.490}
+\newcommand{\selPanelErnieRNAUntrained}{0.479}
+\newcommand{\selHeldOutErnieRNAUntrained}{0.478}
+\newcommand{\selHeldOutCIErnieRNAUntrained}{[0.396, 0.557]}
+\newcommand{\selExcessErnieRNAUntrained}{0.249}
+\newcommand{\selVsThirdErnieRNAUntrained}{0.157}
+\newcommand{\selLayersRiNALMoUntrained}{34}
+\newcommand{\selChanceRiNALMoUntrained}{0.232}
+\newcommand{\selPerFamilyRiNALMoUntrained}{0.337}
+\newcommand{\selPanelRiNALMoUntrained}{0.158}
+\newcommand{\selHeldOutRiNALMoUntrained}{0.157}
+\newcommand{\selHeldOutCIRiNALMoUntrained}{[0.107, 0.209]}
+\newcommand{\selExcessRiNALMoUntrained}{0.105}
+\newcommand{\selVsThirdRiNALMoUntrained}{0.003}
+\newcommand{\selLayersRNAFMUntrained}{13}
+\newcommand{\selChanceRNAFMUntrained}{0.230}
+\newcommand{\selPerFamilyRNAFMUntrained}{0.323}
+\newcommand{\selPanelRNAFMUntrained}{0.143}
+\newcommand{\selHeldOutRNAFMUntrained}{0.144}
+\newcommand{\selHeldOutCIRNAFMUntrained}{[0.093, 0.196]}
+\newcommand{\selExcessRNAFMUntrained}{0.093}
+\newcommand{\selVsThirdRNAFMUntrained}{0.010}
+\newcommand{\selLayersSpliceBERTUntrained}{7}
+\newcommand{\selChanceSpliceBERTUntrained}{0.194}
+\newcommand{\selPerFamilySpliceBERTUntrained}{0.210}
+\newcommand{\selPanelSpliceBERTUntrained}{0.172}
+\newcommand{\selHeldOutSpliceBERTUntrained}{0.172}
+\newcommand{\selHeldOutCISpliceBERTUntrained}{[0.123, 0.221]}
+\newcommand{\selExcessSpliceBERTUntrained}{0.016}
+\newcommand{\selVsThirdSpliceBERTUntrained}{0.124}
+\newcommand{\selLayersUTRLMUntrained}{7}
+\newcommand{\selChanceUTRLMUntrained}{0.127}
+\newcommand{\selPerFamilyUTRLMUntrained}{0.139}
+\newcommand{\selPanelUTRLMUntrained}{0.132}
+\newcommand{\selHeldOutUTRLMUntrained}{0.131}
+\newcommand{\selHeldOutCIUTRLMUntrained}{[0.082, 0.181]}
+\newcommand{\selExcessUTRLMUntrained}{0.011}
+\newcommand{\selVsThirdUTRLMUntrained}{0.194}
+\newcommand{\selMaxShiftPositive}{0.010}
