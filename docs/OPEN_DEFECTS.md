@@ -1010,6 +1010,54 @@ the old panel. A release note has to say that grades change for four models.
 
 ---
 
+## D25. Every verification script was checking a manuscript five versions old
+
+**Detector:** `scripts/paper_versions.py`, which now raises when the named
+manuscript stem has no versioned file rather than falling back.
+
+`newest_paper()` returned the highest-numbered `paper_v*.tex`. The manuscript was
+renamed from `paper_vN.tex` to `rna-structure-audit_vN.tex` at v13, so the glob
+stopped matching it and kept returning `paper_v12.tex` -- a manuscript that
+predates the repaired panel, the token-span repair, the float64 metric and every
+defect from D15 on. `verify_paper_rung12_figures.py` reported "Every mean ratio,
+interval, exceedance count and retention rate matches" against that file.
+
+Its own docstring names the failure it was written to prevent: *"Verification
+scripts therefore have to find the current version rather than name one, or they
+silently keep checking a superseded file."* The convention it guarded changed
+underneath it, and a resolver that finds nothing returned something instead of
+raising.
+
+**Three further failures were hidden behind it.**
+
+*The verifiers could not read the current manuscript at all.* They parse the
+`.tex` for `\label{tab:rung1}`, and the tables moved into `paper/generated/`
+behind `\input`. Pointed at v17 the parse raised; pointed at v12 it found stale
+tables still pasted in the body.
+
+*The bootstrap artifact described a different panel.* `compute_bootstrap_cis.py`
+read `results/*_phases15_dinuc.json` and `data/gpu_results/expanded_rfam/`, both
+pre-repair. Nineteen Table 2 figures disagreed once the verifier could see v17 --
+Caduceus retention 50% against 25%, DNABERT-2 7 families against 3.
+
+*The manuscript and the artifact ran two independent bootstraps.*
+`generate_results_tables.py` resampled the same quantities with its own stream.
+Nine of the ten Rung 1 intervals agreed at two decimals and RNA-FM's upper bound
+did not: 1.9872 against a printed 1.98. Neither number was wrong and they could
+not both be authoritative.
+
+**Fix.** The manuscript stem is named once in `paper_versions.py` and an absent
+stem raises. `expanded_text()` inlines `\input`s and resolves macros, so a check
+reads what a reader sees. `compute_bootstrap_cis.py` reads
+`repaired_panel_v3`. `generate_results_tables.py` reads the artifact rather than
+resampling, and raises if the artifact's point estimate disagrees with the panel.
+
+**Consequence for the reported result.** None of the manuscript's numbers moved.
+Both verifiers now pass against v17: 21 rows for Tables 1 and 2, 17 for Table 5.
+What changed is that the checks now test the manuscript being submitted.
+
+---
+
 ## Checked, clean
 
 - Every numeric literal in the manuscript against a stored source. The existing

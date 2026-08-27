@@ -27,25 +27,33 @@ from tqdm import tqdm
 # Paths
 # ---------------------------------------------------------------------------
 
-# These lived in causal-rna (gone) and rna-structure-awareness (deprecated)
-# until 2026-08-24. Every file was verified byte-identical to its counterpart in
-# the old tree before the five that were missing here were copied in.
+# The repaired panel. Until 2026-08-27 these pointed at the pre-repair trees --
+# `results/*_phases15_dinuc.json` and `data/gpu_results/expanded_rfam/` -- so the
+# artifact every verification script compares the manuscript against was built
+# from a panel the manuscript no longer reports. The mismatch was invisible
+# because the manuscript resolver was also stale (D25) and the two wrong files
+# agreed with each other.
 REPO = Path(__file__).resolve().parents[1]
 RESULTS = REPO / "results"
-RESULTS_EXPANDED = REPO / "data" / "gpu_results" / "expanded_rfam"
+PANEL = RESULTS / "repaired_panel_v3"
+
+
+def _panel(key: str) -> Path:
+    return PANEL / key / f"{key}_phases_1_to_5.json"
+
 
 MODEL_FILES = {
-    "ERNIE-RNA": RESULTS / "ernierna_phases15_dinuc.json",
-    "RiNALMo": RESULTS / "rinalmo_phases_1_to_5.json",
-    "RNA-FM": RESULTS_EXPANDED / "rnafm_expanded_20260716.json",
-    "UTR-LM": RESULTS_EXPANDED / "utrlm_phases_1_to_5.json",
-    "SpliceBERT": RESULTS / "splicebert_phases15_dinuc.json",
-    "NT v2": RESULTS_EXPANDED / "nt_expanded_20260716.json",
-    "DNABERT-2": RESULTS / "dnabert2_phases15_dinuc.json",
-    "HyenaDNA": RESULTS_EXPANDED / "hyenadna_expanded_20260716.json",
-    "Caduceus": RESULTS_EXPANDED / "caduceus_expanded_20260716.json",
-    "Evo": RESULTS_EXPANDED / "evo_expanded_20260716.json",
-    "ERNIE-RNA (untrained)": RESULTS / "ernierna_untrained_phases15.json",
+    "ERNIE-RNA": _panel("ernierna"),
+    "RiNALMo": _panel("rinalmo"),
+    "RNA-FM": _panel("rnafm"),
+    "UTR-LM": _panel("utrlm"),
+    "SpliceBERT": _panel("splicebert"),
+    "NT v2": _panel("nt"),
+    "DNABERT-2": _panel("dnabert2"),
+    "HyenaDNA": _panel("hyenadna"),
+    "Caduceus": _panel("caduceus"),
+    "Evo": _panel("evo"),
+    "ERNIE-RNA (untrained)": _panel("ernierna_untrained"),
 }
 
 OUTPUT_PATH = RESULTS / "bootstrap_cis.json"

@@ -19,7 +19,7 @@ import json
 import re
 from pathlib import Path
 
-from paper_versions import REPO, newest_paper
+from paper_versions import REPO, expanded_text, newest_paper
 
 DEFAULT_PAPER = newest_paper()
 ARTIFACT = REPO / "results" / "bootstrap_cis.json"
@@ -65,7 +65,8 @@ def matches(printed: str, value: float) -> bool:
 
 def main(argv: list) -> int:
     paper = Path(argv[1]).resolve() if len(argv) > 1 else DEFAULT_PAPER
-    text = paper.read_text()
+    # The expansion, because the tables live in paper/generated/ now.
+    text = expanded_text(paper)
     models = json.loads(ARTIFACT.read_text())["models"]
     print(f"checking {paper.relative_to(REPO)} against "
           f"{ARTIFACT.relative_to(REPO)}\n")

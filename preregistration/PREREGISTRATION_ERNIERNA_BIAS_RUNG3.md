@@ -170,3 +170,24 @@ Blinding — N/A; the analysis is deterministic given the weights.
 Randomization — N/A; no units are assigned to conditions.
 Missing data — N/A; a family scores or is recorded as skipped with its reason.
 Exclusion criteria — N/A; the registered Rung 3 filters apply unchanged.
+
+---
+
+## Note on the pinned commit, added 2026-08-27
+
+The `Commit SHA` above names `d095d09`, the code state this plan was written
+against. It is not the commit that froze the document: at `d095d09` the header
+still read `Status: DRAFT, not frozen`. The freeze is commit `cec864b`,
+2026-08-25 10:25, which is where `Status: FROZEN` first appears. The ablated
+cells ran at `71d201c5`, 10:27, two minutes later.
+
+Both facts matter and they are different questions. `d095d09` answers what the
+analysis would run on. `cec864b` answers whether the plan was fixed before the
+result, which is what makes a claim confirmatory, and it is the commit
+`results claim --frozen-at` records.
+
+The header is left as written. A frozen registration's bytes are the evidence,
+and editing them after the outcome is known is what freezing prevents; this note
+is appended instead. The same convention holds in
+`PREREGISTRATION_HTT_RERUN.md`, which pins `08de258` as its code state and froze
+at `bf4f8de`.

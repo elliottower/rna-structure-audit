@@ -236,17 +236,76 @@ def scored(section: dict) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def mutation_stats(run: dict, rng) -> dict:
+# ---------------------------------------------------------------------------
+# The bootstrap artifact
+# ---------------------------------------------------------------------------
+
+# `compute_bootstrap_cis.py` already resamples every one of these quantities and
+# writes the result to results/bootstrap_cis.json, which is what
+# verify_paper_rung12_figures.py checks the manuscript against. Recomputing them
+# here draws a second, independent bootstrap: nine of the ten Rung 1 intervals
+# happened to agree at two decimals and RNA-FM's upper bound did not, 1.9872
+# against a printed 1.98, so the paper and the artifact it is verified against
+# disagreed about a number neither of them was wrong about. The artifact is the
+# source; this file reads it.
+BOOTSTRAP_ARTIFACT = REPO / "results" / "bootstrap_cis.json"
+
+ARTIFACT_NAMES = {
+    "ernierna": "ERNIE-RNA", "rinalmo": "RiNALMo", "rnafm": "RNA-FM",
+    "utrlm": "UTR-LM", "splicebert": "SpliceBERT", "nt": "NT v2",
+    "dnabert2": "DNABERT-2", "hyenadna": "HyenaDNA", "caduceus": "Caduceus",
+    "evo": "Evo", "ernierna_untrained": "ERNIE-RNA (untrained)",
+}
+
+
+def artifact_models() -> dict:
+    if not BOOTSTRAP_ARTIFACT.exists():
+        raise FileNotFoundError(
+            f"{shown(BOOTSTRAP_ARTIFACT)} is missing; run "
+            f"scripts/compute_bootstrap_cis.py before generating tables")
+    return json.loads(BOOTSTRAP_ARTIFACT.read_text())["models"]
+
+
+def artifact_interval(models: dict, key: str, field: str,
+                      point: float | None) -> dict | None:
+    """The stored interval, checked against the point estimate recomputed here.
+
+    A stored interval that describes a different panel is worse than no
+    interval, and the point estimate is what says which panel it describes.
+    """
+    name = ARTIFACT_NAMES.get(key)
+    if name is None or name not in models or field not in models[name]:
+        return None
+    entry = models[name][field]
+    if point is not None and abs(entry["point_estimate"] - point) > 1e-6:
+        raise ValueError(
+            f"{name} {field}: artifact point estimate "
+            f"{entry['point_estimate']:.6f} against {point:.6f} recomputed from "
+            f"the panel. The artifact describes different data; re-run "
+            f"scripts/compute_bootstrap_cis.py.")
+    # Same shape `bootstrap_ci` returns, so callers cannot tell which produced it.
+    return {"point_estimate": entry["point_estimate"],
+            "ci_lower": entry["ci_lower"], "ci_upper": entry["ci_upper"],
+            "n": entry["n"]}
+
+
+def mutation_stats(run: dict, rng, key: str, models: dict) -> dict:
     """Mean ratio with its bootstrap interval, and null exceedance counts."""
     entries = scored(run["phases"]["mutation_trained"])
     ratios = np.array([body["best_ratio"] for body in entries.values()])
     exceeds_nuc = [name for name, body in entries.items() if body.get("exceeds_nuc_null")]
     survives = [name for name in exceeds_nuc if entries[name].get("exceeds_dinuc_null")]
-    interval = bootstrap_ci(ratios, np.mean, rng) if len(ratios) else None
+    mean_ratio = float(np.mean(ratios)) if len(ratios) else None
+    interval = artifact_interval(models, key, "mutation_sensitivity", mean_ratio)
+    if interval is None and len(ratios):
+        interval = bootstrap_ci(ratios, np.mean, rng)
     retention = None
     if exceeds_nuc:
         flags = np.array([float(name in survives) for name in exceeds_nuc])
-        retention = bootstrap_ci(flags, np.mean, rng)
+        retention = artifact_interval(models, key, "frac_exceeds_dinuc_null",
+                                      float(np.mean(flags)))
+        if retention is None:
+            retention = bootstrap_ci(flags, np.mean, rng)
     return {
         "n_scored": len(ratios),
         "mean_ratio": float(np.mean(ratios)) if len(ratios) else None,
@@ -267,8 +326,9 @@ def mutation_all(runs: dict) -> dict:
     v12 was assembled that way, with four independent streams over the same
     families. Seeding from the key makes an interval a property of the model.
     """
+    models = artifact_models()
     return {key: mutation_stats(run, np.random.default_rng(
-                [SEED, zlib.crc32(key.encode())]))
+                [SEED, zlib.crc32(key.encode())]), key, models)
             for key, run in runs.items()}
 
 
