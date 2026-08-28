@@ -816,7 +816,7 @@ reported in the text. Sources: \texttt{PREREGISTRATION\_EXPANDED\_RFAM}
 \texttt{PREREGISTRATION\_PHASE6\_V2} (H1$_6$--H3$_6$).}
 \label{tab:hypotheses}
 \small
-\begin{tabular}{lllll}
+\setlength{\tabcolsep}{4pt}\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.06\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.15\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.10\textwidth}@{}}
 \toprule
 \textbf{Hyp.} & \textbf{Criterion} & \textbf{Panel} & \textbf{Result} & \textbf{Verdict} \\
 \midrule
@@ -872,7 +872,7 @@ def provenance_table(runs: dict) -> str:
         r"family-derived seeding. No single library stack loads all ten models, "
         r"so the stack is given per run, and so is the commit.}",
         r"\label{tab:provenance}",
-        r"\begin{tabular}{lllll}",
+        r"\setlength{\tabcolsep}{4pt}\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.08\textwidth}>{\raggedright\arraybackslash}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.42\textwidth}@{}}",
         r"\toprule",
         r"Model & Weights & Device & Commit & Library stack \\",
         r"\midrule",
