@@ -1,0 +1,165 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{microtype}
+\input{generated/panel_description}
+
+% Tables here are S1, S2, ... so a reference from the manuscript is unambiguous.
+\renewcommand{\thetable}{S\arabic{table}}
+
+\title{Supplementary Material\\Only Two of Ten Nucleic Acid
+Foundation Models Encode Base-Pairing Partners}
+\author{Elliot Tower}
+\date{}
+
+\begin{document}
+\maketitle
+
+The manuscript reports panel-level figures. These are the per-family values
+they aggregate, over the \panelN{} families of the repaired panel, together
+with the family list, the attention--contact channel, the transversion control,
+the registered hypotheses and the run provenance.
+
+\section*{The curated panel}
+
+\input{generated/panel_table}
+
+\section*{Per-family composition gate}
+
+\begin{longtable}{@{}lrrrrrr@{}}
+\caption{Per-family stem--loop sensitivity ratio at each model's best layer. A dagger marks a family whose ratio exceeds that model's nucleotide-stratified null at the 95th percentile. Six of the ten models are shown; the remaining four never exceed the null in more than three families.}\\
+\label{tab:s2}\\
+\toprule
+\textbf{Family} & \textbf{ERNIE-RNA} & \textbf{RiNALMo} & \textbf{RNA-FM} & \textbf{NT~v2} & \textbf{Caduceus} & \textbf{Evo} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Family} & \textbf{ERNIE-RNA} & \textbf{RiNALMo} & \textbf{RNA-FM} & \textbf{NT~v2} & \textbf{Caduceus} & \textbf{Evo} \\
+\midrule
+\endhead
+6S\_RNA & 1.180$^\dagger$ & 1.130 & 1.073 & 1.031 & 1.156 & 1.220 \\
+7SK\_RNA & 1.147$^\dagger$ & 1.122$^\dagger$ & 1.347 & 1.007 & 1.119 & 1.240 \\
+Bacterial\_SRP & 1.208$^\dagger$ & 1.220$^\dagger$ & 1.860 & 1.094 & 1.154 & 1.489 \\
+CRISPR\_leader & 1.485$^\dagger$ & 1.023 & 1.222 & 1.195 & 1.821$^\dagger$ & 2.290$^\dagger$ \\
+Corona\_5UTR & 1.072 & 1.056 & 1.827 & 1.076$^\dagger$ & 1.029 & 1.145 \\
+Corona\_s2m & 1.117 & 1.061 & 2.027 & 1.170$^\dagger$ & 1.133 & 1.149 \\
+CrPV\_IRES & 1.089 & 1.038 & 1.206 & 1.130$^\dagger$ & 1.125 & 1.212 \\
+FMN\_riboswitch & 1.791$^\dagger$ & 1.321$^\dagger$ & 1.186 & 1.046 & 1.272 & 1.499 \\
+HDV\_ribozyme & 1.228$^\dagger$ & 1.043 & 1.179 & 1.068 & 1.146 & 0.993 \\
+Hepatitis\_C\_IRES\_III & 1.048 & 1.119$^\dagger$ & 1.326 & 1.016 & 1.095 & 0.974 \\
+Histone\_3prime & 1.932$^\dagger$ & 1.313$^\dagger$ & 2.094 & 1.178 & 1.218 & 2.272 \\
+IRE\_stem\_loop & 1.055 & 1.075 & 1.051 & 1.158 & 1.172 & 1.251 \\
+SAH\_riboswitch & 1.434$^\dagger$ & 1.265$^\dagger$ & 1.740 & 1.176$^\dagger$ & 1.190 & 3.949$^\dagger$ \\
+SAM\_riboswitch & 1.322$^\dagger$ & 1.142 & 1.641 & 1.010 & 1.131 & 1.319 \\
+SECIS\_element & 1.037 & 1.059 & 1.045 & 1.104 & 1.123 & 1.016 \\
+THF\_riboswitch & 1.076 & 1.099 & 1.028 & 0.990 & 1.124 & 1.021 \\
+TPP\_riboswitch & 1.716$^\dagger$ & 1.335 & 1.762 & 1.016 & 1.246 & 2.417 \\
+T\_box\_leader & 1.175$^\dagger$ & 1.159$^\dagger$ & 1.114 & 1.054 & 1.181$^\dagger$ & 1.089 \\
+U1\_snRNA & 1.135 & 1.157 & 1.117 & 1.024 & 1.422$^\dagger$ & 1.020 \\
+U4\_snRNA & 1.124 & 1.058 & 2.418 & 1.034 & 1.092 & 1.029 \\
+U5\_snRNA & 1.526$^\dagger$ & 1.363$^\dagger$ & 3.127 & 1.054 & 1.089 & 1.110 \\
+U6\_snRNA & 1.919$^\dagger$ & 1.167 & 5.179 & 1.244 & 1.665$^\dagger$ & 2.773 \\
+Vault\_RNA & 1.279$^\dagger$ & 1.150 & 1.296 & 0.996 & 1.490$^\dagger$ & 1.250$^\dagger$ \\
+Y\_RNA & 1.268$^\dagger$ & 1.056 & 1.218 & 1.204$^\dagger$ & 1.203 & 2.002 \\
+ZMP\_riboswitch & 1.139 & 1.052 & 1.188 & 1.227$^\dagger$ & 1.205 & 1.137 \\
+c\_di\_GMP\_riboswitch & 1.414$^\dagger$ & 1.215 & 2.023 & 1.038 & 1.251 & 1.793$^\dagger$ \\
+cobalamin\_riboswitch & 1.303$^\dagger$ & 1.097 & 1.214 & 1.033 & 1.049 & 1.819$^\dagger$ \\
+fluoride\_riboswitch & 1.454$^\dagger$ & 1.190 & 1.914 & 1.148 & 1.792$^\dagger$ & 2.595$^\dagger$ \\
+glmS\_ribozyme & 1.287$^\dagger$ & 1.163$^\dagger$ & 1.115 & 1.056 & 1.052 & 1.234 \\
+glycine\_riboswitch & 1.275$^\dagger$ & 1.226$^\dagger$ & 3.502 & 1.058 & 1.073 & 1.211 \\
+group\_II\_intron\_D5 & 1.394$^\dagger$ & 1.080 & 2.051 & 1.028 & 1.243$^\dagger$ & 1.929$^\dagger$ \\
+group\_I\_intron\_P4P6 & 1.155$^\dagger$ & 1.090 & 1.672 & 1.050 & 1.109 & 1.160 \\
+hammerhead\_ribozyme & 1.090 & 1.013 & 1.220 & 1.053 & 1.315 & 1.270 \\
+hatchet\_ribozyme & 1.237$^\dagger$ & 1.021 & 0.990 & 1.024 & 1.077 & 1.445 \\
+lysine\_riboswitch & 1.137$^\dagger$ & 1.157$^\dagger$ & 1.723 & 1.079$^\dagger$ & 1.070 & 1.123 \\
+manganese\_riboswitch & 1.217$^\dagger$ & 1.135 & 2.630 & 1.029 & 1.390 & 0.919 \\
+mir\_122\_precursor & 1.346$^\dagger$ & 1.269$^\dagger$ & 1.046 & 1.121 & 1.090 & 1.485 \\
+mir\_155\_precursor & 1.217$^\dagger$ & 1.098$^\dagger$ & 0.933 & 1.262$^\dagger$ & 1.070 & 1.397 \\
+mir\_21\_precursor & 1.160 & 1.187$^\dagger$ & 1.804 & 1.157 & 1.105 & 1.121 \\
+mir\_let7\_precursor & 1.236$^\dagger$ & 1.104 & 2.706 & 1.174 & 1.131 & 2.193$^\dagger$ \\
+pistol\_ribozyme & 1.075 & 1.009 & 1.660 & 1.049 & 1.090 & 1.065 \\
+preQ1\_riboswitch & 1.369$^\dagger$ & 1.178 & 1.813 & 1.329 & 1.196 & 1.064 \\
+purine\_riboswitch & 1.523$^\dagger$ & 1.146$^\dagger$ & 1.411 & 1.025 & 1.371 & 1.387 \\
+tRNA\_Ala\_human & 1.111 & 1.208$^\dagger$ & 2.922 & 1.246$^\dagger$ & 1.164 & 0.973 \\
+tRNA\_Phe\_yeast & 1.072 & 1.282$^\dagger$ & 2.705 & 1.141 & 1.374$^\dagger$ & 0.927 \\
+tmRNA & 1.302$^\dagger$ & 1.169 & 2.348 & 1.052 & 1.010 & 1.299 \\
+twister\_ribozyme & 1.088 & 1.091 & 1.134 & 1.147 & 1.079 & 1.270 \\
+\bottomrule
+\end{longtable}
+
+
+\section*{Per-family partner specificity}
+
+\begin{longtable}{@{}lrrrrrr@{}}
+\caption{Per-family partner specificity for the two models that clear Rung 3. PS is the mean over eligible pairs; layer is where mean PS peaks in that family; precision is the fraction of pairs whose partner moves more than either neighbour, against that family's own within-stem derangement chance rate. The two pilot families are quarantined from every confirmatory statistic and are omitted.}\\
+\label{tab:s3}\\
+\toprule
+ & \multicolumn{3}{c}{\textbf{RiNALMo}} & \multicolumn{3}{c}{\textbf{ERNIE-RNA}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+\textbf{Family} & \textbf{PS} & \textbf{Layer} & \textbf{Prec.} & \textbf{PS} & \textbf{Layer} & \textbf{Prec.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Family} & \textbf{PS} & \textbf{Layer} & \textbf{Prec.} & \textbf{PS} & \textbf{Layer} & \textbf{Prec.} \\
+\midrule
+\endhead
+6S\_RNA & +0.3916 & 33 & 1.000 & +0.1088 & 11 & 1.000 \\
+7SK\_RNA & -0.0000 & 0 & 0.000 & -0.0000 & 0 & 0.000 \\
+Bacterial\_SRP & +0.4271 & 33 & 1.000 & +0.1496 & 12 & 1.000 \\
+Corona\_5UTR & +0.0259 & 33 & 0.750 & +0.0268 & 12 & 0.583 \\
+CrPV\_IRES & +0.0009 & 33 & 0.714 & +0.0040 & 11 & 0.143 \\
+FMN\_riboswitch & +0.3534 & 33 & 1.000 & +0.1597 & 12 & 1.000 \\
+HDV\_ribozyme & +0.0000 & 1 & 0.500 & +0.1298 & 12 & 1.000 \\
+Hepatitis\_C\_IRES\_III & +0.0079 & 33 & 0.700 & +0.0078 & 12 & 0.600 \\
+SAM\_riboswitch & +0.3823 & 33 & 1.000 & +0.1968 & 12 & 1.000 \\
+SECIS\_element & +0.0405 & 33 & 0.667 & +0.0277 & 10 & 1.000 \\
+THF\_riboswitch & +0.0445 & 33 & 0.750 & +0.1621 & 12 & 1.000 \\
+TPP\_riboswitch & +0.3642 & 33 & 1.000 & +0.1908 & 12 & 1.000 \\
+T\_box\_leader & +0.3626 & 33 & 1.000 & +0.1154 & 12 & 0.889 \\
+U1\_snRNA & +0.0685 & 33 & 1.000 & +0.1248 & 12 & 1.000 \\
+U4\_snRNA & +0.1829 & 33 & 1.000 & +0.1195 & 12 & 1.000 \\
+U5\_snRNA & +0.2023 & 33 & 1.000 & +0.1913 & 12 & 1.000 \\
+Vault\_RNA & +0.0788 & 33 & 1.000 & +0.0935 & 12 & 1.000 \\
+Y\_RNA & +0.0137 & 32 & 1.000 & +0.0263 & 11 & 1.000 \\
+ZMP\_riboswitch & +0.0012 & 33 & 0.667 & +0.1087 & 12 & 0.833 \\
+c\_di\_GMP\_riboswitch & +0.3388 & 33 & 0.000 & +0.1314 & 12 & 0.000 \\
+cobalamin\_riboswitch & +0.3071 & 33 & 1.000 & +0.1489 & 12 & 1.000 \\
+glmS\_ribozyme & +0.0218 & 33 & 0.545 & +0.1721 & 12 & 1.000 \\
+glycine\_riboswitch & +0.5121 & 33 & 1.000 & +0.1973 & 12 & 1.000 \\
+group\_II\_intron\_D5 & +0.4475 & 33 & 1.000 & +0.1656 & 12 & 1.000 \\
+group\_I\_intron\_P4P6 & +0.3166 & 33 & 1.000 & +0.0205 & 12 & 0.667 \\
+hatchet\_ribozyme & +0.0301 & 33 & 0.750 & +0.0035 & 12 & 0.875 \\
+lysine\_riboswitch & +0.4333 & 33 & 1.000 & +0.1733 & 12 & 1.000 \\
+manganese\_riboswitch & +0.0479 & 33 & 1.000 & +0.1399 & 12 & 1.000 \\
+mir\_122\_precursor & +0.5541 & 33 & 1.000 & +0.1223 & 11 & 1.000 \\
+mir\_155\_precursor & +0.3203 & 33 & 1.000 & +0.0980 & 12 & 1.000 \\
+mir\_21\_precursor & +0.2935 & 33 & 1.000 & +0.1237 & 12 & 1.000 \\
+mir\_let7\_precursor & +0.2545 & 33 & 1.000 & +0.0842 & 12 & 1.000 \\
+pistol\_ribozyme & +0.0588 & 33 & 0.667 & +0.1376 & 12 & 1.000 \\
+purine\_riboswitch & +0.0873 & 33 & 0.800 & +0.1968 & 12 & 1.000 \\
+tmRNA & +0.3644 & 33 & 1.000 & +0.1485 & 12 & 1.000 \\
+twister\_ribozyme & +0.0854 & 33 & 1.000 & +0.0007 & 12 & 0.500 \\
+\bottomrule
+\end{longtable}
+
+
+\section*{Attention as a second channel}
+
+\input{generated/attention_table}
+
+\section*{Transversion control}
+
+\input{generated/transversion_table}
+
+\section*{Registered hypotheses}
+
+\input{generated/hypotheses_table}
+
+\section*{Run provenance}
+
+\input{generated/provenance_table}
+
+\end{document}
