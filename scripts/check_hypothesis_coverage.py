@@ -20,6 +20,8 @@ import pathlib
 import re
 import sys
 
+from paper_versions import expanded_text, newest_paper
+
 # Hypothesis identifiers: H1, H6b, H1_6, H_null, and LaTeX H1$_6$.
 IDENT = re.compile(r"\bH(?:_null|[0-9]{1,2}[a-z]?(?:_6|\$_6\$)?)\b")
 
@@ -51,32 +53,20 @@ def scan_registrations(paths):
     return found
 
 
-def read_with_inputs(path, seen=None):
-    """Manuscript text with \\input and \\include expanded one file deep.
-
-    The hypothesis table is generated into paper/generated/ and pulled in with
-    \\input, so scanning the top-level .tex alone reports every hypothesis as
-    absent.
-    """
-    seen = seen if seen is not None else set()
-    path = path.resolve()
-    if path in seen or not path.exists():
-        return ""
-    seen.add(path)
-    text = path.read_text(errors="ignore")
-    for name in INPUT.findall(text):
-        target = path.parent / (name if name.endswith(".tex") else name + ".tex")
-        text += "\n" + read_with_inputs(target, seen)
-    return text
-
-
 def scan_manuscript(path):
-    return {normalise(m.group(0)) for m in IDENT.finditer(read_with_inputs(path))}
+    """Identifiers in the manuscript as a reader sees it.
+
+    `expanded_text` inlines the generated tables and resolves the macros, which
+    matters here: the hypothesis table is `\\input{generated/hypotheses_table}`,
+    so scanning the top-level .tex alone reports every hypothesis as absent.
+    """
+    return {normalise(m.group(0)) for m in IDENT.finditer(expanded_text(path))}
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--paper", default="paper/rna-structure-audit_v19.tex")
+    parser.add_argument("--paper", default=None,
+                        help="defaults to the newest manuscript version")
     parser.add_argument("--strict", action="store_true")
     args = parser.parse_args()
 
@@ -90,7 +80,8 @@ def main():
         sys.exit("no preregistration files found")
 
     registered = scan_registrations(registrations)
-    reported = scan_manuscript(pathlib.Path(args.paper))
+    paper = pathlib.Path(args.paper) if args.paper else newest_paper()
+    reported = scan_manuscript(paper)
 
     print(f"{len(registrations)} preregistrations, {len(registered)} hypotheses registered")
     for path in registrations:
@@ -98,7 +89,7 @@ def main():
         print(f"  {path.name}: {', '.join(idents) if idents else '(none parsed)'}")
 
     missing = sorted(set(registered) - reported)
-    print(f"\nregistered but absent from {args.paper}: {len(missing)}")
+    print(f"\nregistered but absent from {paper.name}: {len(missing)}")
     for ident in missing:
         source, criterion = registered[ident][0]
         print(f"  {ident:<8} [{source}]")
