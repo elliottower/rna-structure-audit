@@ -698,9 +698,17 @@ only ERNIE-RNA. Mean perturbation specificity, untrained:
 
 `PREREGISTRATION_PHASE6_UNTRAINED_RINALMO.md` registers **H_null: untrained
 RiNALMo produces mean PS indistinguishable from zero (|PS| < 0.001)**. Observed
-8.0e-09. H_null holds by five orders of magnitude, and the registration's
-requirement to "report alongside the ERNIE-RNA untrained control in the paper"
-is unmet in v10.
+8.0e-09 on the pre-repair panel; 2.2e-09 on the repaired panel, which is the
+value `paper/generated/results_macros.tex` writes as `\psUntrainedRiNALMo`.
+H_null holds by five orders of magnitude either way.
+
+The registration's requirement to "report alongside the ERNIE-RNA untrained
+control in the paper" was unmet through v19. It is met from **v20**, which
+gives the mean PS of the RiNALMo, ERNIE-RNA and RNA-FM controls in
+Sec. "The randomly initialized control". The manuscript reports the quantity
+and does not name the hypothesis, so
+`scripts/check_hypothesis_coverage.py` -- which detects identifiers, not
+quantities -- still lists H_null as absent. That is a limit of the check.
 
 Every architecture, without learned weights, sits within 3.2e-08 of zero. The
 exceedance counts in the right-hand column are the negative-threshold artifact
