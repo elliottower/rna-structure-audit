@@ -748,3 +748,34 @@ table lacked because their 2026-07-13 runs failed to load.
 is reported at the final layer and at the embedding layer, because the embedding
 layer already reaches Spearman +1.00 against repeat count for every model
 (D21). The column does not rank models by whether they encode the expansion.
+
+## 2026-10-11 — RNA-FM adapter and the Rung 3 chance rate, recorded before the rerun
+
+**Registrations:** `docs/PREREGISTRATION_EXPANDED_RFAM.md` H1, H6, H6b and H10, and RNA-FM's
+rows in H2 and H3 of `PREREGISTRATION_PHASE6_V2.md`.
+
+**RNA-FM adapter.** `multi_model_audit.RNAFMAdapter` sent each nucleotide to the model under
+another token's id: it built A, C, G, U as 5, 6, 7, 8 between 2 and 3, and the pinned
+checkpoint `multimolecule/rnafm` at revision `7d6e73ad` has them at 6, 7, 8, 9 with `<cls>`
+at 1 and `<eos>` at 2. It also loaded the weights into `transformers.BertModel`, which is
+not the architecture they were trained in. `scripts/rnafm_adapter_v2.py` takes ids from the
+checkpoint's tokenizer and the forward pass from `multimolecule.RnaFmModel`. Every
+embedding-derived RNA-FM number is recomputed: all stages on the panel, the randomly
+initialized control, and the transversion, synthetic, multi-sequence, HTT and reseeded arms.
+
+Written before RNA-FM is recomputed. The direction of the effect is unknown. The deposited
+RNA-FM result at Rung 3 is a negative, and the defect is a confound for that negative. The
+corrected run changes the adapter and the software environment together (torch 2.4.1 and
+transformers 4.44.2 to torch 2.6.0, transformers 5.14.1 and multimolecule 0.2.0), so the
+difference from the deposited values is not attributed to tokenization, architecture or
+library versions singly.
+
+**Rung 3 chance rate.** Per-pair precision is read on deep-interior pairs, and the
+derangement chance rate it is compared with was measured on every eligible pair and stored
+at one layer per family. `scripts/phase6_compensatory_mutation_v3.py` stores the chance rate
+on the pairs precision is read on, at every layer. Phase 6 is rerun for every model so each
+row of the Rung 3 table carries the matched rate. Written before any model is rerun.
+
+**Registered alongside.** The matched-decoy test of
+`preregistration/complementary_decoy/PREREG.md`, frozen at `5a5a935`, is computed from the
+same run.
