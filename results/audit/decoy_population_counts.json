@@ -1,0 +1,63 @@
+{
+  "panel": "results/repaired_panel_v3",
+  "structural": {
+    "family_all": 17,
+    "family_close": 9
+  },
+  "models": {
+    "rinalmo": {
+      "confirmatory": 36,
+      "positive_control": 33,
+      "family_all": 16,
+      "family_close": 9
+    },
+    "ernierna": {
+      "confirmatory": 36,
+      "positive_control": 34,
+      "family_all": 17,
+      "family_close": 9
+    },
+    "caduceus": {
+      "confirmatory": 36,
+      "positive_control": 16,
+      "family_all": 6,
+      "family_close": 4
+    },
+    "rnafm": {
+      "confirmatory": 36,
+      "positive_control": 2,
+      "family_all": 1,
+      "family_close": 0
+    },
+    "utrlm": {
+      "confirmatory": 36,
+      "positive_control": 13,
+      "family_all": 7,
+      "family_close": 6
+    },
+    "splicebert": {
+      "confirmatory": 36,
+      "positive_control": 22,
+      "family_all": 7,
+      "family_close": 3
+    },
+    "hyenadna": {
+      "confirmatory": 36,
+      "positive_control": 7,
+      "family_all": 5,
+      "family_close": 3
+    },
+    "evo": {
+      "confirmatory": 36,
+      "positive_control": 13,
+      "family_all": 7,
+      "family_close": 4
+    },
+    "ernierna_untrained": {
+      "confirmatory": 36,
+      "positive_control": 13,
+      "family_all": 5,
+      "family_close": 3
+    }
+  }
+}
