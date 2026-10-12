@@ -1,0 +1,23 @@
+source:
+  citation: nguyen2024evo
+  local: reference/nguyen2024evo.pdf
+  sha256: cc2718e020c6ff666364312868770cc346498b5c883b4ffdd0b9d37c16f10fa3
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12057570/
+  doi: 10.1126/science.ado9336
+  extract_cmd: pdftotext {} -
+  note: The author manuscript held by PubMed Central (PMC12057570, NIHMS2055853), saved by hand from the
+    address above; the published version in Science could not be fetched.
+claims:
+  size:
+    interpretation:
+      says: Evo has 7B parameters and is character-tokenized
+      whose: rna-structure-audit
+    quotes:
+    - exact: we scaled Evo to 7 billion parameters with a context length of 131 kilobases at single-nucleotide
+        resolution
+  architecture:
+    interpretation:
+      says: Evo uses the StripedHyena architecture
+      whose: rna-structure-audit
+    quotes:
+    - exact: based on the StripedHyena architecture (24), which hybridizes attention and data-controlled
