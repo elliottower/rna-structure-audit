@@ -44,3 +44,7 @@ SUBMISSIONS.md
 
 # Third-party source files behind claims/. Each is pinned by sha256 and url in its claims file.
 reference/
+
+# Empty lock sidecars the citations and prereg tools leave beside a file they write.
+*.provenance-lock
+*.provenance-tmp
