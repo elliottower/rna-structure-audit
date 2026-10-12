@@ -1,0 +1,70 @@
+{
+  "written": "2026-10-11T18:11:24.461128+00:00",
+  "kind": "analysis",
+  "commit": "be4e3468fddefcd9c650fa64f2a17cc36eb7692b",
+  "registration": "preregistration/complementary_decoy/PREREG.md",
+  "tested_files_sha256": {
+    "scripts/modal_decoy_panel.py": "975f87f31dd84b111d5b33d0865dbb4ac81bc638e4f74d6958be9a1e75179717",
+    "scripts/phase6_compensatory_mutation_v3.py": "13bc9035749c1e1c2df4551940b642517521ab12faa657c10fc0d4c1b9b35a6f",
+    "scripts/rnafm_adapter_v2.py": "a9e8ab5f5debd12fae5f987270e88d1435b159506ea2268d34d2d0ec02467084",
+    "scripts/stem_pairs.py": "6abd3b7fc2281670f470d57951bba5176afcd9a95e1c4d1a4d716d3376545fb5",
+    "scripts/decoy_comparison.py": "07dbec710a2b1ffa74b2add37cef2e2ee286c55d7df8c6b35065ade1f3c11273",
+    "scripts/token_spans.py": "2c0802db5f8069c5494f4a6e499338e1b7962038926c61bb8ffb7c566c48e26a",
+    "scripts/family_checkpoint.py": "3187faccfdde76c343242aedadefd00c94a8a37a69a4313c15a2a6a908130d8d",
+    "scripts/family_seed.py": "70be625798b58ab8f285e07117f92f1e9a6d11dd656282febf02c13a6b84edf6",
+    "scripts/phases_1_to_5.py": "02692eae0c77ec11222b0d3b839fcf439caee7ea96c8d7ad2bf7c434b77b5ee2",
+    "scripts/phase6_compensatory_mutation.py": "a110c0c745df4196a8014fd57e6cab035ff0e35889a02db21e04355ce33e204b",
+    "multi_model_audit.py": "2a987a465942d6f9ec330088ea5ff0276dc4820afc138bcbc2a1eb5a9f3990d5",
+    "tests/test_rnafm_adapter_v2.py": "f3207978582033b0d879785958fa9ada2dd5060f0ebfee144366a09226b300a5",
+    "tests/test_matched_chance.py": "65b977406b9fc482b17f93fc74b82609819d1b3a48c6cfd1dcf0d2ab7ddd5238",
+    "tests/test_stem_pairs.py": "c5cb4363e3f8d117e08a362b62cbc56eb0ec71c65e10c3453d0f55f7707c7313"
+  },
+  "registered_files_sha256": {
+    "preregistration/complementary_decoy/PREREG.md": "f64672271d7e83bf23011194f9db49b4e13b40ff2255b9cdc0b792d6b4992cd9",
+    "scripts/decoy_audit_v2.py": "d6011ae965ce98301ef9f47ab8654a91d29c5be6f41406082a3cc4abda7585c1",
+    "scripts/validate_decoy_controls_v2.py": "2f5d663682b16d14397241b78d84dfef0e48139a6e86d1022719cd935dfd9a48",
+    "scripts/count_matched_decoys.py": "82feba725b329d2378ec876286289492e4839b41fa4e22e5e521aa7d1f308c3d",
+    "scripts/count_decoy_population.py": "c0a8845acdb6af2f42000ff98aa9d5b50787bc7aa76eab47cbc7c6a6a2bd50df"
+  },
+  "panel_tree_sha256": "eda30e6856251e2350d440a7674a2e9797426c17daa5bffa85ae83c4c9d82075",
+  "test_record_path": "results/audit/model_side_tests.json",
+  "test_record_sha256": "3b81ffcd5a878e966adb6653c3a21c497ad190d305648d12d8c8538846c02c78",
+  "test_record": {
+    "recorded": "2026-10-11T17:58:04.076187+00:00",
+    "counts": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14
+    },
+    "head_commit": "64ca623bfd6e6f59f3490cecb8b01234c1212cc7",
+    "libraries": {
+      "torch": "2.6.0",
+      "triton": "3.2.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "5.14.1",
+      "multimolecule": "0.2.0",
+      "huggingface-hub": "1.28.0",
+      "flash-attn": null,
+      "mamba-ssm": null
+    }
+  },
+  "environments": "the image definitions in scripts/modal_decoy_panel.py, hashed above",
+  "models": [
+    "rnafm_untrained"
+  ],
+  "flags": {
+    "phase6_only": true,
+    "smoke_only": false,
+    "transversion": false,
+    "ablate_bias": false,
+    "buffers_only": false,
+    "synthetic": false,
+    "multi_seq": false,
+    "htt": false,
+    "reseed_buffers": true
+  }
+}

@@ -280,10 +280,7 @@ def latex(rows: list[dict]) -> str:
         r"families and precision reported on the other half, over "
         rf"{N_SPLITS:,} splits; the bracketed interval is the 2.5th to 97.5th "
         r"percentile over random half-splits and is not a confidence interval "
-        r"over families. "
-        r"Choosing per family costs the two trained models at most $0.010$ "
-        r"and is the whole of every other model's excess over its own chance "
-        r"rate.}",
+        r"over families.}",
         r"\label{tab:layer-selection}",
         r"\small",
         r"\begin{tabular}{@{}lrrrr@{}}",

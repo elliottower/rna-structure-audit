@@ -1,0 +1,4465 @@
+{
+  "model": "dnabert2",
+  "stamp": {
+    "commit": "be4e3468fddefcd9c650fa64f2a17cc36eb7692b",
+    "panel_sha256": "5c4d6f6d4c32b47a8b0f8802efd26af98708d3c3b5f848b298ddfaddea6e6fb3",
+    "n_families": 47,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24 and 2026-10-11",
+    "registration": "preregistration/complementary_decoy/PREREG.md",
+    "libraries": {
+      "torch": "2.4.0",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.28.0",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-10-11 18:10:24 UTC",
+  "phase": 6,
+  "metric": "perturbation_specificity",
+  "preregistration": [
+    "PREREGISTRATION_PHASE6_V2.md",
+    "preregistration/complementary_decoy/PREREG.md"
+  ],
+  "offset": 0,
+  "tokenizer_caveated": true,
+  "results": {
+    "per_rna": {
+      "6S_RNA": {
+        "best_ps": -0.004349965715544829,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.004349965715544829
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 10,
+        "n_wc_pairs_total": 43,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.19053207817102485,
+          "mean_stem_delta": 0.19080319082353353,
+          "mean_loop_delta": 0.18266328580520946
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.008699931431089658,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.0625,
+        "noop_floor": {
+          "best_ps_noop": -0.011430034347300916,
+          "per_layer_ps_noop": [
+            -0.011430034347300916
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0004664658417429722,
+        "null_95th_conservative": -0.0004664658417429722,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "7SK_RNA": {
+        "best_ps": -0.031572565444131034,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.031572565444131034
+        ],
+        "n_eligible_pairs": 30,
+        "n_stems": 17,
+        "n_wc_pairs_total": 80,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.3611805221991299,
+          "mean_stem_delta": 0.15946458182063716,
+          "mean_loop_delta": 0.15667021003714676
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.03411126409311592,
+        "ps_au_pairs": -0.026495168146161263,
+        "nearer_neighbor_larger": 0.26666666666666666,
+        "noop_floor": {
+          "best_ps_noop": -0.031950326753653904,
+          "per_layer_ps_noop": [
+            -0.031950326753653904
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Bacterial_SRP": {
+        "best_ps": -0.011385197035980791,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.011385197035980791
+        ],
+        "n_eligible_pairs": 13,
+        "n_stems": 6,
+        "n_wc_pairs_total": 27,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.23801941468629498,
+          "mean_stem_delta": 0.16547804441300903,
+          "mean_loop_delta": 0.15080011535556267
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 4,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.014100317673664514,
+        "ps_au_pairs": -0.010178476752565804,
+        "nearer_neighbor_larger": 0.15384615384615385,
+        "noop_floor": {
+          "best_ps_noop": -0.005253155265640288,
+          "per_layer_ps_noop": [
+            -0.005253155265640288
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.005076804278186497,
+        "null_95th_conservative": -0.005076804278186497,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          4000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "CRISPR_leader": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "Corona_5UTR": {
+        "best_ps": -0.008408852701284487,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.008408852701284487
+        ],
+        "n_eligible_pairs": 40,
+        "n_stems": 16,
+        "n_wc_pairs_total": 83,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.7674062928057502e-07,
+          "mean_stem_delta": 0.1483616887735522,
+          "mean_loop_delta": 0.13261638449016022
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 12,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.009689898111645164,
+        "ps_au_pairs": -0.006992960405622683,
+        "nearer_neighbor_larger": 0.175,
+        "noop_floor": {
+          "best_ps_noop": -0.008471031004383591,
+          "per_layer_ps_noop": [
+            -0.008471031004383591
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.75
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              4
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.75
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.46388888888888885
+            ],
+            "pairs": [
+              12
+            ],
+            "comparisons": [
+              48
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.525
+            ],
+            "pairs": [
+              6
+            ],
+            "comparisons": [
+              16
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.006695467183850686,
+        "null_95th_conservative": -0.006695467183850686,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          12000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Corona_s2m": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "CrPV_IRES": {
+        "best_ps": -0.004078803924787063,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.004078803924787063
+        ],
+        "n_eligible_pairs": 21,
+        "n_stems": 7,
+        "n_wc_pairs_total": 40,
+        "positive_control": {
+          "pass": true,
+          "p_value": 2.3919602251954185e-05,
+          "mean_stem_delta": 0.208569443382251,
+          "mean_loop_delta": 0.1811150671667308
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 7,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.012236411774361189,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.09523809523809523,
+        "noop_floor": {
+          "best_ps_noop": -0.013702476780942819,
+          "per_layer_ps_noop": [
+            -0.013702476780942819
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              4
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.25
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.4
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              8
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.25
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0014365797766612543,
+        "null_95th_conservative": -0.0014365797766612543,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          7000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "FMN_riboswitch": {
+        "best_ps": 0.0,
+        "best_layer": 0,
+        "per_layer_ps": [
+          0.0
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 6,
+        "n_wc_pairs_total": 28,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7588719023987338,
+          "mean_stem_delta": 0.27570510923269703,
+          "mean_loop_delta": 0.27127721585490294
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 5,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.0,
+        "noop_floor": {
+          "best_ps_noop": -0.00027168127022508023,
+          "per_layer_ps_noop": [
+            -0.00027168127022508023
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          5000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "HDV_ribozyme": {
+        "best_ps": -0.01811533423207295,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01811533423207295
+        ],
+        "n_eligible_pairs": 13,
+        "n_stems": 4,
+        "n_wc_pairs_total": 22,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0059947042155278005,
+          "mean_stem_delta": 0.2928545315898829,
+          "mean_loop_delta": 0.23669579425927753
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 6,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.023549934501694837,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.15384615384615385,
+        "noop_floor": {
+          "best_ps_noop": -0.005736200477464781,
+          "per_layer_ps_noop": [
+            -0.005736200477464781
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.6666666666666666
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          6000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Hepatitis_C_IRES_III": {
+        "best_ps": -0.025260691560373017,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.025260691560373017
+        ],
+        "n_eligible_pairs": 42,
+        "n_stems": 19,
+        "n_wc_pairs_total": 93,
+        "positive_control": {
+          "pass": true,
+          "p_value": 6.970185423845037e-06,
+          "mean_stem_delta": 0.16873503674948867,
+          "mean_loop_delta": 0.15608928445090994
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 10,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.03422416275921506,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.07142857142857142,
+        "noop_floor": {
+          "best_ps_noop": -0.026256629390061015,
+          "per_layer_ps_noop": [
+            -0.026256629390061015
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5555555555555556
+            ],
+            "pairs": [
+              9
+            ],
+            "comparisons": [
+              24
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.5666666666666667
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              12
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.006506322839152189,
+        "null_95th_conservative": -0.006506322839152189,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          10000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Histone_3prime": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (6 found)",
+        "n_wc_pairs_total": 6
+      },
+      "IRE_stem_loop": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (14 found)",
+        "n_wc_pairs_total": 14
+      },
+      "SAH_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (13 found)",
+        "n_wc_pairs_total": 13
+      },
+      "SAM_riboswitch": {
+        "best_ps": -0.0223854153321126,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0223854153321126
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 6,
+        "n_wc_pairs_total": 32,
+        "positive_control": {
+          "pass": true,
+          "p_value": 1.0630222843696063e-05,
+          "mean_stem_delta": 0.26039380923416194,
+          "mean_loop_delta": 0.23364575981048116
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 6,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.011732664182354677,
+        "ps_au_pairs": -0.03303816648187052,
+        "nearer_neighbor_larger": 0.25,
+        "noop_floor": {
+          "best_ps_noop": -0.004899002228032405,
+          "per_layer_ps_noop": [
+            -0.004899002228032405
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0014832000713039621,
+        "null_95th_conservative": -0.0014832000713039621,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          6000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "SECIS_element": {
+        "best_ps": -0.00010489245161088906,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.00010489245161088906
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 4,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.061907630608634454,
+          "mean_stem_delta": 0.10460437041491426,
+          "mean_loop_delta": 0.07671759547268431
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": -0.0001573386774163336,
+        "nearer_neighbor_larger": 0.1111111111111111,
+        "noop_floor": {
+          "best_ps_noop": 0.0,
+          "per_layer_ps_noop": [
+            0.0
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -7.847034170836511e-05,
+        "null_95th_conservative": -7.847034170836511e-05,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "THF_riboswitch": {
+        "best_ps": -0.0007511003416870906,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0007511003416870906
+        ],
+        "n_eligible_pairs": 15,
+        "n_stems": 6,
+        "n_wc_pairs_total": 29,
+        "positive_control": {
+          "pass": true,
+          "p_value": 8.533822578557534e-07,
+          "mean_stem_delta": 0.24605083528769056,
+          "mean_loop_delta": 0.1984497834045259
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 4,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.0009388754271088632,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.13333333333333333,
+        "noop_floor": {
+          "best_ps_noop": -0.018008823156114753,
+          "per_layer_ps_noop": [
+            -0.018008823156114753
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.02836192062907844,
+        "null_95th_conservative": -0.02836192062907844,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          4000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "TPP_riboswitch": {
+        "best_ps": -0.021152790614491056,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.021152790614491056
+        ],
+        "n_eligible_pairs": 12,
+        "n_stems": 6,
+        "n_wc_pairs_total": 25,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.24809830029280563,
+          "mean_stem_delta": 0.2316569380034582,
+          "mean_loop_delta": 0.2438749616245527
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 1,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.019614416683979993,
+        "ps_au_pairs": -0.025767912406024236,
+        "nearer_neighbor_larger": 0.25,
+        "noop_floor": {
+          "best_ps_noop": -0.03374973857134548,
+          "per_layer_ps_noop": [
+            -0.03374973857134548
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.023609491985984537,
+        "null_95th_conservative": -0.023609491985984537,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          1000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "T_box_leader": {
+        "best_ps": -0.03460012854414396,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.03460012854414396
+        ],
+        "n_eligible_pairs": 24,
+        "n_stems": 8,
+        "n_wc_pairs_total": 44,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0020786370901714215,
+          "mean_stem_delta": 0.1738103304594866,
+          "mean_loop_delta": 0.16100525110120048
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 9,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.009003633108591728,
+        "ps_au_pairs": -0.056258701604995846,
+        "nearer_neighbor_larger": 0.20833333333333334,
+        "noop_floor": {
+          "best_ps_noop": -0.010743610286310268,
+          "per_layer_ps_noop": [
+            -0.010743610286310268
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5185185185185185
+            ],
+            "pairs": [
+              9
+            ],
+            "comparisons": [
+              16
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0066236367064705865,
+        "null_95th_conservative": -0.0066236367064705865,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          9000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "U1_snRNA": {
+        "best_ps": -0.0021049387489221233,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0021049387489221233
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 8,
+        "n_wc_pairs_total": 40,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.015834127176473013,
+          "mean_stem_delta": 0.20361844344726296,
+          "mean_loop_delta": 0.1806055579516224
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 1,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.002455761873742477,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.2857142857142857,
+        "noop_floor": {
+          "best_ps_noop": -0.012676848399006457,
+          "per_layer_ps_noop": [
+            -0.012676848399006457
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.029118085292999158,
+        "null_95th_conservative": -0.029118085292999158,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          1000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "U4_snRNA": {
+        "best_ps": -0.02486570558311672,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.02486570558311672
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 5,
+        "n_wc_pairs_total": 26,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.005109620092135905,
+          "mean_stem_delta": 0.21878790014211652,
+          "mean_loop_delta": 0.18290556411027456
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 6,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.03164726165123946,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.2857142857142857,
+        "noop_floor": {
+          "best_ps_noop": -0.0280591912923936,
+          "per_layer_ps_noop": [
+            -0.0280591912923936
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.6
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.006285188071511539,
+        "null_95th_conservative": -0.006285188071511539,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          6000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "U5_snRNA": {
+        "best_ps": -0.01802177165240656,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01802177165240656
+        ],
+        "n_eligible_pairs": 18,
+        "n_stems": 4,
+        "n_wc_pairs_total": 29,
+        "positive_control": {
+          "pass": true,
+          "p_value": 4.844747311213683e-09,
+          "mean_stem_delta": 0.2509206409155783,
+          "mean_loop_delta": 0.17405490118097725
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 10,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.005135791258403563,
+        "ps_au_pairs": -0.028330555967608962,
+        "nearer_neighbor_larger": 0.2222222222222222,
+        "noop_floor": {
+          "best_ps_noop": -0.013409191843034598,
+          "per_layer_ps_noop": [
+            -0.013409191843034598
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.4629629629629629
+            ],
+            "pairs": [
+              9
+            ],
+            "comparisons": [
+              26
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.3
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              7
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.019746821580526007,
+        "null_95th_conservative": -0.019746821580526007,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          10000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "U6_snRNA": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "Vault_RNA": {
+        "best_ps": -0.03826515057504712,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.03826515057504712
+        ],
+        "n_eligible_pairs": 8,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00142426580156021,
+          "mean_stem_delta": 0.29957507816586293,
+          "mean_loop_delta": 0.2356048806549149
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.04373160065719671,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.125,
+        "noop_floor": {
+          "best_ps_noop": -0.016590461536114515,
+          "per_layer_ps_noop": [
+            -0.016590461536114515
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          2000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "Y_RNA": {
+        "best_ps": -0.006271034085467602,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.006271034085467602
+        ],
+        "n_eligible_pairs": 7,
+        "n_stems": 3,
+        "n_wc_pairs_total": 21,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.01711829827186909,
+          "mean_stem_delta": 0.2543954406442698,
+          "mean_loop_delta": 0.19077935544493796
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.010974309649568303,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.0,
+        "noop_floor": {
+          "best_ps_noop": -0.009988463638478782,
+          "per_layer_ps_noop": [
+            -0.009988463638478782
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.006815336160223599,
+        "null_95th_conservative": -0.006815336160223599,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          2000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "ZMP_riboswitch": {
+        "best_ps": -0.038961851951409644,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.038961851951409644
+        ],
+        "n_eligible_pairs": 12,
+        "n_stems": 3,
+        "n_wc_pairs_total": 19,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00018057890042330534,
+          "mean_stem_delta": 0.23379521411889684,
+          "mean_loop_delta": 0.175431066523796
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 6,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.043214092246288485,
+        "ps_au_pairs": -0.03045737136165197,
+        "nearer_neighbor_larger": 0.16666666666666666,
+        "noop_floor": {
+          "best_ps_noop": -0.04677421206925259,
+          "per_layer_ps_noop": [
+            -0.04677421206925259
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              4
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          6000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "c_di_GMP_riboswitch": {
+        "best_ps": -0.015001264664733546,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.015001264664733546
+        ],
+        "n_eligible_pairs": 8,
+        "n_stems": 5,
+        "n_wc_pairs_total": 21,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0036421333251738667,
+          "mean_stem_delta": 0.17943504785956454,
+          "mean_loop_delta": 0.14686656091726868
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          null
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": -0.12001011731786837,
+        "nearer_neighbor_larger": 0.375,
+        "noop_floor": {
+          "best_ps_noop": -0.012017427360845712,
+          "per_layer_ps_noop": [
+            -0.012017427360845712
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": null,
+        "null_95th_conservative": null,
+        "h3_chance_fraction": null,
+        "h3_chance_fraction_matched": null,
+        "chance_per_layer": null,
+        "chance_per_layer_n": null,
+        "null_available": false,
+        "exceeds_null_primary": null,
+        "exceeds_null_conservative": null
+      },
+      "cobalamin_riboswitch": {
+        "best_ps": -0.04700291940379862,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.04700291940379862
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 7,
+        "n_wc_pairs_total": 40,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.02256851723456532,
+          "mean_stem_delta": 0.23451893613711225,
+          "mean_loop_delta": 0.21218348652220495
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.07311565240590895,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.0,
+        "noop_floor": {
+          "best_ps_noop": -0.0022286744016287324,
+          "per_layer_ps_noop": [
+            -0.0022286744016287324
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "fluoride_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (8 found)",
+        "n_wc_pairs_total": 8
+      },
+      "glmS_ribozyme": {
+        "best_ps": -0.007362763549313579,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.007362763549313579
+        ],
+        "n_eligible_pairs": 22,
+        "n_stems": 6,
+        "n_wc_pairs_total": 35,
+        "positive_control": {
+          "pass": true,
+          "p_value": 3.5768635933246396e-08,
+          "mean_stem_delta": 0.24638137713532232,
+          "mean_loop_delta": 0.2122255169777395
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 11,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.011628690125781615,
+        "ps_au_pairs": -0.003807824735590215,
+        "nearer_neighbor_larger": 0.13636363636363635,
+        "noop_floor": {
+          "best_ps_noop": -0.00528365812748595,
+          "per_layer_ps_noop": [
+            -0.00528365812748595
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.6166666666666667
+            ],
+            "pairs": [
+              10
+            ],
+            "comparisons": [
+              20
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.75
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              3
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.005049394283906468,
+        "null_95th_conservative": -0.005049394283906468,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          11000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "glycine_riboswitch": {
+        "best_ps": -0.010588668149118692,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.010588668149118692
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 3,
+        "n_wc_pairs_total": 21,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.009745939955316578,
+          "mean_stem_delta": 0.3060010235771146,
+          "mean_loop_delta": 0.26293824359005374
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 4,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": -0.023824503335517055,
+        "nearer_neighbor_larger": 0.2222222222222222,
+        "noop_floor": {
+          "best_ps_noop": -0.013587172598116272,
+          "per_layer_ps_noop": [
+            -0.013587172598116272
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          4000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "group_II_intron_D5": {
+        "best_ps": -0.020969655874582993,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.020969655874582993
+        ],
+        "n_eligible_pairs": 6,
+        "n_stems": 2,
+        "n_wc_pairs_total": 18,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.005279053034399317,
+          "mean_stem_delta": 0.27754040739234115,
+          "mean_loop_delta": 0.21737992479343984
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.12581793524749796,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.16666666666666666,
+        "noop_floor": {
+          "best_ps_noop": -0.011280154647055174,
+          "per_layer_ps_noop": [
+            -0.011280154647055174
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.007502388094899411,
+        "null_95th_conservative": -0.007502388094899411,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          2000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "group_I_intron_P4P6": {
+        "best_ps": -0.024056324753106734,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.024056324753106734
+        ],
+        "n_eligible_pairs": 19,
+        "n_stems": 9,
+        "n_wc_pairs_total": 43,
+        "positive_control": {
+          "pass": false,
+          "p_value": 9.00135255595347e-06,
+          "mean_stem_delta": 0.18594596667411462,
+          "mean_loop_delta": 0.21267204305498377
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.043066697603412626,
+        "ps_au_pairs": -0.002933688252766853,
+        "nearer_neighbor_larger": 0.05263157894736842,
+        "noop_floor": {
+          "best_ps_noop": -0.020176296654024633,
+          "per_layer_ps_noop": [
+            -0.020176296654024633
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.022095502695116422,
+        "null_95th_conservative": -0.022095502695116422,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "hammerhead_ribozyme": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (12 found)",
+        "n_wc_pairs_total": 12
+      },
+      "hatchet_ribozyme": {
+        "best_ps": -0.01082332957329817,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01082332957329817
+        ],
+        "n_eligible_pairs": 14,
+        "n_stems": 3,
+        "n_wc_pairs_total": 24,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.49102965416759814,
+          "mean_stem_delta": 0.2225138021249284,
+          "mean_loop_delta": 0.21540993348886625
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 8,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": -0.012627217835514534,
+        "nearer_neighbor_larger": 0.21428571428571427,
+        "noop_floor": {
+          "best_ps_noop": -0.0017277727304285434,
+          "per_layer_ps_noop": [
+            -0.0017277727304285434
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.6666666666666666
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              4
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.4444444444444444
+            ],
+            "pairs": [
+              6
+            ],
+            "comparisons": [
+              12
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.6666666666666666
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          8000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "lysine_riboswitch": {
+        "best_ps": -0.03291711565950168,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.03291711565950168
+        ],
+        "n_eligible_pairs": 27,
+        "n_stems": 8,
+        "n_wc_pairs_total": 45,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.02543127345800931,
+          "mean_stem_delta": 0.19407566794793246,
+          "mean_loop_delta": 0.18426093071661157
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 13,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.020116070163299228,
+        "ps_au_pairs": -0.04044714242197372,
+        "nearer_neighbor_larger": 0.25925925925925924,
+        "noop_floor": {
+          "best_ps_noop": -0.01750839406548367,
+          "per_layer_ps_noop": [
+            -0.01750839406548367
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5893939393939394
+            ],
+            "pairs": [
+              11
+            ],
+            "comparisons": [
+              50
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.7333333333333333
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              11
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.006544839752468293,
+        "null_95th_conservative": -0.006544839752468293,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          13000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "manganese_riboswitch": {
+        "best_ps": -0.023657258474219584,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.023657258474219584
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 4,
+        "n_wc_pairs_total": 19,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.7643627300297395,
+          "mean_stem_delta": 0.2852300685801873,
+          "mean_loop_delta": 0.2769419153434071
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.026614415783497034,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.3333333333333333,
+        "noop_floor": {
+          "best_ps_noop": -0.012203002002384777,
+          "per_layer_ps_noop": [
+            -0.012203002002384777
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "mir_122_precursor": {
+        "best_ps": -0.01930146804283873,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.01930146804283873
+        ],
+        "n_eligible_pairs": 11,
+        "n_stems": 3,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.0030625611950711616,
+          "mean_stem_delta": 0.26775652211534995,
+          "mean_loop_delta": 0.21781660001282613
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 5,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.008974037963963899,
+        "ps_au_pairs": -0.025202856659338635,
+        "nearer_neighbor_larger": 0.2727272727272727,
+        "noop_floor": {
+          "best_ps_noop": -0.0023145203236223377,
+          "per_layer_ps_noop": [
+            -0.0023145203236223377
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              1
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.4166666666666667
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              12
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.8333333333333334
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              1
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0018964455734343092,
+        "null_95th_conservative": -0.0018964455734343092,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          5000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "mir_155_precursor": {
+        "best_ps": -0.007417324696904068,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.007417324696904068
+        ],
+        "n_eligible_pairs": 11,
+        "n_stems": 2,
+        "n_wc_pairs_total": 17,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.1805927636774373,
+          "mean_stem_delta": 0.38019266717844774,
+          "mean_loop_delta": 0.3546058406006191
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 7,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.0007059154952743599,
+        "ps_au_pairs": -0.009934103147515208,
+        "nearer_neighbor_larger": 0.2727272727272727,
+        "noop_floor": {
+          "best_ps_noop": -0.0007426929056678834,
+          "per_layer_ps_noop": [
+            -0.0007426929056678834
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.2
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.3333333333333333
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              3
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.2
+            ],
+            "pairs": [
+              5
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.3333333333333333
+            ],
+            "pairs": [
+              3
+            ],
+            "comparisons": [
+              3
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          7000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "mir_21_precursor": {
+        "best_ps": -0.006015695138044881,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.006015695138044881
+        ],
+        "n_eligible_pairs": 7,
+        "n_stems": 3,
+        "n_wc_pairs_total": 16,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.06305448262088398,
+          "mean_stem_delta": 0.2992271907886138,
+          "mean_loop_delta": 0.2614086406089227
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.014036621988771389,
+        "ps_au_pairs": 0.0,
+        "nearer_neighbor_larger": 0.0,
+        "noop_floor": {
+          "best_ps_noop": -0.00202209538507146,
+          "per_layer_ps_noop": [
+            -0.00202209538507146
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0007613175735636801,
+        "null_95th_conservative": -0.0007613175735636801,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          2000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "mir_let7_precursor": {
+        "best_ps": -0.007786766777480086,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.007786766777480086
+        ],
+        "n_eligible_pairs": 11,
+        "n_stems": 3,
+        "n_wc_pairs_total": 23,
+        "positive_control": {
+          "pass": true,
+          "p_value": 4.862632972548894e-05,
+          "mean_stem_delta": 0.18323422299327072,
+          "mean_loop_delta": 0.11993256631101074
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 6,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": -0.014275739092046824,
+        "nearer_neighbor_larger": 0.09090909090909091,
+        "noop_floor": {
+          "best_ps_noop": -0.01672499450166486,
+          "per_layer_ps_noop": [
+            -0.01672499450166486
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              4
+            ],
+            "ties": [
+              4
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              2
+            ],
+            "comparisons": [
+              2
+            ],
+            "ties": [
+              2
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.3333333333333333
+            ],
+            "pairs": [
+              6
+            ],
+            "comparisons": [
+              12
+            ],
+            "ties": [
+              4
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.5
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              6
+            ],
+            "ties": [
+              2
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          6000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "pistol_ribozyme": {
+        "best_ps": -0.06059672055573452,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.06059672055573452
+        ],
+        "n_eligible_pairs": 9,
+        "n_stems": 3,
+        "n_wc_pairs_total": 16,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.015680697242187545,
+          "mean_stem_delta": 0.3205218123695336,
+          "mean_loop_delta": 0.27578851917109065
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 3,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.10827414950576755,
+        "ps_au_pairs": -0.022454777395708093,
+        "nearer_neighbor_larger": 0.3333333333333333,
+        "noop_floor": {
+          "best_ps_noop": -0.02410415773699801,
+          "per_layer_ps_noop": [
+            -0.02410415773699801
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          3000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "preQ1_riboswitch": {
+        "skipped": true,
+        "reason": "< 15 WC pairs (5 found)",
+        "n_wc_pairs_total": 5
+      },
+      "purine_riboswitch": {
+        "best_ps": -0.013099435660861934,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.013099435660861934
+        ],
+        "n_eligible_pairs": 16,
+        "n_stems": 3,
+        "n_wc_pairs_total": 22,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00012954015721559513,
+          "mean_stem_delta": 0.30533906562151913,
+          "mean_loop_delta": 0.25866781853325915
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 10,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.01610840471691851,
+        "ps_au_pairs": -0.00808448723410097,
+        "nearer_neighbor_larger": 0.125,
+        "noop_floor": {
+          "best_ps_noop": -0.011240556088061765,
+          "per_layer_ps_noop": [
+            -0.011240556088061765
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.375
+            ],
+            "pairs": [
+              8
+            ],
+            "comparisons": [
+              12
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              0.75
+            ],
+            "pairs": [
+              4
+            ],
+            "comparisons": [
+              5
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.004558502482840822,
+        "null_95th_conservative": -0.004558502482840822,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          10000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "tRNA_Ala_human": {
+        "best_ps": -0.0002888411365817671,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.0002888411365817671
+        ],
+        "n_eligible_pairs": 6,
+        "n_stems": 3,
+        "n_wc_pairs_total": 15,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.00029357270063885143,
+          "mean_stem_delta": 0.22254154111523752,
+          "mean_loop_delta": 0.16238263605342282
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 1,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": 0.0,
+        "ps_au_pairs": -0.0005776822731635342,
+        "nearer_neighbor_larger": 0.5,
+        "noop_floor": {
+          "best_ps_noop": -0.03481611015612881,
+          "per_layer_ps_noop": [
+            -0.03481611015612881
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": true,
+        "null_95th_primary": -0.0008191507271190964,
+        "null_95th_conservative": -0.0008191507271190964,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          1000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": true,
+        "exceeds_null_conservative": true
+      },
+      "tRNA_Phe_yeast": {
+        "best_ps": -0.008725171094453987,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.008725171094453987
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 5,
+        "n_wc_pairs_total": 20,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.48745770299612023,
+          "mean_stem_delta": 0.3588957619883992,
+          "mean_loop_delta": 0.3658615549779226
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.011974030700800742,
+        "ps_au_pairs": -0.005476311488107233,
+        "nearer_neighbor_larger": 0.2,
+        "noop_floor": {
+          "best_ps_noop": -0.010907762222460681,
+          "per_layer_ps_noop": [
+            -0.010907762222460681
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": true,
+        "null_95th_primary": -0.005879981707808679,
+        "null_95th_conservative": -0.005879981707808679,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          2000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "tmRNA": {
+        "best_ps": -0.017467004192330868,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.017467004192330868
+        ],
+        "n_eligible_pairs": 26,
+        "n_stems": 10,
+        "n_wc_pairs_total": 65,
+        "positive_control": {
+          "pass": false,
+          "p_value": 0.0001528187800342392,
+          "mean_stem_delta": 0.13937227282961254,
+          "mean_loop_delta": 0.15444958403049958
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 8,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.03619850032746399,
+        "ps_au_pairs": -0.001411436076502483,
+        "nearer_neighbor_larger": 0.23076923076923078,
+        "noop_floor": {
+          "best_ps_noop": -0.038707351750438865,
+          "per_layer_ps_noop": [
+            -0.038707351750438865
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              0.5714285714285714
+            ],
+            "pairs": [
+              7
+            ],
+            "comparisons": [
+              8
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              1.0
+            ],
+            "pairs": [
+              1
+            ],
+            "comparisons": [
+              1
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": -0.0033032270371982273,
+        "null_95th_conservative": -0.0033032270371982273,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          8000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      },
+      "twister_ribozyme": {
+        "best_ps": -0.013809881217266406,
+        "best_layer": 0,
+        "per_layer_ps": [
+          -0.013809881217266406
+        ],
+        "n_eligible_pairs": 10,
+        "n_stems": 5,
+        "n_wc_pairs_total": 20,
+        "positive_control": {
+          "pass": true,
+          "p_value": 0.019281778508789076,
+          "mean_stem_delta": 0.2353466099851267,
+          "mean_loop_delta": 0.19318005121086734
+        },
+        "h3_precision": {
+          "fraction": 0.0,
+          "n": 2,
+          "partner_max_count": 0,
+          "p_value": 1.0
+        },
+        "precision_per_layer": [
+          0.0
+        ],
+        "ps_gc_pairs": -0.01736135697166828,
+        "ps_au_pairs": -0.005523104456995369,
+        "nearer_neighbor_larger": 0.2,
+        "noop_floor": {
+          "best_ps_noop": -0.01585914895035916,
+          "per_layer_ps_noop": [
+            -0.01585914895035916
+          ]
+        },
+        "decoys": {
+          "stem_all": {
+            "scope": "stem",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "stem_close": {
+            "scope": "stem",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_all": {
+            "scope": "family",
+            "decoy_set": "all",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          },
+          "family_close": {
+            "scope": "family",
+            "decoy_set": "close",
+            "rate": [
+              null
+            ],
+            "pairs": [
+              0
+            ],
+            "comparisons": [
+              0
+            ],
+            "ties": [
+              0
+            ]
+          }
+        },
+        "quarantined": false,
+        "null_95th_primary": 0.0,
+        "null_95th_conservative": 0.0,
+        "h3_chance_fraction": 0.0,
+        "h3_chance_fraction_matched": 0.0,
+        "chance_per_layer": [
+          0.0
+        ],
+        "chance_per_layer_n": [
+          2000
+        ],
+        "null_available": true,
+        "exceeds_null_primary": false,
+        "exceeds_null_conservative": false
+      }
+    },
+    "mean_best_ps": -0.020438643282835903,
+    "median_best_ps": -0.018068552942239757,
+    "families_exceeding_null_primary": 4,
+    "families_exceeding_null_conservative": 4,
+    "families_no_null": [
+      "c_di_GMP_riboswitch"
+    ],
+    "families_total": 24,
+    "families_quarantined": [
+      "tRNA_Ala_human",
+      "tRNA_Phe_yeast"
+    ],
+    "families_skipped": [
+      "CRISPR_leader",
+      "Corona_s2m",
+      "Histone_3prime",
+      "IRE_stem_loop",
+      "SAH_riboswitch",
+      "U6_snRNA",
+      "fluoride_riboswitch",
+      "hammerhead_ribozyme",
+      "preQ1_riboswitch"
+    ],
+    "families_failed_gate": [
+      "6S_RNA",
+      "7SK_RNA",
+      "Bacterial_SRP",
+      "FMN_riboswitch",
+      "SECIS_element",
+      "TPP_riboswitch",
+      "group_I_intron_P4P6",
+      "hatchet_ribozyme",
+      "manganese_riboswitch",
+      "mir_155_precursor",
+      "mir_21_precursor",
+      "tmRNA"
+    ]
+  }
+}
