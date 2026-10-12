@@ -1,0 +1,14 @@
+source:
+  citation: lorenz2011viennarna
+  local: reference/lorenz2011viennarna.pdf
+  sha256: 2c028fba452a0df6284e1c55c3ba3f07e812ea7a3d08b2b4bbbf8708cb80e079
+  url: https://almob.biomedcentral.com/counter/pdf/10.1186/1748-7188-6-26
+  doi: 10.1186/1748-7188-6-26
+  extract_cmd: pdftotext {} -
+claims:
+  rnafold:
+    interpretation:
+      says: RNAfold returns a minimum-free-energy secondary structure
+      whose: rna-structure-audit
+    quotes:
+    - exact: which computes the minimum free energy (MFE) and backtraces an optimal secondary structure

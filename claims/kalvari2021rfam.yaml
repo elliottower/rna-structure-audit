@@ -1,0 +1,19 @@
+source:
+  citation: kalvari2021rfam
+  local: reference/kalvari2021rfam.xml
+  sha256: 5273f6964d06042917923ab293207afd123c2e8c881670d1d4d78797792df74e
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7779021/fullTextXML
+  doi: 10.1093/nar/gkaa1047
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 668b91ff57ad58f5b34a24b6a92403e93eda1ecd054c5b6a6c3f9d6b8eae8f3b
+claims:
+  families:
+    interpretation:
+      says: Rfam families carry an alignment and a covariance model; the panel uses release 14.10, later
+        than the release this paper describes
+      whose: rna-structure-audit
+      status: ours
+    quotes:
+    - exact: Rfam is a database of RNA families where each of the 3444 families is represented by a multiple
+        sequence alignment of known RNA sequences and a covariance model

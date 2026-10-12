@@ -1,0 +1,22 @@
+source:
+  citation: dalla2023nucleotide
+  local: reference/dalla2023nucleotide.pdf
+  sha256: a5510f4b4b0aaf4817140a3b279d69c3a1b163bd986c5282294b9c65c6644b02
+  url: https://www.nature.com/articles/s41592-024-02523-z.pdf
+  doi: 10.1038/s41592-024-02523-z
+  extract_cmd: pdftotext {} -
+claims:
+  sizes:
+    interpretation:
+      says: The Nucleotide Transformer family includes models near 50M parameters; the table gives 56M
+        for NT v2
+      whose: rna-structure-audit
+      status: ours
+    quotes:
+    - exact: ranging from 50 million up to 2.5 billion parameters
+  tokenizer:
+    interpretation:
+      says: NT v2 uses a 6-mer tokenizer
+      whose: rna-structure-audit
+    quotes:
+    - exact: We used six-mer tokens as a trade-off between sequence length (up to 6 kb) and embedding size, and because it achieved the highest performance when compared to other token lengths.

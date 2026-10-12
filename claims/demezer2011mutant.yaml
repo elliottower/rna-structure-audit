@@ -1,0 +1,16 @@
+source:
+  citation: demezer2011mutant
+  local: reference/demezer2011mutant.xml
+  sha256: 56e2bbd733df61c111c99f2f8e34b07d0262798b33f3e81599a63c7caa0a8abe
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3089464/fullTextXML
+  doi: 10.1093/nar/gkq1323
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 7c540850e718a6d99c4b275e3ea397f4b0789bb5129da6e96e75ee25d9901eb8
+claims:
+  hairpins:
+    interpretation:
+      says: The CAG repeat region of HTT forms hairpin structures
+      whose: rna-structure-audit
+    quotes:
+    - exact: Mutant CAG repeats of Huntingtin transcript fold into hairpins

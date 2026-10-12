@@ -1,0 +1,15 @@
+source:
+  citation: rinalmo
+  local: reference/rinalmo.pdf
+  sha256: 445be4505a0430514c307b8961f6387ed1b2af27575d2a48b4d334846f6370e4
+  url: https://www.nature.com/articles/s41467-025-60872-5.pdf
+  doi: 10.1038/s41467-025-60872-5
+  extract_cmd: pdftotext {} -
+claims:
+  size:
+    interpretation:
+      says: RiNALMo has 650M parameters
+      whose: rna-structure-audit
+    quotes:
+    - exact: RiNALMo is the largest RNA language model to date, with 650M parameters pre-trained on 36M
+        non-coding RNA sequences

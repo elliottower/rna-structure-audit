@@ -1,0 +1,15 @@
+source:
+  citation: zhou2024dnabert2
+  local: reference/zhou2024dnabert2.pdf
+  sha256: 49300acee3e4afd44bebc3de9893c3bc310d331bd4805374e0952fdfbf366f06
+  url: https://arxiv.org/pdf/2306.15006
+  doi: 10.48550/arXiv.2306.15006
+  extract_cmd: pdftotext {} -
+claims:
+  tokenizer:
+    interpretation:
+      says: DNABERT-2 uses a BPE tokenizer
+      whose: rna-structure-audit
+    quotes:
+    - exact: we propose to replace k-mer tokenization with Byte Pair Encoding (BPE), a statistics-based
+        data compression algorithm

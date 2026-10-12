@@ -41,3 +41,6 @@ build/
 
 # Venue status and correspondence stay out of the public tree.
 SUBMISSIONS.md
+
+# Third-party source files behind claims/. Each is pinned by sha256 and url in its claims file.
+reference/
