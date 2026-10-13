@@ -1,0 +1,22 @@
+source:
+  citation: ren2024beacon
+  local: reference/ren2024beacon.pdf
+  sha256: 1370d75fe591bb8f994bc67f100a1a3fd557a62b9edb962b21f2fb038e9dea16
+  url: https://arxiv.org/pdf/2406.10391
+  doi: 10.52202/079017-2949
+  extract_cmd: pdftotext {} -
+  note: arXiv:2406.10391v2, the arXiv posting of the NeurIPS 2024 paper the bibliography cites.
+claims:
+  tokens:
+    interpretation:
+      says: With BPE or non-overlapping k-mer tokens a nucleotide's representation is that of the covering
+        token
+      whose: rna-structure-audit
+    quotes:
+    - exact: the representation is derived from the token covering it
+  single:
+    interpretation:
+      says: Single-nucleotide tokenization outperforms k-mer and BPE on the benchmark
+      whose: rna-structure-audit
+    quotes:
+    - exact: single nucleotide tokenization outperforms both K-mer, BPE, and Non-overlap

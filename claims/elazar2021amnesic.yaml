@@ -1,0 +1,15 @@
+source:
+  citation: elazar2021amnesic
+  local: reference/elazar2021amnesic.pdf
+  sha256: c181d74843b59d7ea92f145f6a8b46ce978324d21b213394565efad1aa8814b8
+  url: https://arxiv.org/pdf/2006.00995
+  doi: 10.1162/tacl_a_00359
+  extract_cmd: pdftotext {} -
+  note: The arXiv posting of the TACL article the bibliography cites.
+claims:
+  use:
+    interpretation:
+      says: A probe shows information can be extracted and gives no evidence the model uses it
+      whose: rna-structure-audit
+    quotes:
+    - exact: it provides no evidence for or against the actual use of this information by the model

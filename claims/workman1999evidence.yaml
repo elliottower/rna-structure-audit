@@ -1,0 +1,22 @@
+source:
+  citation: workman1999evidence
+  local: reference/workman1999evidence.pdf
+  sha256: 1ef8b2d27c997d62ad5daa2361292444da4e6461aaccb373d0074233b8405e1f
+  url: https://academic.oup.com/nar/article-pdf/27/24/4816/274816.pdf
+  doi: 10.1093/nar/27.24.4816
+  extract_cmd: pdftotext {} -
+claims:
+  dinuc-null:
+    interpretation:
+      says: mRNA folding energies are indistinguishable from dinucleotide-matched random sequences
+      whose: rna-structure-audit
+    quotes:
+    - exact: the predicted free energy is not significantly different from random sequences with the same
+        dinucleotide distribution
+  stacking:
+    interpretation:
+      says: The dinucleotide distribution matters because stacking energies set stability
+      whose: rna-structure-audit
+    quotes:
+    - exact: dinucleotide distribution is important for determining the significance of secondary structure,
+        which is not surprising since stacking energies are crucial for the stability of RNA structure
