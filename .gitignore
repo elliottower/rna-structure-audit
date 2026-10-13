@@ -54,3 +54,6 @@ paper/build_*/
 
 # Checkpoint shards a run writes while it is in progress; the final files beside them are kept.
 results/**/_shards_*.json
+
+# Affiliation line with town and postal code; built into the PDF, kept out of the source
+paper/title_contact.tex
