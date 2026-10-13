@@ -1,0 +1,20 @@
+source:
+  citation: nguyen2024hyenadna
+  local: reference/nguyen2024hyenadna.pdf
+  sha256: 2f471549352ff571ac55faa80c8da453f9bf1ff5b01b6b87fa893457828e798c
+  url: https://arxiv.org/pdf/2306.15794
+  doi: 10.48550/arXiv.2306.15794
+  extract_cmd: pdftotext {} -
+claims:
+  tokens:
+    interpretation:
+      says: HyenaDNA is character-tokenized
+      whose: rna-structure-audit
+    quotes:
+    - exact: uses single nucleotide tokens, and has full global context at each layer
+  operator:
+    interpretation:
+      says: HyenaDNA is built from Hyena operators, not attention
+      whose: rna-structure-audit
+    quotes:
+    - exact: The HyenaDNA architecture is a simple stack of Hyena operators (Poli et al., 2023) trained using next token prediction.

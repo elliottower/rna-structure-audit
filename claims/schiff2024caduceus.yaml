@@ -1,0 +1,14 @@
+source:
+  citation: schiff2024caduceus
+  local: reference/schiff2024caduceus.pdf
+  sha256: 9c9b0558132497344bbf5da138ec393467facb020b41d14efbcd9e846f37f18c
+  url: https://arxiv.org/pdf/2403.03234
+  doi: 10.48550/arXiv.2403.03234
+  extract_cmd: pdftotext {} -
+claims:
+  architecture:
+    interpretation:
+      says: Caduceus is a Mamba state-space model
+      whose: rna-structure-audit
+    quotes:
+    - exact: extends it to a BiMamba component that supports bi-directionality

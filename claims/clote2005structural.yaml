@@ -1,0 +1,14 @@
+source:
+  citation: clote2005structural
+  local: reference/clote2005structural.pdf
+  sha256: efe1d42358ebb8d488a9be4b754d5a6a0b7576e84ac39ee63da0d39cd85537cc
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC1370746/
+  doi: 10.1261/rna.7220505
+  extract_cmd: pdftotext {} -
+claims:
+  lower-energy:
+    interpretation:
+      says: Structural RNA classes keep a lower folding energy under a dinucleotide null
+      whose: rna-structure-audit
+    quotes:
+    - exact: show a significantly lower folding energy than random RNAs of the same dinucleotide frequency

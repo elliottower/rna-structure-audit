@@ -1,0 +1,23 @@
+source:
+  citation: rivas2017statistical
+  local: reference/rivas2017statistical.pdf
+  sha256: a332c92c8b43aa6aab697faf85a163af8381456c3da7fa3cd4d150afd8e63327
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5554622/
+  doi: 10.1038/nmeth.4066
+  extract_cmd: pdftotext {} -
+  note: HHMI author manuscript of the Nature Methods article.
+claims:
+  phylo-null:
+    interpretation:
+      says: R-scape tests covariation against a null that preserves phylogeny
+      whose: rna-structure-audit
+    quotes:
+    - exact: by simulating alignments under a null hypothesis in which phylogenetic relationships are
+        preserved but columns evolve independently
+  chance:
+    interpretation:
+      says: Phylogenetic correlation increases chance covariation
+      whose: rna-structure-audit
+    quotes:
+    - exact: The potential for seeing chance compensatory substitutions is exacerbated by phylogenetic
+        correlations

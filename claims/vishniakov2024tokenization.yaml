@@ -1,0 +1,19 @@
+source:
+  citation: vishniakov2024tokenization
+  local: reference/vishniakov2024tokenization.xml
+  sha256: 4d52442b6528658d0c29b3d886e7a0a378a7089c8e22096b3599e9f9656f0e4f
+  url: https://www.biorxiv.org/content/early/2026/03/25/2024.12.18.628606.source.xml
+  doi: 10.1101/2024.12.18.628606
+  extractor: jats-text
+  extractor_version: 1
+  note: Version 3 of the preprint, posted 2026-03-25 under a new title.
+  derived_sha256: 8b921215c4db61e19bcd0e8ad24a7d2f74fbecf334cba61eba8e88956d1d308d
+claims:
+  random-strong:
+    interpretation:
+      says: Randomly initialized genomic models are strong baselines on regulatory classification, and
+        the tokenizer shapes how strong
+      whose: rna-structure-audit
+    quotes:
+    - exact: randomly initialized models provide surprisingly strong baselines and tokenizer and architecture
+        choices strongly shape both these baselines and the gains from pretraining

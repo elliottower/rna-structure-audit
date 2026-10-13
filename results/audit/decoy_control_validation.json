@@ -1,0 +1,588 @@
+{
+  "expected": {
+    "oracle": 1.0,
+    "complementarity": 0.5
+  },
+  "passed": true,
+  "failures": [],
+  "complementarity_rung3_precision_pooled": 0.45789473684210524,
+  "deep_interior_pairs": 190,
+  "families": {
+    "6S_RNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "7SK_RNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.6666666666666666,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "Bacterial_SRP": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "Corona_5UTR": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.6666666666666666,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "CrPV_IRES": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.2857142857142857,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "FMN_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.4,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "HDV_ribozyme": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.3333333333333333,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "Hepatitis_C_IRES_III": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.1,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "SAM_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.3333333333333333,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "SECIS_element": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.6666666666666666,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "THF_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "TPP_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "T_box_leader": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.3333333333333333,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "U1_snRNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "U4_snRNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.3333333333333333,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "U5_snRNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.2,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "Vault_RNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "Y_RNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "ZMP_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "c_di_GMP_riboswitch": {
+      "oracle": {
+        "rung3_precision": null,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": null,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "cobalamin_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.6666666666666666,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "glmS_ribozyme": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.36363636363636365,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "glycine_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "group_II_intron_D5": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "group_I_intron_P4P6": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.6666666666666666,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": null
+      }
+    },
+    "hatchet_ribozyme": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "lysine_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.46153846153846156,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "manganese_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.3333333333333333,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "mir_122_precursor": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.8,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "mir_155_precursor": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.5714285714285714,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "mir_21_precursor": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "mir_let7_precursor": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": 1.0,
+        "stem_close": 1.0,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 1.0,
+        "stem_all": 0.5,
+        "stem_close": 0.5,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "pistol_ribozyme": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    },
+    "purine_riboswitch": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.4,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "tmRNA": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 1.0,
+        "family_close": 1.0
+      },
+      "complementarity": {
+        "rung3_precision": 0.25,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": 0.5,
+        "family_close": 0.5
+      }
+    },
+    "twister_ribozyme": {
+      "oracle": {
+        "rung3_precision": 1.0,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      },
+      "complementarity": {
+        "rung3_precision": 0.5,
+        "stem_all": null,
+        "stem_close": null,
+        "family_all": null,
+        "family_close": null
+      }
+    }
+  }
+}

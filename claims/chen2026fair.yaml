@@ -1,0 +1,16 @@
+source:
+  citation: chen2026fair
+  local: reference/chen2026fair.pdf
+  sha256: 131bb1dd7dbc0df47a81e2c16232302fb3ac9d73de5fc1265b584b32d880843f
+  url: https://arxiv.org/pdf/2603.22330
+  doi: 10.48550/arXiv.2603.22330
+  extract_cmd: pdftotext {} -
+claims:
+  ood:
+    interpretation:
+      says: Foundation-model structure predictors lose most of their advantage out of distribution
+      whose: rna-structure-audit
+    quotes:
+    - exact: foundation-model methods achieved the highest held-out accuracy but lost most of that advantage
+        out of distribution, whereas structured decoders and direct neural predictors remained markedly
+        more robust

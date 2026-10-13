@@ -1,0 +1,197 @@
+{
+  "model": "hyenadna",
+  "stamp": {
+    "commit": "e9a0ed4d5aadd9d4ff8ab1872d3cbdc950f28cec",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24",
+    "libraries": {
+      "torch": "2.4.1",
+      "triton": "3.0.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "4.44.2",
+      "multimolecule": null,
+      "huggingface-hub": "0.36.2",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-08-26 03:51:24 UTC",
+  "experiment": "phases_1_to_5",
+  "mutation_trained": {
+    "model": "hyenadna",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.0550872353674996,
+        "best_layer": 1,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.24759705872062,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.0402277287696529,
+        "best_layer": 1,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.2671903797520316,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.0464889136896498,
+        "best_layer": 1,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.2773147418057962,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.0358142181802354,
+        "best_layer": 1,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.2672393958425592,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.0464950532946902,
+        "best_layer": 3,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.201888284282959,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132
+      }
+    },
+    "mean_best_ratio": 1.0448226298603456,
+    "median_best_ratio": 1.0464889136896498,
+    "n_exceeding_nuc_null": 0,
+    "n_families_scored": 5
+  },
+  "attention_trained": {
+    "model": "hyenadna",
+    "metric": "attention_contact",
+    "per_rna": {},
+    "skipped": "no attention (SSM architecture)"
+  },
+  "probing": {
+    "model": "hyenadna",
+    "metric": "structure_probing",
+    "per_layer": {
+      "0": {
+        "mean_balanced_accuracy": 0.6724844984580237,
+        "std_balanced_accuracy": 0.0437471120181097,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "1": {
+        "mean_balanced_accuracy": 0.8908422332755459,
+        "std_balanced_accuracy": 0.01596075881794549,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "2": {
+        "mean_balanced_accuracy": 0.8860754800160182,
+        "std_balanced_accuracy": 0.018856797426492804,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "3": {
+        "mean_balanced_accuracy": 0.9260854839263246,
+        "std_balanced_accuracy": 0.01665392787608609,
+        "n_samples": 1442,
+        "n_targets": 5
+      }
+    },
+    "best_layer": 3,
+    "best_accuracy": 0.9260854839263246
+  },
+  "htt_distances": {
+    "metric": "cosine_distance_from_fewest_repeats",
+    "reference": "HTT_CAG17_normal",
+    "repeat_counts": [
+      17,
+      21,
+      36,
+      40,
+      60
+    ],
+    "dtype": "float64",
+    "n_layers": 4,
+    "per_layer": {
+      "0": [
+        -2.220446049250313e-16,
+        0.0004360234061902002,
+        0.007329386681308225,
+        0.009980288461448938,
+        0.024888443609597077
+      ],
+      "1": [
+        0.0,
+        0.0024337834265102387,
+        0.03519055308360619,
+        0.046348144714853934,
+        0.10064279420041622
+      ],
+      "2": [
+        0.0,
+        0.0003758016186130586,
+        0.006270850964595565,
+        0.008494345742309561,
+        0.022239081931379356
+      ],
+      "3": [
+        2.220446049250313e-16,
+        0.00038925089055852347,
+        0.005770938742982512,
+        0.00773713967366374,
+        0.019297724074451073
+      ]
+    },
+    "best_layer": 0,
+    "best_spearman": 0.9999999999999999,
+    "at_best_layer": [
+      -2.220446049250313e-16,
+      0.0004360234061902002,
+      0.007329386681308225,
+      0.009980288461448938,
+      0.024888443609597077
+    ],
+    "at_last_layer": [
+      2.220446049250313e-16,
+      0.00038925089055852347,
+      0.005770938742982512,
+      0.00773713967366374,
+      0.019297724074451073
+    ]
+  }
+}

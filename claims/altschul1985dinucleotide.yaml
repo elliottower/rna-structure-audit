@@ -1,0 +1,15 @@
+source:
+  citation: altschul1985dinucleotide
+  local: reference/altschul1985dinucleotide.pdf
+  sha256: 3b38679e12fddbdbd6ed51fbd8d0e11b991d86f2e6e37f5c623d4df61870e5e6
+  url: https://academic.oup.com/mbe/article-pdf/2/6/526/11167276/8alts.pdf
+  doi: 10.1093/oxfordjournals.molbev.a040370
+  extract_cmd: pdftotext {} -
+claims:
+  principle:
+    interpretation:
+      says: A result explained by dinucleotide usage should not be attributed to nucleotide order
+      whose: rna-structure-audit
+    quotes:
+    - exact: It is important to avoid claiming that sequence similarity is the result of nucleotide order
+        if it can be explained merely by nonrandom usage of dinucleotides and/or codons.

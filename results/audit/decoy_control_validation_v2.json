@@ -1,0 +1,1530 @@
+{
+  "expected": {
+    "oracle": 1.0,
+    "complementarity": 0.5
+  },
+  "counts": "results/audit/matched_decoy_counts.json",
+  "passed": true,
+  "failures": [],
+  "conditions_evaluated": 150,
+  "conditions_unavailable": 138,
+  "complementarity_control_rung3": {
+    "hits": 87,
+    "pairs": 190,
+    "precision_pooled": 0.45789473684210524
+  },
+  "families": {
+    "6S_RNA": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "7SK_RNA": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "Bacterial_SRP": {
+      "oracle": {
+        "rung3_hits": 4,
+        "rung3_pairs": 4,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 4,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "Corona_5UTR": {
+      "oracle": {
+        "rung3_hits": 12,
+        "rung3_pairs": 12,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 4
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 12
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 6
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 8,
+        "rung3_pairs": 12,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 4
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 12
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 6
+        }
+      }
+    },
+    "CrPV_IRES": {
+      "oracle": {
+        "rung3_hits": 7,
+        "rung3_pairs": 7,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 4
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 5
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 2
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 7,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 4
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 5
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 2
+        }
+      }
+    },
+    "FMN_riboswitch": {
+      "oracle": {
+        "rung3_hits": 5,
+        "rung3_pairs": 5,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 5,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "HDV_ribozyme": {
+      "oracle": {
+        "rung3_hits": 6,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 3
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 3
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "Hepatitis_C_IRES_III": {
+      "oracle": {
+        "rung3_hits": 10,
+        "rung3_pairs": 10,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 9
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 5
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 1,
+        "rung3_pairs": 10,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 9
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 5
+        }
+      }
+    },
+    "SAM_riboswitch": {
+      "oracle": {
+        "rung3_hits": 6,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 3
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 3
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "SECIS_element": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "THF_riboswitch": {
+      "oracle": {
+        "rung3_hits": 4,
+        "rung3_pairs": 4,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 4,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "TPP_riboswitch": {
+      "oracle": {
+        "rung3_hits": 1,
+        "rung3_pairs": 1,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 0,
+        "rung3_pairs": 1,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "T_box_leader": {
+      "oracle": {
+        "rung3_hits": 9,
+        "rung3_pairs": 9,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 9
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 2
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 3,
+        "rung3_pairs": 9,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 9
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 2
+        }
+      }
+    },
+    "U1_snRNA": {
+      "oracle": {
+        "rung3_hits": 1,
+        "rung3_pairs": 1,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 0,
+        "rung3_pairs": 1,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "U4_snRNA": {
+      "oracle": {
+        "rung3_hits": 6,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 5
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 5
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "U5_snRNA": {
+      "oracle": {
+        "rung3_hits": 10,
+        "rung3_pairs": 10,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 9
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 5
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 10,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 9
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 5
+        }
+      }
+    },
+    "Vault_RNA": {
+      "oracle": {
+        "rung3_hits": 2,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 0,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "Y_RNA": {
+      "oracle": {
+        "rung3_hits": 2,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 1,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "ZMP_riboswitch": {
+      "oracle": {
+        "rung3_hits": 6,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 4
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 3,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 4
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "c_di_GMP_riboswitch": {
+      "oracle": {
+        "rung3_hits": 0,
+        "rung3_pairs": 0,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 0,
+        "rung3_pairs": 0,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "cobalamin_riboswitch": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "glmS_ribozyme": {
+      "oracle": {
+        "rung3_hits": 11,
+        "rung3_pairs": 11,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 10
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 2
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 4,
+        "rung3_pairs": 11,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 10
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 2
+        }
+      }
+    },
+    "glycine_riboswitch": {
+      "oracle": {
+        "rung3_hits": 4,
+        "rung3_pairs": 4,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 4,
+        "rung3_pairs": 4,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "group_II_intron_D5": {
+      "oracle": {
+        "rung3_hits": 2,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 0,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "group_I_intron_P4P6": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "hatchet_ribozyme": {
+      "oracle": {
+        "rung3_hits": 8,
+        "rung3_pairs": 8,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 3
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 6
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 3
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 4,
+        "rung3_pairs": 8,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 3
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 6
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 3
+        }
+      }
+    },
+    "lysine_riboswitch": {
+      "oracle": {
+        "rung3_hits": 13,
+        "rung3_pairs": 13,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 11
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 5
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 6,
+        "rung3_pairs": 13,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 11
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 5
+        }
+      }
+    },
+    "manganese_riboswitch": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 1,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "mir_122_precursor": {
+      "oracle": {
+        "rung3_hits": 5,
+        "rung3_pairs": 5,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 4
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 3
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 4,
+        "rung3_pairs": 5,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 1
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 4
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 3
+        }
+      }
+    },
+    "mir_155_precursor": {
+      "oracle": {
+        "rung3_hits": 7,
+        "rung3_pairs": 7,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 5
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 3
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 5
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 3
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 4,
+        "rung3_pairs": 7,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 5
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 3
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 5
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 3
+        }
+      }
+    },
+    "mir_21_precursor": {
+      "oracle": {
+        "rung3_hits": 2,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 1,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "mir_let7_precursor": {
+      "oracle": {
+        "rung3_hits": 6,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 1.0,
+          "pairs": 4
+        },
+        "stem_close": {
+          "rate": 1.0,
+          "pairs": 2
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 6
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 4
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 6,
+        "rung3_pairs": 6,
+        "stem_all": {
+          "rate": 0.5,
+          "pairs": 4
+        },
+        "stem_close": {
+          "rate": 0.5,
+          "pairs": 2
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 6
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 4
+        }
+      }
+    },
+    "pistol_ribozyme": {
+      "oracle": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 3,
+        "rung3_pairs": 3,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    },
+    "purine_riboswitch": {
+      "oracle": {
+        "rung3_hits": 10,
+        "rung3_pairs": 10,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 8
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 4
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 4,
+        "rung3_pairs": 10,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 8
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 4
+        }
+      }
+    },
+    "tmRNA": {
+      "oracle": {
+        "rung3_hits": 8,
+        "rung3_pairs": 8,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 1.0,
+          "pairs": 7
+        },
+        "family_close": {
+          "rate": 1.0,
+          "pairs": 1
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 2,
+        "rung3_pairs": 8,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": 0.5,
+          "pairs": 7
+        },
+        "family_close": {
+          "rate": 0.5,
+          "pairs": 1
+        }
+      }
+    },
+    "twister_ribozyme": {
+      "oracle": {
+        "rung3_hits": 2,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      },
+      "complementarity": {
+        "rung3_hits": 1,
+        "rung3_pairs": 2,
+        "stem_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "stem_close": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_all": {
+          "rate": null,
+          "pairs": 0
+        },
+        "family_close": {
+          "rate": null,
+          "pairs": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\caption{Matched-decoy test. For each mutated pair, the response at the annotated partner is compared with the response at every other deep-interior paired position of the family that carries the partner's nucleotide (all decoys), and separately with only the decoys no farther from the mutated position than the partner (close decoys). A family's rate is the mean over its pairs of the fraction of decoys the partner exceeds, with ties counted as one half, so $0.5$ is the value of a response shared equally by every such position. Families: the number above, below and at exactly $0.5$, among confirmatory families passing the model's positive control with at least three contributing pairs. The layer is chosen with the family left out. Decision: the registered outcome, from an exact one-sided sign test across families at $\alpha = 0.025$; rows with no decision carry no registered hypothesis. Random init.: every parameter re-initialized. NT~v2 and DNABERT-2 are outside the registered test because their tokens span several nucleotides.}
+\label{tab:decoy}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.6cm}rrrrl@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{All decoys}} & \multicolumn{2}{c}{\textbf{Close decoys}} & \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+\textbf{Model} & \textbf{Families} & \textbf{Mean rate} & \textbf{Families} & \textbf{Mean rate} & \textbf{Decision} \\
+\midrule
+RiNALMo & 16/0/0 & 0.944 & 9/0/0 & 0.920 & H1 holds, G1 holds \\
+ERNIE-RNA & 17/0/0 & 0.980 & 9/0/0 & 0.954 & H2 holds, G2 holds \\
+RNA-FM & 15/1/0 & 0.864 & 7/2/0 & 0.755 &  \\
+Evo & 5/2/0 & 0.674 & 2/2/0 & 0.500 &  \\
+SpliceBERT & 3/1/3 & 0.518 & 1/2/0 & 0.489 &  \\
+Caduceus & 1/0/5 & 0.542 & 0/0/4 & 0.500 &  \\
+UTR-LM & 0/0/7 & 0.500 & 0/0/6 & 0.500 &  \\
+HyenaDNA & 0/0/5 & 0.500 & 0/0/3 & 0.500 &  \\
+\midrule
+ERNIE-RNA, random init. & 1/3/1 & 0.489 & 1/1/1 & 0.544 &  \\
+ERNIE-RNA, random init., pairing bias ablated & 2/1/5 & 0.510 & 0/4/0 & 0.315 &  \\
+\bottomrule
+\end{tabular}
+\end{table}

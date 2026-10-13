@@ -1,0 +1,99 @@
+{
+  "registration": "preregistration/PREREGISTRATION_ERNIERNA_BIAS_RUNG3.md",
+  "panel": "results/decoy_panel_v1",
+  "chance": "h3_chance_fraction_matched",
+  "n_bootstrap": 10000,
+  "seed": 42,
+  "registered_family_digest": "10bc3b36b3fe0d08",
+  "families": [
+    "6S_RNA",
+    "7SK_RNA",
+    "Bacterial_SRP",
+    "Corona_5UTR",
+    "CrPV_IRES",
+    "FMN_riboswitch",
+    "HDV_ribozyme",
+    "Hepatitis_C_IRES_III",
+    "SAM_riboswitch",
+    "SECIS_element",
+    "THF_riboswitch",
+    "TPP_riboswitch",
+    "T_box_leader",
+    "U1_snRNA",
+    "U4_snRNA",
+    "U5_snRNA",
+    "Vault_RNA",
+    "Y_RNA",
+    "ZMP_riboswitch",
+    "cobalamin_riboswitch",
+    "glmS_ribozyme",
+    "glycine_riboswitch",
+    "group_II_intron_D5",
+    "group_I_intron_P4P6",
+    "hatchet_ribozyme",
+    "lysine_riboswitch",
+    "manganese_riboswitch",
+    "mir_122_precursor",
+    "mir_155_precursor",
+    "mir_21_precursor",
+    "mir_let7_precursor",
+    "pistol_ribozyme",
+    "purine_riboswitch",
+    "tmRNA",
+    "twister_ribozyme"
+  ],
+  "arms": {
+    "trained intact": {
+      "n": 35,
+      "precision": 0.8882879818594104,
+      "chance_matched": 0.09145283272283272,
+      "excess": 0.7968351491365777,
+      "family_set_digest": "10bc3b36b3fe0d08"
+    },
+    "trained ablated": {
+      "n": 35,
+      "precision": 0.8423356009070295,
+      "chance_matched": 0.10764787807430665,
+      "excess": 0.7346877228327229,
+      "family_set_digest": "10bc3b36b3fe0d08"
+    },
+    "untrained intact": {
+      "n": 35,
+      "precision": 0.4900390086104372,
+      "chance_matched": 0.2213577834863549,
+      "excess": 0.2686812251240823,
+      "family_set_digest": "10bc3b36b3fe0d08"
+    },
+    "untrained ablated": {
+      "n": 35,
+      "precision": 0.28081489938632803,
+      "chance_matched": 0.2449800586714872,
+      "excess": 0.03583484071484083,
+      "family_set_digest": "10bc3b36b3fe0d08"
+    }
+  },
+  "manipulation_check": {
+    "trained": true,
+    "untrained": true
+  },
+  "tests": {
+    "H1": {
+      "point": 0.2328463844092415,
+      "ci_low": 0.08869295302911365,
+      "ci_high": 0.37678899126468746,
+      "holds": true
+    },
+    "H2": {
+      "point": 0.17069895810538666,
+      "ci_low": 0.014357868635332938,
+      "ci_high": 0.3260708918858917,
+      "holds": true
+    },
+    "H3": {
+      "point": 0.7346877228327229,
+      "ci_low": 0.5935954132653062,
+      "ci_high": 0.8577483932278039,
+      "holds": true
+    }
+  }
+}

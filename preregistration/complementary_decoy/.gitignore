@@ -1,0 +1,4 @@
+# Sidecars from provenance_core.locking. They hold nothing: the kernel releases a lock when its
+# holder exits, and a leftover temp file means a write was killed partway through.
+*.provenance-lock
+*.provenance-tmp

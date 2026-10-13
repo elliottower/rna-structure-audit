@@ -41,3 +41,19 @@ build/
 
 # Venue status and correspondence stay out of the public tree.
 SUBMISSIONS.md
+
+# Third-party source files behind claims/. Each is pinned by sha256 and url in its claims file.
+reference/
+
+# Empty lock sidecars the citations and prereg tools leave beside a file they write.
+*.provenance-lock
+*.provenance-tmp
+
+# LaTeX build folders.
+paper/build_*/
+
+# Checkpoint shards a run writes while it is in progress; the final files beside them are kept.
+results/**/_shards_*.json
+
+# Affiliation line with town and postal code; built into the PDF, kept out of the source
+paper/title_contact.tex

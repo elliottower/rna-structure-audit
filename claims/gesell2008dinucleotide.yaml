@@ -1,0 +1,17 @@
+source:
+  citation: gesell2008dinucleotide
+  local: reference/gesell2008dinucleotide.xml
+  sha256: 31ca2ae645d79287c2c92039d5754c19e55752a720f07abaa258c05dcbd17c20
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2453142/fullTextXML
+  doi: 10.1186/1471-2105-9-248
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: c8f1d0d4376f5b9827000504174b33229648686d94f71f8ca9fa6596c8f05fd2
+claims:
+  loses:
+    interpretation:
+      says: A dinucleotide null also removes part of the signal of true structured RNAs
+      whose: rna-structure-audit
+    quotes:
+    - exact: by using this conservative null model we also loose part of the signal in true structured
+        RNAs

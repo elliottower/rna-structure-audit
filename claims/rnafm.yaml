@@ -1,0 +1,16 @@
+source:
+  citation: rnafm
+  local: reference/rnafm.pdf
+  sha256: b3945c283c5ca6e8a346cfeb3e8d6609dac6e4a3874fd38dc2436c35eeb6074a
+  url: https://arxiv.org/pdf/2204.00300
+  doi: 10.1101/2022.08.06.503062
+  extract_cmd: pdftotext {} -
+  note: arXiv:2204.00300, the arXiv posting of the preprint the bibliography cites by its bioRxiv DOI.
+claims:
+  architecture:
+    interpretation:
+      says: RNA-FM is a 12-block transformer pretrained on RNA
+      whose: rna-structure-audit
+    quotes:
+    - exact: 12 transformer-based bidirectional encoder blocks and trained on 23 million sequences from
+        the RNAcentral database in a self-supervised manner

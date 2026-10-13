@@ -1,0 +1,18 @@
+source:
+  citation: tang2025evaluating
+  local: reference/tang2025evaluating.xml
+  sha256: f6925cc2d93d0694ccc689970207c2df9b7b0d2562d276ede99f0c78d413b08b
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12261763/fullTextXML
+  doi: 10.1186/s13059-025-03674-8
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 961c3d20095cb8491dfda765e1ed37b514b75d360cc6d442675c6989fb1e38b4
+claims:
+  one-hot:
+    interpretation:
+      says: Probing pretrained genomic language models gives no substantial advantage over models on one-hot
+        sequence for regulatory genomics tasks
+      whose: rna-structure-audit
+    quotes:
+    - exact: probing the representations of current pre-trained gLMs do not offer substantial advantages
+        over conventional machine learning approaches that use one-hot encoded sequences

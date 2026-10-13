@@ -1,0 +1,17 @@
+source:
+  citation: chu2024utrlm
+  local: reference/chu2024utrlm.pdf
+  sha256: 2830b959f9087c17c837ee226a98b70329b7cd6ea53ebc21e40f140d86401ae3
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11155392/
+  doi: 10.1038/s42256-024-00823-9
+  extract_cmd: pdftotext {} -
+  note: The author manuscript held by PubMed Central (PMC11155392, NIHMS1998067), saved by hand from the
+    address above; the published version in Nature Machine Intelligence could not be fetched.
+claims:
+  architecture:
+    interpretation:
+      says: UTR-LM is a six-layer transformer; the paper does not state the 1.2M size the table gives
+      whose: rna-structure-audit
+      status: ours
+    quotes:
+    - exact: The encoder block consists of a six-layer transformer34 with 16 multi-heads selfattention.
