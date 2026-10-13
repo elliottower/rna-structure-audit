@@ -1,0 +1,16 @@
+source:
+  citation: sutter2025non
+  local: reference/sutter2025non.pdf
+  sha256: 19e24a3f52da0bc2721dc62060b6fae3583cc2012f07fcaa08e36cc180de0c82
+  url: https://arxiv.org/pdf/2507.08802
+  doi: 10.52202/085713-5000
+  extract_cmd: pdftotext {} -
+  note: arXiv:2507.08802v2, the arXiv posting of the NeurIPS 2025 paper the bibliography cites.
+claims:
+  random-models:
+    interpretation:
+      says: An unrestricted alignment map recovers an algorithm in randomly initialized models
+      whose: rna-structure-audit
+    quotes:
+    - exact: on an experiment using randomly initialised language models, our alignment maps reach 100%
+        interchange-intervention accuracy on the indirect object identification task

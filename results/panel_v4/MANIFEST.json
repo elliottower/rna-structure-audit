@@ -1,0 +1,879 @@
+{
+  "rule": "an RNA-FM arm              every file from the rerun\n    any other arm in the rerun its Phase 6 file from the rerun, the rest from v3\n    an arm only in v3          every file from v3",
+  "arms": {
+    "caduceus": {
+      "caduceus_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/caduceus/caduceus_phase6_ps.json",
+        "sha256": "fd9a71af7b81984ab8e7c3f51ce452d241d6f8b68865ddd54d66424a45e0398a"
+      },
+      "caduceus_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/caduceus/caduceus_phases_1_to_5.json",
+        "sha256": "a05ba1d272559e30fc8e16ea0c7d856ee7743b16ae6484384b24c579d6c3f0be"
+      },
+      "caduceus_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/caduceus/caduceus_rung1_positions.json.gz",
+        "sha256": "3193dc61ac77b97a174dbc738e3817079b62444d751ad94c00cb9129cc6f8af0"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/caduceus/stamp.json",
+        "sha256": "97d075a364f516e7967f8387c28208eb3e1a64f8ddd325bb0c413684e6a5d3aa"
+      }
+    },
+    "caduceus_htt": {
+      "caduceus_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/caduceus_htt/caduceus_phase6_ps.json",
+        "sha256": "abb63aaaba0513abbf747a1d46825fc472376e13be31d81b0e062f7422c0703b"
+      },
+      "caduceus_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/caduceus_htt/caduceus_phases_1_to_5.json",
+        "sha256": "6d2daa8112eeadcd5662ced9de917ec6f79872b32ec6f7f645c2bb8c84bb2c0b"
+      },
+      "caduceus_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/caduceus_htt/caduceus_rung1_positions.json.gz",
+        "sha256": "4e3880c0e2cd8bde689f88a9b61057ddb7c7afe3d3ec30bf00738a63da01aea0"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/caduceus_htt/stamp.json",
+        "sha256": "b3fc198ff649be57f23eed26a82d4138954e609c8e6901b8a4200163b1c92c27"
+      }
+    },
+    "caduceus_multiseq": {
+      "caduceus_multiseq.json": {
+        "from": "results/repaired_panel_v3/caduceus_multiseq/caduceus_multiseq.json",
+        "sha256": "1649e7aae5f785366912ee82fc667e59b04195b82393a0b590586106573cdd72"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/caduceus_multiseq/stamp.json",
+        "sha256": "e63a4c9b8c0e768cbb24b5f20ac76e508c2807699e79ca96d3642472ddc82624"
+      }
+    },
+    "caduceus_synthetic": {
+      "caduceus_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/caduceus_synthetic/caduceus_phase6_ps.json",
+        "sha256": "9188694f6629a65514daeded09db3b0c460674901be4c6bbc58baea9b023408a"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/caduceus_synthetic/stamp.json",
+        "sha256": "b064f6c10bf80f4160983a55b3cbb4b953be30f6a68be27d62077e8bd8ffde85"
+      }
+    },
+    "caduceus_transversion": {
+      "caduceus_transversion.json": {
+        "from": "results/repaired_panel_v3/caduceus_transversion/caduceus_transversion.json",
+        "sha256": "3d05772b71358e735b743749d1a1b7a138ff83da77a4869fb0316544bd8879d5"
+      },
+      "caduceus_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/caduceus_transversion/caduceus_transversion_positions.json.gz",
+        "sha256": "23aa94aacf0f451bc08d986597f2d268d2d98a0735c5e6bb4459e6e9740eaad3"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/caduceus_transversion/stamp.json",
+        "sha256": "97d075a364f516e7967f8387c28208eb3e1a64f8ddd325bb0c413684e6a5d3aa"
+      }
+    },
+    "dnabert2": {
+      "dnabert2_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/dnabert2/dnabert2_phase6_ps.json",
+        "sha256": "a769ccd35f0c4dbd19008ff5b1ca006c1e2c5d42ae73d5a83efe52d04848d196"
+      },
+      "dnabert2_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/dnabert2/dnabert2_phases_1_to_5.json",
+        "sha256": "c9da978d62721965fc750039d56ea6e4638ef6110c2a761dd42c311d746322d3"
+      },
+      "dnabert2_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/dnabert2/dnabert2_rung1_positions.json.gz",
+        "sha256": "58a48bf4c84d3310c389c762f839fa136f7acfbc17532aaa4b07bc0bab6ea42b"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/dnabert2/stamp.json",
+        "sha256": "d9c32f5fcab19a608dde6d7022ee88b817059f4437fa5f4740255fc9fc24678a"
+      }
+    },
+    "dnabert2_htt": {
+      "dnabert2_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/dnabert2_htt/dnabert2_phase6_ps.json",
+        "sha256": "9ad7ff4df8cf7f7ef9f63985b6ccf050cfa1802893390f78a53c7be2b4ac0998"
+      },
+      "dnabert2_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/dnabert2_htt/dnabert2_phases_1_to_5.json",
+        "sha256": "20bfe6725defb93957ebf2f99b306e711dff73125b93e48800d835ccbabd1d4e"
+      },
+      "dnabert2_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/dnabert2_htt/dnabert2_rung1_positions.json.gz",
+        "sha256": "f773f345c9d5b72d78c04709b4a3f6de7b7516562a6fb070a3546e40298e9378"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/dnabert2_htt/stamp.json",
+        "sha256": "1fb88974132f7d9f6f8eac021f8bc80e673716dadbfd312f1e26af4ac3768b8e"
+      }
+    },
+    "dnabert2_multiseq": {
+      "dnabert2_multiseq.json": {
+        "from": "results/repaired_panel_v3/dnabert2_multiseq/dnabert2_multiseq.json",
+        "sha256": "a1a7396cfdfa1e2b8a4430ca9861b62f6eba786c3437251a2321ec08db48d790"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/dnabert2_multiseq/stamp.json",
+        "sha256": "d4c5a2ff953d83439999bbe540c43a5043af7535316b745ebad842032e621957"
+      }
+    },
+    "dnabert2_synthetic": {
+      "dnabert2_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/dnabert2_synthetic/dnabert2_phase6_ps.json",
+        "sha256": "c3804467bfd7dbb53739961b98ddfcb6e55abc2756de843773fee43ee2311901"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/dnabert2_synthetic/stamp.json",
+        "sha256": "b721a7163076ab38585fd5c2adbd3650abb21883fcbde54bec6945d067e834ad"
+      }
+    },
+    "dnabert2_transversion": {
+      "dnabert2_transversion.json": {
+        "from": "results/repaired_panel_v3/dnabert2_transversion/dnabert2_transversion.json",
+        "sha256": "91b5ef12df7be7f00ad62c04cde2560d92813cb19eca230d5d1280ffb0401056"
+      },
+      "dnabert2_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/dnabert2_transversion/dnabert2_transversion_positions.json.gz",
+        "sha256": "915b1285ebe1dcf72fed63da5cc23b8f651cfe004c59985965deac09b28d661b"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/dnabert2_transversion/stamp.json",
+        "sha256": "d9c32f5fcab19a608dde6d7022ee88b817059f4437fa5f4740255fc9fc24678a"
+      }
+    },
+    "dnabert2_untrained": {
+      "dnabert2_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/dnabert2_untrained/dnabert2_untrained_phase6_ps.json",
+        "sha256": "638058c333f447de1b6ae92dc9c7da41ec06d538d79a920c73cb2b9b99e57804"
+      },
+      "dnabert2_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/dnabert2_untrained/dnabert2_untrained_phases_1_to_5.json",
+        "sha256": "ee85c3179ea94de4d842189627dcd8c1a52942ce71d08f7019e792a293ad4f4b"
+      },
+      "dnabert2_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/dnabert2_untrained/dnabert2_untrained_rung1_positions.json.gz",
+        "sha256": "aede2a6189af4682cb48cff25e57be001922cdaa6df49f84203bcdd89b63bccc"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/dnabert2_untrained/stamp.json",
+        "sha256": "11403a9b19acef34456274ca58031fc4c137f1848fdf03b26b00aad040831231"
+      }
+    },
+    "ernierna": {
+      "ernierna_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/ernierna/ernierna_phase6_ps.json",
+        "sha256": "48f460b8a2f675fe54e38730538994a30d454d5baf38226cc8676bd89e06f0bc"
+      },
+      "ernierna_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/ernierna/ernierna_phases_1_to_5.json",
+        "sha256": "13bc4ee6caa20217970d396fb37af742f04054225a4871569b746084f0319b40"
+      },
+      "ernierna_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/ernierna/ernierna_rung1_positions.json.gz",
+        "sha256": "42179b2752c054be275bf10f1d60e380647ddef9e28bc0103b5acb10b7ceeec7"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna/stamp.json",
+        "sha256": "2195eb1cb747730bea53e9466f00c2aaeedda66d94405528be827ba2b2fe8fcb"
+      }
+    },
+    "ernierna_htt": {
+      "ernierna_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/ernierna_htt/ernierna_phase6_ps.json",
+        "sha256": "b1afe911ad7299d0acb1451913bdca8aaecd5f9ffb45484b9fc53f8a7bc58a92"
+      },
+      "ernierna_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/ernierna_htt/ernierna_phases_1_to_5.json",
+        "sha256": "02329700502b58235ad6d73a83c7f6b8c60318d6f3390c1d42ee3a1edeacbcd9"
+      },
+      "ernierna_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/ernierna_htt/ernierna_rung1_positions.json.gz",
+        "sha256": "72343f3ffe71435470031c7a2c43acf4f1b54af08294084a9c9c4ccc9ab4f947"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_htt/stamp.json",
+        "sha256": "7bf38a93e611324c2aa70952146085c5d127744a9641aa6b13c20b0332f5f10d"
+      }
+    },
+    "ernierna_multiseq": {
+      "ernierna_multiseq.json": {
+        "from": "results/repaired_panel_v3/ernierna_multiseq/ernierna_multiseq.json",
+        "sha256": "1e2d3fdecbd742f62cfed5fcb177628211b2844dda82f8c78965c69e23003c8e"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_multiseq/stamp.json",
+        "sha256": "beaf6b564a8835db96553aefdf4338044646deb9b3363afeee9982cdc387bee1"
+      }
+    },
+    "ernierna_noattnbias": {
+      "ernierna_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/ernierna_noattnbias/ernierna_phase6_ps.json",
+        "sha256": "b608ed3f654b58d7616d06f6cc9f1f80241ad57adffc21cb1135f7df65ef6864"
+      },
+      "ernierna_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/ernierna_noattnbias/ernierna_phases_1_to_5.json",
+        "sha256": "868790d7e516b0306778fa421d1d62b8285575c6fb7ff73ffe834fcd8c457d56"
+      },
+      "ernierna_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/ernierna_noattnbias/ernierna_rung1_positions.json.gz",
+        "sha256": "614a535a1e7113d6d3eeec6c212663841e98066f966deae721ba8e635f75f61d"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_noattnbias/stamp.json",
+        "sha256": "3bb69f757542c3e24f06ba1c3ed4c4175bb93b207fcfed56bb64e78f4430282f"
+      }
+    },
+    "ernierna_synthetic": {
+      "ernierna_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/ernierna_synthetic/ernierna_phase6_ps.json",
+        "sha256": "420be5c45d40ee037d5b16fb2261efa80e1625d12bcafe365cacb7214380c962"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_synthetic/stamp.json",
+        "sha256": "f9bf353ecc9f7daa0dc7a80f26ae230750217acf5b4b39e3ac8d4768c4df8e86"
+      }
+    },
+    "ernierna_transversion": {
+      "ernierna_transversion.json": {
+        "from": "results/repaired_panel_v3/ernierna_transversion/ernierna_transversion.json",
+        "sha256": "4c2a0550259793f01b8c5df65a356fddc4c2279d6d091906cd786c1a1005f442"
+      },
+      "ernierna_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/ernierna_transversion/ernierna_transversion_positions.json.gz",
+        "sha256": "ce1573d50b025f6b8d99ba8d6aaf48e6a0cd092226baed5b93d4b068a3c5e2cf"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_transversion/stamp.json",
+        "sha256": "7b2bbfe0ba81b895d0e3f03ec7d6c0277ed492b820a3e21878f43d0c940288af"
+      }
+    },
+    "ernierna_untrained": {
+      "ernierna_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/ernierna_untrained/ernierna_untrained_phase6_ps.json",
+        "sha256": "931e77741ef8b51c08dd26a8721776c638f98191d83e766eedc65900b5c8f949"
+      },
+      "ernierna_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/ernierna_untrained/ernierna_untrained_phases_1_to_5.json",
+        "sha256": "d19062ffc83d06540322dce030ca11c39a22370193032a82b44f79d4997671e2"
+      },
+      "ernierna_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/ernierna_untrained/ernierna_untrained_rung1_positions.json.gz",
+        "sha256": "2b371646c9c1dc0a2e336d20cbad568e0f72005101c1f7aeabda544438a611f2"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_untrained/stamp.json",
+        "sha256": "9199b550669a446b15246995ae4cc8d9e8cdb872cda2eea325393461be893825"
+      }
+    },
+    "ernierna_untrained_noattnbias": {
+      "ernierna_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/ernierna_untrained_noattnbias/ernierna_untrained_phase6_ps.json",
+        "sha256": "dcc3cf80b09cfa0d08f62ac767512922aed417ac2c424f864b6d79b7b10d3d73"
+      },
+      "ernierna_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/ernierna_untrained_noattnbias/ernierna_untrained_phases_1_to_5.json",
+        "sha256": "1302513b4cb8d11a04213a4d53f5b67a23d9ff2cb33111e87a9db9ab221bcd05"
+      },
+      "ernierna_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/ernierna_untrained_noattnbias/ernierna_untrained_rung1_positions.json.gz",
+        "sha256": "289341d978422619ef91293326b94248df2389965bfe238574ffb873bd9385e4"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_untrained_noattnbias/stamp.json",
+        "sha256": "469cc839e526f7a979762d2da2fae0331475fce66f6f05f50170cbdc96fde07e"
+      }
+    },
+    "ernierna_untrained_reseeded": {
+      "ernierna_untrained_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/ernierna_untrained_reseeded/ernierna_untrained_phase6_ps.json",
+        "sha256": "7218a9e23b52932116258881072c65aa10836948c46a94df16569eefaa3091c8"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/ernierna_untrained_reseeded/stamp.json",
+        "sha256": "15fda554117ca0d402598ccc1525ee309e166139fe167d4b808e34d1c1f2c10c"
+      }
+    },
+    "evo": {
+      "evo_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/evo/evo_phase6_ps.json",
+        "sha256": "f442e582a352d5a60973d0895ad9849f0bb24aee5cef94b400a21990eeecf083"
+      },
+      "evo_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/evo/evo_phases_1_to_5.json",
+        "sha256": "0cbff9c7840be89bf3dbc7f4ec1b148b1f9e7135021f9f8bac7b412407b2ba54"
+      },
+      "evo_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/evo/evo_rung1_positions.json.gz",
+        "sha256": "bd30921472cb5f15a645363f4eb447276bc3d34ce96c5e0b8c64187537d9cb7e"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/evo/stamp.json",
+        "sha256": "1c51f69c46fa613c208e3f3574b735389b5485444d6394e585e89b762e34ef32"
+      }
+    },
+    "evo_multiseq": {
+      "evo_multiseq.json": {
+        "from": "results/repaired_panel_v3/evo_multiseq/evo_multiseq.json",
+        "sha256": "7ff05f4be2e565b3133c4f9000ba3c6e12d16e3d5da440c84087d164bcc46afd"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/evo_multiseq/stamp.json",
+        "sha256": "a192d2fdaf55620721e4f4aeb2b9726b26a65872d85d0f40f791afeea5332cb4"
+      }
+    },
+    "evo_synthetic": {
+      "evo_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/evo_synthetic/evo_phase6_ps.json",
+        "sha256": "437358632fb1d2acc1ba1458316936195bf18bcf166c2cfbe7087eac1381e0e0"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/evo_synthetic/stamp.json",
+        "sha256": "93da7c5d7b5ad84090c0eff79d361b43696c00eeed348827605f3ad4ed7de327"
+      }
+    },
+    "evo_transversion": {
+      "evo_transversion.json": {
+        "from": "results/repaired_panel_v3/evo_transversion/evo_transversion.json",
+        "sha256": "bd8685b6eb972a072851ac6e4a2ce90b1e6b186f2764b305281d29947465a429"
+      },
+      "evo_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/evo_transversion/evo_transversion_positions.json.gz",
+        "sha256": "7a99fd6737ab17c7bdef87c86c4fb4d8d5b95ee1cedaa8b75fd0f15651a80cae"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/evo_transversion/stamp.json",
+        "sha256": "1c51f69c46fa613c208e3f3574b735389b5485444d6394e585e89b762e34ef32"
+      }
+    },
+    "hyenadna": {
+      "hyenadna_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/hyenadna/hyenadna_phase6_ps.json",
+        "sha256": "8ba7d1e9bf43d6c6b474496e87ccf665c3c807229d3fb9bbd8e61a4468727076"
+      },
+      "hyenadna_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/hyenadna/hyenadna_phases_1_to_5.json",
+        "sha256": "7afc0346815b05d6e2033547b0a8a20dc66548ac7004331580c63f81db022f0e"
+      },
+      "hyenadna_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/hyenadna/hyenadna_rung1_positions.json.gz",
+        "sha256": "e65aa4e2be22bfce6bdb62a5794aec82f240e435e3fe9a10215e6b89cef31075"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/hyenadna/stamp.json",
+        "sha256": "3db48344fb7a3f460f31cac9a5705c68673cc81a55c8ab46cc274418547b2cf9"
+      }
+    },
+    "hyenadna_htt": {
+      "hyenadna_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/hyenadna_htt/hyenadna_phase6_ps.json",
+        "sha256": "3ed88314ff936e300fe3885476288b4e4ae52680eda75a08979b125e1f9686be"
+      },
+      "hyenadna_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/hyenadna_htt/hyenadna_phases_1_to_5.json",
+        "sha256": "b08c9ef9bc36ea19ad7752ed3eb5f88e09ffc800575947efc7390092a11be63f"
+      },
+      "hyenadna_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/hyenadna_htt/hyenadna_rung1_positions.json.gz",
+        "sha256": "cc6d8657dabb5d8d64a929d47b3ec19a2f531cd1b21cef1be68bd1fb3103f9cd"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/hyenadna_htt/stamp.json",
+        "sha256": "f4eda05a38f05dab935e2a91b1f0608ce6d6ec4d11d0685409f8a1e2dac8b1de"
+      }
+    },
+    "hyenadna_multiseq": {
+      "hyenadna_multiseq.json": {
+        "from": "results/repaired_panel_v3/hyenadna_multiseq/hyenadna_multiseq.json",
+        "sha256": "e28ca8eedf8730ebbfb19e7a1846607be4540df316571f74f2f95c087de04c24"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/hyenadna_multiseq/stamp.json",
+        "sha256": "459a99c21eba2e6ac610c343899f47e22cf9c602fd5ede480fef15a95c334376"
+      }
+    },
+    "hyenadna_synthetic": {
+      "hyenadna_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/hyenadna_synthetic/hyenadna_phase6_ps.json",
+        "sha256": "e39d47534c80e6e7b92e072c1fdb683ad9e1171cc86a6d27c2d5d2015f101dd9"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/hyenadna_synthetic/stamp.json",
+        "sha256": "9057bc60e6bb66f4b91c2c24bbcb169d64fa5c489b3852794fe2b39453e999d5"
+      }
+    },
+    "hyenadna_transversion": {
+      "hyenadna_transversion.json": {
+        "from": "results/repaired_panel_v3/hyenadna_transversion/hyenadna_transversion.json",
+        "sha256": "0dc4ac115ff260f06bde9e1ea17bb2f0a878acf7cd9366c27e0b43bf0b4ac378"
+      },
+      "hyenadna_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/hyenadna_transversion/hyenadna_transversion_positions.json.gz",
+        "sha256": "2fea377550d78cfbd88edc15785977c8c5197c8b73c38ea247c973e84b0347d2"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/hyenadna_transversion/stamp.json",
+        "sha256": "b220b70e7db60982237b2456d6bf8d2f30d5ef98a85b3a92d80327a6219197e9"
+      }
+    },
+    "nt": {
+      "nt_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/nt/nt_phase6_ps.json",
+        "sha256": "783fe3ed313f49cceb5d5f90e59a018245dafffc85991b9de5937ce180f3722c"
+      },
+      "nt_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/nt/nt_phases_1_to_5.json",
+        "sha256": "d198e7a0ae80689d3f52d1f9b33dad6ca8d7a324becfbdd6e56d29109f490e13"
+      },
+      "nt_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/nt/nt_rung1_positions.json.gz",
+        "sha256": "aa61ab988ff574a3772094199fc3740fbc82b1afbfc0f2a500ab722b66238c08"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/nt/stamp.json",
+        "sha256": "b220b70e7db60982237b2456d6bf8d2f30d5ef98a85b3a92d80327a6219197e9"
+      }
+    },
+    "nt_htt": {
+      "nt_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/nt_htt/nt_phase6_ps.json",
+        "sha256": "aa6e879052fcc541d0790cfb97c0a3bffc3815f12ef67132d0dd15ff4b37f148"
+      },
+      "nt_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/nt_htt/nt_phases_1_to_5.json",
+        "sha256": "9f240dda55c1398124efd741e935bd7e1b50675512984796609bf219ce448936"
+      },
+      "nt_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/nt_htt/nt_rung1_positions.json.gz",
+        "sha256": "e99b576ccc40e9cc701e5a45fef265277674a379a8440cb9ce98c3e325221b12"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/nt_htt/stamp.json",
+        "sha256": "f0dac4c42965ab79157a55e0b274cfec6e980c120fe96a2efed7c380e8dcefac"
+      }
+    },
+    "nt_multiseq": {
+      "nt_multiseq.json": {
+        "from": "results/repaired_panel_v3/nt_multiseq/nt_multiseq.json",
+        "sha256": "17e10172508ad4d3d95a4ecec2fb92c16c0c6cc91e68de0fca6f63f07706dbd3"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/nt_multiseq/stamp.json",
+        "sha256": "459a99c21eba2e6ac610c343899f47e22cf9c602fd5ede480fef15a95c334376"
+      }
+    },
+    "nt_synthetic": {
+      "nt_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/nt_synthetic/nt_phase6_ps.json",
+        "sha256": "81c16ff956141ab623b4347533b39ad864618111b0117381edd77e6db8f6771f"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/nt_synthetic/stamp.json",
+        "sha256": "9057bc60e6bb66f4b91c2c24bbcb169d64fa5c489b3852794fe2b39453e999d5"
+      }
+    },
+    "nt_transversion": {
+      "nt_transversion.json": {
+        "from": "results/repaired_panel_v3/nt_transversion/nt_transversion.json",
+        "sha256": "6663299868461347de30a94fb2895cdc1b05548df3f8e6d81d9421902f4e1267"
+      },
+      "nt_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/nt_transversion/nt_transversion_positions.json.gz",
+        "sha256": "405d0e8b65be4417f5c063758f764e5600e557e3594d735fda0e5befb41e5311"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/nt_transversion/stamp.json",
+        "sha256": "3db48344fb7a3f460f31cac9a5705c68673cc81a55c8ab46cc274418547b2cf9"
+      }
+    },
+    "nt_untrained": {
+      "nt_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/nt_untrained/nt_untrained_phase6_ps.json",
+        "sha256": "940121173deec83e96cce1a97db6b9141049129c6b6b4d1d8bc9c3286336a37b"
+      },
+      "nt_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/nt_untrained/nt_untrained_phases_1_to_5.json",
+        "sha256": "8278646fce7c9016736ea6d1d207290ec70e83638f0fb86041b819d192c9d3a3"
+      },
+      "nt_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/nt_untrained/nt_untrained_rung1_positions.json.gz",
+        "sha256": "849568264bd47accbb9702edfe3d62a547cee6034ea6406de2fb41b4c75dc5a0"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/nt_untrained/stamp.json",
+        "sha256": "dc1c140afc35d7aec7be3f4e7ed232683f42febe75dc7676ef36c71b9bda7fcf"
+      }
+    },
+    "rinalmo": {
+      "rinalmo_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rinalmo/rinalmo_phase6_ps.json",
+        "sha256": "0d21948b6e5a3f6ea24cd62311e74671faedf1b77b8d9a127291aa4f5d1a8fc7"
+      },
+      "rinalmo_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/rinalmo/rinalmo_phases_1_to_5.json",
+        "sha256": "3389f8d699f6275f30de74e8f9c26ad3f86a139a7d62f52a416f38f20b3c2a22"
+      },
+      "rinalmo_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/rinalmo/rinalmo_rung1_positions.json.gz",
+        "sha256": "8bfa8dec14bbf5cc530d004a37899c4a9c25b0dc5c477dae5dcf0d855169208c"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo/stamp.json",
+        "sha256": "2195eb1cb747730bea53e9466f00c2aaeedda66d94405528be827ba2b2fe8fcb"
+      }
+    },
+    "rinalmo_htt": {
+      "rinalmo_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/rinalmo_htt/rinalmo_phase6_ps.json",
+        "sha256": "03d835ac9ac6df9bd3bd62899e0f6ae73c25430771a338f25e2d0321ab6ca812"
+      },
+      "rinalmo_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/rinalmo_htt/rinalmo_phases_1_to_5.json",
+        "sha256": "43f7e883921875ed6965d05a0984f00013a05c405a9930659b8e746f03e7fdba"
+      },
+      "rinalmo_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/rinalmo_htt/rinalmo_rung1_positions.json.gz",
+        "sha256": "1fe85c3ec7fa114f3900b06b67f8e79d3b5d8274bc403aa862ff5d96b1b7a167"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo_htt/stamp.json",
+        "sha256": "7bf38a93e611324c2aa70952146085c5d127744a9641aa6b13c20b0332f5f10d"
+      }
+    },
+    "rinalmo_multiseq": {
+      "rinalmo_multiseq.json": {
+        "from": "results/repaired_panel_v3/rinalmo_multiseq/rinalmo_multiseq.json",
+        "sha256": "c7231c6cc4a3f5e26bbe0e15538b93a63a0812247428849c4742f927a02475f7"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo_multiseq/stamp.json",
+        "sha256": "beaf6b564a8835db96553aefdf4338044646deb9b3363afeee9982cdc387bee1"
+      }
+    },
+    "rinalmo_synthetic": {
+      "rinalmo_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/rinalmo_synthetic/rinalmo_phase6_ps.json",
+        "sha256": "9e6748f6301da6386d3e7e1dbec97e13c6ee852a33d68a72b63389d57f926257"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo_synthetic/stamp.json",
+        "sha256": "f9bf353ecc9f7daa0dc7a80f26ae230750217acf5b4b39e3ac8d4768c4df8e86"
+      }
+    },
+    "rinalmo_transversion": {
+      "rinalmo_transversion.json": {
+        "from": "results/repaired_panel_v3/rinalmo_transversion/rinalmo_transversion.json",
+        "sha256": "485df80d924df2066ead19342dc3ac943f44ba71e133845867ea3ed2aa249afb"
+      },
+      "rinalmo_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/rinalmo_transversion/rinalmo_transversion_positions.json.gz",
+        "sha256": "2a1e0900f10199220728d571e1fd5d2ba6492749470742d1ba9bfa2cd6c9683b"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo_transversion/stamp.json",
+        "sha256": "2195eb1cb747730bea53e9466f00c2aaeedda66d94405528be827ba2b2fe8fcb"
+      }
+    },
+    "rinalmo_untrained": {
+      "rinalmo_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rinalmo_untrained/rinalmo_untrained_phase6_ps.json",
+        "sha256": "8aca4f8f8ed4ccf3a5aab8474d57f60c6e9fbcfb9abb153c8698fd6853206d6d"
+      },
+      "rinalmo_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/rinalmo_untrained/rinalmo_untrained_phases_1_to_5.json",
+        "sha256": "be5a1dff346faccad811940ffe227938e4fadc9ce7689709e92096a227fd64c3"
+      },
+      "rinalmo_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/rinalmo_untrained/rinalmo_untrained_rung1_positions.json.gz",
+        "sha256": "3ce7175f5b2d76b6b4d9a37e3cb4b00fe0985fe0d23e1f3482ccc5090481fcf9"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo_untrained/stamp.json",
+        "sha256": "9c243e326d7485f1d95cc753e6bfe4633a9fb5ddc3a06e235860d038d944ca5a"
+      }
+    },
+    "rinalmo_untrained_reseeded": {
+      "rinalmo_untrained_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/rinalmo_untrained_reseeded/rinalmo_untrained_phase6_ps.json",
+        "sha256": "35f2f15a914d09d6c84e71a0ad41bf4e5e7e998340bdf76c154f46d0a024fb6f"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/rinalmo_untrained_reseeded/stamp.json",
+        "sha256": "15fda554117ca0d402598ccc1525ee309e166139fe167d4b808e34d1c1f2c10c"
+      }
+    },
+    "rnafm": {
+      "rnafm_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rnafm/rnafm_phase6_ps.json",
+        "sha256": "fb79ff3aaad229ba2f3e26ff5fa42f3fdd84e5f7afdf0924f91eebb54e5e4023"
+      },
+      "rnafm_phases_1_to_5.json": {
+        "from": "results/decoy_panel_v1/rnafm/rnafm_phases_1_to_5.json",
+        "sha256": "6ec68a27d47bdb9480eb0a84d4bccf8a96f6cb88c8928ae63ef3dfb233ecb288"
+      },
+      "rnafm_rung1_positions.json": {
+        "from": "results/decoy_panel_v1/rnafm/rnafm_rung1_positions.json",
+        "sha256": "4b13d7ddbf82e14c5f7087eec8d0d5c15c6405fd9bb1d896c931324674721924"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm/stamp.json",
+        "sha256": "1a0c7635e4ddbd47a9ed3c990d2a78ed818945e58e37e6b796b47f32da356505"
+      }
+    },
+    "rnafm_htt": {
+      "rnafm_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rnafm_htt/rnafm_phase6_ps.json",
+        "sha256": "ddb359c627532b0729a1875e42b9b7df31b33772a853e9a832871502c9538fc0"
+      },
+      "rnafm_phases_1_to_5.json": {
+        "from": "results/decoy_panel_v1/rnafm_htt/rnafm_phases_1_to_5.json",
+        "sha256": "04058b078b32d7bb6bf6df7c944fa205957b72ed5a7c2a6af6cc0104e4c5785e"
+      },
+      "rnafm_rung1_positions.json": {
+        "from": "results/decoy_panel_v1/rnafm_htt/rnafm_rung1_positions.json",
+        "sha256": "06140259f95ce81966c55034c533bae87875e6cd07539cac083024579a7af252"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm_htt/stamp.json",
+        "sha256": "c866997f82a364c78f4ebe92815ac2b548d9d8932f1b56e4bcac9ecec5609ace"
+      }
+    },
+    "rnafm_multiseq": {
+      "rnafm_multiseq.json": {
+        "from": "results/decoy_panel_v1/rnafm_multiseq/rnafm_multiseq.json",
+        "sha256": "9ab12d83c2443bf2bd403377b79415d229afb30887c6084cddeb203b0c05e307"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm_multiseq/stamp.json",
+        "sha256": "5744d8aa1bb89c091107a20cca0676e0f5b0fc350243454cca174bc93eee7986"
+      }
+    },
+    "rnafm_synthetic": {
+      "rnafm_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rnafm_synthetic/rnafm_phase6_ps.json",
+        "sha256": "9eb345f48953a514aaffcc15a28d3769c475958286ea35e2c83cfe24b592e1f7"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm_synthetic/stamp.json",
+        "sha256": "b4424ade6431b23d026b85c071ae11d87b435043712a518ffd084b0f04f5d5a8"
+      }
+    },
+    "rnafm_transversion": {
+      "rnafm_transversion.json": {
+        "from": "results/decoy_panel_v1/rnafm_transversion/rnafm_transversion.json",
+        "sha256": "ad53a4c65f5adc4704f7dc287eef2c177267a8a2d7ee53ebb1f15371f40075a1"
+      },
+      "rnafm_transversion_positions.json": {
+        "from": "results/decoy_panel_v1/rnafm_transversion/rnafm_transversion_positions.json",
+        "sha256": "456f9113e22db88048a0e845cd8b305006665bf68ac543f0f9698c9bf69bcd68"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm_transversion/stamp.json",
+        "sha256": "1a0c7635e4ddbd47a9ed3c990d2a78ed818945e58e37e6b796b47f32da356505"
+      }
+    },
+    "rnafm_untrained": {
+      "rnafm_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rnafm_untrained/rnafm_untrained_phase6_ps.json",
+        "sha256": "4508bb6b4826714cec6c98acac503514e0fff6f19946324988ca538d4b255f9d"
+      },
+      "rnafm_untrained_phases_1_to_5.json": {
+        "from": "results/decoy_panel_v1/rnafm_untrained/rnafm_untrained_phases_1_to_5.json",
+        "sha256": "a10c4be8ca0238a67b72be83d1a54b3f87366aa1a2920d9b186b92dbd1f4428a"
+      },
+      "rnafm_untrained_rung1_positions.json": {
+        "from": "results/decoy_panel_v1/rnafm_untrained/rnafm_untrained_rung1_positions.json",
+        "sha256": "53d83697537d16b7b7b1885e8df9a4089ccfe24d0bcdaa23759d24fb72a511cc"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm_untrained/stamp.json",
+        "sha256": "e20481173e59c5e5fe53bb1c901c9c47c1bec3896a12087956470fb10e573ed7"
+      }
+    },
+    "rnafm_untrained_reseeded": {
+      "rnafm_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/rnafm_untrained_reseeded/rnafm_untrained_phase6_ps.json",
+        "sha256": "cbb859f48dcc63887e007e1c184e7d0ec2eafc5c7e14859430f7c0ced8b6ddac"
+      },
+      "stamp.json": {
+        "from": "results/decoy_panel_v1/rnafm_untrained_reseeded/stamp.json",
+        "sha256": "e20481173e59c5e5fe53bb1c901c9c47c1bec3896a12087956470fb10e573ed7"
+      }
+    },
+    "splicebert": {
+      "splicebert_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/splicebert/splicebert_phase6_ps.json",
+        "sha256": "282e83c6eccc49a24a943254248ef2c9b78b5ef0ea6e205f9979d72cba4fa6f1"
+      },
+      "splicebert_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/splicebert/splicebert_phases_1_to_5.json",
+        "sha256": "c436123d317862cea663a61e11f93073d08cbe6095f7d3b5d0962603e188ff2a"
+      },
+      "splicebert_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/splicebert/splicebert_rung1_positions.json.gz",
+        "sha256": "228ed068b2295c6e7661138e367a34af06bc4f02a21c4a04c3779d48e6b7a271"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/splicebert/stamp.json",
+        "sha256": "2195eb1cb747730bea53e9466f00c2aaeedda66d94405528be827ba2b2fe8fcb"
+      }
+    },
+    "splicebert_htt": {
+      "splicebert_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/splicebert_htt/splicebert_phase6_ps.json",
+        "sha256": "2001b34a8a46ec172c32b4d5ca7ef8d63c536efffa7082be4f6fcd3e7dacedf5"
+      },
+      "splicebert_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/splicebert_htt/splicebert_phases_1_to_5.json",
+        "sha256": "7cc7694cacdda4eb3c2e35ef98f0d134f79226a450696140009b079e064b3405"
+      },
+      "splicebert_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/splicebert_htt/splicebert_rung1_positions.json.gz",
+        "sha256": "23bbce4535170bbfdb13f041feb0b21787de9321775a00f8d5cc66a6f479d40b"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/splicebert_htt/stamp.json",
+        "sha256": "f9ac526141851a61094bf45c05336932e5f85ee461c57ae7cba53dc0e4e83fee"
+      }
+    },
+    "splicebert_multiseq": {
+      "splicebert_multiseq.json": {
+        "from": "results/repaired_panel_v3/splicebert_multiseq/splicebert_multiseq.json",
+        "sha256": "db3b98fe6b669ee46fc428fcd70046b927406256276e13c9b16d13f378c73e1f"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/splicebert_multiseq/stamp.json",
+        "sha256": "beaf6b564a8835db96553aefdf4338044646deb9b3363afeee9982cdc387bee1"
+      }
+    },
+    "splicebert_synthetic": {
+      "splicebert_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/splicebert_synthetic/splicebert_phase6_ps.json",
+        "sha256": "ef1dbbaad4779a725ef403b9fd8d400bbd1c7a13abd53ced0f6ba78040491bff"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/splicebert_synthetic/stamp.json",
+        "sha256": "f9bf353ecc9f7daa0dc7a80f26ae230750217acf5b4b39e3ac8d4768c4df8e86"
+      }
+    },
+    "splicebert_transversion": {
+      "splicebert_transversion.json": {
+        "from": "results/repaired_panel_v3/splicebert_transversion/splicebert_transversion.json",
+        "sha256": "3eab6fbf6cc854be43c3af2770ecbdd1b2c4e0a31d961dfd5b12da12e5349dc3"
+      },
+      "splicebert_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/splicebert_transversion/splicebert_transversion_positions.json.gz",
+        "sha256": "c4abca361f3ab83a15ccfcb8c1295b50f1d3f0588070ccde9564432f82b99149"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/splicebert_transversion/stamp.json",
+        "sha256": "7b2bbfe0ba81b895d0e3f03ec7d6c0277ed492b820a3e21878f43d0c940288af"
+      }
+    },
+    "splicebert_untrained": {
+      "splicebert_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/splicebert_untrained/splicebert_untrained_phase6_ps.json",
+        "sha256": "28e82d07f64ff05bb01adb98f75d342488389b749dc64af234d2991fa5e5e199"
+      },
+      "splicebert_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/splicebert_untrained/splicebert_untrained_phases_1_to_5.json",
+        "sha256": "225c54405659c10ea29ae2bf00e927ee0555beefa56696d3a25fc9d5f93ba1ad"
+      },
+      "splicebert_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/splicebert_untrained/splicebert_untrained_rung1_positions.json.gz",
+        "sha256": "e1434465b7e6f1ad918bd27c68ac98d2714b42554aa1de20ab0196eab7a5b852"
+      },
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/splicebert_untrained/stamp.json",
+        "sha256": "9199b550669a446b15246995ae4cc8d9e8cdb872cda2eea325393461be893825"
+      }
+    },
+    "utrlm": {
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/utrlm/stamp.json",
+        "sha256": "2195eb1cb747730bea53e9466f00c2aaeedda66d94405528be827ba2b2fe8fcb"
+      },
+      "utrlm_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/utrlm/utrlm_phase6_ps.json",
+        "sha256": "fdfea24771c4115d81fee7e19ab5bfa46c7460ce940eed0bbd01333cc05312f3"
+      },
+      "utrlm_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/utrlm/utrlm_phases_1_to_5.json",
+        "sha256": "09c06225d9690db07a7a8aaaee51108124aa78aae222b1abb37fd742265b4887"
+      },
+      "utrlm_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/utrlm/utrlm_rung1_positions.json.gz",
+        "sha256": "9a62ef23abdb5b5c84ed5eb529a08143603d158e3e505dc624b040f924f5d565"
+      }
+    },
+    "utrlm_htt": {
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/utrlm_htt/stamp.json",
+        "sha256": "7bf38a93e611324c2aa70952146085c5d127744a9641aa6b13c20b0332f5f10d"
+      },
+      "utrlm_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/utrlm_htt/utrlm_phase6_ps.json",
+        "sha256": "3ea4ba63bdff43b76932ef6faa4db622ecb5502f087b31ac9e3ad92b555a055a"
+      },
+      "utrlm_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/utrlm_htt/utrlm_phases_1_to_5.json",
+        "sha256": "e55715b7958ccfab753e8dd2cce38bce5a437bc44edaa96824035f4fbbada845"
+      },
+      "utrlm_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/utrlm_htt/utrlm_rung1_positions.json.gz",
+        "sha256": "ebd1e9bb45ec388ae6c053af34a57f40bea1b15007e768824869faac3172da05"
+      }
+    },
+    "utrlm_multiseq": {
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/utrlm_multiseq/stamp.json",
+        "sha256": "beaf6b564a8835db96553aefdf4338044646deb9b3363afeee9982cdc387bee1"
+      },
+      "utrlm_multiseq.json": {
+        "from": "results/repaired_panel_v3/utrlm_multiseq/utrlm_multiseq.json",
+        "sha256": "d2abf23b31b3cd55551056cc3ca5fbe8360948be9dd06545ed39a173174cd3f9"
+      }
+    },
+    "utrlm_synthetic": {
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/utrlm_synthetic/stamp.json",
+        "sha256": "f9bf353ecc9f7daa0dc7a80f26ae230750217acf5b4b39e3ac8d4768c4df8e86"
+      },
+      "utrlm_phase6_ps.json": {
+        "from": "results/repaired_panel_v3/utrlm_synthetic/utrlm_phase6_ps.json",
+        "sha256": "79882a0d6be86d5bb64e3634abd175648c4ac1d7f09aefc07f61eda81eef02ee"
+      }
+    },
+    "utrlm_transversion": {
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/utrlm_transversion/stamp.json",
+        "sha256": "2195eb1cb747730bea53e9466f00c2aaeedda66d94405528be827ba2b2fe8fcb"
+      },
+      "utrlm_transversion.json": {
+        "from": "results/repaired_panel_v3/utrlm_transversion/utrlm_transversion.json",
+        "sha256": "271e3bcf4ef1318160d07857950724b7741645bdc0df11afb63a1eab5b5543f8"
+      },
+      "utrlm_transversion_positions.json.gz": {
+        "from": "results/repaired_panel_v3/utrlm_transversion/utrlm_transversion_positions.json.gz",
+        "sha256": "96a143906a5ed764dc094430aeee07d4aa59335103dbc7e2c1f7ffa1afba4128"
+      }
+    },
+    "utrlm_untrained": {
+      "stamp.json": {
+        "from": "results/repaired_panel_v3/utrlm_untrained/stamp.json",
+        "sha256": "9199b550669a446b15246995ae4cc8d9e8cdb872cda2eea325393461be893825"
+      },
+      "utrlm_untrained_phase6_ps.json": {
+        "from": "results/decoy_panel_v1/utrlm_untrained/utrlm_untrained_phase6_ps.json",
+        "sha256": "b387968b5c7dcfad000d876f8ae2d67cee28c0527f4188c9163aac9cb64d8ce7"
+      },
+      "utrlm_untrained_phases_1_to_5.json": {
+        "from": "results/repaired_panel_v3/utrlm_untrained/utrlm_untrained_phases_1_to_5.json",
+        "sha256": "9615dba2e92f8be40737f2f2c3904f919870788c6447286633845fa3372f2f4f"
+      },
+      "utrlm_untrained_rung1_positions.json.gz": {
+        "from": "results/repaired_panel_v3/utrlm_untrained/utrlm_untrained_rung1_positions.json.gz",
+        "sha256": "186d23bf12ab4f09ff41282ea13373fd08ea1e10c10513c2d636dcf95d64219a"
+      }
+    }
+  }
+}

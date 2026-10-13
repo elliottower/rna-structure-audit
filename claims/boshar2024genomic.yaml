@@ -1,0 +1,17 @@
+source:
+  citation: boshar2024genomic
+  local: reference/boshar2024genomic.xml
+  sha256: 6691e9c7abc7d9c647408aa5794f7853fdc6eb37ff4c4147990333ab04c8aaca
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11399231/fullTextXML
+  doi: 10.1093/bioinformatics/btae529
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 60190661236f924baa9c5e993b1e643289bb2a4a96c2dfff562ee8455a12652f
+claims:
+  tokenization:
+    interpretation:
+      says: Tokenization granularity changes downstream performance of a genomic language model
+      whose: rna-structure-audit
+    quotes:
+    - exact: We trained a new Nucleotide Transformer (50M) foundation model with 3mer tokenization that
+        outperforms its 6mer counterpart on protein tasks while maintaining performance on genomics tasks.

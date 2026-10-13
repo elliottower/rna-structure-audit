@@ -1,0 +1,16 @@
+source:
+  citation: zhang2024protein
+  local: reference/zhang2024protein.xml
+  sha256: 4d909312061e6fcf4fede91ba4cc248ccddfe515931a8085706532ebc8f24a17
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11551344/fullTextXML
+  doi: 10.1073/pnas.2406285121
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 2ecab66fd741d8f5c481b960e6240547cef585b3837fac5b2998c48810bad854
+claims:
+  categorical-jacobian:
+    interpretation:
+      says: Input perturbation has been used to read pairwise couplings from a protein language model
+      whose: rna-structure-audit
+    quotes:
+    - exact: We present an unsupervised “categorical Jacobian” calculation to extract coevolutionary couplings.

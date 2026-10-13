@@ -1,0 +1,30 @@
+source:
+  citation: zablocki2025benchmarking
+  local: reference/zablocki2025benchmarking.pdf
+  sha256: 585178622b26a76b8beb04ab6d7ece2086a39958edd979890443cb07205d3591
+  url: https://arxiv.org/pdf/2410.16212
+  doi: 10.1093/bib/bbaf137
+  extract_cmd: pdftotext {} -
+  note: arXiv:2410.16212, the arXiv posting of the paper the bibliography cites in Briefings in Bioinformatics.
+claims:
+  top-three:
+    interpretation:
+      says: On random partitions of ArchiveII the three best RNA language models for secondary structure
+        prediction are ERNIE-RNA, RiNALMo and RNA-FM
+      whose: rna-structure-audit
+    quotes:
+    - exact: Those are ERNIE-RNA and RiNALMo, both with F1 = 0.95, and RNA-FM with F1 = 0.91.
+  harder-split:
+    interpretation:
+      says: Under an 80 percent sequence-identity split only ERNIE-RNA and RiNALMo beat a classical predictor
+      whose: rna-structure-audit
+    quotes:
+    - exact: These two RNA-LLM are the only ones that achieve better performance than the classical prediction
+        method (F1 = 0.53)
+  low-homology:
+    interpretation:
+      says: Two models lead and generalization at low homology is hard
+      whose: rna-structure-audit
+    quotes:
+    - exact: Results showed that two LLM clearly outperform the other models, and revealed significant
+        challenges for generalization in low-homology scenarios.

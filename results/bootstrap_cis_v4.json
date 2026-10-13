@@ -1,0 +1,433 @@
+{
+  "description": "Bootstrap 95% CIs for RNA structure awareness metrics",
+  "n_bootstrap": 10000,
+  "seed": 42,
+  "timestamp": "2026-10-12T11:39:12.825653",
+  "models": {
+    "ERNIE-RNA": {
+      "file": "results/panel_v4/ernierna/ernierna_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.2757582279882351,
+        "ci_lower": 1.2173479017575528,
+        "ci_upper": 1.3415262020929017,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.6595744680851063,
+        "ci_lower": 0.5106382978723404,
+        "ci_upper": 0.7872340425531915,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.967741935483871,
+        "ci_lower": 0.9032258064516129,
+        "ci_upper": 1.0,
+        "n": 31
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 31,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 28.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.11256872834222142,
+        "ci_lower": 0.10058963185168424,
+        "ci_upper": 0.1249609443228334,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.6834824355878844,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "RiNALMo": {
+      "file": "results/panel_v4/rinalmo/rinalmo_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.142763334428736,
+        "ci_lower": 1.1178069029772766,
+        "ci_upper": 1.168916813763533,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.3617021276595745,
+        "ci_lower": 0.23404255319148937,
+        "ci_upper": 0.5106382978723404,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.8823529411764706,
+        "ci_lower": 0.7058823529411765,
+        "ci_upper": 1.0,
+        "n": 17
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 17,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 14.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.10736576720747618,
+        "ci_lower": 0.09609158359414317,
+        "ci_upper": 0.11906563598187907,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.6344382875334457,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "RNA-FM": {
+      "file": "results/panel_v4/rnafm/rnafm_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.1287283973463842,
+        "ci_lower": 1.1092308355590537,
+        "ci_upper": 1.1484566362927453,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.3617021276595745,
+        "ci_lower": 0.23404255319148937,
+        "ci_upper": 0.5106382978723404,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.8235294117647058,
+        "ci_lower": 0.6470588235294118,
+        "ci_upper": 1.0,
+        "n": 17
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 17,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 14.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.0977211741102905,
+        "ci_lower": 0.08558312353683316,
+        "ci_upper": 0.10999132785716938,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.5907245465335458,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "UTR-LM": {
+      "file": "results/panel_v4/utrlm/utrlm_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.0557889920396055,
+        "ci_lower": 1.0403401366167115,
+        "ci_upper": 1.0764105448041767,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.06382978723404255,
+        "ci_lower": 0.0,
+        "ci_upper": 0.14893617021276595,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.6666666666666666,
+        "ci_lower": 0.0,
+        "ci_upper": 1.0,
+        "n": 3
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 3,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 0.6499999999999999,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.051026253151591976,
+        "ci_lower": 0.045108158853066835,
+        "ci_upper": 0.05771812723147698,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.5778702978438792,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "SpliceBERT": {
+      "file": "results/panel_v4/splicebert/splicebert_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.0401727044749591,
+        "ci_lower": 1.030093846390743,
+        "ci_upper": 1.0515800196256904,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.06382978723404255,
+        "ci_lower": 0.0,
+        "ci_upper": 0.14893617021276595,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.3333333333333333,
+        "ci_lower": 0.0,
+        "ci_upper": 1.0,
+        "n": 3
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 3,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 0.6499999999999999,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.0535521883441796,
+        "ci_lower": 0.04843911865267171,
+        "ci_upper": 0.058962210694548885,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.565981388158035,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "NT v2": {
+      "file": "results/panel_v4/nt/nt_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.0979448850759352,
+        "ci_lower": 1.0753623907859757,
+        "ci_upper": 1.1223144609302935,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.19148936170212766,
+        "ci_lower": 0.0851063829787234,
+        "ci_upper": 0.3191489361702128,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.8888888888888888,
+        "ci_lower": 0.6666666666666666,
+        "ci_upper": 1.0,
+        "n": 9
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 9,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 6.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.23382379400857703,
+        "ci_lower": 0.20426747144172666,
+        "ci_upper": 0.26745927465707026,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.535665169817733,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "DNABERT-2": {
+      "file": "results/panel_v4/dnabert2/dnabert2_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 0.9958482204738939,
+        "ci_lower": 0.9768677177626004,
+        "ci_upper": 1.0135413553361494,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.06382978723404255,
+        "ci_lower": 0.0,
+        "ci_upper": 0.14893617021276595,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.6666666666666666,
+        "ci_lower": 0.0,
+        "ci_upper": 1.0,
+        "n": 3
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 3,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 0.6499999999999999,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.19589490036353055,
+        "ci_lower": 0.17267396854832695,
+        "ci_upper": 0.22102637364691505,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.5510405442551816,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "HyenaDNA": {
+      "file": "results/panel_v4/hyenadna/hyenadna_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.1600823926148927,
+        "ci_lower": 1.123854295362252,
+        "ci_upper": 1.1997881695431702,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.1702127659574468,
+        "ci_lower": 0.06382978723404255,
+        "ci_upper": 0.2765957446808511,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.875,
+        "ci_lower": 0.625,
+        "ci_upper": 1.0,
+        "n": 8
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 8,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 5.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": null,
+      "probing_accuracy": {
+        "point_estimate": 0.576976788783297,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "Caduceus": {
+      "file": "results/panel_v4/caduceus/caduceus_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.206448408879205,
+        "ci_lower": 1.1578657381734812,
+        "ci_upper": 1.2608528622652853,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.1702127659574468,
+        "ci_lower": 0.06382978723404255,
+        "ci_upper": 0.2765957446808511,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.5,
+        "ci_lower": 0.125,
+        "ci_upper": 0.875,
+        "n": 8
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 8,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 5.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": null,
+      "probing_accuracy": {
+        "point_estimate": 0.576976788783297,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "Evo": {
+      "file": "results/panel_v4/evo/evo_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.4584575679906822,
+        "ci_lower": 1.3004080127291882,
+        "ci_upper": 1.642045904663295,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.1702127659574468,
+        "ci_lower": 0.06382978723404255,
+        "ci_upper": 0.2765957446808511,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.75,
+        "ci_lower": 0.375,
+        "ci_upper": 1.0,
+        "n": 8
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 8,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 5.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": null,
+      "probing_accuracy": {
+        "point_estimate": 0.5515894028778237,
+        "note": "single scalar, no bootstrap"
+      }
+    },
+    "ERNIE-RNA (untrained)": {
+      "file": "results/panel_v4/ernierna_untrained/ernierna_untrained_phases_1_to_5.json",
+      "mutation_sensitivity": {
+        "point_estimate": 1.1644586016367078,
+        "ci_lower": 1.1189663313855944,
+        "ci_upper": 1.2134304146148664,
+        "n": 47
+      },
+      "frac_exceeds_nuc_null": {
+        "point_estimate": 0.2127659574468085,
+        "ci_lower": 0.10638297872340426,
+        "ci_upper": 0.3404255319148936,
+        "n": 47
+      },
+      "frac_exceeds_dinuc_null": {
+        "point_estimate": 0.6,
+        "ci_lower": 0.3,
+        "ci_upper": 0.9,
+        "n": 10
+      },
+      "multiple_testing": {
+        "n_tested": 47,
+        "n_exceeding": 10,
+        "alpha": 0.05,
+        "expected_fp_under_independence": 2.35,
+        "bonferroni_alpha": 0.0011,
+        "excess_over_expected_fp": 7.65,
+        "note": "Binary test: each family compared to its own 95th-percentile permutation null. Expected FP = m * alpha under independence. Continuous p-values would require storing full permutation distributions."
+      },
+      "attention_contact_rho": {
+        "point_estimate": 0.08539864265527687,
+        "ci_lower": 0.07589847346178527,
+        "ci_upper": 0.09575742862724047,
+        "n": 47
+      },
+      "probing_accuracy": {
+        "point_estimate": 0.5435589388601798,
+        "note": "single scalar, no bootstrap"
+      }
+    }
+  }
+}

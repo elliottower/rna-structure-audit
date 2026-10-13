@@ -1,0 +1,16 @@
+source:
+  citation: lu2026two
+  local: reference/lu2026two.pdf
+  sha256: d8f93718fca613aecfc8b87568b98abb24205e73399fc46f25edbc979a3949dd
+  url: https://arxiv.org/pdf/2602.06020
+  doi: 10.48550/arXiv.2602.06020
+  extract_cmd: pdftotext {} -
+claims:
+  interventions:
+    interpretation:
+      says: Causal interventions on internal activations have been used to locate computation in protein
+        structure models
+      whose: rna-structure-audit
+    quotes:
+    - exact: We investigate this question through causal interventions on the folding trunks of ESMFold,
+        OpenFold, and Boltz-1.

@@ -1,0 +1,17 @@
+source:
+  citation: belinkov2022probing
+  local: reference/belinkov2022probing.pdf
+  sha256: 2a96a5654c2f96a7ceaa279cccc476b1e725812ad03b7e3aa71ee1fac9373a32
+  url: https://arxiv.org/pdf/2102.12452
+  doi: 10.1162/coli_a_00422
+  extract_cmd: pdftotext {} -
+  note: arXiv:2102.12452v4, the arXiv posting of the Computational Linguistics article the bibliography
+    cites.
+claims:
+  critiques:
+    interpretation:
+      says: Probing classifiers have been criticized for their baselines and for being correlational
+      whose: rna-structure-audit
+    quotes:
+    - exact: Critiques have been made about comparative baselines, metrics, the choice of classifier,
+        and the correlational nature of the method.

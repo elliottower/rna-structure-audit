@@ -48,3 +48,9 @@ reference/
 # Empty lock sidecars the citations and prereg tools leave beside a file they write.
 *.provenance-lock
 *.provenance-tmp
+
+# LaTeX build folders.
+paper/build_*/
+
+# Checkpoint shards a run writes while it is in progress; the final files beside them are kept.
+results/**/_shards_*.json
