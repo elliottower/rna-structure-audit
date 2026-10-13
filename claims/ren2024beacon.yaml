@@ -20,3 +20,11 @@ claims:
       whose: rna-structure-audit
     quotes:
     - exact: single nucleotide tokenization outperforms both K-mer, BPE, and Non-overlap
+  tokens-full:
+    interpretation:
+      says: With BPE or non-overlapping k-mer tokens a nucleotide's representation is that of the covering
+        token
+      whose: rna-structure-audit
+    quotes:
+    - exact: In Byte-Pair Encoding (BPE) and non-overlapping K-mer tokenization, the representation is
+        derived from the token covering it.
