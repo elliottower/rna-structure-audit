@@ -1,0 +1,23 @@
+source:
+  citation: chen2024splicebert
+  local: reference/chen2024splicebert.xml
+  sha256: d0f38ab5216b01e3a3cd78685a213a79afc177480aafabc4709316ab426eacfa
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11009468/fullTextXML
+  doi: 10.1093/bib/bbae163
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: fccdde791b204ad7ab0b6e6ad99729558335b569658f6a0cfbd6977fabd831db
+claims:
+  size:
+    interpretation:
+      says: SpliceBERT has 19M parameters
+      whose: rna-structure-audit
+    quotes:
+    - exact: SpliceBERT has about 19.4 million learnable parameters.
+  architecture:
+    interpretation:
+      says: SpliceBERT is a transformer pretrained on RNA
+      whose: rna-structure-audit
+    quotes:
+    - exact: SpliceBERT is based on the BERT [ 16 ] architecture, consisting of six Transformer [ 28 ]
+        encoder layers.

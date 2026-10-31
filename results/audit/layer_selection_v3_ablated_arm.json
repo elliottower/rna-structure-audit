@@ -1,0 +1,80 @@
+{
+  "n_splits": 2000,
+  "seed": 42,
+  "panel": "results/decoy_panel_v1",
+  "quarantined": [
+    "tRNA_Ala_human",
+    "tRNA_Phe_yeast"
+  ],
+  "models": [
+    {
+      "model": "ernierna_untrained_noattnbias",
+      "label": "ERNIE-RNA untrained, pairing bias ablated",
+      "n_families": 35,
+      "families": [
+        "6S_RNA",
+        "7SK_RNA",
+        "Bacterial_SRP",
+        "Corona_5UTR",
+        "CrPV_IRES",
+        "FMN_riboswitch",
+        "HDV_ribozyme",
+        "Hepatitis_C_IRES_III",
+        "SAM_riboswitch",
+        "SECIS_element",
+        "THF_riboswitch",
+        "TPP_riboswitch",
+        "T_box_leader",
+        "U1_snRNA",
+        "U4_snRNA",
+        "U5_snRNA",
+        "Vault_RNA",
+        "Y_RNA",
+        "ZMP_riboswitch",
+        "cobalamin_riboswitch",
+        "glmS_ribozyme",
+        "glycine_riboswitch",
+        "group_II_intron_D5",
+        "group_I_intron_P4P6",
+        "hatchet_ribozyme",
+        "lysine_riboswitch",
+        "manganese_riboswitch",
+        "mir_122_precursor",
+        "mir_155_precursor",
+        "mir_21_precursor",
+        "mir_let7_precursor",
+        "pistol_ribozyme",
+        "purine_riboswitch",
+        "tmRNA",
+        "twister_ribozyme"
+      ],
+      "excluded": {
+        "CRISPR_leader": "< 15 WC pairs (6 found)",
+        "Corona_s2m": "< 15 WC pairs (12 found)",
+        "Histone_3prime": "< 15 WC pairs (6 found)",
+        "IRE_stem_loop": "< 15 WC pairs (14 found)",
+        "SAH_riboswitch": "< 15 WC pairs (13 found)",
+        "U6_snRNA": "< 15 WC pairs (5 found)",
+        "c_di_GMP_riboswitch": "no deep-interior pair at some layer",
+        "fluoride_riboswitch": "< 15 WC pairs (8 found)",
+        "hammerhead_ribozyme": "< 15 WC pairs (12 found)",
+        "preQ1_riboswitch": "< 15 WC pairs (5 found)",
+        "tRNA_Ala_human": "quarantined pilot family",
+        "tRNA_Phe_yeast": "quarantined pilot family"
+      },
+      "n_layers": 13,
+      "chance": 0.2449800586714872,
+      "chance_global_layer": 0.16389992261706549,
+      "chance_heldout": 0.16417892484012903,
+      "per_family_layer": 0.28081489938632803,
+      "global_layer": 0.1663251034679606,
+      "global_layer_index": 0,
+      "heldout": 0.16701191008066008,
+      "heldout_ci": [
+        0.10382786195286196,
+        0.22837024087024085
+      ],
+      "n_splits": 2000
+    }
+  ]
+}

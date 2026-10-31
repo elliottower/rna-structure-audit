@@ -1,0 +1,15 @@
+source:
+  citation: patel2024dart
+  local: reference/patel2024dart.pdf
+  sha256: 6809d6c1337a442b273b257674a3193d4f8cf01e40fa7d2bd70f963deda49028
+  url: https://arxiv.org/pdf/2412.05430
+  doi: 10.48550/arXiv.2412.05430
+  extract_cmd: pdftotext {} -
+claims:
+  baselines:
+    interpretation:
+      says: DNA language models do not consistently beat baseline models on regulatory DNA tasks
+      whose: rna-structure-audit
+    quotes:
+    - exact: current annotation-agnostic DNALMs exhibit inconsistent performance and do not offer compelling
+        gains over alternative baseline models for most tasks

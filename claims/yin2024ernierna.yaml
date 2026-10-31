@@ -1,0 +1,31 @@
+source:
+  citation: yin2024ernierna
+  local: reference/yin2024ernierna_natcommun.pdf
+  sha256: 0ef260be4c1d10553ee7205509e4e5eb611a4a59460a246ee94404c34709b6eb
+  url: https://www.nature.com/articles/s41467-025-64972-0.pdf
+  doi: 10.1038/s41467-025-64972-0
+  extract_cmd: pdftotext {} -
+  note: The bibliography entry is the 2024 bioRxiv preprint (10.1101/2024.03.17.585376), which could not
+    be fetched; this file is the version published in Nature Communications in 2025.
+claims:
+  size:
+    interpretation:
+      says: ERNIE-RNA has 86M parameters
+      whose: rna-structure-audit
+    quotes:
+    - exact: results in a model with ~86 million parameters
+  pairing-bias:
+    interpretation:
+      says: 'The architecture holds a hardcoded pairing table: A-U 2.0, C-G 3.0, G-U 0.8'
+      whose: rna-structure-audit
+    quotes:
+    - exact: 'we assign values based on canonical base-pairing rules: 2 for AU pairs, 3 for CG pairs,
+        and a tunable hyperparameter α (initially, 0.8) for GU pairs, with diagonal elements set to 0.'
+  blocks:
+    interpretation:
+      says: ERNIE-RNA is a transformer
+      whose: rna-structure-audit
+    quotes:
+    - exact: consists of 12 transformer blocks
+      prefix: 'architecture. the model '
+      suffix: ', each employing'

@@ -1,0 +1,22 @@
+source:
+  citation: krzyzosiak2012triplet
+  local: reference/krzyzosiak2012triplet.xml
+  sha256: d62c3248a60fc88bd16a361e0d058dd477ec06c08006cae307ff9d3740b03432
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3245940/fullTextXML
+  doi: 10.1093/nar/gkr729
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: ef83d5fc0db665b6176f2b7f8b7472024e224e2061e2c1546790eb245fe45a7d
+claims:
+  stability:
+    interpretation:
+      says: Hairpin stability scales with repeat count
+      whose: rna-structure-audit
+      status: contested
+      contest: The source compares expanded with normal repeats and does not state a dose-response in
+        repeat count. de Mezer et al. report that the mutant HTT CAG structure was not stable enough to
+        be protected from siRNA cleavage.
+    quotes:
+    - exact: expanded repeats are likely to form hairpin structures in cells which make them both more
+        prone (increased repeat length) and more resistant (more stable structure) to interaction with
+        targeting reagents in comparison with normal repeats.

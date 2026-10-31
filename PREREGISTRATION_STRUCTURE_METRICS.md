@@ -4,7 +4,7 @@
 
 **Author:** Elliot Tower (elliot@elliottower.ai)
 
-**Date:** 2026-07-12
+**Date:** 2026-07-12 (pre SHA freeze)
 
 **Commit SHA:** `694b43b0cf85b367c6fff04155cfd929bdf63022` (prereg), `a7d10f5e4aea5c0ad1f7002abe75e91d34a4eaa8` (experiment scripts, factorization-unified repo)
 

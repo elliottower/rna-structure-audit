@@ -1,0 +1,17 @@
+source:
+  citation: cheng2026mechanistic
+  local: reference/cheng2026mechanistic.pdf
+  sha256: 245c6f3208fb8eb8caf7eccab198465fd759b50f3d78b8a36923758b6df878a0
+  url: https://arxiv.org/pdf/2604.06549
+  doi: 10.48550/arXiv.2604.06549
+  extract_cmd: pdftotext {} -
+  note: The first page marks this as a workshop paper at ICLR 2026.
+claims:
+  composition:
+    interpretation:
+      says: In genomic language models an apparent sensitivity to a regulatory mechanism was explained
+        by AT content
+      whose: rna-structure-audit
+    quotes:
+    - exact: apparent compensation sensitivity is driven entirely by AT content correlation (r=0.78–0.96
+        across architectures), not positional regulatory logic

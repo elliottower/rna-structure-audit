@@ -1,0 +1,14 @@
+source:
+  citation: rivas2000secondary
+  local: reference/rivas2000secondary.pdf
+  sha256: 35e9c8fbafaf70930600ea1bca4910cd6794de7a4c67c17ce9e6a43366f9f3e3
+  url: https://academic.oup.com/bioinformatics/article-pdf/16/7/583/48836040/bioinformatics_16_7_583.pdf
+  doi: 10.1093/bioinformatics/16.7.583
+  extract_cmd: pdftotext {} -
+claims:
+  composition:
+    interpretation:
+      says: Most of the structural model's signal is base composition
+      whose: rna-structure-audit
+    quotes:
+    - exact: most of the signal provided by the probabilistic structural model is due to base composition

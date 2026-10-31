@@ -1,0 +1,17 @@
+source:
+  citation: hadad2026optimizing
+  local: reference/hadad2026optimizing.xml
+  sha256: 11ff4f222a848ecb63f51f13f0e30965071c4c4d7f45a09f647af0c0b2c120ac
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12980338/fullTextXML
+  doi: 10.1093/nargab/lqag025
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: e7d8afa3a2f46e42b34693e1472f225c80e9e0996abe2352111ebdc6b7a70b6e
+claims:
+  gc-negatives:
+    interpretation:
+      says: With background genomic negatives a promoter classifier relies on GC and CpG enrichment
+      whose: rna-structure-audit
+    quotes:
+    - exact: the model primarily relies on identifying localized CpG-rich signatures or short-range GC-enrichment
+        to distinguish promoters from the genomic background

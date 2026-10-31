@@ -1,0 +1,16 @@
+source:
+  citation: szikszai2022generalization
+  local: reference/szikszai2022generalization.xml
+  sha256: 7452403ba1338399476ce9a15e00704bfb0ea902e9339c25ad68c15fab948f51
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9364374/fullTextXML
+  doi: 10.1093/bioinformatics/btac415
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 5b19177e02c52300e7ed968498089e87c3dd50bc9ea5454e3216aebacadb4d67
+claims:
+  inter-family:
+    interpretation:
+      says: Deep learning models for RNA structure prediction may fail to generalize across families
+      whose: rna-structure-audit
+    quotes:
+    - exact: provide strong evidence that many existing learning-based models have not generalized inter-family.

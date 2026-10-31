@@ -1,0 +1,25 @@
+source:
+  citation: adebayo2018sanity
+  local: reference/adebayo2018sanity.pdf
+  sha256: 654cb2393d1e2bf96374c2d8bf85d2561ed9a162ce58249e640d7685701c9ce0
+  url: https://arxiv.org/pdf/1810.03292
+  extract_cmd: pdftotext {} -
+  note: arXiv:1810.03292v3.
+claims:
+  test:
+    interpretation:
+      says: The parameter randomization test compares a trained network with a randomly initialized one
+        of the same architecture
+      whose: rna-structure-audit
+    quotes:
+    - exact: The model parameter randomization test compares the output of a saliency method on a trained
+        model with the output of the saliency method on a randomly initialized untrained network of the
+        same architecture.
+  prior:
+    interpretation:
+      says: An output that survives randomization may reflect a prior in the architecture
+      whose: rna-structure-audit
+    quotes:
+    - exact: Explanations that do not depend on model parameters or training data might still depend on
+        the model architecture and thus provide some useful information about the prior incorporated in
+        the model architecture.

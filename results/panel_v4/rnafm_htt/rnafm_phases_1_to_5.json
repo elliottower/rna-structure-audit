@@ -1,0 +1,335 @@
+{
+  "model": "rnafm",
+  "stamp": {
+    "commit": "be4e3468fddefcd9c650fa64f2a17cc36eb7692b",
+    "panel_sha256": "707c19ebe2cdf59db226e2cabbf209a21b1c3c1f80d963c35eb2788caea077b2",
+    "n_families": 5,
+    "withdrawn": [
+      "5S_rRNA_ecoli",
+      "IRES_HCV_domainII",
+      "RNaseP_specificity",
+      "SRP_RNA_helix8",
+      "U2_snRNA_stem"
+    ],
+    "seeding": "family_seed.family_rng, derived from the family name",
+    "deviation": "DEVIATIONS.md, 2026-08-24 and 2026-10-11",
+    "registration": "preregistration/complementary_decoy/PREREG.md",
+    "libraries": {
+      "torch": "2.6.0",
+      "triton": "3.2.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "scikit-learn": "1.5.2",
+      "transformers": "5.14.1",
+      "multimolecule": "0.2.0",
+      "huggingface-hub": "1.28.0",
+      "flash-attn": null,
+      "mamba-ssm": null
+    },
+    "numerics": {
+      "defaults_observed": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": false
+      },
+      "determinism": "forced",
+      "pinned": "tf32 off, cudnn.benchmark off, deterministic algorithms"
+    },
+    "device": "cuda",
+    "ablation": null,
+    "sequences": "natural",
+    "weights": "pretrained"
+  },
+  "completed": "2026-10-11 18:24:39 UTC",
+  "experiment": "phases_1_to_5",
+  "mutation_trained": {
+    "model": "rnafm",
+    "metric": "mutation_sensitivity",
+    "n_permutations": 1000,
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_ratio": 1.1241525798934686,
+        "best_layer": 11,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.2096039661109166,
+        "exceeds_nuc_null": false,
+        "n_stem": 148,
+        "n_loop": 87
+      },
+      "HTT_CAG21_normal": {
+        "best_ratio": 1.151614515485669,
+        "best_layer": 11,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.247004045330251,
+        "exceeds_nuc_null": false,
+        "n_stem": 158,
+        "n_loop": 89
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_ratio": 1.1648719004166557,
+        "best_layer": 11,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.2803057895189447,
+        "exceeds_nuc_null": false,
+        "n_stem": 184,
+        "n_loop": 108
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_ratio": 1.1793635775484115,
+        "best_layer": 11,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.3030873408654542,
+        "exceeds_nuc_null": false,
+        "n_stem": 192,
+        "n_loop": 112
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_ratio": 1.2230124447263475,
+        "best_layer": 11,
+        "noop_floor": 0.0,
+        "nuc_null_95th": 1.3636480366593322,
+        "exceeds_nuc_null": false,
+        "n_stem": 232,
+        "n_loop": 132
+      }
+    },
+    "mean_best_ratio": 1.1686030036141104,
+    "median_best_ratio": 1.1648719004166557,
+    "n_exceeding_nuc_null": 0,
+    "n_families_scored": 5
+  },
+  "attention_trained": {
+    "model": "rnafm",
+    "metric": "attention_contact",
+    "per_rna": {
+      "HTT_CAG17_normal": {
+        "best_corr": 0.043335033300105644,
+        "best_layer": 4
+      },
+      "HTT_CAG21_normal": {
+        "best_corr": 0.04019249293099952,
+        "best_layer": 4
+      },
+      "HTT_CAG36_pathogenic": {
+        "best_corr": 0.045070381701887985,
+        "best_layer": 4
+      },
+      "HTT_CAG40_pathogenic": {
+        "best_corr": 0.04558484566619202,
+        "best_layer": 4
+      },
+      "HTT_CAG60_pathogenic": {
+        "best_corr": 0.04100359096253799,
+        "best_layer": 4
+      }
+    }
+  },
+  "probing": {
+    "model": "rnafm",
+    "metric": "structure_probing",
+    "per_layer": {
+      "0": {
+        "mean_balanced_accuracy": 0.8025144448097488,
+        "std_balanced_accuracy": 0.014467898695037763,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "1": {
+        "mean_balanced_accuracy": 0.7757386272381595,
+        "std_balanced_accuracy": 0.012785989005199101,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "2": {
+        "mean_balanced_accuracy": 0.7897706997356571,
+        "std_balanced_accuracy": 0.02145154565567732,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "3": {
+        "mean_balanced_accuracy": 0.7688592540696229,
+        "std_balanced_accuracy": 0.07888995098484088,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "4": {
+        "mean_balanced_accuracy": 0.9349959949864977,
+        "std_balanced_accuracy": 0.026796212428004087,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "5": {
+        "mean_balanced_accuracy": 0.9722354617461937,
+        "std_balanced_accuracy": 0.007557824859081372,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "6": {
+        "mean_balanced_accuracy": 0.9707862093688622,
+        "std_balanced_accuracy": 0.008974131486895557,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "7": {
+        "mean_balanced_accuracy": 0.9705800106408307,
+        "std_balanced_accuracy": 0.009644889721252048,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "8": {
+        "mean_balanced_accuracy": 0.9703831956576587,
+        "std_balanced_accuracy": 0.00911100157939991,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "9": {
+        "mean_balanced_accuracy": 0.9701299132079747,
+        "std_balanced_accuracy": 0.011082187640960327,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "10": {
+        "mean_balanced_accuracy": 0.9691671747307069,
+        "std_balanced_accuracy": 0.010987188802877999,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "11": {
+        "mean_balanced_accuracy": 0.9715871103402977,
+        "std_balanced_accuracy": 0.008799306259167921,
+        "n_samples": 1442,
+        "n_targets": 5
+      },
+      "12": {
+        "mean_balanced_accuracy": 0.9600937618482315,
+        "std_balanced_accuracy": 0.0032521480239157655,
+        "n_samples": 1442,
+        "n_targets": 5
+      }
+    },
+    "best_layer": 5,
+    "best_accuracy": 0.9722354617461937
+  },
+  "htt_distances": {
+    "metric": "cosine_distance_from_fewest_repeats",
+    "reference": "HTT_CAG17_normal",
+    "repeat_counts": [
+      17,
+      21,
+      36,
+      40,
+      60
+    ],
+    "dtype": "float64",
+    "n_layers": 13,
+    "per_layer": {
+      "0": [
+        0.0,
+        0.0006265339639872636,
+        0.006011160997399512,
+        0.008084963702659542,
+        0.017692122689953127
+      ],
+      "1": [
+        0.0,
+        0.008172527494636928,
+        0.01987837527017411,
+        0.02311727792867857,
+        0.0411312222322171
+      ],
+      "2": [
+        2.220446049250313e-16,
+        0.00382516629431473,
+        0.011996421841425797,
+        0.014005256845973202,
+        0.025789173047460978
+      ],
+      "3": [
+        0.0,
+        0.0008516851560488314,
+        0.004799103840427477,
+        0.005907001278011692,
+        0.014437738039680958
+      ],
+      "4": [
+        -2.220446049250313e-16,
+        0.0005201776640174627,
+        0.004102466711688235,
+        0.005226178856067021,
+        0.013071057198540292
+      ],
+      "5": [
+        1.1102230246251565e-16,
+        0.0014983855423301717,
+        0.017331391401507634,
+        0.018168983609629485,
+        0.03402849611725156
+      ],
+      "6": [
+        0.0,
+        0.0015375070861403106,
+        0.01910982649690407,
+        0.02179699822985881,
+        0.03873689340557407
+      ],
+      "7": [
+        1.1102230246251565e-16,
+        0.0016708946631143196,
+        0.020324934889881185,
+        0.02295849775636427,
+        0.03958984850968861
+      ],
+      "8": [
+        2.220446049250313e-16,
+        0.0016852612817749302,
+        0.02020893427848791,
+        0.02241815892005483,
+        0.03727656272560631
+      ],
+      "9": [
+        1.1102230246251565e-16,
+        0.0013073304815029996,
+        0.016078104455631403,
+        0.018744515106816406,
+        0.03186375996212498
+      ],
+      "10": [
+        0.0,
+        0.001036736863620602,
+        0.01384935083512906,
+        0.016551829334267465,
+        0.028816929331050845
+      ],
+      "11": [
+        0.0,
+        0.0007302889749666308,
+        0.010140500380036777,
+        0.01217753228810392,
+        0.022592928300693704
+      ],
+      "12": [
+        0.0,
+        0.0004161834988100077,
+        0.005794095183641157,
+        0.0071762536912951536,
+        0.014826431203127433
+      ]
+    },
+    "best_layer": 0,
+    "best_spearman": 0.9999999999999999,
+    "at_best_layer": [
+      0.0,
+      0.0006265339639872636,
+      0.006011160997399512,
+      0.008084963702659542,
+      0.017692122689953127
+    ],
+    "at_last_layer": [
+      0.0,
+      0.0004161834988100077,
+      0.005794095183641157,
+      0.0071762536912951536,
+      0.014826431203127433
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+source:
+  citation: hewitt2019designing
+  local: reference/hewitt2019designing.pdf
+  sha256: 5fc41d60b1a9b8974f6a28dae562b9d118ace511e833d0107c6013583945426a
+  url: https://arxiv.org/pdf/1909.03368
+  doi: 10.18653/v1/D19-1275
+  extract_cmd: pdftotext {} -
+  note: arXiv:1909.03368, the arXiv posting of the EMNLP 2019 paper the bibliography cites.
+claims:
+  control-tasks:
+    interpretation:
+      says: A probe's accuracy should be read against a control task that only the probe can learn
+      whose: rna-structure-audit
+    quotes:
+    - exact: we propose control tasks, which associate word types with random outputs, to complement linguistic
+        tasks. By construction, these tasks can only be learned by the probe itself.
+  selectivity:
+    interpretation:
+      says: Selectivity is the gap between task accuracy and control-task accuracy
+      whose: rna-structure-audit
+    quotes:
+    - exact: So a good probe, (one that reflects the representation), should be selective, achieving high
+        linguistic task accuracy and low control task accuracy.

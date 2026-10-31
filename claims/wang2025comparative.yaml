@@ -1,0 +1,23 @@
+source:
+  citation: wang2025comparative
+  local: reference/wang2025comparative.pdf
+  sha256: 7c76b3c1bfccbe7e12e6f74e18a55345b9f4bf75814052cac10cf0f534a76762
+  url: https://arxiv.org/pdf/2505.09087
+  doi: 10.48550/arXiv.2505.09087
+  extract_cmd: pdftotext {} -
+claims:
+  design:
+    interpretation:
+      says: A review compared RNA language models with DNA and protein language models as controls on
+        zero-shot secondary structure prediction
+      whose: rna-structure-audit
+    quotes:
+    - exact: compared 13 RNA LMs along with 3 DNA and 1 protein LMs as controls in zeroshot prediction
+        of RNA secondary structure and functional classification
+  dna-none:
+    interpretation:
+      says: DNA language models carried no secondary-structure information in zero-shot prediction
+      whose: rna-structure-audit
+    quotes:
+    - exact: As expected, DNA LMs and Class II RNA LMs contain no secondarystructural information, indicating
+        the importance of ncRNA sequence libraries employed for pre-training of RNA foundation models.

@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{microtype}
+\input{generated_v24/panel_description}
+
+% Tables here are S1, S2, ... so a reference from the manuscript is unambiguous.
+\renewcommand{\thetable}{S\arabic{table}}
+
+\title{Supplementary Material\\The Composition Confound: Partner-Specific
+Base-Pairing Responses Survive Matched Controls in Three of Ten Nucleic Acid
+Language Models}
+\author{Elliot Tower}
+\date{}
+
+\begin{document}
+\maketitle
+
+The manuscript reports panel-level figures. These are the per-family values
+they aggregate, over the \panelN{} families of the repaired panel, together
+with the family list, the attention--contact channel, the transversion control,
+the registered hypotheses and the run provenance.
+
+\section*{The curated panel}
+
+\input{generated_v24/panel_table}
+
+\section*{Per-family composition gate}
+
+{\setlength{\tabcolsep}{4pt}
+\input{generated_v24/s2_gate_table}
+}
+
+
+\section*{Per-family partner specificity}
+
+{\setlength{\tabcolsep}{4pt}
+\input{generated_v24/s3_ps_table}
+}
+
+
+\section*{Attention as a second channel}
+
+\input{generated_v24/attention_table}
+
+\section*{Transversion control}
+
+\input{generated_v24/transversion_table}
+
+\section*{Registered hypotheses}
+
+\input{generated_v24/hypotheses_table}
+
+\section*{Run provenance}
+
+\input{generated_v24/provenance_table}
+
+\end{document}

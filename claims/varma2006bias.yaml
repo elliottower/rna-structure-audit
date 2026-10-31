@@ -1,0 +1,17 @@
+source:
+  citation: varma2006bias
+  local: reference/varma2006bias.xml
+  sha256: 376cbb34734c73a90f9f3b16c0ace509965d458f1c44f0d9ea46af1c6e529a0f
+  url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC1397873/fullTextXML
+  doi: 10.1186/1471-2105-7-91
+  extractor: jats-text
+  extractor_version: 1
+  derived_sha256: 77f399d5733333bbc93e8a32472c16205c83d5b96df3764d52a68afe914be980
+claims:
+  bias:
+    interpretation:
+      says: Reporting performance on the data used for selection is biased
+      whose: rna-structure-audit
+    quotes:
+    - exact: using CV to compute an error estimate for a classifier that has itself been tuned using CV
+        gives a significantly biased estimate of the true error

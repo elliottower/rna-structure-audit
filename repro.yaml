@@ -1,0 +1,159 @@
+# The evidence manifest for rna-structure-audit-FINAL, read by `repro verify`.
+#
+# `artifacts` pins files by sha256. An edited file is reported as a broken pin until the
+# digest recorded here is replaced with the output of `shasum -a 256 <path>`.
+#
+# `claims` says what the manuscript states and where a pinned artifact holds it. To add a
+# claim, copy an entry under `claims`, give it a new id, and point its evidence at the id of
+# an artifact. A `metric` reads a number at an RFC 6901 JSON Pointer in a JSON or YAML file;
+# `reported` is the number as the manuscript prints it, in quotes. A `quote` finds a passage
+# in a text source. Claims whose id begins `example-` were written by `repro manifest init` to
+# show the shape, and are there to be edited or removed.
+#
+# Check it:
+#
+#     repro verify
+#
+schema_version: repro/1
+project: rna-structure-audit-FINAL
+provenance:
+  repository: https://github.com/elliottower/rna-structure-audit.git
+  commit: e77a3689fd91a347dade275bff9441e2a3bb2fa9
+  dirty: true
+  generated_by: repro manifest init
+artifacts:
+- id: decoy-population-counts
+  path: results/audit/decoy_population_counts.json
+  media_type: application/json
+  digest:
+    algorithm: sha256
+    value: 90c45fde8bc9a74c946a5bb6f5e4601e9ae995fe84f44173431086666c4c9539
+- id: matched-decoy-counts
+  path: results/audit/matched_decoy_counts.json
+  media_type: application/json
+  digest:
+    algorithm: sha256
+    value: e1a53e04b79961ffc92dc4f3c299e3f747b3f1078e105a822b5dc65dd464c63d
+- id: precision-vs-complementarity
+  path: results/audit/precision_vs_complementarity.json
+  media_type: application/json
+  digest:
+    algorithm: sha256
+    value: d17d0fcad82c8f12f822626671090af6b0726db81d48cf936a2fc7d4ee8315c6
+- id: decoy-control-validation-v2
+  path: results/audit/decoy_control_validation_v2.json
+  media_type: application/json
+  digest:
+    algorithm: sha256
+    value: 14b45397e4738f0d2d2878f75d0a507608846445bc1ec5e1f870b432d00d6b8e
+- id: layer-selection
+  path: results/audit/layer_selection.json
+  media_type: application/json
+  digest:
+    algorithm: sha256
+    value: 6a2c8f58c01a8ace0375b65246ca1360412ff5bcb359da0af1a8a4a6f2c5dbcc
+claims:
+- id: ernierna-per-pair-precision
+  text: 'ERNIE-RNA reaches 0.888 per-pair precision at the layer maximizing mean PS within each family.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: per_family_layer
+    reported: '0.888'
+    pointer: /models/0/per_family_layer
+- id: rinalmo-per-pair-precision
+  text: 'RiNALMo reaches 0.872 per-pair precision at the layer maximizing mean PS within each family.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: per_family_layer
+    reported: '0.872'
+    pointer: /models/1/per_family_layer
+- id: ernierna-chance
+  text: 'The within-stem derangement null puts chance at 0.124 for ERNIE-RNA.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: chance
+    reported: '0.124'
+    pointer: /models/0/chance
+- id: rinalmo-chance
+  text: 'The within-stem derangement null puts chance at 0.102 for RiNALMo.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: chance
+    reported: '0.102'
+    pointer: /models/1/chance
+- id: ernierna-heldout
+  text: 'Choosing the layer on families that do not report the number leaves ERNIE-RNA at 0.885.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: heldout
+    reported: '0.885'
+    pointer: /models/0/heldout
+- id: rinalmo-heldout
+  text: 'Choosing the layer on families that do not report the number leaves RiNALMo at 0.882.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: heldout
+    reported: '0.882'
+    pointer: /models/1/heldout
+- id: ernierna-untrained-precision
+  text: 'A randomly initialized ERNIE-RNA reaches 0.490 per-pair precision.'
+  evidence:
+  - kind: metric
+    artifact: layer-selection
+    name: per_family_layer
+    reported: '0.490'
+    pointer: /models/8/per_family_layer
+- id: decoy-families-all
+  text: 'Seventeen confirmatory families have a matched decoy when every decoy is admitted.'
+  evidence:
+  - kind: metric
+    artifact: decoy-population-counts
+    name: family_all
+    reported: '17'
+    pointer: /structural/family_all
+- id: decoy-families-close
+  text: 'Nine confirmatory families have a matched decoy no farther than the partner.'
+  evidence:
+  - kind: metric
+    artifact: decoy-population-counts
+    name: family_close
+    reported: '9'
+    pointer: /structural/family_close
+- id: decoy-population-rinalmo
+  text: 'Sixteen of those families pass the positive control for RiNALMo.'
+  evidence:
+  - kind: metric
+    artifact: decoy-population-counts
+    name: family_all
+    reported: '16'
+    pointer: /models/rinalmo/family_all
+- id: decoy-population-ernierna
+  text: 'Seventeen of those families pass the positive control for ERNIE-RNA.'
+  evidence:
+  - kind: metric
+    artifact: decoy-population-counts
+    name: family_all
+    reported: '17'
+    pointer: /models/ernierna/family_all
+- id: complementarity-control-precision
+  text: 'A complementarity-only profile scores 0.467 mean per-family Rung 3 precision on the RiNALMo families.'
+  evidence:
+  - kind: metric
+    artifact: precision-vs-complementarity
+    name: mean_complementarity_precision
+    reported: '0.467'
+    pointer: /models/0/mean_complementarity_precision
+- id: rinalmo-above-complementarity
+  text: 'The precision of RiNALMo exceeds the complementarity control in 28 families.'
+  evidence:
+  - kind: metric
+    artifact: precision-vs-complementarity
+    name: families_above
+    reported: '28'
+    pointer: /models/0/families_above

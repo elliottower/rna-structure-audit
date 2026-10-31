@@ -1,0 +1,460 @@
+{
+  "inputs": "data/rfam_families",
+  "quarantined": [
+    "tRNA_Ala_human",
+    "tRNA_Phe_yeast"
+  ],
+  "thresholds": {
+    "min_wc_pairs": 15,
+    "min_eligible": 5,
+    "min_pairs_per_family": 3
+  },
+  "summary": {
+    "families_qualifying": 36,
+    "stem": {
+      "families_with_min_pairs": 15,
+      "pairs_with_decoy": 76,
+      "comparisons": 109
+    },
+    "family": {
+      "families_with_min_pairs": 26,
+      "pairs_with_decoy": 184,
+      "comparisons": 870
+    },
+    "deep_interior_pairs": 190
+  },
+  "families": {
+    "6S_RNA": {
+      "eligible_pairs": 16,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 1,
+        "comparisons": 1
+      },
+      "family": {
+        "pairs_with_decoy": 3,
+        "comparisons": 8
+      }
+    },
+    "7SK_RNA": {
+      "eligible_pairs": 30,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 2,
+        "comparisons": 3
+      },
+      "family": {
+        "pairs_with_decoy": 3,
+        "comparisons": 19
+      }
+    },
+    "Bacterial_SRP": {
+      "eligible_pairs": 13,
+      "deep_interior_pairs": 4,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 4,
+        "comparisons": 12
+      }
+    },
+    "Corona_5UTR": {
+      "eligible_pairs": 40,
+      "deep_interior_pairs": 12,
+      "stem": {
+        "pairs_with_decoy": 5,
+        "comparisons": 9
+      },
+      "family": {
+        "pairs_with_decoy": 12,
+        "comparisons": 135
+      }
+    },
+    "CrPV_IRES": {
+      "eligible_pairs": 21,
+      "deep_interior_pairs": 7,
+      "stem": {
+        "pairs_with_decoy": 5,
+        "comparisons": 9
+      },
+      "family": {
+        "pairs_with_decoy": 7,
+        "comparisons": 32
+      }
+    },
+    "FMN_riboswitch": {
+      "eligible_pairs": 14,
+      "deep_interior_pairs": 5,
+      "stem": {
+        "pairs_with_decoy": 3,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 5,
+        "comparisons": 13
+      }
+    },
+    "HDV_ribozyme": {
+      "eligible_pairs": 13,
+      "deep_interior_pairs": 6,
+      "stem": {
+        "pairs_with_decoy": 3,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 18
+      }
+    },
+    "Hepatitis_C_IRES_III": {
+      "eligible_pairs": 42,
+      "deep_interior_pairs": 10,
+      "stem": {
+        "pairs_with_decoy": 5,
+        "comparisons": 7
+      },
+      "family": {
+        "pairs_with_decoy": 10,
+        "comparisons": 125
+      }
+    },
+    "SAM_riboswitch": {
+      "eligible_pairs": 16,
+      "deep_interior_pairs": 6,
+      "stem": {
+        "pairs_with_decoy": 2,
+        "comparisons": 2
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 16
+      }
+    },
+    "SECIS_element": {
+      "eligible_pairs": 9,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 2,
+        "comparisons": 2
+      },
+      "family": {
+        "pairs_with_decoy": 3,
+        "comparisons": 4
+      }
+    },
+    "THF_riboswitch": {
+      "eligible_pairs": 15,
+      "deep_interior_pairs": 4,
+      "stem": {
+        "pairs_with_decoy": 3,
+        "comparisons": 3
+      },
+      "family": {
+        "pairs_with_decoy": 4,
+        "comparisons": 18
+      }
+    },
+    "TPP_riboswitch": {
+      "eligible_pairs": 12,
+      "deep_interior_pairs": 1,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 1,
+        "comparisons": 2
+      }
+    },
+    "T_box_leader": {
+      "eligible_pairs": 24,
+      "deep_interior_pairs": 9,
+      "stem": {
+        "pairs_with_decoy": 2,
+        "comparisons": 2
+      },
+      "family": {
+        "pairs_with_decoy": 9,
+        "comparisons": 41
+      }
+    },
+    "U1_snRNA": {
+      "eligible_pairs": 14,
+      "deep_interior_pairs": 1,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 1,
+        "comparisons": 5
+      }
+    },
+    "U4_snRNA": {
+      "eligible_pairs": 14,
+      "deep_interior_pairs": 6,
+      "stem": {
+        "pairs_with_decoy": 2,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 18
+      }
+    },
+    "U5_snRNA": {
+      "eligible_pairs": 18,
+      "deep_interior_pairs": 10,
+      "stem": {
+        "pairs_with_decoy": 5,
+        "comparisons": 6
+      },
+      "family": {
+        "pairs_with_decoy": 10,
+        "comparisons": 50
+      }
+    },
+    "Vault_RNA": {
+      "eligible_pairs": 8,
+      "deep_interior_pairs": 2,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 2,
+        "comparisons": 4
+      }
+    },
+    "Y_RNA": {
+      "eligible_pairs": 7,
+      "deep_interior_pairs": 2,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 2,
+        "comparisons": 3
+      }
+    },
+    "ZMP_riboswitch": {
+      "eligible_pairs": 12,
+      "deep_interior_pairs": 6,
+      "stem": {
+        "pairs_with_decoy": 3,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 15
+      }
+    },
+    "c_di_GMP_riboswitch": {
+      "eligible_pairs": 8,
+      "deep_interior_pairs": 0,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      }
+    },
+    "cobalamin_riboswitch": {
+      "eligible_pairs": 14,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 3,
+        "comparisons": 5
+      }
+    },
+    "glmS_ribozyme": {
+      "eligible_pairs": 22,
+      "deep_interior_pairs": 11,
+      "stem": {
+        "pairs_with_decoy": 4,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 11,
+        "comparisons": 42
+      }
+    },
+    "glycine_riboswitch": {
+      "eligible_pairs": 9,
+      "deep_interior_pairs": 4,
+      "stem": {
+        "pairs_with_decoy": 2,
+        "comparisons": 2
+      },
+      "family": {
+        "pairs_with_decoy": 4,
+        "comparisons": 5
+      }
+    },
+    "group_II_intron_D5": {
+      "eligible_pairs": 6,
+      "deep_interior_pairs": 2,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 2,
+        "comparisons": 4
+      }
+    },
+    "group_I_intron_P4P6": {
+      "eligible_pairs": 19,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 3,
+        "comparisons": 14
+      }
+    },
+    "hatchet_ribozyme": {
+      "eligible_pairs": 14,
+      "deep_interior_pairs": 8,
+      "stem": {
+        "pairs_with_decoy": 3,
+        "comparisons": 9
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 33
+      }
+    },
+    "lysine_riboswitch": {
+      "eligible_pairs": 27,
+      "deep_interior_pairs": 13,
+      "stem": {
+        "pairs_with_decoy": 4,
+        "comparisons": 8
+      },
+      "family": {
+        "pairs_with_decoy": 13,
+        "comparisons": 107
+      }
+    },
+    "manganese_riboswitch": {
+      "eligible_pairs": 9,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 2,
+        "comparisons": 4
+      }
+    },
+    "mir_122_precursor": {
+      "eligible_pairs": 11,
+      "deep_interior_pairs": 5,
+      "stem": {
+        "pairs_with_decoy": 3,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 5,
+        "comparisons": 21
+      }
+    },
+    "mir_155_precursor": {
+      "eligible_pairs": 11,
+      "deep_interior_pairs": 7,
+      "stem": {
+        "pairs_with_decoy": 5,
+        "comparisons": 10
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 14
+      }
+    },
+    "mir_21_precursor": {
+      "eligible_pairs": 7,
+      "deep_interior_pairs": 2,
+      "stem": {
+        "pairs_with_decoy": 0,
+        "comparisons": 0
+      },
+      "family": {
+        "pairs_with_decoy": 1,
+        "comparisons": 1
+      }
+    },
+    "mir_let7_precursor": {
+      "eligible_pairs": 11,
+      "deep_interior_pairs": 6,
+      "stem": {
+        "pairs_with_decoy": 4,
+        "comparisons": 4
+      },
+      "family": {
+        "pairs_with_decoy": 6,
+        "comparisons": 12
+      }
+    },
+    "pistol_ribozyme": {
+      "eligible_pairs": 9,
+      "deep_interior_pairs": 3,
+      "stem": {
+        "pairs_with_decoy": 1,
+        "comparisons": 1
+      },
+      "family": {
+        "pairs_with_decoy": 2,
+        "comparisons": 3
+      }
+    },
+    "purine_riboswitch": {
+      "eligible_pairs": 16,
+      "deep_interior_pairs": 10,
+      "stem": {
+        "pairs_with_decoy": 5,
+        "comparisons": 5
+      },
+      "family": {
+        "pairs_with_decoy": 10,
+        "comparisons": 25
+      }
+    },
+    "tmRNA": {
+      "eligible_pairs": 26,
+      "deep_interior_pairs": 8,
+      "stem": {
+        "pairs_with_decoy": 1,
+        "comparisons": 1
+      },
+      "family": {
+        "pairs_with_decoy": 8,
+        "comparisons": 37
+      }
+    },
+    "twister_ribozyme": {
+      "eligible_pairs": 10,
+      "deep_interior_pairs": 2,
+      "stem": {
+        "pairs_with_decoy": 1,
+        "comparisons": 1
+      },
+      "family": {
+        "pairs_with_decoy": 2,
+        "comparisons": 5
+      }
+    }
+  }
+}

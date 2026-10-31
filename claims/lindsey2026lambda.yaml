@@ -1,0 +1,24 @@
+source:
+  citation: lindsey2026lambda
+  local: reference/lindsey2026lambda.pdf
+  sha256: 2d2904a23eb68823ceb1595cc61a9a293e1dead6917d1c115f8b61e5233d6d0f
+  url: https://academic.oup.com/nargab/article/8/3/lqag103/8787816
+  doi: 10.1093/nargab/lqag103
+  extract_cmd: pdftotext {} -
+claims:
+  random-baseline:
+    interpretation:
+      says: Pretrained embeddings beat the same models' randomly initialized embeddings on the benchmark's
+        probing tasks
+      whose: rna-structure-audit
+    quotes:
+    - exact: pretrained embeddings outperformed randomly initialized embeddings under both linear probing
+        and shallow nonlinear classification
+  gc-shuffle:
+    interpretation:
+      says: On a GC-preserving shuffle of the test set, GC composition explains little of the models'
+        performance
+      whose: rna-structure-audit
+    quotes:
+    - exact: all models had MCC values that fell within ±0.16 of zero, indicating that GC-composition
+        accounts for only a small fraction of model performance
